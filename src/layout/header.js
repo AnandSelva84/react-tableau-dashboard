@@ -18,7 +18,7 @@ const Header = () => {
   const dark = currentApp === "amp" ? null : darkHeader;
   return (
     <>
-      <Paper style={{ ...theme.header, ...darkHeader, borderRadius: "0" }}>
+      <Paper style={{ ...theme.header, ...dark, borderRadius: "0" }}>
         <div className="left-side">
           <ClickableIcon
             icon={<Menu />}

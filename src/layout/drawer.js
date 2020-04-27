@@ -25,6 +25,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import { useDispatch } from "react-redux";
 import useData from "../hooks/useStore";
 import { toggleDrawer } from "../redux/actions/shared";
+import Select from "../components/select/select";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) =>
@@ -151,6 +152,7 @@ const SideDrawer = (props) => {
           </IconButton>
         </div>
         <Divider />
+        <Select />
         {/* <Divider />
         <List>
           {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
