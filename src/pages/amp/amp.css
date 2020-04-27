@@ -1,0 +1,14 @@
+.panel {
+  min-width: 49%;
+  min-height: 25vh;
+  border: 0.5px solid black;
+  max-width: 30rem;
+  margin: 0.5rem 0;
+}
+
+.panel-wrapper {
+  padding: 0.5rem 1.5rem;
+  /* border: 0.5px solid skyblue; */
+  display: flex;
+  justify-content: space-between;
+}
