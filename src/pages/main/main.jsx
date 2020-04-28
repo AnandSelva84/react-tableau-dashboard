@@ -3,15 +3,18 @@ import useData from "../../hooks/useStore";
 import AgileMetrics from "../amp/amp";
 import KeyIndicators from "../kid/kid";
 import "./main.css";
+import useQuery from "../../hooks/useQuery";
 
 const Main = () => {
   const { currentApp } = useData().sharedReducer;
-  console.log("current App is ", currentApp);
+
+  const query = useQuery();
+  const app = query.get("app");
 
   const DataToRender =
-    currentApp === "amp" ? () => <AgileMetrics /> : () => <KeyIndicators />;
+    app === "amp" ? () => <AgileMetrics /> : () => <KeyIndicators />;
 
-  const style = currentApp === "amp" ? "" : "dark";
+  const style = app === "amp" ? "" : "dark";
 
   return (
     <div className={style} style={{ padding: "0 0rem" }}>

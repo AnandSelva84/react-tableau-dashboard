@@ -1,13 +1,14 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
-import ClickableIcon from "../components/icon-button";
-import theme from "../theme/layout";
-import "./styles/header.css";
+import ClickableIcon from "../../components/icon-button";
+import theme from "../../theme/layout";
+import "./header.css";
 import { useDispatch } from "react-redux";
-import { toggleDrawer, setApp } from "../redux/actions/shared";
-import useData from "../hooks/useStore";
-import useQuery from "../hooks/useQuery";
+import { toggleDrawer, setApp } from "../../redux/actions/shared";
+import useQuery from "../../hooks/useQuery";
+import useData from "../../hooks/useStore";
+import img from "../../assets/img/wp2471777.jpg";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -35,9 +36,9 @@ const Header = () => {
               dispatch(toggleDrawer());
             }}
           />
-          <div style={{ fontSize: "1.4rem", margin: "0 1rem" }}>{appName}</div>
+          <div className="header-title">{appName}</div>
         </div>
-        <div style={{ fontSize: "1.4rem", margin: "0 1rem" }}>User Name</div>
+        <div className="header-title hello">hello panda</div>
       </Paper>
     </>
   );

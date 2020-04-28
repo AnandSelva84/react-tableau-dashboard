@@ -1,0 +1,13 @@
+.header-title {
+  font-size: 1.4rem;
+  margin: 0 1rem;
+}
+.left-side {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.hello {
+  font-size: 1.1rem;
+}
