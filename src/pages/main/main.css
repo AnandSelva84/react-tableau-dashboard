@@ -2,6 +2,12 @@
   color: #61dafb;
   background-color: #192734;
 }
-
-.light {
+.no-data {
+  min-height: 70vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.7rem;
+  color: gray;
+  background-color: #fff;
+  display: flex;
 }

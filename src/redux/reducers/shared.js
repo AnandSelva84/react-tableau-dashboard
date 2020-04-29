@@ -4,10 +4,16 @@ import {
   TOGGLE_DRAWER,
   SET_APP,
   DELETE_FILTER,
+  SET_DARK_MODE,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_DARK_MODE:
+      return {
+        ...state,
+        darkMode: action.state,
+      };
     case ADD_FILTER:
       return {
         ...state,

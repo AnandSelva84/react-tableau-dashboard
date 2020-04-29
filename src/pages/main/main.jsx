@@ -10,14 +10,19 @@ const Main = () => {
 
   const query = useQuery();
   const app = query.get("app");
+  let DataToRender;
 
-  const DataToRender =
-    app === "amp" ? () => <AgileMetrics /> : () => <KeyIndicators />;
-
-  const style = app === "amp" ? "" : "dark";
+  if (!!app) {
+    DataToRender =
+      app === "amp" ? () => <AgileMetrics /> : () => <KeyIndicators />;
+  } else {
+    DataToRender = () => <div>No Data To View!</div>;
+  }
+  const mainStyle = app === "amp" ? "" : "dark";
+  const style = !!app ? mainStyle : "no-data";
 
   return (
-    <div className={style} style={{ padding: "0 0rem" }}>
+    <div className={style}>
       <DataToRender />
     </div>
   );

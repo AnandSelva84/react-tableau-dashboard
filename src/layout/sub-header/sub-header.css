@@ -1,0 +1,12 @@
+.anim {
+  animation: animate 1s ease-in-out;
+}
+
+@keyframes animate {
+  from {
+    height: 0;
+  }
+  to {
+    height: 3.5rem;
+  }
+}

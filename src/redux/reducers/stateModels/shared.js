@@ -6,6 +6,7 @@ const sharedState = {
     { id: "name", values: ["ali", "charly"], title: "Types" },
     { id: "age", values: ["20", "30"], title: "SubTypes", dependancy: "name" },
   ],
+  darkMode: false,
 };
 
 export default sharedState;

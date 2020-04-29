@@ -10,6 +10,7 @@ import Option from "./option";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import { addFilter, deleteFilter } from "../../redux/actions/shared";
+import { isExist } from "../../redux/methods/is-exist";
 
 /*
 interface Select{
@@ -22,18 +23,11 @@ interface Select{
 const Select = (props) => {
   const dispatch = useDispatch();
   const { filters, filterState } = useData().sharedReducer;
+
   const { dependancy } = props;
 
-  const isExist = (id, value) => {
-    const idExist = filterState.find((filter) => filter.id === id);
-    if (!!!idExist) return false;
-    const valueExist = filterState.find((filter) => filter.value === value);
-    if (!!!valueExist) return false;
-    return true;
-  };
-
   const handleClick = (id, value) => {
-    !isExist(id, value)
+    !isExist(filterState, id, value)
       ? dispatch(addFilter({ id, value }))
       : dispatch(deleteFilter({ id, value }));
   };
@@ -63,7 +57,7 @@ const Select = (props) => {
           >
             {props.values.map((option) => (
               <Option
-                checked={isExist(props.id, option)}
+                checked={isExist(filterState, props.id, option)}
                 value={option}
                 id={props.id}
                 onClick={() => handleClick(props.id, option)}
