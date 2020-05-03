@@ -9,12 +9,12 @@ import { toggleDrawer, setApp, setDarkMode } from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
 import img from "../../assets/img/wp2471777.jpg";
+import response from "../../models/getInfo";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { header, darkHeader } = theme;
-  const { currentAp, darkMode } = useData().sharedReducer;
-
+  const { darkMode, appIsLoading, app: appData } = useData().sharedReducer;
   const query = useQuery();
   const app = query.get("app");
 
@@ -22,13 +22,12 @@ const Header = () => {
     app === "kid" ? dispatch(setDarkMode(true)) : dispatch(setDarkMode(false));
   }, [app]);
 
-  const appName = app === "amp" ? "Agile Metrics Panel" : "Key Indicators";
+  // const appName = app === "amp" ? "Agile Metrics Panel" : "Key Indicators";
 
   const dark = !darkMode ? null : darkHeader;
-  debugger;
   return (
     <>
-      {!!app && (
+      {!!app && !appIsLoading && (
         <Paper style={{ ...header, ...dark, borderRadius: "0" }}>
           <div className="left-side">
             <ClickableIcon
@@ -37,7 +36,7 @@ const Header = () => {
                 dispatch(toggleDrawer());
               }}
             />
-            <div className="header-title">{appName}</div>
+            <div className="header-title">{appData.application.name}</div>
           </div>
           <div className="header-title hello">hello panda</div>
         </Paper>

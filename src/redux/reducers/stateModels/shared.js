@@ -7,6 +7,8 @@ const sharedState = {
     { id: "age", values: ["20", "30"], title: "SubTypes", dependancy: "name" },
   ],
   darkMode: false,
+  appIsLoading: true,
+  app: null,
 };
 
 export default sharedState;

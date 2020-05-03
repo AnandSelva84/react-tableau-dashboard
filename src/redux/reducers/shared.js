@@ -5,10 +5,22 @@ import {
   SET_APP,
   DELETE_FILTER,
   SET_DARK_MODE,
+  SET_APP_LOADING,
+  SET_APPLICATION,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_APPLICATION:
+      return {
+        ...state,
+        app: action.app,
+      };
+    case SET_APP_LOADING:
+      return {
+        ...state,
+        appIsLoading: action.state,
+      };
     case SET_DARK_MODE:
       return {
         ...state,
