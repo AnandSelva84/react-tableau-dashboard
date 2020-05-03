@@ -7,8 +7,6 @@ import useData from "../hooks/useStore";
 import SubHeader from "../layout/sub-header/sub-header";
 
 const Router = () => {
-  const { currentApp } = useData().sharedReducer;
-
   return (
     <BrowserRouter>
       <div className="">
