@@ -5,7 +5,8 @@
         "id": "AMP",
         "name": "Agile Metrics Portal",
         "default_view": "AMP_L1",
-        "logo_path_url": "../assets/ampLogo.png"
+        "logo_path_url": "../assets/ampLogo.png",
+        "body_class": "ampBody"
       },
       "subject_area": {
         "id": "PORT",
@@ -20,5 +21,40 @@
         "type": "Application"
       }
     }
+  },
+  "filters": {
+    "types":[{
+      "id": 1,
+      "name": "Type 1",
+      "parentId": null
+    },
+    {
+      "id": 2,
+      "name": "Type 2",
+      "parentId": null
+    }
+  ],
+  "subTypes": [{
+    "id": 1,
+    "name": "Sub Type 1",
+    "parentId": 1
+  },
+  {
+    "id": 2,
+    "name": "Sub Type 2",
+    "parentId": 1
+  },
+  {
+    "id": 3,
+    "name": "Type 2 -Sub Type 1",
+    "parentId": 2
+  }],
+  "sub-sub-types":[
+  {
+    "id": 1,
+    "name": "Sub Sub Type 1",
+    "parentId": 1
+  }
+  ]
   }
 }
