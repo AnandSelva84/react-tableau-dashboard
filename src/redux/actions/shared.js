@@ -5,6 +5,12 @@ export const DELETE_FILTER = "DELETE_FILTER";
 export const SET_DARK_MODE = "SET_DARK_MODE";
 export const SET_APP_LOADING = "SET_APP_LOADING";
 export const SET_APPLICATION = "SET_APPLICATION";
+export const SET_FILTERS = "SET_FILTERS";
+
+export const setFilters = (filters) => ({
+  type: SET_FILTERS,
+  filters,
+});
 
 export const setApp = (app) => ({
   type: SET_APPLICATION,

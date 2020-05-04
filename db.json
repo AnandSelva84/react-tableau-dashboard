@@ -23,38 +23,80 @@
     }
   },
   "filters": {
-    "types":[{
-      "id": 1,
-      "name": "Type 1",
-      "parentId": null
+    "types": [
+      {
+        "id": 1,
+        "name": "Type 1",
+        "parentId": null
+      },
+      {
+        "id": 2,
+        "name": "Type 2",
+        "parentId": null
+      }
+    ],
+    "subTypes": [
+      {
+        "id": 1,
+        "name": "Sub Type 1",
+        "parentId": 1
+      },
+      {
+        "id": 2,
+        "name": "Sub Type 2",
+        "parentId": 1
+      },
+      {
+        "id": 3,
+        "name": "Type 2 -Sub Type 1",
+        "parentId": 2
+      }
+    ],
+    "sub-sub-types": [
+      {
+        "id": 1,
+        "name": "Sub Sub Type 1",
+        "parentId": 1
+      }
+    ]
+  },
+  "newFilters": [
+    {
+      "lvl": 0,
+      "title": "Type",
+      "values": [
+        {
+          "id": 1,
+          "name": "Type 1",
+          "parentId": null
+        },
+        {
+          "id": 2,
+          "name": "Type 2",
+          "parentId": null
+        }
+      ]
     },
     {
-      "id": 2,
-      "name": "Type 2",
-      "parentId": null
+      "lvl": 1,
+      "title": "Sub-Type",
+      "values": [
+        {
+          "id": 1,
+          "name": "Type 3",
+          "parentId": null
+        },
+        {
+          "id": 1,
+          "name": "Type 4",
+          "parentId": null
+        },
+        {
+          "id": 2,
+          "name": "Type 5",
+          "parentId": null
+        }
+      ]
     }
-  ],
-  "subTypes": [{
-    "id": 1,
-    "name": "Sub Type 1",
-    "parentId": 1
-  },
-  {
-    "id": 2,
-    "name": "Sub Type 2",
-    "parentId": 1
-  },
-  {
-    "id": 3,
-    "name": "Type 2 -Sub Type 1",
-    "parentId": 2
-  }],
-  "sub-sub-types":[
-  {
-    "id": 1,
-    "name": "Sub Sub Type 1",
-    "parentId": 1
-  }
   ]
-  }
 }

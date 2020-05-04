@@ -22,14 +22,16 @@ interface Select{
 
 const Select = (props) => {
   const dispatch = useDispatch();
+
   const { filters, filterState } = useData().sharedReducer;
 
-  const { dependancy } = props;
+  const { dependancy, id: ID, title: Title } = props;
 
-  const handleClick = (id, value) => {
+  const handleClick = (ParentName, value, parentId) => {
+    const id = ParentName;
     !isExist(filterState, id, value)
-      ? dispatch(addFilter({ id, value }))
-      : dispatch(deleteFilter({ id, value }));
+      ? dispatch(addFilter({ id, value, parentId }))
+      : dispatch(deleteFilter({ id, value, parentId }));
   };
 
   const isClickable = () => {
@@ -39,6 +41,34 @@ const Select = (props) => {
     return found;
   };
 
+  const getChosen = () => {
+    let data = filterState.filter((filter) => filter.id === ID);
+    if (!!!data) data = [];
+    const pureFilters = data.map((filter) => filter.value);
+    if (!!!pureFilters) return [];
+    return pureFilters;
+  };
+  console.log("chosen", getChosen());
+  const Chosen = (props) => {
+    const { filters } = props;
+    console.log("filters", filters);
+
+    return (
+      <>
+        {filters.map((filter) => (
+          <p style={{ fontSize: "0.7rem" }}>{filter}</p>
+        ))}
+      </>
+    );
+  };
+
+  const filterValue = () => {
+    //values should be filtered before initializing
+  };
+
+  const parentExistance = (parentId) => {
+    //parentId should be in filter state as id
+  };
   return (
     <>
       <ExpansionPanel disabled={isClickable()}>
@@ -49,6 +79,7 @@ const Select = (props) => {
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography style={{ fontSize: "1rem" }}>{props.title}</Typography>
+            <Chosen filters={getChosen()} />
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
@@ -57,10 +88,13 @@ const Select = (props) => {
           >
             {props.values.map((option) => (
               <Option
-                checked={isExist(filterState, props.id, option)}
-                value={option}
+                checked={isExist(filterState, props.title, option.name)}
+                value={option.name}
                 id={props.id}
-                onClick={() => handleClick(props.id, option)}
+                parentId={option.parentId}
+                onClick={() =>
+                  handleClick(props.title, option.name, option.parentId)
+                }
               />
             ))}
           </div>

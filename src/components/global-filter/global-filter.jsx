@@ -3,18 +3,22 @@ import Select from "../select/select";
 import useData from "../../hooks/useStore";
 
 const GlobalFilters = () => {
-  const { filters, filterState } = useData().sharedReducer;
-
+  const { filters, filterState, newFilters } = useData().sharedReducer;
+  const show = newFilters.length > 0;
   return (
     <>
-      {filters.map((filter) => (
-        <Select
-          id={filter.id}
-          values={filter.values}
-          title={filter.title}
-          dependancy={filter.dependancy}
-        />
-      ))}
+      {show && (
+        <>
+          {newFilters.map((filter) => (
+            <Select
+              id={filter.id}
+              values={filter.values}
+              title={filter.title}
+              dependancy={filter.dependancy}
+            />
+          ))}
+        </>
+      )}
     </>
   );
 };

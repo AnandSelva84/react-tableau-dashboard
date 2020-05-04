@@ -7,10 +7,16 @@ import {
   SET_DARK_MODE,
   SET_APP_LOADING,
   SET_APPLICATION,
+  SET_FILTERS,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_FILTERS:
+      return {
+        ...state,
+        newFilters: action.filters,
+      };
     case SET_APPLICATION:
       return {
         ...state,
@@ -27,9 +33,18 @@ const sharedReducer = (state = sharedState, action) => {
         darkMode: action.state,
       };
     case ADD_FILTER:
+      const filterd = state.filterState.filter(
+        (filter) => filter.id !== action.filter.id
+      );
+      const hasSameParent = state.filterState.find(
+        (filter) => filter.id === action.filter.id
+      );
+      const newFilterState = !!hasSameParent
+        ? [...filterd, action.filter]
+        : [...state.filterState, action.filter];
       return {
         ...state,
-        filterState: [...state.filterState, action.filter],
+        filterState: newFilterState,
       };
     case DELETE_FILTER:
       return {

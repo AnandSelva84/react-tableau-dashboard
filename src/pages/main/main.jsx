@@ -5,16 +5,17 @@ import KeyIndicators from "../kid/kid";
 import "./main.css";
 import useQuery from "../../hooks/useQuery";
 import useFetch from "../../hooks/useFetch";
-import { getInfoURL } from "../../enviroment/urls";
+import { getInfoURL, getFilters } from "../../enviroment/urls";
 import LaodingScreen from "../../components/loading/loading";
 import { useDispatch } from "react-redux";
-import { setAppLoading, setApp } from "../../redux/actions/shared";
+import { setAppLoading, setApp, setFilters } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 
 const Main = React.memo(() => {
   // const { currentApp } = useData().sharedReducer;
   const dispatch = useDispatch();
   const { data, loading } = useFetch(getInfoURL);
+  const { data: filters, loading: filtersLoading } = useFetch(getFilters);
 
   const query = useQuery();
   const app = query.get("app");
@@ -38,6 +39,10 @@ const Main = React.memo(() => {
       dispatch(setAppLoading(true));
     }
   }, [data, loading]);
+
+  useEffect(() => {
+    if (!!filters && !filtersLoading) dispatch(setFilters(filters));
+  }, [filters, filtersLoading]);
 
   return (
     <div className={style}>
