@@ -13,7 +13,6 @@ const ClickableIcon = (props) => {
       }}
     >
       <IconButton
-        size={props.size || 14}
         onClick={() => {
           props.onClick();
         }}
@@ -22,11 +21,6 @@ const ClickableIcon = (props) => {
       </IconButton>
     </div>
   );
-};
-
-ClickableIcon.propTypes = {
-  icon: PropTypes.any.isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default ClickableIcon;
