@@ -28,20 +28,21 @@ const Select = (props) => {
     const currentValues = filterHaveParent.filter((filter) =>
       hasLvlTest(filter.lvl)
     );
-    console.log("current after filter ", filterHaveParent);
-    console.log("current after filter ", currentValues);
+    console.log("current after filter ", filterState);
+    // console.log("current after filter ", currentValues);
 
-    console.log("current  lvls ", chosenLvls);
-    console.log(
-      "a ",
-      // chosenLvls.find((lvl) => lvl === 0)
-      currentValues.filter(
-        (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentId)
-      )
-    );
-    console.log("filterHaveParent", filterHaveParent);
+    // console.log("current  lvls ", chosenLvls);
+    // console.log(
+    //   "a ",
+    //   // chosenLvls.find((lvl) => lvl === 0)
+    //   currentValues.filter(
+    //     (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentId)
+    //   )
+    // );
+    // console.log("filterHaveParent", filterHaveParent);
     const localValues = values.filter(
-      (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentId)
+      (value) => hasLvlTest(value.lvl)
+       && hasIdTest(value.parentId)
     );
     setLocalFilters([...localValues, ...filterHaveParent]);
   }, [filterState]);
@@ -92,16 +93,9 @@ const Select = (props) => {
     );
   };
 
-  const filterValue = () => {
-    //values should be filtered before initializing
-  };
-
-  const parentExistance = (parentId) => {
-    //parentId should be in filter state as id
-  };
   return (
     <>
-      <ExpansionPanel disabled={isClickable()}>
+    {localFilters.length > 0 &&  <ExpansionPanel disabled={isClickable()}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -135,7 +129,7 @@ const Select = (props) => {
             ))}
           </div>
         </ExpansionPanelDetails>
-      </ExpansionPanel>
+      </ExpansionPanel>}
     </>
   );
 };
