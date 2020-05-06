@@ -84,17 +84,17 @@
         {
           "id": 1,
           "name": "Type 3",
-          "parentId": null
+          "parentId": 1
         },
         {
           "id": 1,
           "name": "Type 4",
-          "parentId": null
+          "parentId": 1
         },
         {
           "id": 2,
           "name": "Type 5",
-          "parentId": null
+          "parentId": 2
         }
       ]
     }

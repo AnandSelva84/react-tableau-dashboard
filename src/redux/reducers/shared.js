@@ -39,9 +39,10 @@ const sharedReducer = (state = sharedState, action) => {
       const hasSameParent = state.filterState.find(
         (filter) => filter.id === action.filter.id
       );
-      const newFilterState = !!hasSameParent
-        ? [...filterd, action.filter]
-        : [...state.filterState, action.filter];
+      const newFilterState =
+        !!hasSameParent && action.filter.lvl === 0
+          ? [...filterd, action.filter]
+          : [...state.filterState, action.filter];
       return {
         ...state,
         filterState: newFilterState,

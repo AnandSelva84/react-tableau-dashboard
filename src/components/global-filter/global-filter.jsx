@@ -15,6 +15,7 @@ const GlobalFilters = () => {
               values={filter.values}
               title={filter.title}
               dependancy={filter.dependancy}
+              lvl={filter.lvl}
             />
           ))}
         </>
