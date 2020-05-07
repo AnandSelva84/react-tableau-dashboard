@@ -16,6 +16,17 @@ const Main = React.memo(() => {
   const dispatch = useDispatch();
   const { data, loading } = useFetch(getInfoURL);
   const { data: filters, loading: filtersLoading } = useFetch(getFilters);
+  const fullURL = window.location.href;
+
+  React.useEffect(() => {
+    const port = fullURL.substring(
+      fullURL.lastIndexOf(":") + 1,
+      fullURL.lastIndexOf("/")
+    );
+    // console.log('port');
+    // debugger;
+    alert(port);
+  }, [fullURL]);
 
   const query = useQuery();
   const app = query.get("app");
