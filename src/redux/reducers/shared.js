@@ -8,10 +8,16 @@ import {
   SET_APP_LOADING,
   SET_APPLICATION,
   SET_FILTERS,
+  FILTER_STATE_EDIT,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case FILTER_STATE_EDIT:
+      return {
+        ...state,
+        filterState: action.filterState,
+      };
     case SET_FILTERS:
       return {
         ...state,

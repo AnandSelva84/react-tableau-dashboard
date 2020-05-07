@@ -9,14 +9,19 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Option from "./option";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
-import { addFilter, deleteFilter } from "../../redux/actions/shared";
+import {
+  addFilter,
+  deleteFilter,
+  editFilterState,
+} from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 
 //props.values should be filtered before passing it to it's component
 const Select = (props) => {
   const dispatch = useDispatch();
-
   const { filters, filterState } = useData().sharedReducer;
+  const [newFilterState, setNewFilterState] = useState(filterState);
+
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
   const [localFilters, setLocalFilters] = useState(props.values);
   const chosenIds = filterState.map((filter) => filter.ID) || [];
@@ -28,21 +33,9 @@ const Select = (props) => {
     const currentValues = filterHaveParent.filter((filter) =>
       hasLvlTest(filter.lvl)
     );
-    console.log("current after filter ", filterState);
-    // console.log("current after filter ", currentValues);
 
-    // console.log("current  lvls ", chosenLvls);
-    // console.log(
-    //   "a ",
-    //   // chosenLvls.find((lvl) => lvl === 0)
-    //   currentValues.filter(
-    //     (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentId)
-    //   )
-    // );
-    // console.log("filterHaveParent", filterHaveParent);
     const localValues = values.filter(
-      (value) => hasLvlTest(value.lvl)
-       && hasIdTest(value.parentId)
+      (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentId)
     );
     setLocalFilters([...localValues, ...filterHaveParent]);
   }, [filterState]);
@@ -64,6 +57,8 @@ const Select = (props) => {
     !isExist(filterState, id, value)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId }))
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId }));
+    // if (lvl === 0 && isExist(filterState, id, value))
+    //   dispatch(editFilterState([]));
   };
 
   const isClickable = () => {
@@ -95,41 +90,51 @@ const Select = (props) => {
 
   return (
     <>
-    {localFilters.length > 0 &&  <ExpansionPanel disabled={isClickable()}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Typography style={{ fontSize: "1rem" }}>{props.title}</Typography>
-            <Chosen filters={getChosen()} />
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
+      {localFilters.length > 0 && (
+        <ExpansionPanel disabled={isClickable()}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
           >
-            {localFilters.map((option) => (
-              <Option
-                checked={isExist(filterState, props.title, option.name)}
-                value={option.name}
-                id={option.id}
-                parentId={option.parentId}
-                onClick={() =>
-                  handleClick(
-                    props.title,
-                    option.name,
-                    props.lvl,
-                    option.id,
-                    option.parentId
-                  )
-                }
-              />
-            ))}
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Typography style={{ fontSize: "1rem" }}>
+                {props.title}
+              </Typography>
+              <Chosen filters={getChosen()} />
+            </div>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              {localFilters.map((option) => (
+                <Option
+                  checked={isExist(filterState, props.title, option.name)}
+                  value={option.name}
+                  filterState={filterState}
+                  id={option.id}
+                  parentId={option.parentId}
+                  lvl={props.lvl}
+                  onClick={() =>
+                    handleClick(
+                      props.title,
+                      option.name,
+                      props.lvl,
+                      option.id,
+                      option.parentId
+                    )
+                  }
+                />
+              ))}
+            </div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      )}
     </>
   );
 };
