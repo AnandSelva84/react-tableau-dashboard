@@ -10,35 +10,38 @@ import LaodingScreen from "../../components/loading/loading";
 import { useDispatch } from "react-redux";
 import { setAppLoading, setApp, setFilters } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
+import HomePage from "../home/home";
 
 const Main = React.memo(() => {
   // const { currentApp } = useData().sharedReducer;
   const dispatch = useDispatch();
-  const { data, loading } = useFetch(getInfoURL);
+ 
+  
   const { data: filters, loading: filtersLoading } = useFetch(getFilters);
   const fullURL = window.location.href;
+  const [port, setPort ] = React.useState("");
 
-  React.useEffect(() => {
-    const port = fullURL.substring(
+  
+    const domain = fullURL.substring(
       fullURL.lastIndexOf(":") + 1,
       fullURL.lastIndexOf("/")
     );
-    // console.log('port');
-    // debugger;
-    alert(port);
-  }, [fullURL]);
-
-  const query = useQuery();
-  const app = query.get("app");
+  
+    const app = domain === "3000" ? 'amp' : 'kid'
+    //const { data, loading } = useFetch(`${getInfoURL}/${app}`);
+    const { data, loading } = useFetch(`${getInfoURL}`);
+  
+  //const query = useQuery();
+  //const app = query.get("app");
   let DataToRender;
 
-  if (!!app) {
-    DataToRender =
-      app === "amp" ? () => <AgileMetrics /> : () => <KeyIndicators />;
+  if (!loading) {
+    DataToRender = () => <HomePage data = {data} />;
   } else {
-    DataToRender = () => <div>No Data To View!</div>;
+    DataToRender = () => <LaodingScreen />;
   }
 
+  //Change this to get css class from api and apply background
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
