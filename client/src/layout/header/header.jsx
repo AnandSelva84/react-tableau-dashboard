@@ -23,11 +23,11 @@ const Header = () => {
   }, [app]);
 
   // const appName = app === "amp" ? "Agile Metrics Panel" : "Key Indicators";
-
+  debugger;
   const dark = !darkMode ? null : darkHeader;
   return (
     <>
-      {!!app && !appIsLoading && (
+      {!!appData && !appIsLoading && (
         <Paper style={{ ...header, ...dark, borderRadius: "0" }}>
           <div className="left-side">
             <ClickableIcon

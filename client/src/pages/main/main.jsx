@@ -13,30 +13,23 @@ import response from "../../models/getInfo";
 import HomePage from "../home/home";
 
 const Main = React.memo(() => {
-  // const { currentApp } = useData().sharedReducer;
   const dispatch = useDispatch();
- 
-  
+
   const { data: filters, loading: filtersLoading } = useFetch(getFilters);
   const fullURL = window.location.href;
-  const [port, setPort ] = React.useState("");
 
-  
-    const domain = fullURL.substring(
-      fullURL.lastIndexOf(":") + 1,
-      fullURL.lastIndexOf("/")
-    );
-  
-    const app = domain === "3000" ? 'amp' : 'kid'
-    //const { data, loading } = useFetch(`${getInfoURL}/${app}`);
-    const { data, loading } = useFetch(`${getInfoURL}`);
-  
-  //const query = useQuery();
-  //const app = query.get("app");
+  const domain = fullURL.substring(
+    fullURL.lastIndexOf(":") + 1,
+    fullURL.lastIndexOf("/")
+  );
+
+  const app = domain === "3000" ? "amp" : "kid";
+  const { data, loading } = useFetch(`${getInfoURL}/${app}`);
+
   let DataToRender;
 
   if (!loading) {
-    DataToRender = () => <HomePage data = {data} />;
+    DataToRender = () => <HomePage data={data} />;
   } else {
     DataToRender = () => <LaodingScreen />;
   }
@@ -55,7 +48,7 @@ const Main = React.memo(() => {
   }, [data, loading]);
 
   useEffect(() => {
-    if (!!filters && !filtersLoading) dispatch(setFilters(filters));
+    if (!!filters && !filtersLoading) dispatch(setFilters(filters.filters));
   }, [filters, filtersLoading]);
 
   return (
