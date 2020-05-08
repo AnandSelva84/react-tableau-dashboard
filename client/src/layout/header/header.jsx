@@ -15,15 +15,15 @@ const Header = () => {
   const dispatch = useDispatch();
   const { header, darkHeader } = theme;
   const { darkMode, appIsLoading, app: appData } = useData().sharedReducer;
-  const query = useQuery();
-  const app = query.get("app");
 
   React.useEffect(() => {
-    app === "kid" ? dispatch(setDarkMode(true)) : dispatch(setDarkMode(false));
-  }, [app]);
+    if (!!appData) {
+      const { id } = appData.application;
+      id === "KID" ? dispatch(setDarkMode(true)) : dispatch(setDarkMode(false));
+    }
+  }, [appData]);
 
   // const appName = app === "amp" ? "Agile Metrics Panel" : "Key Indicators";
-  debugger;
   const dark = !darkMode ? null : darkHeader;
   return (
     <>

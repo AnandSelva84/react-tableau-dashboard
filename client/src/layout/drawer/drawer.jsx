@@ -27,6 +27,8 @@ import useData from "../../hooks/useStore";
 import { toggleDrawer } from "../../redux/actions/shared";
 import Select from "../../components/select/select";
 import GlobalFilters from "../../components/global-filter/global-filter";
+import LocalTheme from "../../theme/layout";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) =>
@@ -94,9 +96,19 @@ const useStyles = makeStyles((theme) =>
 const SideDrawer = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const {
+    darkMode,
+    appIsLoading,
+    app: appData,
+    drawer,
+  } = useData().sharedReducer;
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const store = useData().sharedReducer;
+  const { header, darkHeader: darkTheme } = LocalTheme;
+
+  const dark = !darkMode ? null : darkTheme;
+
+  // const store = useData().sharedReducer;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -133,16 +145,18 @@ const SideDrawer = (props) => {
       </AppBar> */}
       <Drawer
         className={classes.drawer}
-        style={{ width: !store.drawer ? 0 : 240 }}
+        style={{ width: !drawer ? 0 : 240 }}
         variant="persistent"
         anchor="left"
-        open={store.drawer}
+        open={drawer}
         classes={{
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader}>
-          <div style={{ fontSize: "1.3rem", padding: "0 0.5rem" }}>Filters</div>
+        <div className={classes.drawerHeader} style={{ ...dark }}>
+          <div style={{ fontSize: "1.3rem", padding: "0 0.5rem", ...dark }}>
+            Filters
+          </div>
 
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
