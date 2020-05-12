@@ -6,19 +6,22 @@ import { editFilterState, toggleDrawer } from "../../redux/actions/shared";
 
 const GlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
+  const [loaded, setLoaded] = React.useState(false);
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
   React.useEffect(() => {
     //if there is a change in filter state it should be saved in localStorage
     //and localStorage data should be retrived and applied in store
-    if (filterState.length > 0) {
-      console.log("stored filter", filterState);
+    if (loaded) {
+      if (filterState.length > 0) {
+        console.log("stored filter", filterState);
 
-      localStorage.setItem("filters", JSON.stringify(filterState));
+        localStorage.setItem("filters", JSON.stringify(filterState));
+      }
+      if (filterState.length === 0) {
+        localStorage.setItem("filters", JSON.stringify([]));
+      }
     }
-    // if (filterState.length === 0) {
-    //   localStorage.setItem("filters", JSON.stringify([]));
-    // }
     debugger;
   }, [filterState]);
 
@@ -26,10 +29,11 @@ const GlobalFilters = React.memo(() => {
   React.useEffect(() => {
     //if there is a change in filter state it should be saved in localStorage
     //and localStorage data should be retrived and applied in store
+    setLoaded(true);
     const storedFilters = JSON.parse(localStorage.getItem("filters"));
     if (!!storedFilters) {
       dispatch(editFilterState(storedFilters));
-      // if (storedFilters.length > 0) dispatch(toggleDrawer(true));
+      if (storedFilters.length > 0) dispatch(toggleDrawer(true));
     }
   }, []);
   return (
