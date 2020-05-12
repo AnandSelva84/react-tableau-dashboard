@@ -13,6 +13,7 @@ const Option = (props) => {
     console.log("option checked", checked);
     console.log("option filter state ", filterState);
     const afterEdit = filterState.filter((filter) => filter.lvl <= lvl);
+    //only in deletion state
     if (!checked) dispatch(editFilterState(afterEdit));
   }, [checked]);
   return (

@@ -14,6 +14,8 @@ import {
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
     case FILTER_STATE_EDIT:
+      console.log("state edit");
+
       return {
         ...state,
         filterState: action.filterState,
@@ -54,15 +56,29 @@ const sharedReducer = (state = sharedState, action) => {
         filterState: newFilterState,
       };
     case DELETE_FILTER:
+      const afterEdit = state.filterState
+        .filter((filter) => filter.lvl <= action.filter.lvl)
+        .filter(
+          (filter) =>
+            filter.id !== action.filter.id ||
+            filter.value !== action.filter.value
+        );
+
+      const filterAfterCheck = state.filterState.filter(
+        (filter) =>
+          filter.id !== action.filter.id || filter.value !== action.filter.value
+      );
+      // const match = afterEdit.length === filterAfterCheck.length;
       return {
         ...state,
-        filterState: [
-          ...state.filterState.filter(
-            (filter) =>
-              filter.id !== action.filter.id ||
-              filter.value !== action.filter.value
-          ),
-        ],
+        // filterState: [
+        //   ...state.filterState.filter(
+        //     (filter) =>
+        //       filter.id !== action.filter.id ||
+        //       filter.value !== action.filter.value
+        //   ),
+        // ],
+        filterState: [...afterEdit],
       };
     case SET_APP:
       return {

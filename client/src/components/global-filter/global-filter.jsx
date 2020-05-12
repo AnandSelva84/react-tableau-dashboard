@@ -1,10 +1,37 @@
 import React from "react";
 import Select from "../select/select";
 import useData from "../../hooks/useStore";
+import { useDispatch } from "react-redux";
+import { editFilterState, toggleDrawer } from "../../redux/actions/shared";
 
-const GlobalFilters = () => {
-  const { filters, filterState, newFilters } = useData().sharedReducer;
+const GlobalFilters = React.memo(() => {
+  const { filters, newFilters, filterState } = useData().sharedReducer;
   const show = newFilters.length > 0;
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    //if there is a change in filter state it should be saved in localStorage
+    //and localStorage data should be retrived and applied in store
+    if (filterState.length > 0) {
+      console.log("stored filter", filterState);
+
+      localStorage.setItem("filters", JSON.stringify(filterState));
+    }
+    // if (filterState.length === 0) {
+    //   localStorage.setItem("filters", JSON.stringify([]));
+    // }
+    debugger;
+  }, [filterState]);
+
+  //this is for a single time
+  React.useEffect(() => {
+    //if there is a change in filter state it should be saved in localStorage
+    //and localStorage data should be retrived and applied in store
+    const storedFilters = JSON.parse(localStorage.getItem("filters"));
+    if (!!storedFilters) {
+      dispatch(editFilterState(storedFilters));
+      // if (storedFilters.length > 0) dispatch(toggleDrawer(true));
+    }
+  }, []);
   return (
     <>
       {show && (
@@ -22,5 +49,5 @@ const GlobalFilters = () => {
       )}
     </>
   );
-};
+});
 export default GlobalFilters;

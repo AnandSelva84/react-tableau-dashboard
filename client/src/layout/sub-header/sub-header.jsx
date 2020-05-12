@@ -17,10 +17,10 @@ const SubHeader = () => {
   //filter the cildren that have no parent exitst
   React.useEffect(() => {}, [filterState]);
 
-  const handleClick = (id, value) => {
+  const handleClick = (id, value, lvl) => {
     !isExist(filterState, id, value)
       ? dispatch(addFilter({ id, value }))
-      : dispatch(deleteFilter({ id, value }));
+      : dispatch(deleteFilter({ id, value, lvl }));
   };
 
   return (
@@ -35,7 +35,7 @@ const SubHeader = () => {
             <Chip
               label={createChip(filter.id, filter.value)}
               style={{ marginRight: "0.4rem" }}
-              onDelete={() => handleClick(filter.id, filter.value)}
+              onDelete={() => handleClick(filter.id, filter.value, filter.lvl)}
             />
           ))}
         </Paper>
