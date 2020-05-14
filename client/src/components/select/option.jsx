@@ -29,7 +29,7 @@ const Option = (props) => {
           // onChange={props.onChange()}
           color="primary"
         />
-        <div>{props.value}</div>
+        <div>{props.display}</div>
       </CardActionArea>
     </>
   );

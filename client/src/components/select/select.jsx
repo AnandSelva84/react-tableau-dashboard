@@ -15,9 +15,16 @@ import {
   editFilterState,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
+import { filterModel } from "../../models/filter";
 
 //props.values should be filtered before passing it to it's component
 const Select = (props) => {
+  const {
+    filterOptionId,
+    filter_display_text,
+    filter_value_text,
+  } = filterModel.values[0];
+
   const dispatch = useDispatch();
   const { filters, filterState } = useData().sharedReducer;
   const [newFilterState, setNewFilterState] = useState(filterState);
@@ -28,14 +35,11 @@ const Select = (props) => {
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
 
   React.useEffect(() => {
-    //filterstate : [{id:1 , parentId : null}]
-    const filterHaveParent = values.filter((value) => value.parentId == null);
-    const currentValues = filterHaveParent.filter((filter) =>
-      hasLvlTest(filter.lvl)
+    const filterHaveParent = values.filter(
+      (value) => value.parentFilterOptionId == null
     );
-
     const localValues = values.filter(
-      (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentId)
+      (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentFilterOptionId)
     );
     setLocalFilters([...localValues, ...filterHaveParent]);
   }, [filterState]);
@@ -50,25 +54,16 @@ const Select = (props) => {
     if (hasId === 0) hasId = 1;
     return !!hasId;
   };
-  const { dependancy, id: ID, title: Title } = props;
 
   const handleClick = (ParentName, value, lvl, ID, parentId) => {
     const id = ParentName;
     !isExist(filterState, id, value)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId }))
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId }));
-    // if (lvl === 0 && isExist(filterState, id, value))
-    //   dispatch(editFilterState([]));
-  };
-
-  const isClickable = () => {
-    const found = !!dependancy
-      ? !!!filterState.find((filter) => filter.id === dependancy)
-      : false;
-    return found;
   };
 
   const getChosen = () => {
+    //check the title and value
     let data = filterState.filter((filter) => filter.id === props.title);
     if (!!!data) data = [];
     const pureFilters = data.map((filter) => filter.value);
@@ -76,9 +71,18 @@ const Select = (props) => {
     return pureFilters;
   };
 
+  function sortOptions(a, b) {
+    if (a.order < b.order) {
+      return 1;
+    }
+    if (a.order > b.orde) {
+      return -1;
+    }
+    return 0;
+  }
+
   const Chosen = (props) => {
     const { filters } = props;
-
     return (
       <div style={{ display: "flex" }}>
         {filters.map((filter) => (
@@ -91,7 +95,7 @@ const Select = (props) => {
   return (
     <>
       {localFilters.length > 0 && (
-        <ExpansionPanel disabled={isClickable()}>
+        <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -112,21 +116,26 @@ const Select = (props) => {
                 width: "100%",
               }}
             >
-              {localFilters.map((option) => (
+              {props.values.sort(sortOptions).map((option) => (
                 <Option
-                  checked={isExist(filterState, props.title, option.name)}
-                  value={option.name}
+                  checked={isExist(
+                    filterState,
+                    props.title,
+                    option.filter_value_text
+                  )}
+                  value={option.filter_value_text}
                   filterState={filterState}
-                  id={option.id}
-                  parentId={option.parentId}
+                  id={option.filterOptionId}
+                  parentId={option.parentFilterOptionId}
                   lvl={props.lvl}
+                  display={option.filter_display_text}
                   onClick={() =>
                     handleClick(
                       props.title,
-                      option.name,
+                      option.filter_value_text,
                       props.lvl,
-                      option.id,
-                      option.parentId
+                      option.filterOptionId,
+                      option.parentFilterOptionId
                     )
                   }
                 />

@@ -3,6 +3,7 @@ import Select from "../select/select";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import { editFilterState, toggleDrawer } from "../../redux/actions/shared";
+import { filterModel } from "../../models/filter";
 
 const GlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
@@ -22,7 +23,6 @@ const GlobalFilters = React.memo(() => {
         localStorage.setItem("filters", JSON.stringify([]));
       }
     }
-    debugger;
   }, [filterState]);
 
   //this is for a single time
@@ -35,18 +35,18 @@ const GlobalFilters = React.memo(() => {
       dispatch(editFilterState(storedFilters));
       if (storedFilters.length > 0) dispatch(toggleDrawer(true));
     }
+    // filterModel.level
   }, []);
   return (
     <>
-      {show && (
+      {show && !!newFilters && (
         <>
           {newFilters.map((filter) => (
             <Select
-              id={filter.id}
+              id={filter.filterId}
               values={filter.values}
               title={filter.title}
-              dependancy={filter.dependancy}
-              lvl={filter.lvl}
+              lvl={filter.level}
             />
           ))}
         </>

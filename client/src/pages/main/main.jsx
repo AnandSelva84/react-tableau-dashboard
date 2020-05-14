@@ -5,7 +5,7 @@ import KeyIndicators from "../kid/kid";
 import "./main.css";
 import useQuery from "../../hooks/useQuery";
 import useFetch from "../../hooks/useFetch";
-import { getInfoURL, getFilters } from "../../enviroment/urls";
+import { getInfoURL, getFilters, newFiltersURL } from "../../enviroment/urls";
 import LaodingScreen from "../../components/loading/loading";
 import { useDispatch } from "react-redux";
 import { setAppLoading, setApp, setFilters } from "../../redux/actions/shared";
@@ -15,7 +15,7 @@ import HomePage from "../home/home";
 const Main = React.memo(() => {
   const dispatch = useDispatch();
 
-  const { data: filters, loading: filtersLoading } = useFetch(getFilters);
+  const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
   const fullURL = window.location.href;
 
   const domain = fullURL.substring(
