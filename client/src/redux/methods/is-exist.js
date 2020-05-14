@@ -5,3 +5,8 @@ export const isExist = (filterState, id, value) => {
   if (!!!valueExist) return false;
   return true;
 };
+
+export const newIsExist = (filterState, id) => {
+  const isExist = filterState.find((filter) => filter.id === id);
+  return isExist;
+};
