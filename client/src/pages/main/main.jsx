@@ -54,7 +54,7 @@ const Main = React.memo(() => {
   return (
     <div className={style}>
       {loading && <LaodingScreen />}
-      {!!data && !loading && <DataToRender />}
+      {!!data && !loading && <HomePage data={data} />}
     </div>
   );
 });

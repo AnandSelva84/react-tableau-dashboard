@@ -1,0 +1,22 @@
+.global-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  min-height: 90vh;
+}
+
+.filters-wrapper {
+  max-height: 50rem;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+}
+
+.btns > div {
+  margin: 10rem;
+}

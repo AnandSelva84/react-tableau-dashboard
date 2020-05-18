@@ -9,12 +9,31 @@ import {
   SET_APPLICATION,
   SET_FILTERS,
   FILTER_STATE_EDIT,
+  SAVE_FILTERS,
+  APPLY_FILTERS,
+  CLEAR_FILTERS,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filterState: [],
+      };
+    case APPLY_FILTERS:
+      return {
+        ...state,
+        appliedFilters: action.filters,
+      };
+    case SAVE_FILTERS:
+      localStorage.setItem("filters", JSON.stringify(action.filters));
+      return {
+        ...state,
+      };
     case FILTER_STATE_EDIT:
-      console.log("state edit");
+      console.log("edit", action);
+      debugger;
 
       return {
         ...state,
@@ -63,21 +82,8 @@ const sharedReducer = (state = sharedState, action) => {
             filter.id !== action.filter.id ||
             filter.value !== action.filter.value
         );
-
-      const filterAfterCheck = state.filterState.filter(
-        (filter) =>
-          filter.id !== action.filter.id || filter.value !== action.filter.value
-      );
-      // const match = afterEdit.length === filterAfterCheck.length;
       return {
         ...state,
-        // filterState: [
-        //   ...state.filterState.filter(
-        //     (filter) =>
-        //       filter.id !== action.filter.id ||
-        //       filter.value !== action.filter.value
-        //   ),
-        // ],
         filterState: [...afterEdit],
       };
     case SET_APP:

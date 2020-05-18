@@ -11,6 +11,8 @@ const sharedState = {
   appIsLoading: true,
   app: null,
   newFilters: [],
+  savedFilters: [],
+  appliedFilters: [],
 };
 
 export default sharedState;

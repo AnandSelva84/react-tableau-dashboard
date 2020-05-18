@@ -6,12 +6,29 @@ export const SET_DARK_MODE = "SET_DARK_MODE";
 export const SET_APP_LOADING = "SET_APP_LOADING";
 export const SET_APPLICATION = "SET_APPLICATION";
 export const SET_FILTERS = "SET_FILTERS";
-export const FILTER_STATE_EDIT = 'FILTER_STATE_EDIT'
+export const FILTER_STATE_EDIT = "FILTER_STATE_EDIT";
+export const SAVE_FILTERS = "SAVE_FILTERS";
+export const APPLY_FILTERS = "APPLY_FILTERS";
+export const CLEAR_FILTERS = "CLEAR_FILTERS";
 
-export const editFilterState = (filterState)=>({
-  type : FILTER_STATE_EDIT,
-  filterState
-})
+export const clearFilter = () => ({
+  type: CLEAR_FILTERS,
+});
+
+export const applyFilters = (filters) => ({
+  type: APPLY_FILTERS,
+  filters,
+});
+
+export const saveFilters = (filters) => ({
+  type: SAVE_FILTERS,
+  filters,
+});
+
+export const editFilterState = (filterState) => ({
+  type: FILTER_STATE_EDIT,
+  filterState,
+});
 
 export const setFilters = (filters) => ({
   type: SET_FILTERS,
