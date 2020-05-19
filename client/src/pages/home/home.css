@@ -5,3 +5,41 @@
   align-items: center;
   font-size: 2.5rem;
 }
+
+.panel {
+  min-height: 30vh;
+  border: 0.5px solid black;
+  max-width: 30rem;
+  margin: 0.5rem 0.3rem;
+}
+
+.panel-wrapper {
+  padding: 0.5rem 1.5rem;
+  /* border: 0.5px solid skyblue; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.ampBody {
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 80vh;
+}
+
+.kidBody {
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 80vh;
+}
+
+.kidBody > .panel {
+  min-width: 32.5%;
+  min-height: 37vh;
+  border: 0.5px solid white;
+}
+
+.kidBody > .panel {
+  min-height: 25vh;
+}

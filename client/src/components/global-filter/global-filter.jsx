@@ -19,9 +19,7 @@ const GlobalFilters = React.memo(() => {
 
   React.useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("filters"));
-    debugger;
-    dispatch(editFilterState(saved));
-    console.log("to retreive ", filterState);
+    if (!!saved) dispatch(editFilterState(saved));
   }, []);
   return (
     <div className="global-wrapper">

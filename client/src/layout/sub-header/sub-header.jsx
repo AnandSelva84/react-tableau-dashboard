@@ -11,6 +11,7 @@ const SubHeader = () => {
   const { filters, filterState } = useData().sharedReducer;
   const dispatch = useDispatch();
   const createChip = (id, value) => `${id} : ${value}`;
+  debugger;
   const isVisiable = filterState.length > 0;
 
   //in case you delete a parent without child

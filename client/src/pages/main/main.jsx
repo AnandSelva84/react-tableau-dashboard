@@ -8,7 +8,12 @@ import useFetch from "../../hooks/useFetch";
 import { getInfoURL, getFilters, newFiltersURL } from "../../enviroment/urls";
 import LaodingScreen from "../../components/loading/loading";
 import { useDispatch } from "react-redux";
-import { setAppLoading, setApp, setFilters } from "../../redux/actions/shared";
+import {
+  setAppLoading,
+  setApp,
+  setFilters,
+  setBodyClass,
+} from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
 
@@ -26,14 +31,6 @@ const Main = React.memo(() => {
   const app = domain === "3000" ? "amp" : "kid";
   const { data, loading } = useFetch(`${getInfoURL}/${app}`);
 
-  let DataToRender;
-
-  if (!loading) {
-    DataToRender = () => <HomePage data={data} />;
-  } else {
-    DataToRender = () => <LaodingScreen />;
-  }
-
   //Change this to get css class from api and apply background
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
@@ -42,6 +39,7 @@ const Main = React.memo(() => {
     if (!!data && !loading) {
       dispatch(setAppLoading(false));
       dispatch(setApp(data.data));
+      dispatch(setBodyClass(data.data.application.body_class));
     } else {
       dispatch(setAppLoading(true));
     }

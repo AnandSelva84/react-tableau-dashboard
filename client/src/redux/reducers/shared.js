@@ -38,9 +38,6 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
       };
     case FILTER_STATE_EDIT:
-      console.log("edit", action);
-      debugger;
-
       return {
         ...state,
         filterState: action.filterState,
