@@ -13,6 +13,7 @@ const sharedState = {
   newFilters: [],
   savedFilters: [],
   appliedFilters: [],
+  body_class: "ampBody",
 };
 
 export default sharedState;

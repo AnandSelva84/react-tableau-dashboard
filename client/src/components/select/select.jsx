@@ -16,18 +16,12 @@ import {
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
+import { sortOptions } from "../../redux/methods/array-handling";
 
 //props.values should be filtered before passing it to it's component
 const Select = (props) => {
-  const {
-    filterOptionId,
-    filter_display_text,
-    filter_value_text,
-  } = filterModel.values[0];
-
   const dispatch = useDispatch();
-  const { filters, filterState } = useData().sharedReducer;
-  const [newFilterState, setNewFilterState] = useState(filterState);
+  const { filterState } = useData().sharedReducer;
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
   const [localFilters, setLocalFilters] = useState(props.values);
@@ -71,22 +65,17 @@ const Select = (props) => {
     return pureFilters;
   };
 
-  function sortOptions(a, b) {
-    if (a.order < b.order) {
-      return 1;
-    }
-    if (a.order > b.orde) {
-      return -1;
-    }
-    return 0;
-  }
-
   const Chosen = (props) => {
     const { filters } = props;
     return (
       <div style={{ display: "flex" }}>
-        {filters.map((filter) => (
-          <p style={{ fontSize: "0.7rem", marginRight: "0.2rem" }}>{filter},</p>
+        {filters.map((filter, index) => (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <p style={{ fontSize: "0.7rem", marginRight: "0.2rem" }}>
+              {filter}
+            </p>
+            {index !== filters.length - 1 && <div>,</div>}
+          </div>
         ))}
       </div>
     );

@@ -10,6 +10,12 @@ export const FILTER_STATE_EDIT = "FILTER_STATE_EDIT";
 export const SAVE_FILTERS = "SAVE_FILTERS";
 export const APPLY_FILTERS = "APPLY_FILTERS";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
+export const SET_BODY_CLASS = "SET_BODY_CLASS";
+
+export const setBodyClass = (css) => ({
+  type: SET_BODY_CLASS,
+  css,
+});
 
 export const clearFilter = () => ({
   type: CLEAR_FILTERS,

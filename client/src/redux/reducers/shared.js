@@ -12,10 +12,16 @@ import {
   SAVE_FILTERS,
   APPLY_FILTERS,
   CLEAR_FILTERS,
+  SET_BODY_CLASS,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_BODY_CLASS:
+      return {
+        ...state,
+        body_class: action.css,
+      };
     case CLEAR_FILTERS:
       return {
         ...state,
