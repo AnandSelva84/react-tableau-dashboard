@@ -17,6 +17,7 @@ import {
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
 import { sortOptions } from "../../redux/methods/array-handling";
+import { Select as AutoComplete } from "../auto-complete-select/auto-complete-select";
 
 //props.values should be filtered before passing it to it's component
 const Select = (props) => {
@@ -81,10 +82,71 @@ const Select = (props) => {
     );
   };
 
+  const getValues = () => {
+    const title = props.title;
+    console.log(filterState);
+    if (title === "COSA") return;
+
+    return filterState.filter((value) => value.id === title);
+  };
+  const createOptions = () => {
+    const pureOption = getValues();
+    if (!!pureOption) {
+      const newOptions = pureOption.map((option) => ({
+        filterOptionId: option.ID,
+        filter_value_text: option.value,
+        filter_display_text: option.value,
+        order: 1,
+        parentFilterOptionId: null,
+      }));
+      console.log("pureoption", newOptions);
+      return newOptions;
+    } else {
+      return [];
+    }
+  };
+
   return (
     <>
       {localFilters.length > 0 && (
-        <ExpansionPanel>
+        <>
+          <AutoComplete
+            // disableCloseOnSelect={props.disableCloseOnSelect}
+            filterState={filterState}
+            title={props.title}
+            options={props.values}
+            value={[...createOptions()]}
+            multiple={props.multi}
+            onChange={(e, obj, reason) => {
+              try {
+                if (!props.multi)
+                  handleClick(
+                    props.title,
+                    obj.filter_value_text,
+                    props.lvl,
+                    obj.filterOptionId,
+                    obj.parentFilterOptionId
+                  );
+                else
+                  handleClick(
+                    props.title,
+                    e.target.innerText,
+                    props.lvl,
+                    obj[obj.length - 1].filterOptionId,
+                    obj[obj.length - 1].parentFilterOptionId
+                  );
+              } catch {}
+            }}
+          />
+        </>
+      )}
+    </>
+  );
+};
+
+export default Select;
+
+/* <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -131,10 +193,4 @@ const Select = (props) => {
               ))}
             </div>
           </ExpansionPanelDetails>
-        </ExpansionPanel>
-      )}
-    </>
-  );
-};
-
-export default Select;
+        </ExpansionPanel> */
