@@ -5,6 +5,8 @@ import SideDrawer from "../layout/drawer/drawer";
 import Main from "../pages/main/main";
 import useData from "../hooks/useStore";
 import SubHeader from "../layout/sub-header/sub-header";
+import LVL_3 from "../pages/lvl-3/lvl-3";
+import LVL_2 from "../pages/lvl-2/lvl-2";
 
 const Router = () => {
   return (
@@ -14,7 +16,9 @@ const Router = () => {
           <Header />
           <SubHeader />
           <Switch>
-            <Route path="/" component={() => <Main />} />
+            <Route exact path="/" component={() => <Main />} />
+            <Route exact path="/lvl3" component={() => <LVL_3 />} />
+            <Route exact path="/lvl2" component={() => <LVL_2 />} />
           </Switch>
         </SideDrawer>
       </div>

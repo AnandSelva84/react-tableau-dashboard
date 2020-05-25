@@ -11,6 +11,9 @@
   border: 0.5px solid black;
   max-width: 30rem;
   margin: 0.5rem 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .panel-wrapper {
