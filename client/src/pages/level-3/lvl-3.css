@@ -8,7 +8,13 @@
 }
 
 .split > * {
-  max-height: 90%;
+  /* max-height: 90%; */
+  flex: 1;
+}
+.split {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
 }
 
 .unit {

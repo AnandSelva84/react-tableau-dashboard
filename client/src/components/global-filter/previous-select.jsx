@@ -42,6 +42,9 @@ const PrevSelect = (props) => {
       (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentFilterOptionId)
     );
     setLocalFilters([...localValues, ...filterHaveParent]);
+    const afterFiltering = filterState.filter(
+      (value) => !!hasParentTest(value.parentId)
+    );
   }, [filterState]);
 
   const hasLvlTest = (lvl) => {
@@ -55,9 +58,16 @@ const PrevSelect = (props) => {
     return !!hasId;
   };
 
+  const hasParentTest = (parentId) => {
+    debugger;
+    let hasId = filterState.find((filter) => filter.ID === parentId);
+    if (hasId === 0) hasId = 1;
+    return !!hasId;
+  };
+
   const handleClick = (ParentName, value, lvl, ID, parentId) => {
     const id = ParentName;
-    !isExist(filterState, id, value)
+    !isExist(filterState, id, value, ID)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId }))
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId }));
   };

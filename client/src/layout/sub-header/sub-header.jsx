@@ -24,7 +24,7 @@ const SubHeader = () => {
   };
 
   return (
-    <div style={{ minHeight: "3.5rem" }}>
+    <div>
       {isVisiable && (
         <Paper
           style={{

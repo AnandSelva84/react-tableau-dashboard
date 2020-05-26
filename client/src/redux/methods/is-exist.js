@@ -5,7 +5,7 @@ export const isExist = (filterState, id, value) => {
   // if (!!!valueExist) return false;
 
   // return !!idExist && !!valueExist;
-  return valueExist;
+  return !!valueExist && !!idExist;
 };
 
 export const newIsExist = (filterState, id) => {

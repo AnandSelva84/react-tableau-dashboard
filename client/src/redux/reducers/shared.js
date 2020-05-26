@@ -63,6 +63,15 @@ const sharedReducer = (state = sharedState, action) => {
         darkMode: action.state,
       };
     case ADD_FILTER:
+      const hasParentTest = (id) => {
+        state.filterState.find((value) => value.ID === id);
+      };
+      debugger;
+      const hasParent = state.filterState.find(
+        (filter) => hasParentTest(filter.parentId) && filter.lvl !== 0
+      );
+      console.log(!!hasParent);
+
       const filterd = state.filterState.filter(
         (filter) => filter.id !== action.filter.id
       );
@@ -73,6 +82,7 @@ const sharedReducer = (state = sharedState, action) => {
         !!hasSameParent && action.filter.lvl === 0
           ? [...filterd, action.filter]
           : [...state.filterState, action.filter];
+
       return {
         ...state,
         filterState: newFilterState,
