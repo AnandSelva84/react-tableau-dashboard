@@ -8,7 +8,7 @@ import theme from "../../theme/layout";
 import "./sub-header.css";
 
 const SubHeader = () => {
-  const { filters, filterState } = useData().sharedReducer;
+  const { filters, filterState, appliedFilters } = useData().sharedReducer;
   const dispatch = useDispatch();
   const createChip = (id, value) => `${id} : ${value}`;
   const isVisiable = filterState.length > 0;
@@ -23,6 +23,21 @@ const SubHeader = () => {
       : dispatch(deleteFilter({ id, value, lvl }));
   };
 
+  const isApplied = (ID) => {
+    console.log("applied are ", appliedFilters);
+    console.log("applied are ", appliedFilters);
+
+    const color = !!appliedFilters.find((filter) => filter.ID === ID)
+      ? "#80deea"
+      : "";
+    return color;
+  };
+
+  const getChips = () => {
+    if (filterState.length === 0) return appliedFilters;
+    else return filterState;
+  };
+
   return (
     <div>
       {isVisiable && (
@@ -31,10 +46,13 @@ const SubHeader = () => {
             ...theme.subHeader,
           }}
         >
-          {filterState.map((filter) => (
+          {getChips().map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}
-              style={{ marginRight: "0.4rem" }}
+              style={{
+                marginRight: "0.4rem",
+                backgroundColor: isApplied(filter.ID),
+              }}
               onDelete={() => handleClick(filter.id, filter.value, filter.lvl)}
             />
           ))}

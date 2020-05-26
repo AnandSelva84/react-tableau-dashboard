@@ -2,7 +2,11 @@ import React from "react";
 import Button from "../button/button";
 import btnsTheme from "../../theme/btn-control";
 import { useDispatch } from "react-redux";
-import { saveFilters, clearFilter } from "../../redux/actions/shared";
+import {
+  saveFilters,
+  clearFilter,
+  applyFilters,
+} from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 
 const ControlButtons = () => {
@@ -15,10 +19,19 @@ const ControlButtons = () => {
   const handleClear = () => {
     dispatch(clearFilter());
   };
+  const handleApply = () => {
+    console.log("filters applied ");
+
+    dispatch(applyFilters(filterState));
+  };
 
   return (
     <>
-      <Button title="Apply Filters" style={{ ...btnsTheme.apply }} />
+      <Button
+        title="Apply Filters"
+        style={{ ...btnsTheme.apply }}
+        onClick={handleApply}
+      />
       <Button
         title=" Save Filters"
         style={{ ...btnsTheme.save }}
