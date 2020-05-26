@@ -56,12 +56,12 @@ const LVL_3 = React.memo((props) => {
         </div>
       )}
       <div className="split">
-        <SplitterLayout vertical customClassName="split">
-          {(showGraph || showBoth) && (
-            <div onClick={handleGraphClick}>This is a graph</div>
-          )}
-          {(showTable || showBoth) && <div>This is a table</div>}
-        </SplitterLayout>
+        {(showGraph || showBoth) && (
+          <div className="unit" onClick={handleGraphClick}>
+            This is a graph
+          </div>
+        )}
+        {(showTable || showBoth) && <div className="unit">This is a table</div>}
       </div>
     </>
   );
