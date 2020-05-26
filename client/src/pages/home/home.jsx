@@ -17,7 +17,7 @@ const HomePage = (props) => {
         <div className={css_class}>
           <div className="panel">
             <Button
-              title="Check Lvl 3"
+              title="Click here!"
               style={{ backgroundColor: "#f4f4f4" }}
               onClick={() => {
                 history.push("/lvl3");

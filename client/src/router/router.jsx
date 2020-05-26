@@ -5,8 +5,8 @@ import SideDrawer from "../layout/drawer/drawer";
 import Main from "../pages/main/main";
 import useData from "../hooks/useStore";
 import SubHeader from "../layout/sub-header/sub-header";
-import LVL_3 from "../pages/lvl-3/lvl-3";
-import LVL_2 from "../pages/lvl-2/lvl-2";
+import LVL_3 from "../pages/level-3/lvl-3";
+import LVL_2 from "../pages/level-2/lvl-2";
 
 const Router = () => {
   return (
