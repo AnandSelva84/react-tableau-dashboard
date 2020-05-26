@@ -66,7 +66,6 @@ const sharedReducer = (state = sharedState, action) => {
       const hasParentTest = (id) => {
         state.filterState.find((value) => value.ID === id);
       };
-      debugger;
       const hasParent = state.filterState.find(
         (filter) => hasParentTest(filter.parentId) && filter.lvl !== 0
       );

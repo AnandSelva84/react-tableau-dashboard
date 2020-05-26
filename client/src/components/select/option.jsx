@@ -7,6 +7,21 @@ import { editFilterState } from "../../redux/actions/shared";
 const Option = (props) => {
   const dispatch = useDispatch();
   const { checked, filterState, lvl } = props;
+  const chosenIds = filterState.map((filter) => filter.ID) || [];
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
+
+  const filterAfterChange = () => {
+    const afterFilter = filterState.filter(
+      (filter) =>
+        chosenIds.some((id) => id === filter.parentId) || filter.lvl === 0
+    );
+    return afterFilter;
+  };
+
   React.useEffect(() => {
     //when unchecking an option check the lvl and clear all higher lvls
     console.log("option lvl ", lvl);
@@ -15,6 +30,7 @@ const Option = (props) => {
     const afterEdit = filterState.filter((filter) => filter.lvl <= lvl);
     //only in deletion state
     // if (!checked) dispatch(editFilterState(afterEdit));
+    if (loaded) dispatch(editFilterState(filterAfterChange()));
   }, [checked]);
   return (
     <>

@@ -47,6 +47,26 @@ const PrevSelect = (props) => {
     );
   }, [filterState]);
 
+  const editFilter = React.useCallback(
+    (afterFilter) => {
+      dispatch(editFilterState(afterFilter));
+    },
+    [chosenIds]
+  );
+
+  React.useEffect(() => {
+    const isParentExist = filterState.find((filter) =>
+      chosenIds.some((id) => id === filter.parentId)
+    );
+    const afterFilter = filterState.filter(
+      (filter) =>
+        chosenIds.some((id) => id === filter.parentId) || filter.lvl === 0
+    );
+    console.log(isParentExist);
+    console.log(afterFilter);
+    // editFilter(afterFilter);
+  }, [chosenIds]);
+
   const hasLvlTest = (lvl) => {
     let hasLvl = chosenLvls.find((filterLvl) => filterLvl === lvl - 1);
     if (hasLvl === 0) hasLvl = 1;
@@ -59,7 +79,6 @@ const PrevSelect = (props) => {
   };
 
   const hasParentTest = (parentId) => {
-    debugger;
     let hasId = filterState.find((filter) => filter.ID === parentId);
     if (hasId === 0) hasId = 1;
     return !!hasId;
