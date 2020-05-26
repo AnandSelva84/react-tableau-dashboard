@@ -6,7 +6,6 @@ import {
   ExpansionPanelDetails,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Option from "./option";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import {
@@ -16,14 +15,19 @@ import {
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
-import { sortOptions } from "../../redux/methods/array-handling";
-import { Select as AutoComplete } from "../auto-complete-select/auto-complete-select";
-import PrevSelect from "../global-filter/previous-select";
+import Option from "../select/option";
 
 //props.values should be filtered before passing it to it's component
-const Select = (props) => {
+const PrevSelect = (props) => {
+  const {
+    filterOptionId,
+    filter_display_text,
+    filter_value_text,
+  } = filterModel.values[0];
+
   const dispatch = useDispatch();
-  const { filterState } = useData().sharedReducer;
+  const { filters, filterState } = useData().sharedReducer;
+  const [newFilterState, setNewFilterState] = useState(filterState);
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
   const [localFilters, setLocalFilters] = useState(props.values);
@@ -67,115 +71,31 @@ const Select = (props) => {
     return pureFilters;
   };
 
+  function sortOptions(a, b) {
+    if (a.order < b.order) {
+      return 1;
+    }
+    if (a.order > b.orde) {
+      return -1;
+    }
+    return 0;
+  }
+
   const Chosen = (props) => {
     const { filters } = props;
     return (
       <div style={{ display: "flex" }}>
-        {filters.map((filter, index) => (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <p style={{ fontSize: "0.7rem", marginRight: "0.2rem" }}>
-              {filter}
-            </p>
-            {index !== filters.length - 1 && <div>,</div>}
-          </div>
+        {filters.map((filter) => (
+          <p style={{ fontSize: "0.7rem", marginRight: "0.2rem" }}>{filter},</p>
         ))}
       </div>
     );
   };
 
-  const getValues = () => {
-    const title = props.title;
-    console.log(filterState);
-    if (title === "COSA") return;
-
-    return filterState.filter((value) => value.id === title);
-  };
-  const createOptions = () => {
-    const pureOption = getValues();
-    if (!!pureOption) {
-      const newOptions = pureOption.map((option) => ({
-        filterOptionId: option.ID,
-        filter_value_text: option.value,
-        filter_display_text: option.value,
-        order: 1,
-        parentFilterOptionId: null,
-      }));
-      console.log("pureoption", newOptions);
-      return newOptions;
-    } else {
-      return [];
-    }
-  };
-
   return (
     <>
       {localFilters.length > 0 && (
-        <>
-          <AutoComplete
-            // disableCloseOnSelect={props.disableCloseOnSelect}
-            filterState={filterState}
-            title={props.title}
-            options={props.values}
-            value={[...createOptions()]}
-            multiple={props.multi}
-            onChange={(e, obj, reason) => {
-              try {
-                if (!props.multi)
-                  handleClick(
-                    props.title,
-                    obj.filter_value_text,
-                    props.lvl,
-                    obj.filterOptionId,
-                    obj.parentFilterOptionId
-                  );
-                else
-                  handleClick(
-                    props.title,
-                    e.target.innerText,
-                    props.lvl,
-                    obj[obj.length - 1].filterOptionId,
-                    obj[obj.length - 1].parentFilterOptionId
-                  );
-              } catch {}
-            }}
-          />
-          {/* <PrevSelect
-            // disableCloseOnSelect={props.disableCloseOnSelect}
-            filterState={filterState}
-            title={props.title}
-            values={props.values}
-            // value={[...createOptions()]}
-            multiple={props.multi}
-            // onChange={(e, obj, reason) => {
-            //   try {
-            //     if (!props.multi)
-            //       handleClick(
-            //         props.title,
-            //         obj.filter_value_text,
-            //         props.lvl,
-            //         obj.filterOptionId,
-            //         obj.parentFilterOptionId
-            //       );
-            //     else
-            //       handleClick(
-            //         props.title,
-            //         e.target.innerText,
-            //         props.lvl,
-            //         obj[obj.length - 1].filterOptionId,
-            //         obj[obj.length - 1].parentFilterOptionId
-            //       );
-            //   } catch {}
-            // }}
-          /> */}
-        </>
-      )}
-    </>
-  );
-};
-
-export default Select;
-
-/* <ExpansionPanel>
+        <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -222,4 +142,9 @@ export default Select;
               ))}
             </div>
           </ExpansionPanelDetails>
-        </ExpansionPanel> */
+        </ExpansionPanel>
+      )}
+    </>
+  );
+};
+export default PrevSelect;

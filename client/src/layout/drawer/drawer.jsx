@@ -28,6 +28,7 @@ import { toggleDrawer } from "../../redux/actions/shared";
 import Select from "../../components/select/select";
 import GlobalFilters from "../../components/global-filter/global-filter";
 import LocalTheme from "../../theme/layout";
+import PrevGlobalFilters from "../../components/global-filter/previous-global-filter";
 
 const drawerWidth = 240;
 
@@ -169,6 +170,7 @@ const SideDrawer = (props) => {
         <Divider />
         <div className="global-filters">
           <GlobalFilters />
+          {/* <PrevGlobalFilters /> */}
         </div>
         {/* <Divider />
         <List>
