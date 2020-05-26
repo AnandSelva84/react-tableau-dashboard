@@ -13,6 +13,7 @@ import {
   setApp,
   setFilters,
   setBodyClass,
+  editFilterState,
 } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
@@ -34,6 +35,12 @@ const Main = React.memo(() => {
   //Change this to get css class from api and apply background
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
+
+  useEffect(()=>{
+const savedFilters = JSON.parse(localStorage.getItem('filters'))
+if(!!savedFilters)
+dispatch(editFilterState(savedFilters))
+  },[])
 
   useEffect(() => {
     if (!!data && !loading) {
