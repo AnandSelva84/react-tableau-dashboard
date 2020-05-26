@@ -9,7 +9,7 @@ Router.get("/", (req, res) => {
 });
 
 Router.get("/new", (req, res) => {
-  res.send({ ...newFiltersResponse });
+  res.send(newFiltersResponse);
 });
 
 module.exports = Router;

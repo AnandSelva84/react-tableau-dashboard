@@ -46,7 +46,7 @@ const Main = React.memo(() => {
   }, [data, loading]);
 
   useEffect(() => {
-    if (!!filters && !filtersLoading) dispatch(setFilters(filters.filters));
+    if (!!filters && !filtersLoading) dispatch(setFilters(filters));
   }, [filters, filtersLoading]);
 
   return (
