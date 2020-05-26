@@ -6,7 +6,7 @@ const btnsTheme = {
   },
   cancel: { backgroundColor: "#f7f7f7", margin: "0.3rem 1rem" },
   save: {
-    backgroundColor: "#888888",
+    backgroundColor: "rgb(102,187,106)",
     margin: "0.3rem 1rem",
     color: "#fff",
   },
