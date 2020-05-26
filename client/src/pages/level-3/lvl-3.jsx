@@ -3,10 +3,10 @@ import "./lvl-3.css";
 // import SplitPane  from "react-split-pane";
 import Button from "../../components/button/button";
 //import SplitPane from "react-split-pane";
-import SplitterLayout from "react-splitter-layout";
-import "react-splitter-layout/lib/index.css";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+//import SplitterLayout from "react-splitter-layout";
+//import "react-splitter-layout/lib/index.css";
+//import ToggleButton from "@material-ui/lab/ToggleButton";
+//import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import {
   FormatAlignLeft,
   FormatAlignCenter,

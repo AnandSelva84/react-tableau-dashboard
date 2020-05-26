@@ -169,8 +169,8 @@ const SideDrawer = (props) => {
         </div>
         <Divider />
         <div className="global-filters">
-          <GlobalFilters />
-          {/* <PrevGlobalFilters /> */}
+          {/* <GlobalFilters /> */}
+          <PrevGlobalFilters />
         </div>
         {/* <Divider />
         <List>

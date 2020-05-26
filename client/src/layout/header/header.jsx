@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { toggleDrawer, setApp, setDarkMode } from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
-import img from "../../assets/img/wp2471777.jpg";
 import response from "../../models/getInfo";
 
 const Header = () => {
