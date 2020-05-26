@@ -15,6 +15,7 @@ import {
   TableChart,
   SwapVert,
 } from "@material-ui/icons";
+import { ButtonGroup, IconButton } from "@material-ui/core";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -42,7 +43,7 @@ const LVL_3 = React.memo((props) => {
             justifyContent: "flex-end",
           }}
         >
-          <ToggleButtonGroup value={value} exclusive onChange={handleAlignment}>
+          {/* <ToggleButtonGroup value={value} exclusive onChange={handleAlignment}>
             <ToggleButton value="graph" aria-label="left aligned">
               <BarChart />
             </ToggleButton>
@@ -52,7 +53,27 @@ const LVL_3 = React.memo((props) => {
             <ToggleButton value="table" aria-label="right aligned">
               <TableChart />
             </ToggleButton>
-          </ToggleButtonGroup>
+          </ToggleButtonGroup> */}
+          <ButtonGroup>
+            <IconButton
+              onClick={() => setValue("graph")}
+              style={{ backgroundColor: !!showGraph ? "#f4f4f4" : "" }}
+            >
+              <BarChart />
+            </IconButton>
+            <IconButton
+              style={{ backgroundColor: !!showBoth ? "#f4f4f4" : "" }}
+              onClick={() => setValue("both")}
+            >
+              <SwapVert />
+            </IconButton>
+            <IconButton
+              style={{ backgroundColor: !!showTable ? "#f4f4f4" : "" }}
+              onClick={() => setValue("table")}
+            >
+              <TableChart />
+            </IconButton>
+          </ButtonGroup>
         </div>
       )}
       <div className="split">
