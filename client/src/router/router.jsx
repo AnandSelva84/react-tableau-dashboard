@@ -7,12 +7,13 @@ import useData from "../hooks/useStore";
 import SubHeader from "../layout/sub-header/sub-header";
 import LVL_3 from "../pages/level-3/lvl-3";
 import LVL_2 from "../pages/level-2/lvl-2";
+import SwipSideDrawer from "../layout/drawer/swipeable-drawer";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <div className="">
-        <SideDrawer>
+        <SwipSideDrawer>
           <Header />
           <SubHeader />
           <Switch>
@@ -20,7 +21,7 @@ const Router = () => {
             <Route exact path="/lvl3" component={() => <LVL_3 />} />
             <Route exact path="/lvl2" component={() => <LVL_2 />} />
           </Switch>
-        </SideDrawer>
+        </SwipSideDrawer>
       </div>
     </BrowserRouter>
   );
