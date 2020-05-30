@@ -1,7 +1,15 @@
 const sharedState = {
   currentApp: "amp",
   drawer: false,
-  filterState: [],
+  filterState: [
+    {
+      ID: "Business",
+      id: "Hierarchies",
+      lvl: 0,
+      parentId: null,
+      value: "Business",
+    },
+  ],
   filters: [
     //id stays the same but the dependency become parentId and title becomes name
     { id: "name", values: ["ali", "charly"], title: "Types" },

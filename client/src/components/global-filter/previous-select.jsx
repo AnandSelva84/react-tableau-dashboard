@@ -27,6 +27,8 @@ const PrevSelect = (props) => {
 
   const dispatch = useDispatch();
   const { filters, filterState } = useData().sharedReducer;
+  console.log("initial ", filterState);
+
   const [newFilterState, setNewFilterState] = useState(filterState);
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
@@ -79,7 +81,7 @@ const PrevSelect = (props) => {
   };
 
   const hasParentTest = (parentId) => {
-    let hasId = filterState.find((filter) => filter.ID === parentId);
+    let hasId = chosenIds.find((id) => id === parentId);
     if (hasId === 0) hasId = 1;
     return !!hasId;
   };
@@ -121,9 +123,16 @@ const PrevSelect = (props) => {
     );
   };
 
+  const getOptions = () => {
+    const options = props.values.filter(
+      (value) => hasParentTest(value.parentFilterOptionId) || props.lvl === 0
+    );
+    return options;
+  };
+
   return (
     <>
-      {localFilters.length > 0 && (
+      {true && (
         <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
@@ -145,30 +154,32 @@ const PrevSelect = (props) => {
                 width: "100%",
               }}
             >
-              {props.values.sort(sortOptions).map((option) => (
-                <Option
-                  checked={isExist(
-                    filterState,
-                    props.title,
-                    option.filter_value_text
-                  )}
-                  value={option.filter_value_text}
-                  filterState={filterState}
-                  id={option.filterOptionId}
-                  parentId={option.parentFilterOptionId}
-                  lvl={props.lvl}
-                  display={option.filter_display_text}
-                  onClick={() =>
-                    handleClick(
+              {getOptions()
+                .sort(sortOptions)
+                .map((option) => (
+                  <Option
+                    checked={isExist(
+                      filterState,
                       props.title,
-                      option.filter_value_text,
-                      props.lvl,
-                      option.filterOptionId,
-                      option.parentFilterOptionId
-                    )
-                  }
-                />
-              ))}
+                      option.filter_value_text
+                    )}
+                    value={option.filter_value_text}
+                    filterState={filterState}
+                    id={option.filterOptionId}
+                    parentId={option.parentFilterOptionId}
+                    lvl={props.lvl}
+                    display={option.filter_display_text}
+                    onClick={() =>
+                      handleClick(
+                        props.title,
+                        option.filter_value_text,
+                        props.lvl,
+                        option.filterOptionId,
+                        option.parentFilterOptionId
+                      )
+                    }
+                  />
+                ))}
             </div>
           </ExpansionPanelDetails>
         </ExpansionPanel>

@@ -36,11 +36,11 @@ const Main = React.memo(() => {
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
-  useEffect(()=>{
-const savedFilters = JSON.parse(localStorage.getItem('filters'))
-if(!!savedFilters)
-dispatch(editFilterState(savedFilters))
-  },[])
+  useEffect(() => {
+    const savedFilters = JSON.parse(localStorage.getItem("filters"));
+    if (!!savedFilters && savedFilters.length > 0)
+      dispatch(editFilterState(savedFilters));
+  }, []);
 
   useEffect(() => {
     if (!!data && !loading) {

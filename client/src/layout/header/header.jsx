@@ -9,11 +9,20 @@ import { toggleDrawer, setApp, setDarkMode } from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
 import response from "../../models/getInfo";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { header, darkHeader } = theme;
-  const { darkMode, appIsLoading, app: appData } = useData().sharedReducer;
+  const {
+    darkMode,
+    appIsLoading,
+    app: appData,
+    filterState,
+  } = useData().sharedReducer;
+  console.log("initial ", filterState);
+
+  const history = useHistory();
 
   React.useEffect(() => {
     if (!!appData) {
@@ -21,6 +30,10 @@ const Header = () => {
       id === "KID" ? dispatch(setDarkMode(true)) : dispatch(setDarkMode(false));
     }
   }, [appData]);
+
+  const onLogoClicked = () => {
+    if (history.location.pathname !== "/") history.push("/");
+  };
 
   // const appName = app === "amp" ? "Agile Metrics Panel" : "Key Indicators";
   const dark = !darkMode ? null : darkHeader;
@@ -35,7 +48,9 @@ const Header = () => {
                 dispatch(toggleDrawer());
               }}
             />
-            <div className="header-title">{appData.application.name}</div>
+            <div onClick={onLogoClicked} className="header-title">
+              {appData.application.name}
+            </div>
           </div>
           <div className="header-title hello">hello panda</div>
         </Paper>

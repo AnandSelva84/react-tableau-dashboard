@@ -43,8 +43,38 @@ const newFiltersResponse = [
         order: 2,
         parentFilterOptionId: "Business",
       },
+      {
+        filterOptionId: "Legacy IT",
+        filter_value_text: "Legacy IT",
+        filter_display_text: "Legacy IT",
+        order: 2,
+        parentFilterOptionId: "legcy",
+      },
     ],
   },
+  // ,{
+  //   level: 3,
+  //   filterId: "JIRA",
+  //   title: "JIRA",
+  //   filterType: "Multi-Select",
+  //   parentFilterId: "Hierarchies",
+  //   values: [
+  //     {
+  //       filterOptionId: "Bank1",
+  //       filter_value_text: "Bank",
+  //       filter_display_text: "Bank",
+  //       order: 1,
+  //       parentFilterOptionId: "Business",
+  //     },
+  //     {
+  //       filterOptionId: "IT",
+  //       filter_value_text: "IT",
+  //       filter_display_text: "IT",
+  //       order: 2,
+  //       parentFilterOptionId: "Business",
+  //     },
+  //   ],
+  // },
 ];
 
 module.exports = { newFiltersResponse };
