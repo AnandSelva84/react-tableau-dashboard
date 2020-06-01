@@ -26,7 +26,8 @@ const PrevSelect = (props) => {
   } = filterModel.values[0];
 
   const dispatch = useDispatch();
-  const { filters, filterState } = useData().sharedReducer;
+
+  const { filters, filterState, newFilters } = useData().sharedReducer;
   console.log("initial ", filterState);
 
   const [newFilterState, setNewFilterState] = useState(filterState);
@@ -130,6 +131,54 @@ const PrevSelect = (props) => {
     return options;
   };
 
+  const getAllPossibleFilters = (parentTitle) => {
+    // const rawPossible =
+    //   newFilters.filter((filter) => filter.title === parentTitle)[0]?.values ||
+    //   [];
+
+    const possible = getOptions().map((option) => ({
+      id: parentTitle,
+      ID: option.filterOptionId,
+      lvl: props.lvl,
+      parentId: option.parentFilterOptionId,
+      value: option.filter_value_text,
+    }));
+    return possible;
+  };
+
+  const isAllExisted = (parentTitle) => {
+    //compare what is in the filterState and what is in the resposne
+    const toCompare = getAllPossibleFilters(parentTitle);
+    const existanceLength =
+      filterState.filter((value) => value.id === props.title)?.length || 0;
+    const existance = existanceLength === toCompare.length;
+    return existance;
+  };
+
+  const selectAll = () => {
+    dispatch(
+      editFilterState([...filterState, ...getAllPossibleFilters(props.title)])
+    );
+  };
+
+  const unSelectAll = () => {
+    dispatch(
+      editFilterState([
+        ...filterState.filter((filter) => filter.id !== props.title),
+      ])
+    );
+  };
+
+  const handleSelectAll = () => {
+    const AllChecked = isAllExisted(props.title);
+    console.log("all is selected!");
+    if (AllChecked) {
+      unSelectAll();
+    } else {
+      selectAll();
+    }
+  };
+
   return (
     <>
       {true && (
@@ -154,6 +203,14 @@ const PrevSelect = (props) => {
                 width: "100%",
               }}
             >
+              {props.lvl !== 0 && (
+                <Option
+                  checked={isAllExisted(props.title)}
+                  filterState={filterState}
+                  onClick={handleSelectAll}
+                  display={"All"}
+                />
+              )}
               {getOptions()
                 .sort(sortOptions)
                 .map((option) => (
