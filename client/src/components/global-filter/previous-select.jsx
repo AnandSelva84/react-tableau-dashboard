@@ -28,7 +28,6 @@ const PrevSelect = (props) => {
   const dispatch = useDispatch();
 
   const { filters, filterState, newFilters } = useData().sharedReducer;
-  console.log("initial ", filterState);
 
   const [newFilterState, setNewFilterState] = useState(filterState);
 
@@ -89,6 +88,7 @@ const PrevSelect = (props) => {
 
   const handleClick = (ParentName, value, lvl, ID, parentId) => {
     const id = ParentName;
+    if (lvl === 0 && isExist(filterState, id, value, ID)) return;
     !isExist(filterState, id, value, ID)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId }))
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId }));
@@ -131,10 +131,11 @@ const PrevSelect = (props) => {
     return options;
   };
 
-  const getAllPossibleFilters = (parentTitle) => {
+  const getAllPossibleFilters = () => {
     // const rawPossible =
     //   newFilters.filter((filter) => filter.title === parentTitle)[0]?.values ||
     //   [];
+    const parentTitle = props.title;
 
     const possible = getOptions().map((option) => ({
       id: parentTitle,
@@ -143,21 +144,29 @@ const PrevSelect = (props) => {
       parentId: option.parentFilterOptionId,
       value: option.filter_value_text,
     }));
+
     return possible;
   };
 
-  const isAllExisted = (parentTitle) => {
+  const isAllExisted = () => {
     //compare what is in the filterState and what is in the resposne
-    const toCompare = getAllPossibleFilters(parentTitle);
+    const toCompare = getAllPossibleFilters();
+
     const existanceLength =
       filterState.filter((value) => value.id === props.title)?.length || 0;
+
     const existance = existanceLength === toCompare.length;
     return existance;
   };
 
   const selectAll = () => {
     dispatch(
-      editFilterState([...filterState, ...getAllPossibleFilters(props.title)])
+      editFilterState([
+        ...filterState,
+        ...getAllPossibleFilters().filter(
+          (value) => !chosenIds.includes(value.ID)
+        ),
+      ])
     );
   };
 
@@ -170,8 +179,10 @@ const PrevSelect = (props) => {
   };
 
   const handleSelectAll = () => {
-    const AllChecked = isAllExisted(props.title);
-    console.log("all is selected!");
+    const AllChecked = isAllExisted();
+    const currentSelected = filterState.filter(
+      (filter) => filter.id !== props.title
+    );
     if (AllChecked) {
       unSelectAll();
     } else {
@@ -179,10 +190,20 @@ const PrevSelect = (props) => {
     }
   };
 
+  const panelProps = () => {
+    const toReturn =
+      props.lvl === 0
+        ? {
+            expanded: true,
+          }
+        : {};
+    return toReturn;
+  };
+
   return (
     <>
       {true && (
-        <ExpansionPanel>
+        <ExpansionPanel {...panelProps()}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -205,7 +226,7 @@ const PrevSelect = (props) => {
             >
               {props.lvl !== 0 && (
                 <Option
-                  checked={isAllExisted(props.title)}
+                  checked={isAllExisted()}
                   filterState={filterState}
                   onClick={handleSelectAll}
                   display={"All"}

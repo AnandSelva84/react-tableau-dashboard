@@ -53,7 +53,10 @@ const SubHeader = () => {
                 marginRight: "0.4rem",
                 backgroundColor: isApplied(filter.ID),
               }}
-              onDelete={() => handleClick(filter.id, filter.value, filter.lvl)}
+              onDelete={() => {
+                if (!!filter.lvl)
+                  handleClick(filter.id, filter.value, filter.lvl);
+              }}
             />
           ))}
         </Paper>
