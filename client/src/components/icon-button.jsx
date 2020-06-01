@@ -6,6 +6,9 @@ import PropTypes from "prop-types";
 const ClickableIcon = (props) => {
   return (
     <div
+      onMouseDown={() => {
+        props.onClick();
+      }}
       style={{
         display: "flex",
         justifyContent: "center",
