@@ -6,8 +6,9 @@ import PropTypes from "prop-types";
 const ClickableIcon = (props) => {
   return (
     <div
-      onMouseDown={() => {
+      onMouseEnter={() => {
         props.onClick();
+        console.log("hocer down");
       }}
       style={{
         display: "flex",
