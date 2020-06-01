@@ -52,6 +52,7 @@ const SubHeader = () => {
               style={{
                 marginRight: "0.4rem",
                 backgroundColor: isApplied(filter.ID),
+                marginTop: "0.2rem",
               }}
               onDelete={() => {
                 if (!!filter.lvl)

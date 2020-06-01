@@ -7,6 +7,7 @@ import { filterModel } from "../../models/filter";
 import PrevSelect from "./previous-select";
 import ControlButtons from "./control-buttons";
 import "./global-filters.css";
+import { reFormat } from "../../redux/methods/re-format-response";
 
 const PrevGlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
@@ -47,12 +48,18 @@ const PrevGlobalFilters = React.memo(() => {
   //   // filterModel.level
   // }, []);
 
+  React.useEffect(() => {
+    if (!!newFilters) {
+      reFormat(newFilters);
+    }
+  }, [newFilters]);
+
   return (
     <>
       <div className="global-wrapper">
         {show && !!newFilters && (
           <div className="filters-wrapper">
-            {newFilters.map((filter) => (
+            {reFormat(newFilters).map((filter) => (
               <PrevSelect
                 id={filter.filterId}
                 values={filter.values}

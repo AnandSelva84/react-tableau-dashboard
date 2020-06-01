@@ -9,13 +9,6 @@ const sharedState = {
       parentId: null,
       value: "Business",
     },
-    // {
-    //   ID: "legcy",
-    //   id: "Hierarchies",
-    //   lvl: 0,
-    //   parentId: null,
-    //   value: "legcy",
-    // },
   ],
   filters: [
     //id stays the same but the dependency become parentId and title becomes name
@@ -27,7 +20,15 @@ const sharedState = {
   app: null,
   newFilters: [],
   savedFilters: [],
-  appliedFilters: [],
+  appliedFilters: [
+    {
+      ID: "Business",
+      id: "Hierarchies",
+      lvl: 0,
+      parentId: null,
+      value: "Business",
+    },
+  ],
   body_class: null,
 };
 
