@@ -5,6 +5,7 @@ import {
   Typography,
   ExpansionPanelDetails,
 } from "@material-ui/core";
+import InputBase from "@material-ui/core/InputBase";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
@@ -31,6 +32,7 @@ const PrevSelect = (props) => {
   const { filters, filterState, newFilters } = useData().sharedReducer;
 
   const [newFilterState, setNewFilterState] = useState(filterState);
+  const [searchValue, setSearchValue] = useState("");
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
   const [localFilters, setLocalFilters] = useState(props.values);
@@ -69,6 +71,10 @@ const PrevSelect = (props) => {
     console.log(afterFilter);
     // editFilter(afterFilter);
   }, [chosenIds]);
+
+  const handlechange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   const hasLvlTest = (lvl) => {
     let hasLvl = chosenLvls.find((filterLvl) => filterLvl === lvl - 1);
@@ -223,6 +229,23 @@ const PrevSelect = (props) => {
     return toReturn;
   };
 
+  console.log(
+    "search ",
+    getOptions().filter((option) =>
+      option.filter_display_text.toLowerCase().includes(searchValue)
+    )
+  );
+
+  const getOptionsAfterSearch = () => {
+    if (!!searchValue) {
+      return getOptions().filter((option) =>
+        option.filter_display_text.toLowerCase().includes(searchValue)
+      );
+    } else {
+      return getOptions();
+    }
+  };
+
   return (
     <>
       {true && (
@@ -233,7 +256,14 @@ const PrevSelect = (props) => {
             id="panel1a-header"
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <Typography style={{ fontSize: "1rem" }}>{getTitle()}</Typography>
+              {props.lvl === 0 && (
+                <Typography style={{ fontSize: "1rem" }}>
+                  {getTitle()}
+                </Typography>
+              )}
+              {props.lvl !== 0 && (
+                <InputBase placeholder={getTitle()} onChange={handlechange} />
+              )}
               <Chosen filters={getChosen()} />
             </div>
           </ExpansionPanelSummary>
@@ -253,7 +283,7 @@ const PrevSelect = (props) => {
                   display={"All"}
                 />
               )}
-              {getOptions()
+              {getOptionsAfterSearch()
                 .sort(sortOptions)
                 .map((option) => (
                   <Option

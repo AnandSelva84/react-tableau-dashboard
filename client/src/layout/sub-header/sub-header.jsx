@@ -53,9 +53,7 @@ const SubHeader = () => {
             ...theme.subHeader,
           }}
         >
-          <>
-            <Select options={["hello"]} />
-          </>
+          <>{/* <Select options={["hello"]} /> */}</>
           {getChips().map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}
