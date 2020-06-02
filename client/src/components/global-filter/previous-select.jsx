@@ -88,6 +88,7 @@ const PrevSelect = (props) => {
 
   const handleClick = (ParentName, value, lvl, ID, parentId) => {
     const id = ParentName;
+    debugger;
     if (lvl === 0 && isExist(filterState, id, value, ID)) return;
     !isExist(filterState, id, value, ID)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId }))
@@ -96,7 +97,7 @@ const PrevSelect = (props) => {
 
   const getChosen = () => {
     //check the title and value
-    let data = filterState.filter((filter) => filter.id === props.title);
+    let data = filterState.filter((filter) => filter.id === getTitle());
     if (!!!data) data = [];
     const pureFilters = data.map((filter) => filter.value);
     if (!!!pureFilters) return [];
@@ -135,7 +136,7 @@ const PrevSelect = (props) => {
     // const rawPossible =
     //   newFilters.filter((filter) => filter.title === parentTitle)[0]?.values ||
     //   [];
-    const parentTitle = props.title;
+    const parentTitle = getTitle();
 
     const possible = getOptions().map((option) => ({
       id: parentTitle,
@@ -153,7 +154,7 @@ const PrevSelect = (props) => {
     const toCompare = getAllPossibleFilters();
 
     const existanceLength =
-      filterState.filter((value) => value.id === props.title)?.length || 0;
+      filterState.filter((value) => value.id === getTitle())?.length || 0;
 
     const existance = existanceLength === toCompare.length;
     return existance;
@@ -173,7 +174,7 @@ const PrevSelect = (props) => {
   const unSelectAll = () => {
     dispatch(
       editFilterState([
-        ...filterState.filter((filter) => filter.id !== props.title),
+        ...filterState.filter((filter) => filter.id !== getTitle()),
       ])
     );
   };
@@ -181,12 +182,32 @@ const PrevSelect = (props) => {
   const handleSelectAll = () => {
     const AllChecked = isAllExisted();
     const currentSelected = filterState.filter(
-      (filter) => filter.id !== props.title
+      (filter) => filter.id !== getTitle()
     );
     if (AllChecked) {
       unSelectAll();
     } else {
       selectAll();
+    }
+  };
+
+  const getTitle = () => {
+    console.log("for title get options", getOptions());
+
+    const localValues = getOptions();
+    const localId = localValues[0]?.filterOptionId || "";
+    console.log("for title", localValues);
+    console.log("for title one local id", localId);
+
+    if (props.lvl === 0) return props.title;
+    else {
+      const found = newFilters.find(
+        (filter) =>
+          !!filter.values.find((value) => value.filter_option === localId)
+      );
+      console.log("for title found", found);
+      //this is the other possible value of the same level
+      return found?.title || props.title;
     }
   };
 
@@ -210,9 +231,7 @@ const PrevSelect = (props) => {
             id="panel1a-header"
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <Typography style={{ fontSize: "1rem" }}>
-                {props.title}
-              </Typography>
+              <Typography style={{ fontSize: "1rem" }}>{getTitle()}</Typography>
               <Chosen filters={getChosen()} />
             </div>
           </ExpansionPanelSummary>
@@ -238,7 +257,7 @@ const PrevSelect = (props) => {
                   <Option
                     checked={isExist(
                       filterState,
-                      props.title,
+                      getTitle(),
                       option.filter_value_text
                     )}
                     value={option.filter_value_text}
@@ -249,7 +268,7 @@ const PrevSelect = (props) => {
                     display={option.filter_display_text}
                     onClick={() =>
                       handleClick(
-                        props.title,
+                        getTitle(),
                         option.filter_value_text,
                         props.lvl,
                         option.filterOptionId,
