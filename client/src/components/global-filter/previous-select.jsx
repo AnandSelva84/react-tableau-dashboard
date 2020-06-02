@@ -284,6 +284,8 @@ const PrevSelect = (props) => {
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
+                maxHeight: "5rem",
+                overflowY: "auto",
               }}
             >
               {props.lvl !== 0 && (
