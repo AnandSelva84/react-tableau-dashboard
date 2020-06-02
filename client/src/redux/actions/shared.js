@@ -11,6 +11,7 @@ export const SAVE_FILTERS = "SAVE_FILTERS";
 export const APPLY_FILTERS = "APPLY_FILTERS";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
 export const SET_BODY_CLASS = "SET_BODY_CLASS";
+export const SET_ALL_ARE_SELECTED = "SET_ALL_ARE_SELECTED";
 
 export const setBodyClass = (css) => ({
   type: SET_BODY_CLASS,
@@ -70,4 +71,10 @@ export const deleteFilter = (filter) => ({
 
 export const toggleDrawer = () => ({
   type: TOGGLE_DRAWER,
+});
+
+//filter : {hasAll : boolean , title : string}
+export const setAllAreSelected = (filter) => ({
+  type: SET_ALL_ARE_SELECTED,
+  filter,
 });

@@ -1,11 +1,18 @@
 import React from "react";
-import { Paper, Chip, createStyles, makeStyles } from "@material-ui/core";
+import {
+  Paper,
+  Chip,
+  createStyles,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import { addFilter, deleteFilter } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import theme from "../../theme/layout";
 import "./sub-header.css";
+import { Select } from "../../components/auto-complete-select/auto-complete-select";
 
 const SubHeader = () => {
   const { filters, filterState, appliedFilters } = useData().sharedReducer;
@@ -46,6 +53,9 @@ const SubHeader = () => {
             ...theme.subHeader,
           }}
         >
+          <>
+            <Select options={["hello"]} />
+          </>
           {getChips().map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}

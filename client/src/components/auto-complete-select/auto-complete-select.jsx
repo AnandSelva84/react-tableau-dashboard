@@ -1,5 +1,5 @@
 import React from "react";
-//import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Checkbox } from "@material-ui/core";
@@ -41,40 +41,38 @@ export const Select = (props) => {
   };
 
   return (
-    // <div style={{ padding: "1rem 0rem" }}>
-    //   <Autocomplete
-    //     {...props}
-    //     id="checkboxes-tags-demo"
-    //     options={props.options}
-    //     disableCloseOnSelect
-    //     getOptionLabel={(option) => option.filter_display_text}
-    //     renderOption={(option, { selected }) => {
-    //       return (
-    //         <React.Fragment>
-    //           <Checkbox
-    //             icon={icon}
-    //             checkedIcon={checkedIcon}
-    //             style={{ marginRight: 8 }}
-    //             checked={isChecked(option)}
-    //             onChange={(e) => {
-    //               console.log("from change", option);
-    //             }}
-    //           />
-    //           {option.filter_display_text}
-    //         </React.Fragment>
-    //       );
-    //     }}
-    //     renderInput={(params) => (
-    //       <TextField
-    //         {...params}
-    //         variant="outlined"
-    //         label={props.title}
-    //         placeholder="Favorites"
-    //       />
-    //     )}
-    //   />
-    // </div>
-    <>
-    </>
+    <div style={{ padding: "1rem 0rem" }}>
+      <Autocomplete
+        {...props}
+        id="checkboxes-tags-demo"
+        options={props.options}
+        disableCloseOnSelect
+        getOptionLabel={(option) => "option.filter_display_text"}
+        renderOption={(option, { selected }) => {
+          return (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={isChecked(option)}
+                onChange={(e) => {
+                  console.log("from change", option);
+                }}
+              />
+              {"option.filter_display_text"}
+            </React.Fragment>
+          );
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            label={"props.title"}
+            placeholder="Favorites"
+          />
+        )}
+      />
+    </div>
   );
 };

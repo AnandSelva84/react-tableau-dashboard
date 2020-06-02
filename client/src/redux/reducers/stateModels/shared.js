@@ -30,6 +30,7 @@ const sharedState = {
     },
   ],
   body_class: null,
+  hasAllSelected: [],
 };
 
 export default sharedState;

@@ -12,6 +12,7 @@ import {
   addFilter,
   deleteFilter,
   editFilterState,
+  setAllAreSelected,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
@@ -155,8 +156,9 @@ const PrevSelect = (props) => {
 
     const existanceLength =
       filterState.filter((value) => value.id === getTitle())?.length || 0;
-
     const existance = existanceLength === toCompare.length;
+    // dispatch(setAllAreSelected({ title: getTitle(), hasAll: existance }));
+
     return existance;
   };
 

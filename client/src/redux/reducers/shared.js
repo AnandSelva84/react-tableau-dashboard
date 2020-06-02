@@ -13,10 +13,21 @@ import {
   APPLY_FILTERS,
   CLEAR_FILTERS,
   SET_BODY_CLASS,
+  SET_ALL_ARE_SELECTED,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_ALL_ARE_SELECTED:
+      const { hasAll, title } = action.filter;
+      const newHasAll = hasAll
+        ? [...state.hasAllSelected, action.filter]
+        : [...state.hasAllSelected.filter((filter) => filter.title !== title)];
+
+      return {
+        ...state,
+        hasAllSelected: [...newHasAll],
+      };
     case SET_BODY_CLASS:
       return {
         ...state,
