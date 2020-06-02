@@ -35,6 +35,7 @@ const Option = (props) => {
   return (
     <>
       <CardActionArea
+      ref={props.ref}
         style={{ ...select.option }}
         onClick={() => {
           props.onClick();

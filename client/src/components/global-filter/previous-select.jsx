@@ -39,6 +39,16 @@ const PrevSelect = (props) => {
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
 
+  const allButton = React.useRef(null);
+
+  React.useEffect(() => {
+    console.log("refrence", allButton);
+
+    if (!!allButton.current) allButton.current.click();
+  }, [allButton.current]);
+
+  const clickAll = () => {};
+
   React.useEffect(() => {
     const filterHaveParent = values.filter(
       (value) => value.parentFilterOptionId == null
@@ -162,7 +172,8 @@ const PrevSelect = (props) => {
 
     const existanceLength =
       filterState.filter((value) => value.id === getTitle())?.length || 0;
-    const existance = existanceLength === toCompare.length;
+    const existance =
+      existanceLength === toCompare.length && toCompare.length !== 0;
     // dispatch(setAllAreSelected({ title: getTitle(), hasAll: existance }));
 
     return existance;
@@ -281,6 +292,7 @@ const PrevSelect = (props) => {
                   filterState={filterState}
                   onClick={handleSelectAll}
                   display={"All"}
+                  ref={allButton}
                 />
               )}
               {getOptionsAfterSearch()

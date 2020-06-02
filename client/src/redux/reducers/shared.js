@@ -98,13 +98,31 @@ const sharedReducer = (state = sharedState, action) => {
         filterState: newFilterState,
       };
     case DELETE_FILTER:
-      const afterEdit = state.filterState
+      //in case of chip all
+      // if (action.filter.value === "All") {
+      //   return {
+      //     ...state,
+      //     filterState: [
+      //       ...state.filterState.filter(
+      //         (filter) => filter.id !== action.filter.id
+      //       ),
+      //     ],
+      //   };
+      // }
+      debugger;
+      let afterEdit = state.filterState
         .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter(
           (filter) =>
             filter.id !== action.filter.id ||
             filter.value !== action.filter.value
         );
+
+      if (action.filter.value === "All") {
+        afterEdit = state.filterState
+          .filter((filter) => filter.lvl <= action.filter.lvl)
+          .filter((filter) => filter.id !== action.filter.id);
+      }
       return {
         ...state,
         filterState: [...afterEdit],
