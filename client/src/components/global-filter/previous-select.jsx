@@ -275,7 +275,7 @@ const PrevSelect = (props) => {
               {props.lvl !== 0 && (
                 <InputBase placeholder={getTitle()} onChange={handlechange} />
               )}
-              <Chosen filters={getChosen()} />
+              {/* <Chosen filters={getChosen()} /> */}
             </div>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
