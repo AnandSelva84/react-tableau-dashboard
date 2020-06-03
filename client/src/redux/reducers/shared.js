@@ -109,7 +109,6 @@ const sharedReducer = (state = sharedState, action) => {
       //     ],
       //   };
       // }
-      debugger;
       let afterEdit = state.filterState
         .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter(

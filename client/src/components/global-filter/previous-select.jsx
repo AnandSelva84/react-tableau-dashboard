@@ -105,7 +105,6 @@ const PrevSelect = (props) => {
 
   const handleClick = (ParentName, value, lvl, ID, parentId) => {
     const id = ParentName;
-    debugger;
     if (lvl === 0 && isExist(filterState, id, value, ID)) return;
     !isExist(filterState, id, value, ID)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId }))

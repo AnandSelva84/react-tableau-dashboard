@@ -13,6 +13,7 @@ import { isExist } from "../../redux/methods/is-exist";
 import theme from "../../theme/layout";
 import "./sub-header.css";
 import { Select } from "../../components/auto-complete-select/auto-complete-select";
+import { reFormat } from "../../redux/methods/re-format-response";
 
 const SubHeader = () => {
   const {
@@ -25,6 +26,7 @@ const SubHeader = () => {
   const createChip = (id, value) => `${id} : ${value}`;
   const isVisiable = filterState.length > 0;
   const [ids, setIds] = useState([]);
+  const chosenIds = filterState.map((filter) => filter.ID) || [];
 
   //in case you delete a parent without child
   //filter the cildren that have no parent exitst
@@ -44,13 +46,28 @@ const SubHeader = () => {
     return color;
   };
 
+  const hasParentTest = (parentId) => {
+    let hasId = chosenIds.find((id) => id === parentId);
+    if (hasId === 0) hasId = 1;
+    return !!hasId;
+  };
+
   const getChips = () => {
     if (filterState.length === 0) return appliedFilters;
     else return filterState;
   };
 
-  const getMax = (id) => {
+  const howManyPossible = (id) => {};
+
+  const getMax = (id, lvl) => {
     //id in filter state is equal to filter.title iin newFilters
+
+    const pureOptions = reFormat(newFilters);
+    const options = pureOptions.filter(
+      (value) => hasParentTest(value.parentFilterOptionId) || lvl === 0
+    );
+    console.log("chips true posible options", options);
+
     return (
       newFilters.filter((filter) => filter.title === id)[0]?.values.length || 0
     );
@@ -62,9 +79,31 @@ const SubHeader = () => {
 
   const checkCurrent = () => {
     const allChips = getChips();
+    const pureOptions = reFormat(newFilters);
+
     let hasAll = [];
     allChips.forEach((value) => {
-      const match = howManyRepeated(value.id) === getMax(value.id);
+      if (value.id === "Business Portfolio") {
+        console.log("chips possible for id ", value.id);
+        console.log("chips possible new chosen ", chosenIds);
+        console.log(
+          "chips possible new filters after search ",
+          newFilters
+            .filter((filter) => filter.title === value.id)[0]
+            .values.filter((filter) =>
+              chosenIds.includes(filter.parent_filter_option)
+            )?.length || 0
+        );
+      }
+
+      const possible =
+        newFilters
+          .filter((filter) => filter.title === value.id)[0]
+          ?.values.filter((filter) =>
+            chosenIds.includes(filter.parent_filter_option)
+          )?.length || 0;
+
+      const match = howManyRepeated(value.id) === possible;
       if (match) {
         if (!hasAll.find((filter) => filter.id === value.id))
           hasAll.push(value);
