@@ -52,3 +52,50 @@ export const reFormat = (filters) => {
   console.log("refactor finish", afterRefactor);
   return afterRefactor;
 };
+
+const getIds = (array, filter_id) => {
+  const ids = array
+    .filter((filter) => filter.filter_id === filter_id)
+    .map((filter) => filter.values)
+    ?.map((option) => option.filter_option);
+  console.log("fill get ids", ids);
+  return ids;
+};
+export const getPossibleChoicesToFill = (newFilters, local, onAccept) => {
+  const localIds = ["Business"];
+  newFilters.forEach((newFilter) => {
+    if (newFilter.level > 1) {
+      const possibleForTitle = newFilters.filter(
+        (filter) => filter.filter_id === newFilter.filter_id
+      )[0].values;
+      console.log("fill possible ", possibleForTitle);
+      console.log("fill for  ", newFilter.title);
+      // const values = possibleForTitle.map((poss) => poss.values);
+      // console.log("fill values", values);
+
+      const afterFilter = possibleForTitle.filter((value) =>
+        localIds.includes(value?.parent_filter_option)
+      );
+      console.log("fill after Filter", afterFilter);
+      localIds.push(...afterFilter.map((after) => after.filter_option));
+      console.log("fill ids after filtering ", localIds);
+
+      console.log(
+        "fill after filtering accoring to chosen ids ",
+        possibleForTitle.map((poss) => poss.filter_option)
+      );
+    }
+    // console.log(
+    //   "fill after getting ids  ",
+    //   possibleForTitle.map((option) => option.filter_id)
+    // );
+    // if(possibleForTitle.map((option) => option.filter_id)?.length)
+    // localIds.push(getIds(newFilters, newFilter.title));
+    // console.log("fill localids  ", localIds);
+  });
+
+  // return newFilters
+  //   .filter((filter) => filter.title === title)[0]
+  //   .values.filter((filter) => chosenIds.includes(filter.parent_filter_option));
+  return localIds;
+};

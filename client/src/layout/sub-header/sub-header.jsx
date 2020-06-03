@@ -13,7 +13,10 @@ import { isExist } from "../../redux/methods/is-exist";
 import theme from "../../theme/layout";
 import "./sub-header.css";
 import { Select } from "../../components/auto-complete-select/auto-complete-select";
-import { reFormat } from "../../redux/methods/re-format-response";
+import {
+  reFormat,
+  getPossibleChoicesToFill,
+} from "../../redux/methods/re-format-response";
 
 const SubHeader = () => {
   const {
@@ -28,9 +31,21 @@ const SubHeader = () => {
   const [ids, setIds] = useState([]);
   const chosenIds = filterState.map((filter) => filter.ID) || [];
 
+  const addFilter = (id, value, lvl, ID, parentId) => {
+    dispatch(addFilter({ id, value, lvl, ID, parentId }));
+  };
+
   //in case you delete a parent without child
   //filter the cildren that have no parent exitst
-  React.useEffect(() => {}, [filterState]);
+  React.useEffect(() => {
+    if (!!newFilters) {
+      newFilters.forEach((newFilter) => {
+        const ids = console.log(
+          getPossibleChoicesToFill(newFilters, chosenIds)
+        );
+      });
+    }
+  }, [newFilters]);
 
   const handleClick = (id, value, lvl) => {
     dispatch(deleteFilter({ id, value, lvl }));
@@ -52,12 +67,17 @@ const SubHeader = () => {
     return !!hasId;
   };
 
+  const getOptions = (values, lvl) => {
+    const options = values?.filter(
+      (value) => hasParentTest(value?.parent_filter_option) || lvl === 1
+    );
+    return options;
+  };
+
   const getChips = () => {
     if (filterState.length === 0) return appliedFilters;
     else return filterState;
   };
-
-  const howManyPossible = (id) => {};
 
   const getMax = (id, lvl) => {
     //id in filter state is equal to filter.title iin newFilters
@@ -81,29 +101,45 @@ const SubHeader = () => {
     const allChips = getChips();
     const pureOptions = reFormat(newFilters);
 
+    newFilters.forEach((newFilter) => {
+      // console.log(
+      //   "id get Options",
+      //   getOptions(newFilter.values, newFilter.level)
+      // );
+      console.log("id get Options for id", newFilter.title);
+    });
+
     let hasAll = [];
     allChips.forEach((value) => {
-      if (value.id === "Business Portfolio") {
-        console.log("chips possible for id ", value.id);
-        console.log("chips possible new chosen ", chosenIds);
-        console.log(
-          "chips possible new filters after search ",
-          newFilters
-            .filter((filter) => filter.title === value.id)[0]
-            .values.filter((filter) =>
-              chosenIds.includes(filter.parent_filter_option)
-            )?.length || 0
-        );
-      }
+      // console.log("------------ -------");
+      // console.log("chips possible for id ", value.id);
+      // console.log("chips possible new chosen ", chosenIds);
+      // console.log(
+      //   "chips possible new filters after search ",
+      //   newFilters
+      //     .filter((filter) => filter.title === value.id)[0]
+      //     ?.values.filter((filter) =>
+      //       chosenIds.includes(filter.parent_filter_option)
+      //     )
+      // );
+      console.log("------------ -------");
 
       const possible =
         newFilters
           .filter((filter) => filter.title === value.id)[0]
-          ?.values.filter((filter) =>
-            chosenIds.includes(filter.parent_filter_option)
+          ?.values.filter((value) =>
+            chosenIds.includes(value.parent_filter_option)
           )?.length || 0;
 
-      const match = howManyRepeated(value.id) === possible;
+      const chosenOne = newFilters.filter(
+        (filter) => filter.title === value.id
+      )[0];
+
+      const newPossible = getOptions(chosenOne?.values, chosenOne?.level);
+
+      console.log("id get Options", newPossible);
+      if (!!!newPossible) return;
+      const match = howManyRepeated(value.id) === newPossible?.length;
       if (match) {
         if (!hasAll.find((filter) => filter.id === value.id))
           hasAll.push(value);
