@@ -52,8 +52,8 @@ const SubHeader = () => {
   };
 
   const isApplied = (ID) => {
-    console.log("applied are ", appliedFilters);
-    console.log("applied are ", appliedFilters);
+    // console.log("applied are ", appliedFilters);
+    // console.log("applied are ", appliedFilters);
 
     const color = !!appliedFilters.find((filter) => filter.ID === ID)
       ? "#80deea"
@@ -68,6 +68,8 @@ const SubHeader = () => {
   };
 
   const getOptions = (values, lvl) => {
+    if (lvl === 5) console.log("in id get ", values);
+
     const options = values?.filter(
       (value) => hasParentTest(value?.parent_filter_option) || lvl === 1
     );
@@ -86,7 +88,7 @@ const SubHeader = () => {
     const options = pureOptions.filter(
       (value) => hasParentTest(value.parentFilterOptionId) || lvl === 0
     );
-    console.log("chips true posible options", options);
+    // console.log("chips true posible options", options);
 
     return (
       newFilters.filter((filter) => filter.title === id)[0]?.values.length || 0
@@ -106,7 +108,7 @@ const SubHeader = () => {
       //   "id get Options",
       //   getOptions(newFilter.values, newFilter.level)
       // );
-      console.log("id get Options for id", newFilter.title);
+      // console.log("id get Options for id", newFilter.title);
     });
 
     let hasAll = [];
@@ -122,7 +124,7 @@ const SubHeader = () => {
       //       chosenIds.includes(filter.parent_filter_option)
       //     )
       // );
-      console.log("------------ -------");
+      // console.log("------------ -------");
 
       const possible =
         newFilters
@@ -131,13 +133,35 @@ const SubHeader = () => {
             chosenIds.includes(value.parent_filter_option)
           )?.length || 0;
 
-      const chosenOne = newFilters.filter(
+      // const chosenOne = newFilters.filter(
+      //   (filter) => filter.title === value.id
+      // )[0];
+
+      const allpossobilesinNewFilter = newFilters.filter(
         (filter) => filter.title === value.id
+      );
+
+      const chosenOne = allpossobilesinNewFilter?.filter((po) =>
+        po.values.map((val) => val.filter_value).includes(value.value)
       )[0];
+
+      if (value.lvl === 4) {
+        debugger;
+        // console.log("how many of these chip", AnotherchosenOne);
+        allpossobilesinNewFilter.filter((po) =>
+          po.values.includes(value.value)
+        );
+        console.log(
+          "how many of these",
+          allpossobilesinNewFilter.filter((po) =>
+            po.values.map((val) => val.filter_value).includes(value.value)
+          )
+        );
+      }
 
       const newPossible = getOptions(chosenOne?.values, chosenOne?.level);
 
-      console.log("id get Options", newPossible);
+      // console.log("id get Options", newPossible);
       if (!!!newPossible) return;
       const match = howManyRepeated(value.id) === newPossible?.length;
       if (match) {
@@ -152,7 +176,7 @@ const SubHeader = () => {
   React.useEffect(() => {
     const idsThatHasAll = checkCurrent();
     setIds([...idsThatHasAll]);
-    console.log("chip array ids", idsThatHasAll);
+    // console.log("chip array ids", idsThatHasAll);
   }, [filterState]);
 
   const reFormatChips = () => {

@@ -103,12 +103,12 @@ const PrevSelect = (props) => {
     return !!hasId;
   };
 
-  const handleClick = (ParentName, value, lvl, ID, parentId) => {
+  const handleClick = (ParentName, value, lvl, ID, parentId, filter_id) => {
     const id = ParentName;
     if (lvl === 0 && isExist(filterState, id, value, ID)) return;
     !isExist(filterState, id, value, ID)
-      ? dispatch(addFilter({ id, value, lvl, ID, parentId }))
-      : dispatch(deleteFilter({ id, value, lvl, ID, parentId }));
+      ? dispatch(addFilter({ id, value, lvl, ID, parentId, filter_id }))
+      : dispatch(deleteFilter({ id, value, lvl, ID, parentId, filter_id }));
   };
 
   const getChosen = () => {
@@ -317,7 +317,8 @@ const PrevSelect = (props) => {
                         option.filter_value_text,
                         props.lvl,
                         option.filterOptionId,
-                        option.parentFilterOptionId
+                        option.parentFilterOptionId,
+                        props.id
                       )
                     }
                   />

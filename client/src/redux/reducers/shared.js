@@ -74,6 +74,8 @@ const sharedReducer = (state = sharedState, action) => {
         darkMode: action.state,
       };
     case ADD_FILTER:
+      console.log("action", action.filter);
+
       const hasParentTest = (id) => {
         state.filterState.find((value) => value.ID === id);
       };
