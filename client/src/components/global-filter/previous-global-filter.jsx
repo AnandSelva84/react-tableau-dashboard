@@ -134,46 +134,44 @@ const PrevGlobalFilters = React.memo(() => {
     return lvls.includes(lvl);
   };
 
-  React.useEffect(() => {
-    if (!!newFilters) {
-      let loc = [];
-      if (initialLoaded) {
-        return;
-      }
-      newFilters.forEach((filter, index) => {
-        const afterChange = format(filter.filter_id);
-        if (afterChange.values.length) {
-          const lvls = newFilters.map((f) => f.level);
-          const stateLvls = filterState.map((f) => f.lvl);
-          const lvl = format(filter.filter_id).level;
-          const lvlExistance = Math.max(...lvls) - 1 === Math.max(...stateLvls);
-          if (!lvlExistance && lvl !== 0) {
-            loc = [
-              ...loc,
-              ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
-            ];
-            console.log("fullState current array", loc);
-            dispatch(
-              editFilterState([
-                ...loc,
-                {
-                  ID: "Business",
-                  id: "Hierarchies",
-                  lvl: 0,
-                  parentId: null,
-                  value: "Business",
-                },
-              ])
-            );
-            // dispatch
-          } else {
-            console.log("fullState final array", loc);
-            if (lvl !== 0) setInitialLoaded(true);
-          }
-        }
-      });
-    }
-  }, [chosenIds]);
+  // React.useEffect(() => {
+  //   if (!!newFilters) {
+  //     let loc = [];
+  //     if (initialLoaded) {
+  //       return;
+  //     }
+  //     newFilters.forEach((filter, index) => {
+  //       const afterChange = format(filter.filter_id);
+  //       if (afterChange.values.length) {
+  //         const lvls = newFilters.map((f) => f.level);
+  //         const stateLvls = filterState.map((f) => f.lvl);
+  //         const lvl = format(filter.filter_id).level;
+  //         const stateIsFull = Math.max(...lvls) - 1 === Math.max(...stateLvls);
+  //         if (!stateIsFull && lvl !== 0) {
+  //           loc = [
+  //             ...loc,
+  //             ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
+  //           ];
+  //           dispatch(
+  //             editFilterState([
+  //               ...loc,
+  //               {
+  //                 ID: "Business",
+  //                 id: "Hierarchies",
+  //                 lvl: 0,
+  //                 parentId: null,
+  //                 value: "Business",
+  //               },
+  //             ])
+  //           );
+  //           // dispatch
+  //         } else {
+  //           if (lvl !== 0) setInitialLoaded(true);
+  //         }
+  //       }
+  //     });
+  //   }
+  // }, [chosenIds]);
 
   React.useEffect(() => {
     console.log("local fullState", localFilterState);

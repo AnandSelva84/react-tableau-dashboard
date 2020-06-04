@@ -17,12 +17,15 @@ import {
 } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
+import { fromOptionsToChips } from "../../redux/methods/re-format-response";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();
 
   const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
   const fullURL = window.location.href;
+  const { filters: Filters, newFilters, filterState } = useData().sharedReducer;
+  const chosenIds = filterState.map((filter) => filter.ID) || [];
 
   const domain = fullURL.substring(
     fullURL.lastIndexOf(":") + 1,
@@ -31,6 +34,7 @@ const Main = React.memo(() => {
 
   const app = domain === "3000" ? "amp" : "kid";
   const { data, loading } = useFetch(`${getInfoURL}/${app}`);
+  const [initialLoaded, setInitialLoaded] = React.useState(false);
 
   //Change this to get css class from api and apply background
   const mainStyle = app === "amp" ? "" : "dark";
@@ -55,6 +59,121 @@ const Main = React.memo(() => {
   useEffect(() => {
     if (!!filters && !filtersLoading) dispatch(setFilters(filters));
   }, [filters, filtersLoading]);
+
+  const format = (filter_id) => {
+    const AfterMerge = newFilters.map((filter, index) => {
+      const filterLvl = filter.level;
+      return {
+        ...filter,
+        values: [
+          ...filter.values,
+          ...(Filters.filter(
+            (toMerge, toMergeIndex) =>
+              toMerge.level === filterLvl && toMergeIndex !== index
+          )[0]?.values || []),
+        ],
+      };
+    });
+
+    const afterRefactor = AfterMerge.map((filter) => ({
+      filterId: filter.filter_id,
+      filterType: filter.filter_type,
+      parentFilterId: filter.parent_filter,
+      level: filter.level - 1,
+      title: filter.title,
+      values: [
+        ...filter.values.map((value) => ({
+          filterOptionId: value.filter_option,
+          filter_value_text: value.filter_value,
+          filter_display_text: value.filter_display_text,
+          order: value.order,
+          parentFilterOptionId: value.parent_filter_option,
+        })),
+      ],
+    }));
+
+    // console.log("hello ref", afterRefactor);
+    let filterToReturn;
+    afterRefactor.forEach((after) => {
+      if (after.filterId === filter_id) {
+        const a = after.values.filter((value) =>
+          chosenIds.includes(value.parentFilterOptionId)
+        );
+        //you will get filtered values and after with be the chosen filter so return it -- a is values and after is filter
+        console.log("Anew values for id ", after.filterId);
+        // console.log("Anew values ", a);
+        const afterChange = {
+          ...after,
+          values: [...a],
+        };
+        if (!!!a.length) {
+          console.log("Anew filter in case no values ", {
+            ...after,
+            values: [],
+          });
+          filterToReturn = {
+            ...after,
+            values: [],
+          };
+
+          // return {
+          //   ...after,
+          //   values: [],
+          // };
+        }
+
+        if (after.level === 0) {
+          filterToReturn = { ...after };
+        }
+        if (a.length) {
+          console.log("Anew filter in case there is  ", afterChange);
+          filterToReturn = { ...afterChange };
+          // return afterChange;
+        }
+      }
+    });
+
+    return filterToReturn;
+  };
+
+  React.useEffect(() => {
+    if (!!newFilters) {
+      let loc = [];
+      if (initialLoaded) {
+        return;
+      }
+      newFilters.forEach((filter, index) => {
+        const afterChange = format(filter.filter_id);
+        if (afterChange.values.length) {
+          const lvls = newFilters.map((f) => f.level);
+          const stateLvls = filterState.map((f) => f.lvl);
+          const lvl = format(filter.filter_id).level;
+          const stateIsFull = Math.max(...lvls) - 1 === Math.max(...stateLvls);
+          if (!stateIsFull && lvl !== 0) {
+            loc = [
+              ...loc,
+              ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
+            ];
+            dispatch(
+              editFilterState([
+                ...loc,
+                {
+                  ID: "Business",
+                  id: "Hierarchies",
+                  lvl: 0,
+                  parentId: null,
+                  value: "Business",
+                },
+              ])
+            );
+            // dispatch
+          } else {
+            if (lvl !== 0) setInitialLoaded(true);
+          }
+        }
+      });
+    }
+  }, [chosenIds]);
 
   return (
     <div className={style}>
