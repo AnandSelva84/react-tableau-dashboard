@@ -28,6 +28,7 @@ export const reFormat = (filters) => {
   });
 
   console.log("refactor after merge", AfterMerge);
+  //aftermerge should be filtered according to parent in chosen ids
 
   const afterDuplicateDelte = deleteDuplicate(AfterMerge);
   console.log("refactor unique", afterDuplicateDelte);

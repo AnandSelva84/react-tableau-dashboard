@@ -42,7 +42,7 @@ const PrevSelect = (props) => {
   const allButton = React.useRef(null);
 
   React.useEffect(() => {
-    console.log("refrence", allButton);
+    // console.log("refrence", allButton);
 
     if (!!allButton.current) allButton.current.click();
   }, [allButton.current]);
@@ -77,8 +77,8 @@ const PrevSelect = (props) => {
       (filter) =>
         chosenIds.some((id) => id === filter.parentId) || filter.lvl === 0
     );
-    console.log(isParentExist);
-    console.log(afterFilter);
+    // console.log(isParentExist);
+    // console.log(afterFilter);
     // editFilter(afterFilter);
   }, [chosenIds]);
 
@@ -168,6 +168,15 @@ const PrevSelect = (props) => {
   const isAllExisted = () => {
     //compare what is in the filterState and what is in the resposne
     const toCompare = getAllPossibleFilters();
+    // console.log("to compare", toCompare);
+
+    // const allpossobilesinNewFilter = newFilters.filter(
+    //   (filter) => filter.title === getTitle()
+    // );
+
+    // const chosenOne = allpossobilesinNewFilter?.filter((po) =>
+    //   po.values.map((val) => val.filter_value).includes(getOptions().map(option => option.value)[0])
+    // )[0];
 
     const existanceLength =
       filterState.filter((value) => value.id === getTitle())?.length || 0;
@@ -210,23 +219,23 @@ const PrevSelect = (props) => {
   };
 
   const getTitle = () => {
-    console.log("for title get options", getOptions());
+    // console.log("for title get options", getOptions());
+    return props.title;
+    // const localValues = getOptions();
+    // const localId = localValues[0]?.filterOptionId || "";
+    // // console.log("for title", localValues);
+    // // console.log("for title one local id", localId);
 
-    const localValues = getOptions();
-    const localId = localValues[0]?.filterOptionId || "";
-    console.log("for title", localValues);
-    console.log("for title one local id", localId);
-
-    if (props.lvl === 0) return props.title;
-    else {
-      const found = newFilters.find(
-        (filter) =>
-          !!filter.values.find((value) => value.filter_option === localId)
-      );
-      console.log("for title found", found);
-      //this is the other possible value of the same level
-      return found?.title || props.title;
-    }
+    // if (props.lvl === 0) return props.title;
+    // else {
+    //   const found = newFilters.find(
+    //     (filter) =>
+    //       !!filter.values.find((value) => value.filter_option === localId)
+    //   );
+    //   // console.log("for title found", found);
+    //   //this is the other possible value of the same level
+    //   return found?.title || props.title;
+    // }
   };
 
   const panelProps = () => {
@@ -239,12 +248,12 @@ const PrevSelect = (props) => {
     return toReturn;
   };
 
-  console.log(
-    "search ",
-    getOptions().filter((option) =>
-      option.filter_display_text.toLowerCase().includes(searchValue)
-    )
-  );
+  // console.log(
+  //   "search ",
+  //   getOptions().filter((option) =>
+  //     option.filter_display_text.toLowerCase().includes(searchValue)
+  //   )
+  // );
 
   const getOptionsAfterSearch = () => {
     if (!!searchValue) {
