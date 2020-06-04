@@ -84,16 +84,28 @@ const sharedReducer = (state = sharedState, action) => {
       );
       console.log(!!hasParent);
 
-      const filterd = state.filterState.filter(
-        (filter) => filter.id !== action.filter.id
-      );
+      const filterd = state.filterState
+        .filter((filter) => filter.lvl <= action.filter.lvl)
+        .filter(
+          (filter) =>
+            filter.id !== action.filter.id ||
+            filter.value !== action.filter.value
+        );
       const hasSameParent = state.filterState.find(
         (filter) => filter.id === action.filter.id
       );
-      const newFilterState =
-        !!hasSameParent && action.filter.lvl === 0
-          ? [...filterd, action.filter]
-          : [...state.filterState, action.filter];
+      // const newFilterState =
+      //   !!hasSameParent && action.filter.lvl === 0
+      //     ? [...filterd, action.filter]
+      //     : [...state.filterState, action.filter];
+
+      const newFilterState = [...filterd, action.filter];
+      if (action.filter.lvl === 0) {
+        return {
+          ...state,
+          filterState: [action.filter],
+        };
+      }
 
       return {
         ...state,
