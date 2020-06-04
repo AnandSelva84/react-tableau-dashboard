@@ -8,6 +8,22 @@ const deleteDuplicate = (array) => {
   return unique;
 };
 
+// filterOptionId: "Business_Bank"
+// filter_display_text: "Bank"
+// filter_value_text: "Bank"
+// order: 1
+// parentFilterOptionId: "Business"
+
+export const fromOptionsToChips = (values, filter) => {
+  return values.map((value) => ({
+    ID: value.filterOptionId,
+    id: filter.title,
+    lvl: filter.level - 1,
+    parentId: value.parentFilterOptionId,
+    value: value.filter_value_text,
+  }));
+};
+
 export const reFormat = (filters) => {
   console.log("refactor raw value", filters);
 

@@ -7,11 +7,15 @@ import { filterModel } from "../../models/filter";
 import PrevSelect from "./previous-select";
 import ControlButtons from "./control-buttons";
 import "./global-filters.css";
-import { reFormat } from "../../redux/methods/re-format-response";
+import {
+  reFormat,
+  fromOptionsToChips,
+} from "../../redux/methods/re-format-response";
 
 const PrevGlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
-  const [loaded, setLoaded] = React.useState(false);
+  const [initialLoaded, setInitialLoaded] = React.useState(false);
+  const [localFilterState, setLocalFilterState] = React.useState([]);
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
   const chosenIds = filterState.map((filter) => filter.ID) || [];
@@ -125,11 +129,55 @@ const PrevGlobalFilters = React.memo(() => {
     return filterToReturn;
   };
 
+  const isLvlExist = (array, lvl) => {
+    const lvls = filterState.map((filter) => filter.lvl);
+    return lvls.includes(lvl);
+  };
+
   React.useEffect(() => {
     if (!!newFilters) {
-      reFormat(newFilters);
+      let loc = [];
+      if (initialLoaded) {
+        return;
+      }
+      newFilters.forEach((filter, index) => {
+        const afterChange = format(filter.filter_id);
+        if (afterChange.values.length) {
+          const lvls = newFilters.map((f) => f.level);
+          const stateLvls = filterState.map((f) => f.lvl);
+          const lvl = format(filter.filter_id).level;
+          const lvlExistance = Math.max(...lvls) - 1 === Math.max(...stateLvls);
+          if (!lvlExistance && lvl !== 0) {
+            loc = [
+              ...loc,
+              ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
+            ];
+            console.log("fullState current array", loc);
+            dispatch(
+              editFilterState([
+                ...loc,
+                {
+                  ID: "Business",
+                  id: "Hierarchies",
+                  lvl: 0,
+                  parentId: null,
+                  value: "Business",
+                },
+              ])
+            );
+            // dispatch
+          } else {
+            console.log("fullState final array", loc);
+            if (lvl !== 0) setInitialLoaded(true);
+          }
+        }
+      });
     }
-  }, [newFilters]);
+  }, [chosenIds]);
+
+  React.useEffect(() => {
+    console.log("local fullState", localFilterState);
+  }, [localFilterState]);
 
   React.useEffect(() => {
     const heighestLvlID = Math.max([...filterState.map((state) => state.lvl)]);
