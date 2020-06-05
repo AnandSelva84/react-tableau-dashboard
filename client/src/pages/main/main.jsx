@@ -18,6 +18,7 @@ import {
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
 import { fromOptionsToChips } from "../../redux/methods/re-format-response";
+import CustomSelect from "../../components/custom-auto-complete/custom-auto-complete";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();

@@ -4,6 +4,9 @@ import {
   ExpansionPanelSummary,
   Typography,
   ExpansionPanelDetails,
+  Paper,
+  TextField,
+  ClickAwayListener,
 } from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -18,6 +21,7 @@ import {
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
 import Option from "../select/option";
+import CustomSelect from "../custom-auto-complete/custom-auto-complete";
 
 //props.values should be filtered before passing it to it's component
 const PrevSelect = (props) => {
@@ -219,23 +223,7 @@ const PrevSelect = (props) => {
   };
 
   const getTitle = () => {
-    // console.log("for title get options", getOptions());
     return props.title;
-    // const localValues = getOptions();
-    // const localId = localValues[0]?.filterOptionId || "";
-    // // console.log("for title", localValues);
-    // // console.log("for title one local id", localId);
-
-    // if (props.lvl === 0) return props.title;
-    // else {
-    //   const found = newFilters.find(
-    //     (filter) =>
-    //       !!filter.values.find((value) => value.filter_option === localId)
-    //   );
-    //   // console.log("for title found", found);
-    //   //this is the other possible value of the same level
-    //   return found?.title || props.title;
-    // }
   };
 
   const panelProps = () => {
@@ -248,12 +236,23 @@ const PrevSelect = (props) => {
     return toReturn;
   };
 
-  // console.log(
-  //   "search ",
-  //   getOptions().filter((option) =>
-  //     option.filter_display_text.toLowerCase().includes(searchValue)
-  //   )
-  // );
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleOpen = () => {
+    setShowMenu(true);
+  };
+
+  const hanldeClose = () => {
+    setShowMenu(false);
+  };
+
+  const toggle = () => {
+    showMenu ? hanldeClose() : handleOpen();
+  };
+
+  const handleTextChange = (text) => {
+    props.onTextChange(text);
+  };
 
   const getOptionsAfterSearch = () => {
     if (!!searchValue) {
@@ -264,36 +263,30 @@ const PrevSelect = (props) => {
       return getOptions();
     }
   };
-
-  return (
-    <>
-      {true && (
-        <ExpansionPanel {...panelProps()}>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {props.lvl === 0 && (
-                <Typography style={{ fontSize: "1rem" }}>
-                  {getTitle()}
-                </Typography>
-              )}
-              {props.lvl !== 0 && (
-                <InputBase placeholder={getTitle()} onChange={handlechange} />
-              )}
-              {/* <Chosen filters={getChosen()} /> */}
-            </div>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <div
+  if (true) {
+    return (
+      <ClickAwayListener onClickAway={hanldeClose}>
+        <div style={{ position: "relative", paddingTop: "1rem" }}>
+          <TextField
+            onClick={toggle}
+            fullWidth
+            variant="outlined"
+            onChange={handlechange}
+            placeholder={props?.title || "Unkown"}
+            label={props?.title || "Unkown"}
+          />
+          {showMenu && (
+            <Paper
               style={{
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
-                maxHeight: "5rem",
+                maxHeight: "15rem",
                 overflowY: "auto",
+                position: "absolute",
+                top: "4.5rem",
+                minWidth: "100%",
+                zIndex: "100",
               }}
             >
               {props.lvl !== 0 && (
@@ -332,11 +325,84 @@ const PrevSelect = (props) => {
                     }
                   />
                 ))}
-            </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      )}
-    </>
-  );
+            </Paper>
+          )}
+        </div>
+      </ClickAwayListener>
+    );
+  } else
+    return (
+      <>
+        {true && (
+          <ExpansionPanel {...panelProps()}>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {props.lvl === 0 && (
+                  <Typography style={{ fontSize: "1rem" }}>
+                    {getTitle()}
+                  </Typography>
+                )}
+                {props.lvl !== 0 && (
+                  <InputBase placeholder={getTitle()} onChange={handlechange} />
+                )}
+                {/* <Chosen filters={getChosen()} /> */}
+              </div>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  maxHeight: "5rem",
+                  overflowY: "auto",
+                }}
+              >
+                {props.lvl !== 0 && (
+                  <Option
+                    checked={isAllExisted()}
+                    filterState={filterState}
+                    onClick={handleSelectAll}
+                    display={"All"}
+                    ref={allButton}
+                  />
+                )}
+                {getOptionsAfterSearch()
+                  .sort(sortOptions)
+                  .map((option) => (
+                    <Option
+                      checked={isExist(
+                        filterState,
+                        getTitle(),
+                        option.filter_value_text
+                      )}
+                      value={option.filter_value_text}
+                      filterState={filterState}
+                      id={option.filterOptionId}
+                      parentId={option.parentFilterOptionId}
+                      lvl={props.lvl}
+                      display={option.filter_display_text}
+                      onClick={() =>
+                        handleClick(
+                          getTitle(),
+                          option.filter_value_text,
+                          props.lvl,
+                          option.filterOptionId,
+                          option.parentFilterOptionId,
+                          props.id
+                        )
+                      }
+                    />
+                  ))}
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        )}
+      </>
+    );
 };
 export default PrevSelect;
