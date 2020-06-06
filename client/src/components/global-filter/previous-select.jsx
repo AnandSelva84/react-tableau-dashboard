@@ -263,6 +263,7 @@ const PrevSelect = (props) => {
       return getOptions();
     }
   };
+  // if (props.lvl !== 0) {
   if (true) {
     return (
       <ClickAwayListener onClickAway={hanldeClose}>
@@ -330,79 +331,83 @@ const PrevSelect = (props) => {
         </div>
       </ClickAwayListener>
     );
-  } else
-    return (
-      <>
-        {true && (
-          <ExpansionPanel {...panelProps()}>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {props.lvl === 0 && (
-                  <Typography style={{ fontSize: "1rem" }}>
-                    {getTitle()}
-                  </Typography>
-                )}
-                {props.lvl !== 0 && (
-                  <InputBase placeholder={getTitle()} onChange={handlechange} />
-                )}
-                {/* <Chosen filters={getChosen()} /> */}
-              </div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  maxHeight: "5rem",
-                  overflowY: "auto",
-                }}
-              >
-                {props.lvl !== 0 && (
-                  <Option
-                    checked={isAllExisted()}
-                    filterState={filterState}
-                    onClick={handleSelectAll}
-                    display={"All"}
-                    ref={allButton}
-                  />
-                )}
-                {getOptionsAfterSearch()
-                  .sort(sortOptions)
-                  .map((option) => (
-                    <Option
-                      checked={isExist(
-                        filterState,
-                        getTitle(),
-                        option.filter_value_text
-                      )}
-                      value={option.filter_value_text}
-                      filterState={filterState}
-                      id={option.filterOptionId}
-                      parentId={option.parentFilterOptionId}
-                      lvl={props.lvl}
-                      display={option.filter_display_text}
-                      onClick={() =>
-                        handleClick(
-                          getTitle(),
-                          option.filter_value_text,
-                          props.lvl,
-                          option.filterOptionId,
-                          option.parentFilterOptionId,
-                          props.id
-                        )
-                      }
-                    />
-                  ))}
-              </div>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        )}
-      </>
-    );
+  } else {
+    return null;
+  }
 };
 export default PrevSelect;
+
+// else
+//     return (
+//       <>
+//         {true && (
+//           <ExpansionPanel {...panelProps()}>
+//             <ExpansionPanelSummary
+//               expandIcon={<ExpandMoreIcon />}
+//               aria-controls="panel1a-content"
+//               id="panel1a-header"
+//             >
+//               <div style={{ display: "flex", flexDirection: "column" }}>
+//                 {props.lvl === 0 && (
+//                   <Typography style={{ fontSize: "1rem" }}>
+//                     {getTitle()}
+//                   </Typography>
+//                 )}
+//                 {props.lvl !== 0 && (
+//                   <InputBase placeholder={getTitle()} onChange={handlechange} />
+//                 )}
+//                 {/* <Chosen filters={getChosen()} /> */}
+//               </div>
+//             </ExpansionPanelSummary>
+//             <ExpansionPanelDetails>
+//               <div
+//                 style={{
+//                   display: "flex",
+//                   flexDirection: "column",
+//                   width: "100%",
+//                   maxHeight: "5rem",
+//                   overflowY: "auto",
+//                 }}
+//               >
+//                 {props.lvl !== 0 && (
+//                   <Option
+//                     checked={isAllExisted()}
+//                     filterState={filterState}
+//                     onClick={handleSelectAll}
+//                     display={"All"}
+//                     ref={allButton}
+//                   />
+//                 )}
+//                 {getOptionsAfterSearch()
+//                   .sort(sortOptions)
+//                   .map((option) => (
+//                     <Option
+//                       checked={isExist(
+//                         filterState,
+//                         getTitle(),
+//                         option.filter_value_text
+//                       )}
+//                       value={option.filter_value_text}
+//                       filterState={filterState}
+//                       id={option.filterOptionId}
+//                       parentId={option.parentFilterOptionId}
+//                       lvl={props.lvl}
+//                       display={option.filter_display_text}
+//                       onClick={() =>
+//                         handleClick(
+//                           getTitle(),
+//                           option.filter_value_text,
+//                           props.lvl,
+//                           option.filterOptionId,
+//                           option.parentFilterOptionId,
+//                           props.id
+//                         )
+//                       }
+//                     />
+//                   ))}
+//               </div>
+//             </ExpansionPanelDetails>
+//           </ExpansionPanel>
+//         )}
+//       </>
+//     );

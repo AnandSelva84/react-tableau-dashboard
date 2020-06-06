@@ -14,6 +14,7 @@ import {
   CLEAR_FILTERS,
   SET_BODY_CLASS,
   SET_ALL_ARE_SELECTED,
+  SET_CURRENT_MAIN_FILTER,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -27,6 +28,12 @@ const sharedReducer = (state = sharedState, action) => {
       return {
         ...state,
         hasAllSelected: [...newHasAll],
+      };
+
+    case SET_CURRENT_MAIN_FILTER:
+      return {
+        ...state,
+        currentMainFilter: action.name,
       };
     case SET_BODY_CLASS:
       return {

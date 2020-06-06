@@ -11,6 +11,7 @@ import {
   reFormat,
   fromOptionsToChips,
 } from "../../redux/methods/re-format-response";
+import MainSwitch from "../main-switch/main-switch";
 
 const PrevGlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
@@ -192,6 +193,8 @@ const PrevGlobalFilters = React.memo(() => {
   return (
     <>
       <div className="global-wrapper">
+        <MainSwitch />
+
         {show && !!newFilters && (
           <div className="filters-wrapper">
             {newFilters.map((filter) => {

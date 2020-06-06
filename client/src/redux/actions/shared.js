@@ -12,6 +12,12 @@ export const APPLY_FILTERS = "APPLY_FILTERS";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
 export const SET_BODY_CLASS = "SET_BODY_CLASS";
 export const SET_ALL_ARE_SELECTED = "SET_ALL_ARE_SELECTED";
+export const SET_CURRENT_MAIN_FILTER = "SET_CURRENT_MAIN_FILTER";
+
+export const setCurrentMainFilter = (name) => ({
+  type: SET_CURRENT_MAIN_FILTER,
+  name,
+});
 
 export const setBodyClass = (css) => ({
   type: SET_BODY_CLASS,

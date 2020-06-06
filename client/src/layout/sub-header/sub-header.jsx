@@ -146,7 +146,6 @@ const SubHeader = () => {
       )[0];
 
       if (value.lvl === 4) {
-        debugger;
         // console.log("how many of these chip", AnotherchosenOne);
         allpossobilesinNewFilter.filter((po) =>
           po.values.includes(value.value)

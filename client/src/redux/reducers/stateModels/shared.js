@@ -31,6 +31,7 @@ const sharedState = {
   ],
   body_class: null,
   hasAllSelected: [],
+  currentMainFilter: "Business",
 };
 
 export default sharedState;

@@ -19,13 +19,19 @@ import response from "../../models/getInfo";
 import HomePage from "../home/home";
 import { fromOptionsToChips } from "../../redux/methods/re-format-response";
 import CustomSelect from "../../components/custom-auto-complete/custom-auto-complete";
+import MainSwitch from "../../components/main-switch/main-switch";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();
 
   const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
   const fullURL = window.location.href;
-  const { filters: Filters, newFilters, filterState } = useData().sharedReducer;
+  const {
+    filters: Filters,
+    newFilters,
+    filterState,
+    currentMainFilter,
+  } = useData().sharedReducer;
   const chosenIds = filterState.map((filter) => filter.ID) || [];
 
   const domain = fullURL.substring(
@@ -36,12 +42,41 @@ const Main = React.memo(() => {
   const app = domain === "3000" ? "amp" : "kid";
   const { data, loading } = useFetch(`${getInfoURL}/${app}`);
   const [initialLoaded, setInitialLoaded] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+  const [mainFilter, setMainFilter] = React.useState({
+    ID: "Business",
+    id: "Hierarchies",
+    lvl: 0,
+    parentId: null,
+    value: "Business",
+  });
+
+  const getMainFilterAccordingToName = (name) => {
+    const filter =
+      name === "Business"
+        ? {
+            ID: "Business",
+            id: "Hierarchies",
+            lvl: 0,
+            parentId: null,
+            value: "Business",
+          }
+        : {
+            ID: "Legacy",
+            id: "Hierarchies",
+            lvl: 0,
+            parentId: null,
+            value: "Legacy",
+          };
+    return filter;
+  };
 
   //Change this to get css class from api and apply background
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
   useEffect(() => {
+    setLoaded(true);
     const savedFilters = JSON.parse(localStorage.getItem("filters"));
     if (!!savedFilters && savedFilters.length > 0)
       dispatch(editFilterState(savedFilters));
@@ -60,6 +95,19 @@ const Main = React.memo(() => {
   useEffect(() => {
     if (!!filters && !filtersLoading) dispatch(setFilters(filters));
   }, [filters, filtersLoading]);
+
+  React.useEffect(() => {
+    // setInitialLoaded(false);
+    if (loaded) {
+      setInitialLoaded(false);
+      console.log("current name al initial ", mainFilter);
+      setMainFilter(getMainFilterAccordingToName(currentMainFilter));
+      console.log(
+        "current name al",
+        getMainFilterAccordingToName(currentMainFilter)
+      );
+    }
+  }, [currentMainFilter]);
 
   const format = (filter_id) => {
     const AfterMerge = newFilters.map((filter, index) => {
@@ -138,6 +186,8 @@ const Main = React.memo(() => {
   };
 
   React.useEffect(() => {
+    console.log("change in ids initial loaded", initialLoaded);
+
     if (!!newFilters) {
       let loc = [];
       if (initialLoaded) {
@@ -155,21 +205,15 @@ const Main = React.memo(() => {
               ...loc,
               ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
             ];
-            dispatch(
-              editFilterState([
-                ...loc,
-                {
-                  ID: "Business",
-                  id: "Hierarchies",
-                  lvl: 0,
-                  parentId: null,
-                  value: "Business",
-                },
-              ])
-            );
+            dispatch(editFilterState([...loc, mainFilter]));
             // dispatch
           } else {
             if (lvl !== 0) setInitialLoaded(true);
+            else {
+              console.log("change in ids initial shoyuld be false here ");
+
+              setInitialLoaded(false);
+            }
           }
         }
       });
