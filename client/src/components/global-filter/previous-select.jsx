@@ -17,6 +17,7 @@ import {
   deleteFilter,
   editFilterState,
   setAllAreSelected,
+  setAllCheckArray,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
@@ -41,6 +42,7 @@ const PrevSelect = (props) => {
   } = useData().sharedReducer;
 
   const [searchValue, setSearchValue] = useState("");
+  const [loaded, setLoaded] = useState(false);
   const [checkedArray, setcheCheckedArray] = useState([]);
   const [allCheck, setAllCheck] = useState(false);
 
@@ -92,6 +94,16 @@ const PrevSelect = (props) => {
     },
     [chosenIds]
   );
+
+  React.useEffect(() => {
+    setLoaded(true);
+    selectAll();
+    return () => {
+      dispatch(
+        setAllCheckArray([...allCheckArray.filter((f) => f !== props.title)])
+      );
+    };
+  }, []);
 
   React.useEffect(() => {
     const isParentExist = filterState.find((filter) =>
@@ -192,13 +204,15 @@ const PrevSelect = (props) => {
   };
 
   const selectAll = () => {
-    setShowMenu(false);
+    // setShowMenu(false);
 
+    // setAllCheck(true);
     dispatch(editFilterState([...newState]));
   };
 
   const unSelectAll = () => {
-    setShowMenu(false);
+    // setShowMenu(false);
+    // setAllCheck(false);
 
     dispatch(editFilterState([...possibleAllSelect]));
   };
@@ -265,6 +279,27 @@ const PrevSelect = (props) => {
       setAllCheck(false);
     }
   }, [checkedArray]);
+
+  React.useEffect(() => {
+    console.log("allCheckArray for id ", props.title);
+    console.log("allCheckArray state ", allCheck);
+    if (allCheck && loaded) {
+      console.log("allCheckArray new array ", [...allCheckArray, props.title]);
+
+      dispatch(setAllCheckArray([...allCheckArray, props.title]));
+    }
+    if (!allCheck && loaded) {
+      dispatch(
+        setAllCheckArray([...allCheckArray.filter((f) => f !== props.title)])
+      );
+    }
+  }, [allCheck]);
+
+  React.useEffect(() => {
+    console.log("allCheckArray", allCheckArray);
+    if (allCheckArray.length === props.maxLength) {
+    }
+  }, [allCheckArray]);
 
   React.useEffect(() => {}, [allCheck]);
 

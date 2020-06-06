@@ -199,7 +199,8 @@ const SubHeader = () => {
           }}
         >
           <>{/* <Select options={["hello"]} /> */}</>
-          {reFormatChips().map((filter) => (
+          {/* {reFormatChips().map((filter) => ( */}
+          {[].map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}
               style={{

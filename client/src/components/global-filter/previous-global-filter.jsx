@@ -188,7 +188,9 @@ const PrevGlobalFilters = React.memo(() => {
     });
   }, [chosenIds]);
 
-  const heighestLvlID = Math.max([...filterState.map((state) => state.lvl)]);
+  const heighestLvlFilter = Math.max(
+    ...[...newFilters.map((filter) => filter.level)]
+  );
 
   return (
     <>
@@ -203,6 +205,7 @@ const PrevGlobalFilters = React.memo(() => {
               if (afterChange.values.length)
                 return (
                   <PrevSelect
+                    maxLength={heighestLvlFilter - 1}
                     id={afterChange.filterId}
                     // values={filter.values}
                     values={afterChange.values}
