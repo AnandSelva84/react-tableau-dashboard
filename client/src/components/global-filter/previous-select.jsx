@@ -204,14 +204,14 @@ const PrevSelect = (props) => {
   };
 
   const selectAll = () => {
-    // setShowMenu(false);
+    setShowMenu(false);
 
     // setAllCheck(true);
     dispatch(editFilterState([...newState]));
   };
 
   const unSelectAll = () => {
-    // setShowMenu(false);
+    setShowMenu(false);
     // setAllCheck(false);
 
     dispatch(editFilterState([...possibleAllSelect]));
