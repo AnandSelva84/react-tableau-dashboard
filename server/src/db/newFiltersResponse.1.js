@@ -23,7 +23,7 @@ const newFiltersResponse = [
       },
     ],
   },
-  //Level - 2 - Legacy 
+  //Level - 2 - Legacy
   {
     level: 2,
     filter_id: "Portfolio",
@@ -44,7 +44,7 @@ const newFiltersResponse = [
         filter_display_text: "Business Of IT",
         order: 2,
         parent_filter_option: "Legacy",
-      }
+      },
     ],
   },
   //Level - 3 - Legacy
@@ -75,8 +75,7 @@ const newFiltersResponse = [
         filter_display_text: "Other (Business of IT)",
         order: 3,
         parent_filter_option: "Legacy_Business_of_IT",
-      }
-
+      },
     ],
   },
   //Level - 4 - Legacy
@@ -100,7 +99,7 @@ const newFiltersResponse = [
         filter_display_text: "Bank AML Program",
         order: 2,
         parent_filter_option: "Legacy_Bank_Omni_Channel",
-      }
+      },
     ],
   },
   //Level - 5 - Legacy
@@ -112,19 +111,23 @@ const newFiltersResponse = [
     parent_filter: "Project",
     values: [
       {
-        filter_option: "Legacy_Info_not_available_(_Agile_Process_Configuration_V1.0)",
+        filter_option:
+          "Legacy_Info_not_available_(_Agile_Process_Configuration_V1.0)",
         filter_value: "Info not available (_Agile Process Configuration V1.0)",
-        filter_display_text: "Info not available (_Agile Process Configuration V1.0)",
+        filter_display_text:
+          "Info not available (_Agile Process Configuration V1.0)",
         order: 1,
         parent_filter_option: "Legacy_Bank_OMNI_IT_ART",
       },
       {
-        filter_option: "Legacy_Info_not_available_(_Recycle_Bin_Process_Agile_V1.0)",
+        filter_option:
+          "Legacy_Info_not_available_(_Recycle_Bin_Process_Agile_V1.0)",
         filter_value: "Info not available (__Recycle Bin Process Agile V1)",
-        filter_display_text: "Info not available (__Recycle Bin Process Agile V1)",
+        filter_display_text:
+          "Info not available (__Recycle Bin Process Agile V1)",
         order: 2,
         parent_filter_option: "Legacy_Bank_AML_Program",
-      }
+      },
     ],
   },
 
@@ -149,11 +152,11 @@ const newFiltersResponse = [
         filter_display_text: "CAO",
         order: 2,
         parent_filter_option: "Business",
-      }
+      },
     ],
   },
-   //Level -3 - Business
-   {
+  //Level -3 - Business
+  {
     level: 3,
     filter_id: "TIABusinessPortfolio",
     title: "Business Portfolio",
@@ -173,11 +176,11 @@ const newFiltersResponse = [
         filter_display_text: "AML",
         order: 2,
         parent_filter_option: "Business_CAO",
-      }
+      },
     ],
   },
-   //Level -4 - Business
-   {
+  //Level -4 - Business
+  {
     level: 4,
     filter_id: "TIAProgram",
     title: "Program Name",
@@ -190,11 +193,11 @@ const newFiltersResponse = [
         filter_display_text: "Bank AML IT Solutions",
         order: 1,
         parent_filter_option: "Business_Bank_AML",
-      }
+      },
     ],
   },
-   //Level -5 - Business
-   {
+  //Level -5 - Business
+  {
     level: 5,
     filter_id: "TIATeam",
     title: "Team Name",
@@ -207,7 +210,7 @@ const newFiltersResponse = [
         filter_display_text: "AML System Teams",
         order: 1,
         parent_filter_option: "Business_Bank_AML_IT_Solutions",
-      }
+      },
     ],
   },
 ];

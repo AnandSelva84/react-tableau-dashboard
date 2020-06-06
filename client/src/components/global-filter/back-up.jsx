@@ -35,28 +35,13 @@ const PrevSelect = (props) => {
 
   const { filters, filterState, newFilters } = useData().sharedReducer;
 
+  const [newFilterState, setNewFilterState] = useState(filterState);
   const [searchValue, setSearchValue] = useState("");
-  const [checkedArray, setcheCheckedArray] = useState([]);
-  const [allCheck, setAllCheck] = useState(false);
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
   const [localFilters, setLocalFilters] = useState(props.values);
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
-
-  const possibleAllSelect = filterState.filter(
-    (filter) => filter.id !== props.title
-  );
-  const newState = [
-    ...props.values.map((value) => ({
-      id: props.title,
-      ID: value.filterOptionId,
-      lvl: props.lvl,
-      parentId: value.parentFilterOptionId,
-      value: value.filter_value_text,
-    })),
-    ...possibleAllSelect,
-  ];
 
   const allButton = React.useRef(null);
 
@@ -207,11 +192,22 @@ const PrevSelect = (props) => {
   };
 
   const selectAll = () => {
-    dispatch(editFilterState([...newState]));
+    dispatch(
+      editFilterState([
+        ...filterState,
+        ...getAllPossibleFilters().filter(
+          (value) => !chosenIds.includes(value.ID)
+        ),
+      ])
+    );
   };
 
   const unSelectAll = () => {
-    dispatch(editFilterState([...possibleAllSelect]));
+    dispatch(
+      editFilterState([
+        ...filterState.filter((filter) => filter.id !== getTitle()),
+      ])
+    );
   };
 
   const handleSelectAll = () => {
@@ -219,7 +215,7 @@ const PrevSelect = (props) => {
     const currentSelected = filterState.filter(
       (filter) => filter.id !== getTitle()
     );
-    if (allCheck) {
+    if (AllChecked) {
       unSelectAll();
     } else {
       selectAll();
@@ -241,41 +237,6 @@ const PrevSelect = (props) => {
   };
 
   const [showMenu, setShowMenu] = useState(false);
-
-  const isExistinArray = (array, element) => {
-    return array.includes(element);
-  };
-
-  const handleOptionChange = (checkState, id, parentId) => {
-    if (
-      isExistinArray(
-        checkedArray.map((c) => c.id),
-        id
-      ) &&
-      !checkState
-    ) {
-      setcheCheckedArray([...checkedArray.filter((c) => c.id !== id)]);
-    } else if (
-      !isExistinArray(
-        checkedArray.map((c) => c.id),
-        id
-      ) &&
-      checkState
-    ) {
-      setcheCheckedArray([...checkedArray, { id, checkState, parentId }]);
-    }
-  };
-
-  React.useEffect(() => {
-    console.log("checkArray change for  ", props.title);
-    console.log("checkArray change  ", checkedArray);
-    const f = filterState.filter((filter) => filter.id === props.title).length;
-    if (f === props.values.length) {
-      setAllCheck(true);
-    } else {
-      setAllCheck(false);
-    }
-  }, [checkedArray]);
 
   const handleOpen = () => {
     setShowMenu(true);
@@ -331,22 +292,17 @@ const PrevSelect = (props) => {
             >
               {props.lvl !== 0 && (
                 <Option
-                  checked={allCheck}
+                  checked={isAllExisted()}
                   filterState={filterState}
-                  onClick={() => {
-                    // handleSelectAll();
-                    handleSelectAll();
-                  }}
+                  onClick={handleSelectAll}
                   display={"All"}
                   ref={allButton}
-                  onChange={() => {}}
                 />
               )}
               {getOptionsAfterSearch()
                 .sort(sortOptions)
                 .map((option) => (
                   <Option
-                    onChange={handleOptionChange}
                     checked={isExist(
                       filterState,
                       getTitle(),

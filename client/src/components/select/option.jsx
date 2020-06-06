@@ -27,6 +27,7 @@ const Option = (props) => {
     console.log("option lvl ", lvl);
     console.log("option checked", checked);
     console.log("option filter state ", filterState);
+    props.onChange(checked, props.id, props.parentId);
     const afterEdit = filterState.filter((filter) => filter.lvl <= lvl);
     //only in deletion state
     // if (!checked) dispatch(editFilterState(afterEdit));
@@ -35,7 +36,7 @@ const Option = (props) => {
   return (
     <>
       <CardActionArea
-      ref={props.ref}
+        ref={props.ref}
         style={{ ...select.option }}
         onClick={() => {
           props.onClick();
