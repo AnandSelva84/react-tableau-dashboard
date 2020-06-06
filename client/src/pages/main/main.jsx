@@ -93,7 +93,7 @@ const Main = React.memo(() => {
   }, [data, loading]);
 
   useEffect(() => {
-    if (!!filters && !filtersLoading) dispatch(setFilters(filters));
+    if (!!filters && !filtersLoading) dispatch(setFilters(filters.filters));
   }, [filters, filtersLoading]);
 
   React.useEffect(() => {
