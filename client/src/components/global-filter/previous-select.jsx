@@ -193,6 +193,7 @@ const PrevSelect = (props) => {
 
   const selectAll = () => {
     setShowMenu(false);
+
     dispatch(editFilterState([...newState]));
   };
 
