@@ -32,6 +32,7 @@ const sharedState = {
   body_class: null,
   hasAllSelected: [],
   currentMainFilter: "Business",
+  allCheckArray: [],
 };
 
 export default sharedState;

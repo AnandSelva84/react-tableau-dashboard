@@ -31,7 +31,8 @@ const Option = (props) => {
     const afterEdit = filterState.filter((filter) => filter.lvl <= lvl);
     //only in deletion state
     // if (!checked) dispatch(editFilterState(afterEdit));
-    if (loaded) dispatch(editFilterState(filterAfterChange()));
+
+    // if (loaded) dispatch(editFilterState(filterAfterChange()));
   }, [checked]);
   return (
     <>

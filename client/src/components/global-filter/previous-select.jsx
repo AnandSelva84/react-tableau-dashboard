@@ -33,7 +33,12 @@ const PrevSelect = (props) => {
 
   const dispatch = useDispatch();
 
-  const { filters, filterState, newFilters } = useData().sharedReducer;
+  const {
+    filters,
+    filterState,
+    newFilters,
+    allCheckArray,
+  } = useData().sharedReducer;
 
   const [searchValue, setSearchValue] = useState("");
   const [checkedArray, setcheCheckedArray] = useState([]);
@@ -130,15 +135,6 @@ const PrevSelect = (props) => {
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId, filter_id }));
   };
 
-  const getChosen = () => {
-    //check the title and value
-    let data = filterState.filter((filter) => filter.id === getTitle());
-    if (!!!data) data = [];
-    const pureFilters = data.map((filter) => filter.value);
-    if (!!!pureFilters) return [];
-    return pureFilters;
-  };
-
   function sortOptions(a, b) {
     if (a.order < b.order) {
       return 1;
@@ -148,17 +144,6 @@ const PrevSelect = (props) => {
     }
     return 0;
   }
-
-  const Chosen = (props) => {
-    const { filters } = props;
-    return (
-      <div style={{ display: "flex" }}>
-        {filters.map((filter) => (
-          <p style={{ fontSize: "0.7rem", marginRight: "0.2rem" }}>{filter},</p>
-        ))}
-      </div>
-    );
-  };
 
   const getOptions = () => {
     const options = props.values.filter(
@@ -207,10 +192,13 @@ const PrevSelect = (props) => {
   };
 
   const selectAll = () => {
+    setShowMenu(false);
     dispatch(editFilterState([...newState]));
   };
 
   const unSelectAll = () => {
+    setShowMenu(false);
+
     dispatch(editFilterState([...possibleAllSelect]));
   };
 
@@ -276,6 +264,8 @@ const PrevSelect = (props) => {
       setAllCheck(false);
     }
   }, [checkedArray]);
+
+  React.useEffect(() => {}, [allCheck]);
 
   const handleOpen = () => {
     setShowMenu(true);

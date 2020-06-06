@@ -15,10 +15,16 @@ import {
   SET_BODY_CLASS,
   SET_ALL_ARE_SELECTED,
   SET_CURRENT_MAIN_FILTER,
+  SET_ALL_CHECKED_ARRAY,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_ALL_CHECKED_ARRAY:
+      return {
+        ...state,
+        allCheckArray: action.array,
+      };
     case SET_ALL_ARE_SELECTED:
       const { hasAll, title } = action.filter;
       const newHasAll = hasAll
