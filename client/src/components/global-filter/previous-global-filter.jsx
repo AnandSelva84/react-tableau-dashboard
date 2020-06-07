@@ -12,6 +12,7 @@ import {
 } from "../../redux/methods/re-format-response";
 import MainSwitch from "../main-switch/main-switch";
 import { useHistory } from "react-router-dom";
+import DateControls from "../../pages/level-2/date-controls";
 const PrevSelect = React.lazy(() => import("./previous-select"));
 
 const PrevGlobalFilters = React.memo(() => {
@@ -144,6 +145,7 @@ const PrevGlobalFilters = React.memo(() => {
                     </React.Suspense>
                   );
               })}
+              {path === "lvl2" && <DateControls />}
             </div>
           )}
 

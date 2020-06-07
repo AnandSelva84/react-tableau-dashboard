@@ -97,7 +97,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     setLoaded(true);
-    selectAll();
+    if (!props.custom) selectAll();
     return () => {
       dispatch(
         setAllCheckArray([...allCheckArray.filter((f) => f !== props.title)])
@@ -328,7 +328,7 @@ const PrevSelect = (props) => {
       return getOptions();
     }
   };
-  if (props.lvl !== 0) {
+  if (props.lvl !== 0 || props.custom) {
     return (
       <ClickAwayListener onClickAway={hanldeClose}>
         <div style={{ position: "relative", paddingTop: "1rem" }}>
@@ -337,7 +337,7 @@ const PrevSelect = (props) => {
             fullWidth
             variant="outlined"
             onChange={handlechange}
-            placeholder={props?.title || "Unkown"}
+            placeholder={!props.custom ? props?.title : props.placeholder}
             label={props?.title || "Unkown"}
           />
           {showMenu && (
