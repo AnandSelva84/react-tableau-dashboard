@@ -40,9 +40,9 @@ const SubHeader = () => {
   React.useEffect(() => {
     if (!!newFilters) {
       newFilters.forEach((newFilter) => {
-        const ids = console.log(
-          getPossibleChoicesToFill(newFilters, chosenIds)
-        );
+        // const ids = console.log(
+        //   getPossibleChoicesToFill(newFilters, chosenIds)
+        // );
       });
     }
   }, [newFilters]);

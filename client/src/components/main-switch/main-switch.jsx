@@ -30,6 +30,7 @@ const MainSwitch = React.memo((props) => {
   };
   const handleChange = (e) => {
     console.log("change in name", e.target.name);
+    props.onSwitch();
     const newName = currentMainFilter === "Legacy" ? "Business" : "Legacy";
     handleStoreUpdate(newName);
     if (!!e.target.name) dispatch(setCurrentMainFilter(newName));

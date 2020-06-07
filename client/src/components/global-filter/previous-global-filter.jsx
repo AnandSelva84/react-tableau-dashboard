@@ -16,7 +16,7 @@ const PrevSelect = React.lazy(() => import("./previous-select"));
 
 const PrevGlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
-  const [localFilterState, setLocalFilterState] = React.useState([]);
+  const [viewedFilters, setViewedFilters] = React.useState([]);
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
   const chosenIds = filterState.map((filter) => filter.ID) || [];
@@ -24,6 +24,9 @@ const PrevGlobalFilters = React.memo(() => {
   const { pathname } = history.location;
   const path = pathname.substr(1, pathname.length);
 
+  const heighestLvlFilter = Math.max(
+    ...[...newFilters.map((filter) => filter.level)]
+  );
   const format = (filter_id) => {
     const AfterMerge = newFilters.map((filter, index) => {
       const filterLvl = filter.level;
@@ -83,6 +86,13 @@ const PrevGlobalFilters = React.memo(() => {
           filterToReturn = { ...after };
         }
         if (a.length) {
+          if (!viewedFilters.map((a) => a.id).includes(after.filterId)) {
+            setViewedFilters([
+              ...viewedFilters,
+              { id: after.filterId, valuesLength: a.length },
+            ]);
+          }
+
           console.log("Anew filter in case there is  ", afterChange);
           filterToReturn = { ...afterChange };
         }
@@ -92,28 +102,15 @@ const PrevGlobalFilters = React.memo(() => {
     return filterToReturn;
   };
 
-  const isLvlExist = (array, lvl) => {
-    const lvls = filterState.map((filter) => filter.lvl);
-    return lvls.includes(lvl);
-  };
+  React.useEffect(() => {
+    console.log("viewed ", viewedFilters);
+  }, [viewedFilters]);
 
   React.useEffect(() => {
-    console.log("local fullState", localFilterState);
-  }, [localFilterState]);
-
-  React.useEffect(() => {
-    const heighestLvlID = Math.max([...filterState.map((state) => state.lvl)]);
-    const heightLvl = filterState.filter((state) => state.ID === heighestLvlID);
-    newFilters.forEach((filter, index) => {
-      const afterChange = format(filter.filter_id);
-      if (afterChange.values.length)
-        console.log("filnal filter", format(filter.filter_id));
-    });
+    // newFilters.forEach((filter) => {
+    //   format(filter.filter_id);
+    // });
   }, [chosenIds]);
-
-  const heighestLvlFilter = Math.max(
-    ...[...newFilters.map((filter) => filter.level)]
-  );
 
   return (
     <>
@@ -121,12 +118,19 @@ const PrevGlobalFilters = React.memo(() => {
         <div className="global-wrapper">
           {show && !!newFilters && (
             <div className="filters-wrapper">
-              <MainSwitch />
+              <MainSwitch
+                onSwitch={() => {
+                  setViewedFilters([]);
+                }}
+              />
 
               {newFilters.map((filter) => {
                 let toRender;
                 const afterChange = format(filter.filter_id);
-                if (afterChange.values.length)
+                if (
+                  afterChange.values.length ||
+                  !!viewedFilters.find((f) => f.id === filter.filter_id)
+                )
                   return (
                     <React.Suspense fallback={<>Loading...</>}>
                       <PrevSelect
