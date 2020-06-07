@@ -20,7 +20,7 @@ const HomePage = (props) => {
               title="Click here!"
               style={{ backgroundColor: "#f4f4f4" }}
               onClick={() => {
-                history.push("/lvl3");
+                history.push("/lvl2");
               }}
             />
           </div>

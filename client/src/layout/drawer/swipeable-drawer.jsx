@@ -29,8 +29,9 @@ import Select from "../../components/select/select";
 import GlobalFilters from "../../components/global-filter/global-filter";
 import LocalTheme from "../../theme/layout";
 import PrevGlobalFilters from "../../components/global-filter/previous-global-filter";
+import { useHistory } from "react-router-dom";
 
-const drawerWidth = 240;
+const drawerWidth = "17rem";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       // padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: "space-between",
+      // justifyContent: "space-between",
     },
     content: {
       flexGrow: 1,
@@ -106,7 +107,9 @@ const SwipSideDrawer = (props) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const { header, darkHeader: darkTheme } = LocalTheme;
-
+  const history = useHistory();
+  const { pathname } = history.location;
+  const path = pathname.substr(1, pathname.length);
   const dark = !darkMode ? null : darkTheme;
 
   // const store = useData().sharedReducer;
@@ -117,7 +120,12 @@ const SwipSideDrawer = (props) => {
 
   const handleDrawerClose = () => {
     dispatch(toggleDrawer());
-    // setOpen(false);
+  };
+
+  const getWidth = () => {
+    if (!drawer) return 0;
+    if (path === "lvl3") return "34rem";
+    else return "17rem";
   };
 
   return (
@@ -145,28 +153,50 @@ const SwipSideDrawer = (props) => {
         </Toolbar>
       </AppBar> */}
       <Drawer
-        className={classes.drawer}
-        style={{ width: !drawer ? 0 : 240 }}
-        // variant="persistent"
+        className={(classes.drawer, { width: getWidth() })}
+        style={{ width: getWidth() }}
         anchor="left"
         open={drawer}
         onClose={handleDrawerClose}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        // classes={{
+        //   paper: classes.drawerPaper,
+        // }}
       >
-        <div className={classes.drawerHeader} style={{ ...dark }}>
-          <div style={{ fontSize: "1.3rem", padding: "0 0.5rem", ...dark }}>
+        <div
+          className={classes.drawerHeader}
+          style={{ ...dark, width: getWidth() }}
+        >
+          <div
+            style={{
+              fontSize: "1.3rem",
+              padding: "0 0.5rem",
+              ...dark,
+              flex: 1,
+            }}
+          >
             Filters
           </div>
 
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
+          {path === "lvl3" && (
+            <div
+              style={{
+                fontSize: "1.3rem",
+                padding: "0 0.5rem",
+                ...dark,
+                flex: 1,
+              }}
+            >
+              Private Filters
+            </div>
+          )}
+
+          {/* <IconButton onClick={handleDrawerClose}> */}
+          {/* {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
             )}
-          </IconButton>
+          </IconButton> */}
         </div>
         <Divider />
         <div className="global-filters">

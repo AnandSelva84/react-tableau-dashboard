@@ -56,7 +56,7 @@ const SubHeader = () => {
     // console.log("applied are ", appliedFilters);
 
     const color = !!appliedFilters.find((filter) => filter.ID === ID)
-      ? "#80deea"
+      ? "#192734"
       : "";
     return color;
   };
@@ -177,6 +177,10 @@ const SubHeader = () => {
     setIds([...idsThatHasAll]);
     // console.log("chip array ids", idsThatHasAll);
   }, [filterState]);
+
+  const howManyOfSameTitle = (title) => {
+    return filterState.filter((f) => f.id === title)?.length || 0;
+  };
 
   const reFormatChips = () => {
     const pureIds = ids.map((value) => value.id);

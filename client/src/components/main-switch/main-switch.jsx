@@ -2,7 +2,7 @@ import React from "react";
 import useData from "../../hooks/useStore";
 import { Paper, Switch, FormControlLabel, FormGroup } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { setCurrentMainFilter } from "../../redux/actions/shared";
+import { setCurrentMainFilter, addFilter } from "../../redux/actions/shared";
 
 const MainSwitch = React.memo((props) => {
   const { currentMainFilter } = useData().sharedReducer;
@@ -16,26 +16,54 @@ const MainSwitch = React.memo((props) => {
   const testForCheck = (name) => {
     return currentMainFilter === name;
   };
+  const handleStoreUpdate = (name) => {
+    dispatch(
+      addFilter({
+        id: "Hierarchies",
+        value: name,
+        lvl: 0,
+        ID: name,
+        parentId: null,
+        filter_id: null,
+      })
+    );
+  };
   const handleChange = (e) => {
     console.log("change in name", e.target.name);
-    if (!!e.target.name) dispatch(setCurrentMainFilter(e.target.name));
+    const newName = currentMainFilter === "Legacy" ? "Business" : "Legacy";
+    handleStoreUpdate(newName);
+    if (!!e.target.name) dispatch(setCurrentMainFilter(newName));
+  };
+  const getName = () => {
+    return currentMainFilter;
   };
 
   return (
-    <Paper style={{ padding: "0.5rem 1rem" }}>
+    <div
+      style={{
+        padding: "0.5rem 1rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <div className="" style={{ marginRight: "1rem" }}>
+        Legacy
+      </div>
+
       <FormGroup>
         <FormControlLabel
-          label="Legacy"
+          label=""
           control={
             <Switch
               onChange={handleChange}
-              checked={testForCheck("Legacy")}
-              name="Legacy"
+              checked={testForCheck("Business")}
+              name={getName()}
               color="primary"
             />
           }
         />
-        <FormControlLabel
+        {/* <FormControlLabel
           label="Business"
           control={
             <Switch
@@ -45,9 +73,10 @@ const MainSwitch = React.memo((props) => {
               color="secondary"
             />
           }
-        />
+        /> */}
       </FormGroup>
-    </Paper>
+      <div className="">Business</div>
+    </div>
   );
 });
 

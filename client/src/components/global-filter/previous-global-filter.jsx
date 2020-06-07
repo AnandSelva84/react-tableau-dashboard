@@ -4,7 +4,6 @@ import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import { editFilterState, toggleDrawer } from "../../redux/actions/shared";
 import { filterModel } from "../../models/filter";
-import PrevSelect from "./previous-select";
 import ControlButtons from "./control-buttons";
 import "./global-filters.css";
 import {
@@ -12,47 +11,18 @@ import {
   fromOptionsToChips,
 } from "../../redux/methods/re-format-response";
 import MainSwitch from "../main-switch/main-switch";
+import { useHistory } from "react-router-dom";
+const PrevSelect = React.lazy(() => import("./previous-select"));
 
 const PrevGlobalFilters = React.memo(() => {
   const { filters, newFilters, filterState } = useData().sharedReducer;
-  const [initialLoaded, setInitialLoaded] = React.useState(false);
   const [localFilterState, setLocalFilterState] = React.useState([]);
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
   const chosenIds = filterState.map((filter) => filter.ID) || [];
-
-  // React.useEffect(() => {
-  //   const newfilterState = filterState.filter(value => value.lvl)
-  //   }, [filterState]);
-
-  // React.useEffect(() => {
-  //   //if there is a change in filter state it should be saved in localStorage
-  //   //and localStorage data should be retrived and applied in store
-  //   if (loaded) {
-  //     if (filterState.length > 0) {
-  //       console.log("stored filter", filterState);
-
-  //       localStorage.setItem("filters", JSON.stringify(filterState));
-  //     }
-  //     if (filterState.length === 0) {
-  //       localStorage.setItem("filters", JSON.stringify([]));
-  //     }
-  //   }
-  // }, [filterState]);
-
-  //this is for a single time
-
-  // React.useEffect(() => {
-  //   //if there is a change in filter state it should be saved in localStorage
-  //   //and localStorage data should be retrived and applied in store
-  //   setLoaded(true);
-  //   const storedFilters = JSON.parse(localStorage.getItem("filters"));
-  //   if (!!storedFilters) {
-  //     dispatch(editFilterState(storedFilters));
-  //     if (storedFilters.length > 0) dispatch(toggleDrawer(true));
-  //   }
-  //   // filterModel.level
-  // }, []);
+  const history = useHistory();
+  const { pathname } = history.location;
+  const path = pathname.substr(1, pathname.length);
 
   const format = (filter_id) => {
     const AfterMerge = newFilters.map((filter, index) => {
@@ -86,7 +56,6 @@ const PrevGlobalFilters = React.memo(() => {
       ],
     }));
 
-    // console.log("hello ref", afterRefactor);
     let filterToReturn;
     afterRefactor.forEach((after) => {
       if (after.filterId === filter_id) {
@@ -95,7 +64,6 @@ const PrevGlobalFilters = React.memo(() => {
         );
         //you will get filtered values and after with be the chosen filter so return it -- a is values and after is filter
         console.log("Anew values for id ", after.filterId);
-        // console.log("Anew values ", a);
         const afterChange = {
           ...after,
           values: [...a],
@@ -109,11 +77,6 @@ const PrevGlobalFilters = React.memo(() => {
             ...after,
             values: [],
           };
-
-          // return {
-          //   ...after,
-          //   values: [],
-          // };
         }
 
         if (after.level === 0) {
@@ -122,7 +85,6 @@ const PrevGlobalFilters = React.memo(() => {
         if (a.length) {
           console.log("Anew filter in case there is  ", afterChange);
           filterToReturn = { ...afterChange };
-          // return afterChange;
         }
       }
     });
@@ -134,45 +96,6 @@ const PrevGlobalFilters = React.memo(() => {
     const lvls = filterState.map((filter) => filter.lvl);
     return lvls.includes(lvl);
   };
-
-  // React.useEffect(() => {
-  //   if (!!newFilters) {
-  //     let loc = [];
-  //     if (initialLoaded) {
-  //       return;
-  //     }
-  //     newFilters.forEach((filter, index) => {
-  //       const afterChange = format(filter.filter_id);
-  //       if (afterChange.values.length) {
-  //         const lvls = newFilters.map((f) => f.level);
-  //         const stateLvls = filterState.map((f) => f.lvl);
-  //         const lvl = format(filter.filter_id).level;
-  //         const stateIsFull = Math.max(...lvls) - 1 === Math.max(...stateLvls);
-  //         if (!stateIsFull && lvl !== 0) {
-  //           loc = [
-  //             ...loc,
-  //             ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
-  //           ];
-  //           dispatch(
-  //             editFilterState([
-  //               ...loc,
-  //               {
-  //                 ID: "Business",
-  //                 id: "Hierarchies",
-  //                 lvl: 0,
-  //                 parentId: null,
-  //                 value: "Business",
-  //               },
-  //             ])
-  //           );
-  //           // dispatch
-  //         } else {
-  //           if (lvl !== 0) setInitialLoaded(true);
-  //         }
-  //       }
-  //     });
-  //   }
-  // }, [chosenIds]);
 
   React.useEffect(() => {
     console.log("local fullState", localFilterState);
@@ -194,34 +117,79 @@ const PrevGlobalFilters = React.memo(() => {
 
   return (
     <>
-      <div className="global-wrapper">
-        <MainSwitch />
+      <div className="drawer-wrapper">
+        <div className="global-wrapper">
+          {show && !!newFilters && (
+            <div className="filters-wrapper">
+              <MainSwitch />
 
-        {show && !!newFilters && (
-          <div className="filters-wrapper">
-            {newFilters.map((filter) => {
-              let toRender;
-              const afterChange = format(filter.filter_id);
-              if (afterChange.values.length)
-                return (
-                  <PrevSelect
-                    maxLength={heighestLvlFilter - 1}
-                    id={afterChange.filterId}
-                    // values={filter.values}
-                    values={afterChange.values}
-                    title={afterChange.title}
-                    lvl={afterChange.level}
-                  />
-                );
-            })}
+              {newFilters.map((filter) => {
+                let toRender;
+                const afterChange = format(filter.filter_id);
+                if (afterChange.values.length)
+                  return (
+                    <React.Suspense fallback={<>Loading...</>}>
+                      <PrevSelect
+                        maxLength={heighestLvlFilter - 1}
+                        id={afterChange.filterId}
+                        // values={filter.values}
+                        values={afterChange.values}
+                        title={afterChange.title}
+                        lvl={afterChange.level}
+                      />
+                    </React.Suspense>
+                  );
+              })}
+            </div>
+          )}
+
+          <div className="btns">
+            <ControlButtons />
           </div>
-        )}
-
-        <div className="btns">
-          <ControlButtons />
         </div>
+
+        {path === "lvl3" && <div className="private-filters"></div>}
       </div>
     </>
   );
 });
 export default PrevGlobalFilters;
+
+// React.useEffect(() => {
+//   if (!!newFilters) {
+//     let loc = [];
+//     if (initialLoaded) {
+//       return;
+//     }
+//     newFilters.forEach((filter, index) => {
+//       const afterChange = format(filter.filter_id);
+//       if (afterChange.values.length) {
+//         const lvls = newFilters.map((f) => f.level);
+//         const stateLvls = filterState.map((f) => f.lvl);
+//         const lvl = format(filter.filter_id).level;
+//         const stateIsFull = Math.max(...lvls) - 1 === Math.max(...stateLvls);
+//         if (!stateIsFull && lvl !== 0) {
+//           loc = [
+//             ...loc,
+//             ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
+//           ];
+//           dispatch(
+//             editFilterState([
+//               ...loc,
+//               {
+//                 ID: "Business",
+//                 id: "Hierarchies",
+//                 lvl: 0,
+//                 parentId: null,
+//                 value: "Business",
+//               },
+//             ])
+//           );
+//           // dispatch
+//         } else {
+//           if (lvl !== 0) setInitialLoaded(true);
+//         }
+//       }
+//     });
+//   }
+// }, [chosenIds]);

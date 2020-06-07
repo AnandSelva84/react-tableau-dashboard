@@ -21,3 +21,16 @@
 .btns > div {
   margin: 10rem;
 }
+
+.drawer-wrapper {
+  display: flex;
+}
+
+.drawer-wrapper > div {
+  flex: 1;
+  padding: 0 0.3rem;
+}
+
+.private-filters {
+  border-left: 0.5px #e0e0e0 solid;
+}

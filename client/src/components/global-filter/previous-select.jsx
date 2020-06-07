@@ -328,8 +328,7 @@ const PrevSelect = (props) => {
       return getOptions();
     }
   };
-  // if (props.lvl !== 0) {
-  if (true) {
+  if (props.lvl !== 0) {
     return (
       <ClickAwayListener onClickAway={hanldeClose}>
         <div style={{ position: "relative", paddingTop: "1rem" }}>
