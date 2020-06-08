@@ -140,6 +140,15 @@ const PrevSelect = (props) => {
   };
 
   const handleClick = (ParentName, value, lvl, ID, parentId, filter_id) => {
+    if (props.custom) {
+      dispatch(
+        editFilterState([
+          ...filterState.filter((f) => f.id !== ParentName),
+          { id: ParentName, value, lvl, ID, parentId, filter_id },
+        ])
+      );
+      return;
+    }
     const id = ParentName;
     if (lvl === 0 && isExist(filterState, id, value, ID)) return;
     !isExist(filterState, id, value, ID)
