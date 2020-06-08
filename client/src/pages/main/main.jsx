@@ -86,7 +86,7 @@ const Main = React.memo(() => {
     if (!!data && !loading) {
       dispatch(setAppLoading(false));
       dispatch(setApp(data.data));
-      dispatch(setBodyClass(data.data.application.body_class));
+      dispatch(setBodyClass(data.data.application.app_body_css_class));
     } else {
       dispatch(setAppLoading(true));
     }
