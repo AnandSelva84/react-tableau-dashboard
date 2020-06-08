@@ -236,6 +236,16 @@ const SubHeader = () => {
     return filterState.find((f) => f.id === id)?.lvl || 0;
   };
 
+  function sortOptions(a, b) {
+    if (a.lvl < b.lvl) {
+      return -1;
+    }
+    if (a.lvl > b.lvl) {
+      return 1;
+    }
+    return 0;
+  }
+
   return (
     <div>
       {isVisiable && (
@@ -244,25 +254,27 @@ const SubHeader = () => {
             ...theme.subHeader,
           }}
         >
-          {wrapChips().map((filter) => (
-            <Chip
-              label={createChip(filter.id, filter.value)}
-              color={!!isApplied(filter.ID) ? "primary" : ""}
-              style={{
-                marginRight: "0.4rem",
-                //TODO make isApplied functional for mulitble and single values
-                backgroundColor: isApplied(filter.ID),
-                color: !!isApplied(filter.ID) ? "white" : "",
-                marginTop: "0.2rem",
-                // cursor: isClickable(filter.value),
-              }}
-              onClick={() => handleOpen(filter.value, filter.id)}
-              onDelete={() => {
-                if (!!filter.lvl)
-                  handleClick(filter.id, filter.value, filter.lvl);
-              }}
-            />
-          ))}
+          {wrapChips()
+            .sort(sortOptions)
+            .map((filter) => (
+              <Chip
+                label={createChip(filter.id, filter.value)}
+                color={!!isApplied(filter.ID) ? "primary" : ""}
+                style={{
+                  marginRight: "0.4rem",
+                  //TODO make isApplied functional for mulitble and single values
+                  backgroundColor: isApplied(filter.ID),
+                  color: !!isApplied(filter.ID) ? "white" : "",
+                  marginTop: "0.2rem",
+                  // cursor: isClickable(filter.value),
+                }}
+                onClick={() => handleOpen(filter.value, filter.id)}
+                onDelete={() => {
+                  if (!!filter.lvl)
+                    handleClick(filter.id, filter.value, filter.lvl);
+                }}
+              />
+            ))}
         </Paper>
       )}
       <ChipsWrapper
