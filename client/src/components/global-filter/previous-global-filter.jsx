@@ -54,6 +54,9 @@ const PrevGlobalFilters = React.memo(() => {
       };
     });
 
+    console.log(" in format after merge for id  ", filter_id);
+    console.log(" in format after merge ", AfterMerge);
+
     const afterRefactor = AfterMerge.map((filter) => ({
       filterId: filter.filter_id,
       filterType: filter.filter_type,

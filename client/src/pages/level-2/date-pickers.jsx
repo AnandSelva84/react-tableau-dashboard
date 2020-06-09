@@ -18,6 +18,8 @@ const DatePickers = () => {
           display: "flex",
           flexDirection: "column",
           padding: "1rem 0.5rem",
+          border: " 0.5px #e0e0e0 solid",
+          borderTop: "0px",
         }}
       >
         <TextField
