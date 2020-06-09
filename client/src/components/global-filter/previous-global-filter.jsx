@@ -145,7 +145,7 @@ const PrevGlobalFilters = React.memo(() => {
                     </React.Suspense>
                   );
               })}
-              {path === "lvl2" && <DateControls />}
+              {path !== "" && <DateControls />}
             </div>
           )}
 
