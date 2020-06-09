@@ -16,7 +16,7 @@ const CustomSwitch = withStyles({
     // color: red[500],
   },
   switchBase: {
-    color: "#e91e63",
+    color: "#3f51b5",
     "& + $track": {
       color: red[500],
     },
