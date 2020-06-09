@@ -41,7 +41,7 @@ const SubHeader = () => {
   };
 
   const isMultible = (chipsForIdValues) => {
-    return chipsForIdValues.length > 1 ? "Mulitible" : chipsForIdValues[0];
+    return chipsForIdValues.length > 1 ? "Multiple" : chipsForIdValues[0];
   };
 
   const wrapChips = () => {
@@ -214,7 +214,7 @@ const SubHeader = () => {
   // };
 
   const isClickable = (value, id) => {
-    return value === "Mulitible";
+    return value === "Multiple";
   };
 
   const handleOpen = (value, id) => {

@@ -20,10 +20,10 @@ const DateControls = () => {
     <>
       <PrevSelect
         values={dateOptions}
-        title="Date Select"
+        title="Time Interval"
         lvl={0}
         custom
-        placeholder={label}
+        placeholder="Time Interval"
       />
       {!!showPickers && <DatePickers />}
     </>
