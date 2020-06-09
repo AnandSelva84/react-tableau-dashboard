@@ -246,6 +246,14 @@ const SubHeader = () => {
     return 0;
   }
 
+  const reOrder = (array) => {
+    if (!array.map((a) => a.id).includes("Time Interval")) return array;
+    let arr = array.filter((a, index) => a.id !== "Time Interval");
+    let element = array.find((a, index) => a.id === "Time Interval");
+    arr.push(element);
+    return arr;
+  };
+
   return (
     <div>
       {isVisiable && (
@@ -254,27 +262,25 @@ const SubHeader = () => {
             ...theme.subHeader,
           }}
         >
-          {wrapChips()
-            .sort(sortOptions)
-            .map((filter) => (
-              <Chip
-                label={createChip(filter.id, filter.value)}
-                color={!!isApplied(filter.ID) ? "primary" : ""}
-                style={{
-                  marginRight: "0.4rem",
-                  //TODO make isApplied functional for mulitble and single values
-                  backgroundColor: isApplied(filter.ID),
-                  color: !!isApplied(filter.ID) ? "white" : "",
-                  marginTop: "0.2rem",
-                  // cursor: isClickable(filter.value),
-                }}
-                onClick={() => handleOpen(filter.value, filter.id)}
-                onDelete={() => {
-                  if (!!filter.lvl)
-                    handleClick(filter.id, filter.value, filter.lvl);
-                }}
-              />
-            ))}
+          {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
+            <Chip
+              label={createChip(filter.id, filter.value)}
+              color={!!isApplied(filter.ID) ? "primary" : ""}
+              style={{
+                marginRight: "0.4rem",
+                //TODO make isApplied functional for mulitble and single values
+                backgroundColor: isApplied(filter.ID),
+                color: !!isApplied(filter.ID) ? "white" : "",
+                marginTop: "0.2rem",
+                // cursor: isClickable(filter.value),
+              }}
+              onClick={() => handleOpen(filter.value, filter.id)}
+              onDelete={() => {
+                if (!!filter.lvl)
+                  handleClick(filter.id, filter.value, filter.lvl);
+              }}
+            />
+          ))}
         </Paper>
       )}
       <ChipsWrapper
