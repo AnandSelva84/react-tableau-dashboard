@@ -1,8 +1,46 @@
 import React from "react";
 import useData from "../../hooks/useStore";
-import { Paper, Switch, FormControlLabel, FormGroup } from "@material-ui/core";
+import {
+  Paper,
+  Switch,
+  FormControlLabel,
+  FormGroup,
+  withStyles,
+} from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { setCurrentMainFilter, addFilter } from "../../redux/actions/shared";
+import { purple, red } from "@material-ui/core/colors";
+
+const CustomSwitch = withStyles({
+  root: {
+    // color: red[500],
+  },
+  switchBase: {
+    color: "#e91e63",
+    "& + $track": {
+      color: red[500],
+    },
+    "&$checked": {
+      color: purple[500],
+    },
+    "&$checked + $track": {
+      backgroundColor: purple[500],
+    },
+    "&$disabled + $track": {
+      color: red[500],
+      backgroundColor: red[500],
+    },
+  },
+
+  // checked: {},
+  // track: {},
+  // disabled: {
+  //   color: red[500],
+  // },
+  // edgeStart: {
+  //   color: red[500],
+  // },
+})(Switch);
 
 const MainSwitch = React.memo((props) => {
   const { currentMainFilter } = useData().sharedReducer;
@@ -56,7 +94,7 @@ const MainSwitch = React.memo((props) => {
         <FormControlLabel
           label=""
           control={
-            <Switch
+            <CustomSwitch
               onChange={handleChange}
               checked={testForCheck("Business")}
               name={getName()}

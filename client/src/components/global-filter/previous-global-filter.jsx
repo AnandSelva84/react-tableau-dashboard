@@ -28,6 +28,8 @@ const PrevGlobalFilters = React.memo(() => {
   const heighestLvlFilter = Math.max(
     ...[...newFilters.map((filter) => filter.level)]
   );
+
+  React.useEffect(() => {}, []);
   const format = (filter_id) => {
     const AfterMerge = newFilters.map((filter, index) => {
       const filterLvl = filter.level;
@@ -105,6 +107,9 @@ const PrevGlobalFilters = React.memo(() => {
 
   React.useEffect(() => {
     console.log("viewed ", viewedFilters);
+    return () => {
+      console.log("on unmount viewed", viewedFilters);
+    };
   }, [viewedFilters]);
 
   React.useEffect(() => {
