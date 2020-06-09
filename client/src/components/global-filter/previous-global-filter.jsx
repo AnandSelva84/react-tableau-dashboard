@@ -2,7 +2,11 @@ import React from "react";
 // import Select from "../select/select";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
-import { editFilterState, toggleDrawer } from "../../redux/actions/shared";
+import {
+  editFilterState,
+  toggleDrawer,
+  setStoredViewdFilters,
+} from "../../redux/actions/shared";
 import { filterModel } from "../../models/filter";
 import ControlButtons from "./control-buttons";
 import "./global-filters.css";
@@ -16,7 +20,12 @@ import DateControls from "../../pages/level-2/date-controls";
 const PrevSelect = React.lazy(() => import("./previous-select"));
 
 const PrevGlobalFilters = React.memo(() => {
-  const { filters, newFilters, filterState } = useData().sharedReducer;
+  const {
+    filters,
+    newFilters,
+    filterState,
+    storedViewedFilters,
+  } = useData().sharedReducer;
   const [viewedFilters, setViewedFilters] = React.useState([]);
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
@@ -90,6 +99,7 @@ const PrevGlobalFilters = React.memo(() => {
         }
         if (a.length) {
           if (!viewedFilters.map((a) => a.id).includes(after.filterId)) {
+            // if (storedViewedFilters.length)
             setViewedFilters([
               ...viewedFilters,
               { id: after.filterId, valuesLength: a.length },
@@ -106,7 +116,10 @@ const PrevGlobalFilters = React.memo(() => {
   };
 
   React.useEffect(() => {
-    console.log("viewed ", viewedFilters);
+    console.log("viewed max ", heighestLvlFilter);
+    console.log("viewed current ", viewedFilters);
+    if (viewedFilters.length === heighestLvlFilter - 1)
+      dispatch(setStoredViewdFilters([...viewedFilters]));
     return () => {
       console.log("on unmount viewed", viewedFilters);
     };
@@ -135,7 +148,7 @@ const PrevGlobalFilters = React.memo(() => {
                 const afterChange = format(filter.filter_id);
                 if (
                   afterChange.values.length ||
-                  !!viewedFilters.find((f) => f.id === filter.filter_id)
+                  !!storedViewedFilters.find((f) => f.id === filter.filter_id)
                 )
                   return (
                     <React.Suspense fallback={<>Loading...</>}>

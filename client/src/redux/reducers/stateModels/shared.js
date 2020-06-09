@@ -33,6 +33,7 @@ const sharedState = {
   hasAllSelected: [],
   currentMainFilter: "Business",
   allCheckArray: [],
+  storedViewedFilters: [],
 };
 
 export default sharedState;

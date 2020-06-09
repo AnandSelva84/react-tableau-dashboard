@@ -11,10 +11,15 @@ export const SAVE_FILTERS = "SAVE_FILTERS";
 export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_ALL_CHECKED_ARRAY = "SET_ALL_CHECKED_ARRAY";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
+export const SET_VIEWED_FILTERS = "SET_VIEWED_FILTERS";
 export const SET_BODY_CLASS = "SET_BODY_CLASS";
 export const SET_ALL_ARE_SELECTED = "SET_ALL_ARE_SELECTED";
 export const SET_CURRENT_MAIN_FILTER = "SET_CURRENT_MAIN_FILTER";
 
+export const setStoredViewdFilters = (filters) => ({
+  type: SET_VIEWED_FILTERS,
+  filters,
+});
 export const setAllCheckArray = (array) => ({
   type: SET_ALL_CHECKED_ARRAY,
   array,

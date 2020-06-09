@@ -16,10 +16,16 @@ import {
   SET_ALL_ARE_SELECTED,
   SET_CURRENT_MAIN_FILTER,
   SET_ALL_CHECKED_ARRAY,
+  SET_VIEWED_FILTERS,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_VIEWED_FILTERS:
+      return {
+        ...state,
+        storedViewedFilters: action.filters,
+      };
     case SET_ALL_CHECKED_ARRAY:
       return {
         ...state,
