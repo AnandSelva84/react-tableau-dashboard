@@ -40,24 +40,25 @@ const PrevGlobalFilters = React.memo(() => {
 
   React.useEffect(() => {}, []);
   const format = (filter_id) => {
-    const AfterMerge = newFilters.map((filter, index) => {
-      const filterLvl = filter.level;
-      return {
-        ...filter,
-        values: [
-          ...filter.values,
-          ...(filters.filter(
-            (toMerge, toMergeIndex) =>
-              toMerge.level === filterLvl && toMergeIndex !== index
-          )[0]?.values || []),
-        ],
-      };
-    });
+    // const AfterMerge = newFilters.map((filter, index) => {
+    //   const filterLvl = filter.level;
+    //   return {
+    //     ...filter,
+    //     values: [
+    //       ...filter.values,
+    //       ...(filters.filter(
+    //         (toMerge, toMergeIndex) =>
+    //           toMerge.level === filterLvl && toMergeIndex !== index
+    //       )[0]?.values || []),
+    //     ],
+    //   };
+    // });
 
-    console.log(" in format after merge for id  ", filter_id);
-    console.log(" in format after merge ", AfterMerge);
+    // console.log(" in format after merge for id  ", filter_id);
+    // console.log(" in format after merge ", AfterMerge);
+    // console.log(" in format after merge new filters  ", newFilters);
 
-    const afterRefactor = AfterMerge.map((filter) => ({
+    const afterRefactor = newFilters.map((filter) => ({
       filterId: filter.filter_id,
       filterType: filter.filter_type,
       parentFilterId: filter.parent_filter,
@@ -128,12 +129,6 @@ const PrevGlobalFilters = React.memo(() => {
     };
   }, [viewedFilters]);
 
-  React.useEffect(() => {
-    // newFilters.forEach((filter) => {
-    //   format(filter.filter_id);
-    // });
-  }, [chosenIds]);
-
   return (
     <>
       <div className="drawer-wrapper">
@@ -181,42 +176,3 @@ const PrevGlobalFilters = React.memo(() => {
   );
 });
 export default PrevGlobalFilters;
-
-// React.useEffect(() => {
-//   if (!!newFilters) {
-//     let loc = [];
-//     if (initialLoaded) {
-//       return;
-//     }
-//     newFilters.forEach((filter, index) => {
-//       const afterChange = format(filter.filter_id);
-//       if (afterChange.values.length) {
-//         const lvls = newFilters.map((f) => f.level);
-//         const stateLvls = filterState.map((f) => f.lvl);
-//         const lvl = format(filter.filter_id).level;
-//         const stateIsFull = Math.max(...lvls) - 1 === Math.max(...stateLvls);
-//         if (!stateIsFull && lvl !== 0) {
-//           loc = [
-//             ...loc,
-//             ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
-//           ];
-//           dispatch(
-//             editFilterState([
-//               ...loc,
-//               {
-//                 ID: "Business",
-//                 id: "Hierarchies",
-//                 lvl: 0,
-//                 parentId: null,
-//                 value: "Business",
-//               },
-//             ])
-//           );
-//           // dispatch
-//         } else {
-//           if (lvl !== 0) setInitialLoaded(true);
-//         }
-//       }
-//     });
-//   }
-// }, [chosenIds]);

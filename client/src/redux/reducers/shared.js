@@ -104,7 +104,7 @@ const sharedReducer = (state = sharedState, action) => {
       console.log(!!hasParent);
 
       const filterd = state.filterState
-        .filter((filter) => filter.lvl <= action.filter.lvl)
+        // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter(
           (filter) =>
             filter.id !== action.filter.id ||

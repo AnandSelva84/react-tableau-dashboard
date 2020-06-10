@@ -54,6 +54,7 @@ const PrevSelect = (props) => {
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
   );
+  // .filter((f) => !chosenIds.includes(f.parentId));
   const newState = [
     ...props.values.map((value) => ({
       id: props.title,
@@ -65,36 +66,6 @@ const PrevSelect = (props) => {
     ...possibleAllSelect,
   ];
 
-  const allButton = React.useRef(null);
-
-  React.useEffect(() => {
-    // console.log("refrence", allButton);
-
-    if (!!allButton.current) allButton.current.click();
-  }, [allButton.current]);
-
-  const clickAll = () => {};
-
-  React.useEffect(() => {
-    const filterHaveParent = values.filter(
-      (value) => value.parentFilterOptionId == null
-    );
-    const localValues = values.filter(
-      (value) => hasLvlTest(value.lvl) && hasIdTest(value.parentFilterOptionId)
-    );
-    setLocalFilters([...localValues, ...filterHaveParent]);
-    const afterFiltering = filterState.filter(
-      (value) => !!hasParentTest(value.parentId)
-    );
-  }, [filterState]);
-
-  const editFilter = React.useCallback(
-    (afterFilter) => {
-      dispatch(editFilterState(afterFilter));
-    },
-    [chosenIds]
-  );
-
   React.useEffect(() => {
     setLoaded(true);
     if (!props.custom) selectAll();
@@ -105,32 +76,8 @@ const PrevSelect = (props) => {
     };
   }, []);
 
-  React.useEffect(() => {
-    const isParentExist = filterState.find((filter) =>
-      chosenIds.some((id) => id === filter.parentId)
-    );
-    const afterFilter = filterState.filter(
-      (filter) =>
-        chosenIds.some((id) => id === filter.parentId) || filter.lvl === 0
-    );
-    // console.log(isParentExist);
-    // console.log(afterFilter);
-    // editFilter(afterFilter);
-  }, [chosenIds]);
-
   const handlechange = (e) => {
     setSearchValue(e.target.value);
-  };
-
-  const hasLvlTest = (lvl) => {
-    let hasLvl = chosenLvls.find((filterLvl) => filterLvl === lvl - 1);
-    if (hasLvl === 0) hasLvl = 1;
-    return !!hasLvl;
-  };
-  const hasIdTest = (id) => {
-    let hasId = chosenIds.find((filterId) => filterId === id);
-    if (hasId === 0) hasId = 1;
-    return !!hasId;
   };
 
   const hasParentTest = (parentId) => {
@@ -191,18 +138,7 @@ const PrevSelect = (props) => {
   };
 
   const isAllExisted = () => {
-    //compare what is in the filterState and what is in the resposne
     const toCompare = getAllPossibleFilters();
-    // console.log("to compare", toCompare);
-
-    // const allpossobilesinNewFilter = newFilters.filter(
-    //   (filter) => filter.title === getTitle()
-    // );
-
-    // const chosenOne = allpossobilesinNewFilter?.filter((po) =>
-    //   po.values.map((val) => val.filter_value).includes(getOptions().map(option => option.value)[0])
-    // )[0];
-
     const existanceLength =
       filterState.filter((value) => value.id === getTitle())?.length || 0;
     const existance =
@@ -242,16 +178,6 @@ const PrevSelect = (props) => {
     return props.title;
   };
 
-  const panelProps = () => {
-    const toReturn =
-      props.lvl === 0
-        ? {
-            expanded: true,
-          }
-        : {};
-    return toReturn;
-  };
-
   const [showMenu, setShowMenu] = useState(false);
 
   const isExistinArray = (array, element) => {
@@ -279,8 +205,6 @@ const PrevSelect = (props) => {
   };
 
   React.useEffect(() => {
-    console.log("checkArray change for  ", props.title);
-    console.log("checkArray change  ", checkedArray);
     const f = filterState.filter((filter) => filter.id === props.title).length;
     if (f === props.values.length) {
       setAllCheck(true);
@@ -290,11 +214,7 @@ const PrevSelect = (props) => {
   }, [checkedArray]);
 
   React.useEffect(() => {
-    console.log("allCheckArray for id ", props.title);
-    console.log("allCheckArray state ", allCheck);
     if (allCheck && loaded) {
-      console.log("allCheckArray new array ", [...allCheckArray, props.title]);
-
       dispatch(setAllCheckArray([...allCheckArray, props.title]));
     }
     if (!allCheck && loaded) {
@@ -322,10 +242,6 @@ const PrevSelect = (props) => {
 
   const toggle = () => {
     showMenu ? hanldeClose() : handleOpen();
-  };
-
-  const handleTextChange = (text) => {
-    props.onTextChange(text);
   };
 
   const getOptionsAfterSearch = () => {
@@ -372,7 +288,6 @@ const PrevSelect = (props) => {
                     handleSelectAll();
                   }}
                   display={"All"}
-                  ref={allButton}
                   onChange={() => {}}
                 />
               )}
@@ -414,78 +329,3 @@ const PrevSelect = (props) => {
   }
 };
 export default PrevSelect;
-
-// else
-//     return (
-//       <>
-//         {true && (
-//           <ExpansionPanel {...panelProps()}>
-//             <ExpansionPanelSummary
-//               expandIcon={<ExpandMoreIcon />}
-//               aria-controls="panel1a-content"
-//               id="panel1a-header"
-//             >
-//               <div style={{ display: "flex", flexDirection: "column" }}>
-//                 {props.lvl === 0 && (
-//                   <Typography style={{ fontSize: "1rem" }}>
-//                     {getTitle()}
-//                   </Typography>
-//                 )}
-//                 {props.lvl !== 0 && (
-//                   <InputBase placeholder={getTitle()} onChange={handlechange} />
-//                 )}
-//                 {/* <Chosen filters={getChosen()} /> */}
-//               </div>
-//             </ExpansionPanelSummary>
-//             <ExpansionPanelDetails>
-//               <div
-//                 style={{
-//                   display: "flex",
-//                   flexDirection: "column",
-//                   width: "100%",
-//                   maxHeight: "5rem",
-//                   overflowY: "auto",
-//                 }}
-//               >
-//                 {props.lvl !== 0 && (
-//                   <Option
-//                     checked={isAllExisted()}
-//                     filterState={filterState}
-//                     onClick={handleSelectAll}
-//                     display={"All"}
-//                     ref={allButton}
-//                   />
-//                 )}
-//                 {getOptionsAfterSearch()
-//                   .sort(sortOptions)
-//                   .map((option) => (
-//                     <Option
-//                       checked={isExist(
-//                         filterState,
-//                         getTitle(),
-//                         option.filter_value_text
-//                       )}
-//                       value={option.filter_value_text}
-//                       filterState={filterState}
-//                       id={option.filterOptionId}
-//                       parentId={option.parentFilterOptionId}
-//                       lvl={props.lvl}
-//                       display={option.filter_display_text}
-//                       onClick={() =>
-//                         handleClick(
-//                           getTitle(),
-//                           option.filter_value_text,
-//                           props.lvl,
-//                           option.filterOptionId,
-//                           option.parentFilterOptionId,
-//                           props.id
-//                         )
-//                       }
-//                     />
-//                   ))}
-//               </div>
-//             </ExpansionPanelDetails>
-//           </ExpansionPanel>
-//         )}
-//       </>
-//     );
