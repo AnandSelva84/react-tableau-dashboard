@@ -51,10 +51,10 @@ const PrevSelect = (props) => {
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
 
-  const possibleAllSelect = filterState.filter(
-    (filter) => filter.id !== props.title
-  );
-  // .filter((f) => !chosenIds.includes(f.parentId));
+  const possibleAllSelect = filterState
+    .filter((filter) => filter.id !== props.title)
+    .filter((f) => f.lvl < props.lvl);
+
   const newState = [
     ...props.values.map((value) => ({
       id: props.title,
