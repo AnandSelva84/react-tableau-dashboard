@@ -18,6 +18,7 @@ import {
   editFilterState,
   setAllAreSelected,
   setAllCheckArray,
+  setStoredViewdFilters,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
@@ -39,6 +40,7 @@ const PrevSelect = (props) => {
     filterState,
     newFilters,
     allCheckArray,
+    storedViewedFilters,
   } = useData().sharedReducer;
 
   const [searchValue, setSearchValue] = useState("");
@@ -62,6 +64,7 @@ const PrevSelect = (props) => {
       lvl: props.lvl,
       parentId: value.parentFilterOptionId,
       value: value.filter_value_text,
+      filter_id: props.id,
     })),
     ...possibleAllSelect,
   ];
@@ -75,6 +78,19 @@ const PrevSelect = (props) => {
       );
     };
   }, []);
+
+  React.useEffect(() => {
+    let editedValues = storedViewedFilters.find((f) => f.id === props.id);
+    if (!!editedValues) {
+      editedValues.valuesLength = props.values.length;
+      const storedAfterChange = [
+        ...storedViewedFilters.filter((f) => f.id !== props.id),
+        editedValues,
+      ];
+      console.log("edit Values ", storedAfterChange);
+      dispatch(setStoredViewdFilters([...storedAfterChange]));
+    }
+  }, [filterState]);
 
   const handlechange = (e) => {
     setSearchValue(e.target.value);
