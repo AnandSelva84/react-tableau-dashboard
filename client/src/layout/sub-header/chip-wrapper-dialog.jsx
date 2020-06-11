@@ -2,12 +2,16 @@ import React from "react";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import { Chip } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import useData from "../../hooks/useStore";
 
 const ChipsWrapper = (props) => {
+  const dispatch = useDispatch();
+  const { filterState } = useData().sharedReducer;
+
   const createChip = (id, value) => `${id} : ${value}`;
 
   const getChipId = (value) => {
-    debugger;
     console.log(
       "chip ID",
       props.filterState.find((f) => f.id === props.title && f.value === value)
@@ -17,6 +21,12 @@ const ChipsWrapper = (props) => {
       props.filterState.find((f) => f.id === props.title && f.value === value)
         ?.ID || null
     );
+  };
+
+  const isApplied = (ID) => {
+    return !!filterState.find((f) => f.ID === ID)?.applied || false
+      ? "#192734"
+      : "";
   };
 
   return (
@@ -40,16 +50,18 @@ const ChipsWrapper = (props) => {
         >
           {props.values.map((value) => (
             <Chip
-              label={createChip(props.title, value)}
+              // ID = {value.ID}
+              label={createChip(props.title, value.value)}
+              color={!!isApplied(value.ID) ? "primary" : ""}
               style={{
                 marginRight: "0.4rem",
                 //TODO make isApplied functional for mulitble and single values
-                backgroundColor: props.isApplied(getChipId(value)),
+                backgroundColor: isApplied(value.ID),
                 marginTop: "0.2rem",
                 // cursor: isClickable(filter.value),
               }}
               onDelete={() => {
-                props.onDelete(props.title, value, props.lvl);
+                props.onDelete(props.title, value.value, props.lvl);
               }}
             />
           ))}

@@ -52,20 +52,24 @@ const SubHeader = () => {
     console.log("currentValuesLength", currentValuesLength);
 
     if (chipsForIdValues.length === currentValuesLength) return "All";
-    return chipsForIdValues.length > 1 ? "Multiple" : chipsForIdValues[0];
+    return chipsForIdValues.length > 1 ? "Multiple" : chipsForIdValues[0].value;
   };
 
   const wrapChips = () => {
     let chipsArray = [];
     filterState.forEach((filter) => {
       const chipsForId = filterState.filter((f) => f.id === filter.id);
-      const chipsForIdValues = chipsForId.map((c) => c.value);
+      const chipsForIdValues = chipsForId.map((c) => ({
+        value: c.value,
+        ID: c.ID,
+      }));
       if (!chipsArray.map((c) => c.id).includes(filter.id))
         chipsArray.push({
           id: filter.id,
           values: chipsForIdValues,
           value: isMultible(chipsForIdValues, filter.filter_id),
           lvl: filter.lvl,
+          filter_id: filter.filter_id,
         });
     });
     return chipsArray;
@@ -80,9 +84,6 @@ const SubHeader = () => {
   };
 
   const isApplied = (ID) => {
-    // console.log("applied are ", appliedFilters);
-    // console.log("applied are ", appliedFilters);
-
     const color = !!appliedFilters.find((filter) => filter.ID === ID)
       ? "#192734"
       : "";
@@ -130,6 +131,12 @@ const SubHeader = () => {
     return arr;
   };
 
+  const isAllApplied = (filter_id) => {
+    const chosen = filterState.filter((f) => f.filter_id === filter_id);
+    const appliedValues = chosen.map((c) => c?.applied || false);
+    return appliedValues.every((c) => c === true) ? "#192734" : "";
+  };
+
   return (
     <div>
       {isVisiable && (
@@ -141,12 +148,12 @@ const SubHeader = () => {
           {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}
-              color={!!isApplied(filter.ID) ? "primary" : ""}
+              color={!!isAllApplied(filter.filter_id) ? "primary" : ""}
               style={{
                 marginRight: "0.4rem",
                 //TODO make isApplied functional for mulitble and single values
-                backgroundColor: isApplied(filter.ID),
-                color: !!isApplied(filter.ID) ? "white" : "",
+                backgroundColor: isAllApplied(filter.filter_id),
+                // color: !!isApplied(filter.ID) ? "white" : "",
                 marginTop: "0.2rem",
                 // cursor: isClickable(filter.value),
               }}

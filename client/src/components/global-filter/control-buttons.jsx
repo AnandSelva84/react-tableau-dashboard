@@ -6,6 +6,7 @@ import {
   saveFilters,
   clearFilter,
   applyFilters,
+  editFilterState,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 
@@ -21,8 +22,13 @@ const ControlButtons = () => {
   };
   const handleApply = () => {
     console.log("filters applied ");
-
-    dispatch(applyFilters(filterState));
+    const filterStateAfterApply = [
+      ...filterState.map((f) => ({
+        ...f,
+        applied: true,
+      })),
+    ];
+    dispatch(editFilterState(filterStateAfterApply));
   };
 
   return (
