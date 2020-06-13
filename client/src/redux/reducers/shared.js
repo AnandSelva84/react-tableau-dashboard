@@ -105,11 +105,7 @@ const sharedReducer = (state = sharedState, action) => {
 
       const filterd = state.filterState
         // .filter((filter) => filter.lvl <= action.filter.lvl)
-        .filter(
-          (filter) =>
-            filter.id !== action.filter.id ||
-            filter.value !== action.filter.value
-        );
+        .filter((filter) => filter.ID !== action.filter.ID);
       const hasSameParent = state.filterState.find(
         (filter) => filter.id === action.filter.id
       );
@@ -131,6 +127,7 @@ const sharedReducer = (state = sharedState, action) => {
         filterState: newFilterState,
       };
     case DELETE_FILTER:
+      const chosenIds = state.filterState.map((f) => f.ID);
       //in case of chip all
       // if (action.filter.value === "All") {
       //   return {
@@ -142,13 +139,10 @@ const sharedReducer = (state = sharedState, action) => {
       //     ],
       //   };
       // }
+      alert("delete");
       let afterEdit = state.filterState
-        .filter((filter) => filter.lvl <= action.filter.lvl)
-        .filter(
-          (filter) =>
-            filter.id !== action.filter.id ||
-            filter.value !== action.filter.value
-        );
+        // .filter((filter) => filter.lvl <= action.filter.lvl)
+        .filter((filter) => filter.ID !== action.filter.ID);
 
       if (action.filter.value === "All") {
         afterEdit = state.filterState

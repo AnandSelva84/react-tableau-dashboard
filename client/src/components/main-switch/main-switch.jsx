@@ -63,6 +63,7 @@ const MainSwitch = React.memo((props) => {
         ID: name,
         parentId: null,
         filter_id: null,
+        applied: true,
       })
     );
   };

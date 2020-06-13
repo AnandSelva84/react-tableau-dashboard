@@ -25,8 +25,11 @@ const PrevGlobalFilters = React.memo(() => {
     newFilters,
     filterState,
     storedViewedFilters,
+    currentMainFilter,
   } = useData().sharedReducer;
   const [viewedFilters, setViewedFilters] = React.useState([]);
+  const [loaded, setLoaded] = React.useState(false);
+
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
   const chosenIds = filterState.map((filter) => filter.ID) || [];
@@ -38,26 +41,10 @@ const PrevGlobalFilters = React.memo(() => {
     ...[...newFilters.map((filter) => filter.level)]
   );
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    setViewedFilters([]);
+  }, [currentMainFilter]);
   const format = (filter_id) => {
-    // const AfterMerge = newFilters.map((filter, index) => {
-    //   const filterLvl = filter.level;
-    //   return {
-    //     ...filter,
-    //     values: [
-    //       ...filter.values,
-    //       ...(filters.filter(
-    //         (toMerge, toMergeIndex) =>
-    //           toMerge.level === filterLvl && toMergeIndex !== index
-    //       )[0]?.values || []),
-    //     ],
-    //   };
-    // });
-
-    // console.log(" in format after merge for id  ", filter_id);
-    // console.log(" in format after merge ", AfterMerge);
-    // console.log(" in format after merge new filters  ", newFilters);
-
     const afterRefactor = newFilters.map((filter) => ({
       filterId: filter.filter_id,
       filterType: filter.filter_type,
@@ -129,6 +116,25 @@ const PrevGlobalFilters = React.memo(() => {
     };
   }, [viewedFilters]);
 
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
+  React.useEffect(() => {
+    if (loaded) {
+      // dispatch(setStoredViewdFilters([]));
+      // setViewedFilters([]);
+    }
+  }, [currentMainFilter]);
+
+  const handleValuesChange = (valuesLength, id) => {
+    dispatch(
+      setStoredViewdFilters([
+        ...storedViewedFilters.filter((f) => f.id !== id),
+        { id, valuesLength },
+      ])
+    );
+  };
+
   return (
     <>
       <div className="drawer-wrapper">
@@ -138,6 +144,7 @@ const PrevGlobalFilters = React.memo(() => {
               <MainSwitch
                 onSwitch={() => {
                   setViewedFilters([]);
+                  dispatch(setStoredViewdFilters([]));
                 }}
               />
 
@@ -157,6 +164,7 @@ const PrevGlobalFilters = React.memo(() => {
                         values={afterChange.values}
                         title={afterChange.title}
                         lvl={afterChange.level}
+                        onValuesChanged={handleValuesChange}
                       />
                     </React.Suspense>
                   );

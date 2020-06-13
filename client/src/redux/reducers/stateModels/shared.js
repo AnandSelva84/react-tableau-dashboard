@@ -8,6 +8,7 @@ const sharedState = {
       lvl: 0,
       parentId: null,
       value: "Business",
+      applied: true,
     },
   ],
   filters: [
@@ -27,6 +28,7 @@ const sharedState = {
       lvl: 0,
       parentId: null,
       value: "Business",
+      applied: true,
     },
   ],
   body_class: null,

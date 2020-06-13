@@ -34,7 +34,7 @@ const Option = (props) => {
     );
     console.log("onchange ", handledFilterStateChange);
 
-    dispatch(editFilterState([...handledFilterStateChange]));
+    // dispatch(editFilterState([...handledFilterStateChange]));
 
     //only in deletion state
     // if (!checked) dispatch(editFilterState(afterEdit));

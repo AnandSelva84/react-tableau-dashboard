@@ -9,7 +9,11 @@ import {
 } from "@material-ui/core";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
-import { addFilter, deleteFilter } from "../../redux/actions/shared";
+import {
+  addFilter,
+  deleteFilter,
+  applyFilters,
+} from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import theme from "../../theme/layout";
 import "./sub-header.css";
@@ -27,15 +31,32 @@ const SubHeader = () => {
     appliedFilters,
     newFilters,
     storedViewedFilters,
+    currentMainFilter,
+    drawer,
   } = useData().sharedReducer;
   const dispatch = useDispatch();
   const createChip = (id, value) => `${id} : ${value}`;
   const isVisiable = filterState.length > 0;
   const [ids, setIds] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [chosenDialog, seChosentShowDialog] = useState("");
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
+
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
+
+  // React.useEffect(() => {
+  //   if (!drawer && storedViewedFilters.length === 4) {
+  //     dispatch(applyFilters([...filterState]));
+  //   }
+  // }, [filterState]);
+
+  React.useEffect(() => {
+    if (loaded) dispatch(applyFilters([]));
+  }, [currentMainFilter]);
 
   const addFilter = (id, value, lvl, ID, parentId) => {
     dispatch(addFilter({ id, value, lvl, ID, parentId }));
@@ -52,12 +73,19 @@ const SubHeader = () => {
     console.log("currentValuesLength", currentValuesLength);
 
     if (chipsForIdValues.length === currentValuesLength) return "All";
-    return chipsForIdValues.length > 1 ? "Multiple" : chipsForIdValues[0].value;
+    return chipsForIdValues.length > 1
+      ? "Multiple"
+      : chipsForIdValues[0]?.value;
   };
 
   const wrapChips = () => {
+    const reFormattedApplied = appliedFilters.map((f) => ({
+      ...f,
+      applied: true,
+    }));
     let chipsArray = [];
-    filterState.forEach((filter) => {
+    let onlyApplied = filterState.filter((f) => f.applied);
+    reFormattedApplied.forEach((filter) => {
       const chipsForId = filterState.filter((f) => f.id === filter.id);
       const chipsForIdValues = chipsForId.map((c) => ({
         value: c.value,
@@ -79,8 +107,8 @@ const SubHeader = () => {
     console.log("wrapChips", wrapChips());
   }, [filterState]);
 
-  const handleClick = (id, value, lvl) => {
-    dispatch(deleteFilter({ id, value, lvl }));
+  const handleClick = (id, value, lvl, ID, deleteAll) => {
+    dispatch(deleteFilter({ id, value, lvl, ID, fromHeader: true }));
   };
 
   const isApplied = (ID) => {
@@ -137,6 +165,31 @@ const SubHeader = () => {
     return appliedValues.every((c) => c === true) ? "#192734" : "";
   };
 
+  React.useEffect(() => {
+    console.log("values has changed chosen", chosenIds);
+    console.log(
+      "values has changed parentIds in filterState",
+      filterState.map((f) => f.parentId)
+    );
+    const parents = filterState.map((f) => f.parentId);
+    console.log(
+      "values has changed parentIds in after filter",
+      filterState.filter(
+        (f) => chosenIds.includes(f.parentId) || f.parentId === null
+      )
+    );
+    if (!drawer && storedViewedFilters.length === 4) {
+      dispatch(
+        applyFilters([
+          ...filterState.filter(
+            (f) => chosenIds.includes(f.parentId) || f.parentId === null
+          ),
+        ])
+      );
+    }
+    // dispatch(editFilterState())
+  }, [filterState]);
+
   return (
     <div>
       {isVisiable && (
@@ -160,7 +213,7 @@ const SubHeader = () => {
               onClick={() => handleOpen(filter.value, filter.id)}
               onDelete={() => {
                 if (!!filter.lvl)
-                  handleClick(filter.id, filter.value, filter.lvl);
+                  handleClick(filter.id, filter.value, filter.lvl, true);
               }}
             />
           ))}
@@ -176,8 +229,8 @@ const SubHeader = () => {
         }}
         values={getChosenValues(chosenDialog)}
         lvl={getLvl(chosenDialog)}
-        onDelete={(id, value, lvl) => {
-          handleClick(id, value, lvl);
+        onDelete={(id, value, lvl, ID) => {
+          handleClick(id, value, lvl, ID, false);
         }}
       />
     </div>

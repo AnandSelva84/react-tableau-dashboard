@@ -28,7 +28,9 @@ const ControlButtons = () => {
         applied: true,
       })),
     ];
+
     dispatch(editFilterState(filterStateAfterApply));
+    dispatch(applyFilters([...filterStateAfterApply]));
   };
 
   return (
@@ -44,7 +46,7 @@ const ControlButtons = () => {
         onClick={handleSave}
       />
       <Button
-        title="Clear Filters"
+        title="Reset Filters"
         style={{ ...btnsTheme.cancel }}
         onClick={handleClear}
       />

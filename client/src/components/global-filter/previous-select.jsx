@@ -41,10 +41,12 @@ const PrevSelect = (props) => {
     newFilters,
     allCheckArray,
     storedViewedFilters,
+    appliedFilters,
   } = useData().sharedReducer;
 
   const [searchValue, setSearchValue] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [cleared, setCleared] = useState(false);
   const [checkedArray, setcheCheckedArray] = useState([]);
   const [allCheck, setAllCheck] = useState(false);
 
@@ -53,9 +55,10 @@ const PrevSelect = (props) => {
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
 
-  const possibleAllSelect = filterState
-    .filter((filter) => filter.id !== props.title)
-    .filter((f) => f.lvl < props.lvl);
+  const possibleAllSelect = filterState.filter(
+    (filter) => filter.id !== props.title
+  );
+  // .filter((f) => f.lvl < props.lvl);
 
   const newState = [
     ...props.values.map((value) => ({
@@ -68,6 +71,10 @@ const PrevSelect = (props) => {
     })),
     ...possibleAllSelect,
   ];
+
+  React.useEffect(() => {
+    props.onValuesChanged(props.values, props.id);
+  }, [filterState]);
 
   React.useEffect(() => {
     setLoaded(true);
@@ -128,6 +135,18 @@ const PrevSelect = (props) => {
     }
     return 0;
   }
+
+  React.useEffect(() => {
+    if (!!!props.values.length && !cleared) {
+      dispatch(
+        editFilterState(filterState.filter((f) => f.filter_id !== props.id))
+      );
+      setCleared(true);
+    }
+    if (!!props.values.length) {
+      setCleared(false);
+    }
+  }, [filterState]);
 
   const getOptions = () => {
     const options = props.values.filter(

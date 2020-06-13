@@ -61,7 +61,7 @@ const ChipsWrapper = (props) => {
                 // cursor: isClickable(filter.value),
               }}
               onDelete={() => {
-                props.onDelete(props.title, value.value, props.lvl);
+                props.onDelete(props.title, value.value, props.lvl, value.ID);
               }}
             />
           ))}
