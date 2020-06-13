@@ -51,14 +51,7 @@ const SubHeader = () => {
 
   React.useEffect(() => {
     drawer && setInitialApplied([...appliedFilters]);
-    alert("change");
   }, [appliedFilters]);
-
-  // React.useEffect(() => {
-  //   if (!drawer && storedViewedFilters.length === 4) {
-  //     dispatch(applyFilters([...filterState]));
-  //   }
-  // }, [filterState]);
 
   React.useEffect(() => {
     if (loaded) dispatch(applyFilters([]));

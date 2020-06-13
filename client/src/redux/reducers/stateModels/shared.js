@@ -36,6 +36,7 @@ const sharedState = {
   currentMainFilter: "Business",
   allCheckArray: [],
   storedViewedFilters: [],
+  unCompleted: [],
 };
 
 export default sharedState;

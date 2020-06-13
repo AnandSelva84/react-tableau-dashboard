@@ -17,10 +17,16 @@ import {
   SET_CURRENT_MAIN_FILTER,
   SET_ALL_CHECKED_ARRAY,
   SET_VIEWED_FILTERS,
+  SET_UNCOMPLETED_FILTERS,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
   switch (action.type) {
+    case SET_UNCOMPLETED_FILTERS:
+      return {
+        ...state,
+        unCompleted: action.filters,
+      };
     case SET_VIEWED_FILTERS:
       return {
         ...state,
@@ -68,7 +74,6 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
       };
     case FILTER_STATE_EDIT:
-      debugger;
       return {
         ...state,
         filterState: action.filterState,
@@ -128,18 +133,6 @@ const sharedReducer = (state = sharedState, action) => {
         filterState: newFilterState,
       };
     case DELETE_FILTER:
-      //in case of chip all
-      // if (action.filter.value === "All") {
-      //   return {
-      //     ...state,
-      //     filterState: [
-      //       ...state.filterState.filter(
-      //         (filter) => filter.id !== action.filter.id
-      //       ),
-      //     ],
-      //   };
-      // }
-      debugger;
       let afterEdit = state.filterState
         // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter((filter) => filter.ID !== action.filter.ID);

@@ -19,6 +19,7 @@ import {
   setAllAreSelected,
   setAllCheckArray,
   setStoredViewdFilters,
+  setUncompletedFilters,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
@@ -44,10 +45,13 @@ const PrevSelect = (props) => {
     appliedFilters,
   } = useData().sharedReducer;
 
+  const fullStateStandardIds = storedViewedFilters.map((f) => f.id);
+
   const [searchValue, setSearchValue] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [cleared, setCleared] = useState(false);
   const [checkedArray, setcheCheckedArray] = useState([]);
+  const [unCompletedFilters, setUncompleted] = useState([]);
   const [allCheck, setAllCheck] = useState(false);
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
@@ -71,6 +75,10 @@ const PrevSelect = (props) => {
     })),
     ...possibleAllSelect,
   ];
+
+  const validate = () => {
+    return !!unCompletedFilters.length;
+  };
 
   React.useEffect(() => {
     props.onValuesChanged(props.values, props.id);
@@ -120,6 +128,8 @@ const PrevSelect = (props) => {
       return;
     }
     const id = ParentName;
+    // validate();
+
     if (lvl === 0 && isExist(filterState, id, value, ID)) return;
     !isExist(filterState, id, value, ID)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId, filter_id }))
@@ -137,8 +147,26 @@ const PrevSelect = (props) => {
   }
 
   React.useEffect(() => {
+    // debugger;
+    let unCompletedFilters = [];
+    fullStateStandardIds.forEach((id) => {
+      if (!!!filterState.find((f) => f.filter_id === id)) {
+        console.log("not available", id);
+        unCompletedFilters.push(
+          newFilters.find((f) => f.filter_id === id)?.title
+        );
+      }
+    });
+    setUncompleted([...unCompletedFilters]);
+  }, [filterState]);
+
+  React.useEffect(() => {
+    console.log("uncompleted", unCompletedFilters);
+    dispatch(setUncompletedFilters([...unCompletedFilters]));
+  }, [unCompletedFilters]);
+
+  React.useEffect(() => {
     if (!!!props.values.length && !cleared) {
-      debugger;
       dispatch(
         editFilterState(filterState.filter((f) => f.filter_id !== props.id))
       );

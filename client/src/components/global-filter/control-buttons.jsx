@@ -12,7 +12,7 @@ import useData from "../../hooks/useStore";
 
 const ControlButtons = () => {
   const dispatch = useDispatch();
-  const { filterState } = useData().sharedReducer;
+  const { filterState, unCompleted } = useData().sharedReducer;
 
   const handleSave = () => {
     dispatch(saveFilters(filterState));
@@ -28,6 +28,11 @@ const ControlButtons = () => {
         applied: true,
       })),
     ];
+
+    if (!!unCompleted.length) {
+      alert(`${unCompleted} are empty, please check atleast one option.`);
+      return;
+    }
 
     dispatch(editFilterState(filterStateAfterApply));
     dispatch(applyFilters([...filterStateAfterApply]));
