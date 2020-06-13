@@ -138,6 +138,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     if (!!!props.values.length && !cleared) {
+      debugger;
       dispatch(
         editFilterState(filterState.filter((f) => f.filter_id !== props.id))
       );

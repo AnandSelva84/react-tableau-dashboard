@@ -68,6 +68,7 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
       };
     case FILTER_STATE_EDIT:
+      debugger;
       return {
         ...state,
         filterState: action.filterState,
@@ -127,7 +128,6 @@ const sharedReducer = (state = sharedState, action) => {
         filterState: newFilterState,
       };
     case DELETE_FILTER:
-      const chosenIds = state.filterState.map((f) => f.ID);
       //in case of chip all
       // if (action.filter.value === "All") {
       //   return {
@@ -139,10 +139,19 @@ const sharedReducer = (state = sharedState, action) => {
       //     ],
       //   };
       // }
-      alert("delete");
+      debugger;
       let afterEdit = state.filterState
         // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter((filter) => filter.ID !== action.filter.ID);
+
+      const chosenIds = afterEdit.map((f) => f.ID);
+
+      console.log(
+        "values has changed parentIds in after filter",
+        afterEdit.filter(
+          (f) => chosenIds.includes(f.parentId) || f.parentId === null
+        )
+      );
 
       if (action.filter.value === "All") {
         afterEdit = state.filterState

@@ -15,11 +15,11 @@ const Option = (props) => {
   }, []);
 
   const filterAfterChange = () => {
-    const afterFilter = filterState.filter(
-      (filter) =>
-        chosenIds.some((id) => id === filter.parentId) || filter.lvl === 0
-    );
-    return afterFilter;
+    // const afterFilter = filterState.filter(
+    //   (filter) =>
+    //     chosenIds.some((id) => id === filter.parentId) || filter.lvl === 0
+    // );
+    // return afterFilter;
   };
 
   React.useEffect(() => {

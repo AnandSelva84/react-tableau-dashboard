@@ -26,6 +26,8 @@ const PrevGlobalFilters = React.memo(() => {
     filterState,
     storedViewedFilters,
     currentMainFilter,
+    drawer,
+    appliedFilters,
   } = useData().sharedReducer;
   const [viewedFilters, setViewedFilters] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
@@ -40,6 +42,10 @@ const PrevGlobalFilters = React.memo(() => {
   const heighestLvlFilter = Math.max(
     ...[...newFilters.map((filter) => filter.level)]
   );
+
+  React.useEffect(() => {
+    dispatch(editFilterState([...appliedFilters]));
+  }, [drawer]);
 
   React.useEffect(() => {
     setViewedFilters([]);

@@ -41,12 +41,18 @@ const SubHeader = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [chosenDialog, seChosentShowDialog] = useState("");
+  const [initialApplied, setInitialApplied] = useState([...appliedFilters]);
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
 
   React.useEffect(() => {
     setLoaded(true);
   }, []);
+
+  React.useEffect(() => {
+    drawer && setInitialApplied([...appliedFilters]);
+    alert("change");
+  }, [appliedFilters]);
 
   // React.useEffect(() => {
   //   if (!drawer && storedViewedFilters.length === 4) {
@@ -79,14 +85,14 @@ const SubHeader = () => {
   };
 
   const wrapChips = () => {
-    const reFormattedApplied = appliedFilters.map((f) => ({
+    const reFormattedApplied = initialApplied.map((f) => ({
       ...f,
       applied: true,
     }));
     let chipsArray = [];
     let onlyApplied = filterState.filter((f) => f.applied);
     reFormattedApplied.forEach((filter) => {
-      const chipsForId = filterState.filter((f) => f.id === filter.id);
+      const chipsForId = initialApplied.filter((f) => f.id === filter.id);
       const chipsForIdValues = chipsForId.map((c) => ({
         value: c.value,
         ID: c.ID,
@@ -160,7 +166,7 @@ const SubHeader = () => {
   };
 
   const isAllApplied = (filter_id) => {
-    const chosen = filterState.filter((f) => f.filter_id === filter_id);
+    const chosen = initialApplied.filter((f) => f.filter_id === filter_id);
     const appliedValues = chosen.map((c) => c?.applied || false);
     return appliedValues.every((c) => c === true) ? "#192734" : "";
   };
@@ -172,22 +178,32 @@ const SubHeader = () => {
       filterState.map((f) => f.parentId)
     );
     const parents = filterState.map((f) => f.parentId);
+
     console.log(
       "values has changed parentIds in after filter",
       filterState.filter(
         (f) => chosenIds.includes(f.parentId) || f.parentId === null
       )
     );
-    if (!drawer && storedViewedFilters.length === 4) {
-      dispatch(
-        applyFilters([
-          ...filterState.filter(
-            (f) => chosenIds.includes(f.parentId) || f.parentId === null
-          ),
-        ])
-      );
-    }
+    console.log("values has changed length", storedViewedFilters.length);
+    // if (!drawer && storedViewedFilters.length === 4) {
+    //   dispatch(
+    //     applyFilters([
+    //       ...filterState.filter(
+    //         (f) => chosenIds.includes(f.parentId) || f.parentId === null
+    //       ),
+    //     ])
+    //   );
+    // }
     // dispatch(editFilterState())
+  }, [filterState]);
+
+  React.useEffect(() => {
+    filterState.forEach((elem) => {
+      if (!chosenIds.includes(elem.parentId)) {
+        console.log("this element isnt in state", elem);
+      }
+    });
   }, [filterState]);
 
   return (
