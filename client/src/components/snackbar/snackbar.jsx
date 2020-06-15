@@ -3,6 +3,9 @@ import { Snackbar as Snack } from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import Button from "@material-ui/core/Button";
 import MuiAlert from "@material-ui/lab/Alert";
+import useData from "../../hooks/useStore";
+import { useDispatch } from "react-redux";
+import { showMessage } from "../../redux/actions/shared";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -13,16 +16,23 @@ function SlideTransition(props) {
 }
 
 const Snackbar = () => {
-  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
-  const closeSncak = () => {};
+  const { snack } = useData().sharedReducer;
+
+  const { open, msg, varient } = snack;
+
+  // const [open, setOpen] = React.useState(false);
+
+  const closeSncak = () => {
+    dispatch(showMessage("", "", false));
+  };
 
   const handleClick = () => {
-    setOpen(true);
+    dispatch(showMessage("this is message ", "error", true));
   };
   const handleClose = () => {
-    alert("closed");
-    setOpen(false);
+    closeSncak();
   };
 
   return (
@@ -32,13 +42,13 @@ const Snackbar = () => {
         open={open}
         onClose={handleClose}
         // TransitionComponent={SlideTransition}
-        message="I love snacks"
+        message={msg}
         key={"notiKey"}
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert onClose={handleClose} severity="success">
-          This is a success message!
+        <Alert onClose={handleClose} severity={varient}>
+          {msg}
         </Alert>
       </Snack>
     </>

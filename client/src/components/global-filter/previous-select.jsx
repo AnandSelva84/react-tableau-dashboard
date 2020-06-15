@@ -94,6 +94,7 @@ const PrevSelect = (props) => {
   };
 
   React.useEffect(() => {
+    debugger
     props.onValuesChanged(props.values, props.id);
   }, [filterState]);
 

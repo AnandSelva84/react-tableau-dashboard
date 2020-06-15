@@ -24,6 +24,7 @@ const DateControls = () => {
         lvl={0}
         custom
         placeholder="Time Interval"
+        onValuesChanged={() => {}}
       />
       {!!showPickers && <DatePickers />}
     </>
