@@ -15,6 +15,7 @@ import {
   setBodyClass,
   editFilterState,
   applyFilters,
+  setCurrentMainFilter,
 } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
@@ -52,6 +53,14 @@ const Main = React.memo(() => {
     value: "Business",
   });
 
+  const savedFilters = JSON.parse(localStorage.getItem("filters"));
+
+  React.useEffect(() => {
+    const mainFilter =
+      savedFilters.find((f) => f.id === "Hierarchies")?.value || "Business";
+    dispatch(setCurrentMainFilter(mainFilter));
+  }, []);
+
   const getMainFilterAccordingToName = (name) => {
     const filter =
       name === "Business"
@@ -82,7 +91,6 @@ const Main = React.memo(() => {
     console.log("savedFilters", savedFilters);
 
     if (!!savedFilters && savedFilters.length > 0) {
-      alert("filters applied");
       // dispatch(editFilterState(savedFilters));
       dispatch(applyFilters(savedFilters));
     }

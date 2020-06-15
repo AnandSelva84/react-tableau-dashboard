@@ -18,6 +18,7 @@ import {
   SET_ALL_CHECKED_ARRAY,
   SET_VIEWED_FILTERS,
   SET_UNCOMPLETED_FILTERS,
+  TOGGLE_RESET_BUTTON,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -32,6 +33,11 @@ const sharedReducer = (state = sharedState, action) => {
   };
 
   switch (action.type) {
+    case TOGGLE_RESET_BUTTON:
+      return {
+        ...state,
+        resetState: !state.resetState,
+      };
     case SET_UNCOMPLETED_FILTERS:
       return {
         ...state,

@@ -54,7 +54,7 @@ const SubHeader = () => {
   }, [appliedFilters]);
 
   React.useEffect(() => {
-    if (loaded) dispatch(applyFilters([]));
+    // if (loaded) dispatch(applyFilters([]));
   }, [currentMainFilter]);
 
   const addFilter = (id, value, lvl, ID, parentId) => {

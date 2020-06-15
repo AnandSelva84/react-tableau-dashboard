@@ -16,6 +16,11 @@ export const SET_UNCOMPLETED_FILTERS = "SET_UNCOMPLETED_FILTERS";
 export const SET_BODY_CLASS = "SET_BODY_CLASS";
 export const SET_ALL_ARE_SELECTED = "SET_ALL_ARE_SELECTED";
 export const SET_CURRENT_MAIN_FILTER = "SET_CURRENT_MAIN_FILTER";
+export const TOGGLE_RESET_BUTTON = "TOGGLE_RESET_BUTTON";
+
+export const toggleResetButton = () => ({
+  type: TOGGLE_RESET_BUTTON,
+});
 
 export const setUncompletedFilters = (filters) => ({
   type: SET_UNCOMPLETED_FILTERS,

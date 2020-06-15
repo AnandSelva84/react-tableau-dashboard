@@ -20,6 +20,7 @@ import {
   setAllCheckArray,
   setStoredViewdFilters,
   setUncompletedFilters,
+  toggleResetButton,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
@@ -43,6 +44,7 @@ const PrevSelect = (props) => {
     allCheckArray,
     storedViewedFilters,
     appliedFilters,
+    resetState,
   } = useData().sharedReducer;
 
   const fullStateStandardIds = storedViewedFilters.map((f) => f.id);
@@ -67,6 +69,13 @@ const PrevSelect = (props) => {
   React.useEffect(() => {
     if (!!!props.values.length) setAllCheck(false);
   }, [props.values]);
+
+  React.useEffect(() => {
+    if (loaded) {
+      selectAll();
+      dispatch(toggleResetButton());
+    }
+  }, [resetState]);
 
   const newState = [
     ...props.values.map((value) => ({
@@ -218,7 +227,7 @@ const PrevSelect = (props) => {
 
   const selectAll = () => {
     setShowMenu(false);
-
+    debugger;
     // setAllCheck(true);
     dispatch(editFilterState([...newState]));
   };

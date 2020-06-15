@@ -7,6 +7,9 @@ import {
   clearFilter,
   applyFilters,
   editFilterState,
+  toggleResetButton,
+  setStoredViewdFilters,
+  addFilter,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 import { useSnackbar } from "notistack";
@@ -14,8 +17,26 @@ import { useSnackbar } from "notistack";
 const ControlButtons = () => {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const { filterState, unCompleted } = useData().sharedReducer;
+  const {
+    filterState,
+    unCompleted,
+    currentMainFilter,
+  } = useData().sharedReducer;
   const [error, setError] = React.useState("");
+
+  const handleStoreUpdate = (name) => {
+    dispatch(
+      addFilter({
+        id: "Hierarchies",
+        value: name,
+        lvl: 0,
+        ID: name,
+        parentId: null,
+        filter_id: null,
+        applied: true,
+      })
+    );
+  };
 
   React.useEffect(() => {
     if (unCompleted.length)
@@ -43,7 +64,16 @@ const ControlButtons = () => {
     dispatch(saveFilters(filterState));
   };
   const handleClear = () => {
-    dispatch(clearFilter());
+    // dispatch(clearFilter());
+    showMessage(`filters are reseted.`, "info");
+    dispatch(setStoredViewdFilters([]));
+    handleStoreUpdate(currentMainFilter);
+
+    // props.onSwitch();
+    // const newName = currentMainFilter === "Legacy" ? "Business" : "Legacy";
+    // handleStoreUpdate(newName);
+
+    dispatch(toggleResetButton());
   };
   const handleApply = () => {
     if (!!unCompleted.length) {

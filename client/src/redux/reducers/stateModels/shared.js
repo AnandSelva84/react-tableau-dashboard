@@ -37,6 +37,7 @@ const sharedState = {
   allCheckArray: [],
   storedViewedFilters: [],
   unCompleted: [],
+  resetState: false,
 };
 
 export default sharedState;
