@@ -21,6 +21,16 @@ import {
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
+  const initialfilter = {
+    ID: state.currentMainFilter,
+    applied: true,
+    filter_id: null,
+    id: "Hierarchies",
+    lvl: 0,
+    parentId: null,
+    value: state.currentMainFilter,
+  };
+
   switch (action.type) {
     case SET_UNCOMPLETED_FILTERS:
       return {
@@ -61,7 +71,7 @@ const sharedReducer = (state = sharedState, action) => {
     case CLEAR_FILTERS:
       return {
         ...state,
-        filterState: [],
+        filterState: [initialfilter],
       };
     case APPLY_FILTERS:
       return {

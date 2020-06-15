@@ -50,7 +50,7 @@ const SubHeader = () => {
   }, []);
 
   React.useEffect(() => {
-    drawer && setInitialApplied([...appliedFilters]);
+    setInitialApplied([...appliedFilters]);
   }, [appliedFilters]);
 
   React.useEffect(() => {

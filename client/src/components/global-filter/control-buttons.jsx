@@ -9,19 +9,50 @@ import {
   editFilterState,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
+import { useSnackbar } from "notistack";
 
 const ControlButtons = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const { filterState, unCompleted } = useData().sharedReducer;
+  const [error, setError] = React.useState("");
+
+  React.useEffect(() => {
+    if (unCompleted.length)
+      setError(`${unCompleted} are empty, please don'\t leave empty options.`);
+    else setError("");
+  }, [unCompleted]);
+
+  const showMessage = (msg, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(msg, { variant });
+  };
+
+  const isNotValid = () => {
+    return !!unCompleted.length;
+  };
 
   const handleSave = () => {
+    if (!!unCompleted.length) {
+      showMessage(error, "error");
+      return;
+    } else {
+      showMessage(`filters saved successfully.`, "success");
+    }
+
     dispatch(saveFilters(filterState));
   };
   const handleClear = () => {
     dispatch(clearFilter());
   };
   const handleApply = () => {
-    console.log("filters applied ");
+    if (!!unCompleted.length) {
+      showMessage(error, "error");
+      return;
+    } else {
+      showMessage(`filters applied successfully.`, "success");
+    }
+
     const filterStateAfterApply = [
       ...filterState.map((f) => ({
         ...f,
@@ -29,10 +60,10 @@ const ControlButtons = () => {
       })),
     ];
 
-    if (!!unCompleted.length) {
-      alert(`${unCompleted} are empty, please check atleast one option.`);
-      return;
-    }
+    // if (!!unCompleted.length) {
+    //   alert(`${unCompleted} are empty, please check atleast one option.`);
+    //   return;
+    // }
 
     dispatch(editFilterState(filterStateAfterApply));
     dispatch(applyFilters([...filterStateAfterApply]));

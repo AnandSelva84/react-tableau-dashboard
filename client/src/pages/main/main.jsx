@@ -14,6 +14,7 @@ import {
   setFilters,
   setBodyClass,
   editFilterState,
+  applyFilters,
 } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
@@ -78,8 +79,13 @@ const Main = React.memo(() => {
   useEffect(() => {
     setLoaded(true);
     const savedFilters = JSON.parse(localStorage.getItem("filters"));
-    if (!!savedFilters && savedFilters.length > 0)
-      dispatch(editFilterState(savedFilters));
+    console.log("savedFilters", savedFilters);
+
+    if (!!savedFilters && savedFilters.length > 0) {
+      alert("filters applied");
+      // dispatch(editFilterState(savedFilters));
+      dispatch(applyFilters(savedFilters));
+    }
   }, []);
 
   useEffect(() => {

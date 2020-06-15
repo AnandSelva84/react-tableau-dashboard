@@ -64,6 +64,10 @@ const PrevSelect = (props) => {
   );
   // .filter((f) => f.lvl < props.lvl);
 
+  React.useEffect(() => {
+    if (!!!props.values.length) setAllCheck(false);
+  }, [props.values]);
+
   const newState = [
     ...props.values.map((value) => ({
       id: props.title,
