@@ -38,6 +38,11 @@ const sharedState = {
   storedViewedFilters: [],
   unCompleted: [],
   resetState: false,
+  snack: {
+    open: false,
+    msg: "",
+    varient: "info",
+  },
 };
 
 export default sharedState;

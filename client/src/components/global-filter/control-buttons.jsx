@@ -12,10 +12,10 @@ import {
   addFilter,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
-import { useSnackbar } from "notistack";
+// import { useSnackbar } from "notistack";
 
 const ControlButtons = () => {
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const {
     filterState,
@@ -46,7 +46,7 @@ const ControlButtons = () => {
 
   const showMessage = (msg, variant) => {
     // variant could be success, error, warning, info, or default
-    enqueueSnackbar(msg, { variant });
+    // enqueueSnackbar(msg, { variant });
   };
 
   const isNotValid = () => {

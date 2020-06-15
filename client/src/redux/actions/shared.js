@@ -17,6 +17,16 @@ export const SET_BODY_CLASS = "SET_BODY_CLASS";
 export const SET_ALL_ARE_SELECTED = "SET_ALL_ARE_SELECTED";
 export const SET_CURRENT_MAIN_FILTER = "SET_CURRENT_MAIN_FILTER";
 export const TOGGLE_RESET_BUTTON = "TOGGLE_RESET_BUTTON";
+export const SHOW_MESSAGE = "SHOW_MESSAGE";
+
+export const showMessage = (msg, varient, open) => ({
+  type: SHOW_MESSAGE,
+  snack: {
+    msg,
+    varient,
+    open,
+  },
+});
 
 export const toggleResetButton = () => ({
   type: TOGGLE_RESET_BUTTON,

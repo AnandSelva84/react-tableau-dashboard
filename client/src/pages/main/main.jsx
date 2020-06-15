@@ -22,6 +22,7 @@ import HomePage from "../home/home";
 import { fromOptionsToChips } from "../../redux/methods/re-format-response";
 import CustomSelect from "../../components/custom-auto-complete/custom-auto-complete";
 import MainSwitch from "../../components/main-switch/main-switch";
+import Snackbar from "../../components/snackbar/snackbar";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();
@@ -238,6 +239,7 @@ const Main = React.memo(() => {
     <div className={style}>
       {loading && <LaodingScreen />}
       {!!data && !loading && <HomePage data={data} />}
+      <Snackbar />
     </div>
   );
 });

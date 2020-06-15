@@ -227,7 +227,6 @@ const PrevSelect = (props) => {
 
   const selectAll = () => {
     setShowMenu(false);
-    debugger;
     // setAllCheck(true);
     dispatch(editFilterState([...newState]));
   };
@@ -364,7 +363,7 @@ const PrevSelect = (props) => {
                     // handleSelectAll();
                     handleSelectAll();
                   }}
-                  display={"All"}
+                  display={`All\t (${props.values?.length || 0})`}
                   onChange={() => {}}
                 />
               )}

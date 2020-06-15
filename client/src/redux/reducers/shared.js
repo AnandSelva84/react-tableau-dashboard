@@ -19,6 +19,7 @@ import {
   SET_VIEWED_FILTERS,
   SET_UNCOMPLETED_FILTERS,
   TOGGLE_RESET_BUTTON,
+  SHOW_MESSAGE,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -33,6 +34,13 @@ const sharedReducer = (state = sharedState, action) => {
   };
 
   switch (action.type) {
+    case SHOW_MESSAGE:
+      return {
+        ...state,
+        snack: {
+          ...action.snack,
+        },
+      };
     case TOGGLE_RESET_BUTTON:
       return {
         ...state,
