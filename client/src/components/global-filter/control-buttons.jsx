@@ -10,6 +10,7 @@ import {
   toggleResetButton,
   setStoredViewdFilters,
   addFilter,
+  showMessage,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 // import { useSnackbar } from "notistack";
@@ -44,10 +45,10 @@ const ControlButtons = () => {
     else setError("");
   }, [unCompleted]);
 
-  const showMessage = (msg, variant) => {
+  const makeMessage = (msg, variant) => {
     // variant could be success, error, warning, info, or default
     // enqueueSnackbar(msg, { variant });
-    alert(msg);
+    dispatch(showMessage(msg, variant, true));
   };
 
   const isNotValid = () => {
@@ -56,10 +57,10 @@ const ControlButtons = () => {
 
   const handleSave = () => {
     if (!!unCompleted.length) {
-      showMessage(error, "error");
+      makeMessage(error, "error");
       return;
     } else {
-      showMessage(`Filters Saved Successfully.`, "success");
+      makeMessage(`Filters Saved Successfully.`, "success");
     }
 
     dispatch(saveFilters(filterState));
@@ -68,7 +69,7 @@ const ControlButtons = () => {
     // dispatch(clearFilter());
     dispatch(setStoredViewdFilters([]));
     handleStoreUpdate(currentMainFilter);
-    showMessage(`Filters Reset Successfully.`, "info");
+    makeMessage(`Filters Reset Successfully.`, "info");
     // props.onSwitch();
     // const newName = currentMainFilter === "Legacy" ? "Business" : "Legacy";
     // handleStoreUpdate(newName);
@@ -77,10 +78,10 @@ const ControlButtons = () => {
   };
   const handleApply = () => {
     if (!!unCompleted.length) {
-      showMessage(error, "error");
+      makeMessage(error, "error");
       return;
     } else {
-      showMessage(`Filters Applied Successfully.`, "success");
+      makeMessage(`Filters Applied Successfully.`, "success");
     }
 
     const filterStateAfterApply = [
