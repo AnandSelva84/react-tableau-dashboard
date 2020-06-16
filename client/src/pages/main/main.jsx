@@ -58,7 +58,7 @@ const Main = React.memo(() => {
 
   React.useEffect(() => {
     const mainFilter =
-      savedFilters.find((f) => f.id === "Hierarchies")?.value || "Business";
+      savedFilters?.find((f) => f.id === "Hierarchies")?.value || "Business";
     dispatch(setCurrentMainFilter(mainFilter));
   }, []);
 

@@ -26,6 +26,8 @@ import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
 import Option from "../select/option";
 import CustomSelect from "../custom-auto-complete/custom-auto-complete";
+import MenuSkeleton from "../menu-skeletons/menu-skeletons";
+import OptionsWrapper from "./optionsWrapper";
 
 //props.values should be filtered before passing it to it's component
 const PrevSelect = (props) => {
@@ -51,6 +53,7 @@ const PrevSelect = (props) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [menuLoading, setMenuLoading] = useState(false);
   const [cleared, setCleared] = useState(false);
   const [checkedArray, setcheCheckedArray] = useState([]);
   const [unCompletedFilters, setUncompleted] = useState([]);
@@ -94,7 +97,6 @@ const PrevSelect = (props) => {
   };
 
   React.useEffect(() => {
-    debugger
     props.onValuesChanged(props.values, props.id);
   }, [filterState]);
 
@@ -159,6 +161,9 @@ const PrevSelect = (props) => {
     }
     return 0;
   }
+  React.useEffect(() => {
+    console.log("menuLoading", menuLoading);
+  }, [menuLoading]);
 
   React.useEffect(() => {
     // debugger;
@@ -318,6 +323,8 @@ const PrevSelect = (props) => {
   };
 
   const toggle = () => {
+    setMenuLoading(true);
+
     showMenu ? hanldeClose() : handleOpen();
   };
 
@@ -343,60 +350,65 @@ const PrevSelect = (props) => {
             label={props?.title || "Unkown"}
           />
           {showMenu && (
-            <Paper
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                maxHeight: "15rem",
-                overflowY: "auto",
-                position: "absolute",
-                top: "4.5rem",
-                minWidth: "100%",
-                zIndex: "100",
+            <OptionsWrapper
+              onMenuHasLoaded={() => {
+                setTimeout(() => {
+                  setMenuLoading(false);
+                }, 100);
               }}
             >
-              {props.lvl !== 0 && (
-                <Option
-                  checked={allCheck}
-                  filterState={filterState}
-                  onClick={() => {
-                    // handleSelectAll();
-                    handleSelectAll();
-                  }}
-                  display={`All\t (${props.values?.length || 0})`}
-                  onChange={() => {}}
-                />
-              )}
-              {getOptionsAfterSearch()
-                .sort(sortOptions)
-                .map((option) => (
-                  <Option
-                    onChange={handleOptionChange}
-                    checked={isExist(
-                      filterState,
-                      getTitle(),
-                      option.filter_value_text
+              {!menuLoading ? (
+                <>
+                  <>
+                    {props.lvl !== 0 && (
+                      <Option
+                        checked={allCheck}
+                        filterState={filterState}
+                        onClick={() => {
+                          // handleSelectAll();
+                          handleSelectAll();
+                        }}
+                        display={`All\t (${props.values?.length || 0})`}
+                        onChange={() => {}}
+                        // onMenuHasLoaded = {()=>{}}
+                      />
                     )}
-                    value={option.filter_value_text}
-                    filterState={filterState}
-                    id={option.filterOptionId}
-                    parentId={option.parentFilterOptionId}
-                    lvl={props.lvl}
-                    display={option.filter_display_text}
-                    onClick={() =>
-                      handleClick(
-                        getTitle(),
-                        option.filter_value_text,
-                        props.lvl,
-                        option.filterOptionId,
-                        option.parentFilterOptionId,
-                        props.id
-                      )
-                    }
-                  />
-                ))}
-            </Paper>
+                  </>
+                  <>
+                    {getOptionsAfterSearch()
+                      .sort(sortOptions)
+                      .map((option) => (
+                        <Option
+                          onChange={handleOptionChange}
+                          checked={isExist(
+                            filterState,
+                            getTitle(),
+                            option.filter_value_text
+                          )}
+                          value={option.filter_value_text}
+                          filterState={filterState}
+                          id={option.filterOptionId}
+                          parentId={option.parentFilterOptionId}
+                          lvl={props.lvl}
+                          display={option.filter_display_text}
+                          onClick={() =>
+                            handleClick(
+                              getTitle(),
+                              option.filter_value_text,
+                              props.lvl,
+                              option.filterOptionId,
+                              option.parentFilterOptionId,
+                              props.id
+                            )
+                          }
+                        />
+                      ))}
+                  </>
+                </>
+              ) : (
+                <MenuSkeleton />
+              )}{" "}
+            </OptionsWrapper>
           )}
         </div>
       </ClickAwayListener>
