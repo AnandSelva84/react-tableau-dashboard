@@ -1,0 +1,76 @@
+{
+    "metadata": {
+
+    "swagger": "2.0"
+    },
+    
+    "filters" : [
+    {
+        "level": 1,
+    
+        "Filter_id": "Hierarchies",
+        
+        "title": "Hierarchies",
+        
+        "filter_type": "Dropdown",
+        
+        "parent_ filter": null,
+        
+        "values": [
+        
+        {
+            "filter_option ": "Legacy",
+        
+            "filter_value": "Legacy",
+            
+            "filter_display_text": "Legacy",
+            
+            "order": 1,
+            
+            "parent filter_option": null
+        },
+       
+        {
+            "filter_option": "Business",
+        
+            "filter_value": "Business",
+            
+            "filter_display_text": "Business",
+            
+            "order": 2,
+            
+            "parent filter_option": null
+        }
+    ]
+        
+
+    },
+    {
+        "level": 2,
+    
+        "filter_id": "Portfolio",
+        
+        "title": "IT Portfolio",
+        
+        "filter_ type": "Multi-select",
+        
+        "parent filter": "Hierarchies",
+        
+        "values": [
+            {
+                "filter_option": "Legacy_Bank",
+        
+                "filter_value": "Bank",
+                
+                "Filter_display_text": "Bank",
+                
+                "order": 1,
+            }
+        ]
+        
+    }
+]
+}
+    
+    
+    
