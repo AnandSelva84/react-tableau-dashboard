@@ -1,7 +1,7 @@
 import React from "react";
 import {
   BookmarkBorder,
-  SaveAltOutlined,
+  SaveOutlined,
   HelpOutlineOutlined,
 } from "@material-ui/icons";
 import ClickableIcon from "../icon-button";
@@ -12,7 +12,7 @@ const ToolBar = () => {
     <div className="" style={{ display: "flex", justifyContent: "flex-end" }}>
       <div className="tool-wrapper">
         <ClickableIcon onClick={() => {}} icon={<BookmarkBorder />} />
-        <ClickableIcon onClick={() => {}} icon={<SaveAltOutlined />} />
+        <ClickableIcon onClick={() => {}} icon={<SaveOutlined />} />
         <ClickableIcon onClick={() => {}} icon={<HelpOutlineOutlined />} />
       </div>
     </div>
