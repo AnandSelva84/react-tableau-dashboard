@@ -77,6 +77,7 @@ const ControlButtons = () => {
     dispatch(toggleResetButton());
   };
   const handleApply = () => {
+    debugger;
     if (!!unCompleted.length) {
       makeMessage(error, "error");
       return;
