@@ -1,0 +1,10 @@
+.nav-wrapper {
+  display: flex;
+  justify-content: space-around;
+  color: white;
+  background-color: #27323a;
+  min-width: 15rem;
+  min-height: 4rem;
+  align-items: center;
+  margin-right: 10rem;
+}

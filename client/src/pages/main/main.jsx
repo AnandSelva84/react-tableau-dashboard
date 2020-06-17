@@ -200,46 +200,10 @@ const Main = React.memo(() => {
     return filterToReturn;
   };
 
-  // React.useEffect(() => {
-  //   console.log("change in ids initial loaded", initialLoaded);
-
-  //   if (!!newFilters) {
-  //     let loc = [];
-  //     if (initialLoaded) {
-  //       return;
-  //     }
-  //     newFilters.forEach((filter, index) => {
-  //       const afterChange = format(filter.filter_id);
-  //       if (afterChange.values.length) {
-  //         const lvls = newFilters.map((f) => f.level);
-  //         const stateLvls = filterState.map((f) => f.lvl);
-  //         const lvl = format(filter.filter_id).level;
-  //         const stateIsFull = Math.max(...lvls) - 1 === Math.max(...stateLvls);
-  //         if (!stateIsFull && lvl !== 0) {
-  //           loc = [
-  //             ...loc,
-  //             ...fromOptionsToChips(format(filter.filter_id)?.values, filter),
-  //           ];
-  //           dispatch(editFilterState([...loc, mainFilter]));
-  //           // dispatch
-  //         } else {
-  //           if (lvl !== 0) setInitialLoaded(true);
-  //           else {
-  //             console.log("change in ids initial shoyuld be false here ");
-
-  //             setInitialLoaded(false);
-  //           }
-  //         }
-  //       }
-  //     });
-  //   }
-  // }, [chosenIds]);
-
   return (
     <div className={style}>
       {loading && <LaodingScreen />}
       {!!data && !loading && <HomePage data={data} />}
-      <Snackbar />
     </div>
   );
 });

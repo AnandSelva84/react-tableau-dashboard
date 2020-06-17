@@ -314,6 +314,13 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {}, [allCheck]);
 
+  const newAllChecked = () => {
+    const allOptionsIds = props.values.map((v) => v.filterOptionId);
+    const allExistInState = allOptionsIds.every((v) => chosenIds.includes(v));
+    return allExistInState;
+  };
+
+  newAllChecked();
   const handleOpen = () => {
     setShowMenu(true);
   };
@@ -362,7 +369,7 @@ const PrevSelect = (props) => {
                   <>
                     {props.lvl !== 0 && (
                       <Option
-                        checked={allCheck}
+                        checked={allCheck && newAllChecked()}
                         filterState={filterState}
                         onClick={() => {
                           // handleSelectAll();
