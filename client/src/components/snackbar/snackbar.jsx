@@ -29,6 +29,7 @@ const Snackbar = () => {
   };
 
   const handleClick = () => {
+    alert("cleck");
     dispatch(showMessage("this is message ", "error", true));
   };
   const handleClose = () => {
@@ -37,7 +38,6 @@ const Snackbar = () => {
 
   return (
     <>
-      <Button onClick={handleClick}>Up</Button>
       <Snack
         open={open}
         onClose={handleClose}
