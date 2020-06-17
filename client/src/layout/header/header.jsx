@@ -10,6 +10,7 @@ import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
 import response from "../../models/getInfo";
 import { useHistory } from "react-router-dom";
+import Navigator from "../../components/navigator/navigator";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const Header = () => {
               {appData.application.name}
             </div>
           </div>
+          <Navigator />
           <div className="header-title hello">hello panda</div>
         </Paper>
       )}
