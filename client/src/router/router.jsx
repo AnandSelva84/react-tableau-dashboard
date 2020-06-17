@@ -8,6 +8,7 @@ import SubHeader from "../layout/sub-header/sub-header";
 import LVL_3 from "../pages/level-3/lvl-3";
 import LVL_2 from "../pages/level-2/lvl-2";
 import SwipSideDrawer from "../layout/drawer/swipeable-drawer";
+import ToolBar from "../components/tool-bar/tool-bar";
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
         <SwipSideDrawer>
           <Header />
           <SubHeader />
+          <ToolBar />
           <Switch>
             <Route exact path="/" component={() => <Main />} />
             <Route exact path="/lvl3" component={() => <LVL_3 />} />

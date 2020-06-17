@@ -17,6 +17,8 @@ const ClickableIcon = (props) => {
       }}
     >
       <IconButton
+        {...props}
+        size="medium"
         onClick={() => {
           props.onClick();
         }}

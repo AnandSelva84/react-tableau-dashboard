@@ -11,6 +11,7 @@ import useData from "../../hooks/useStore";
 import response from "../../models/getInfo";
 import { useHistory } from "react-router-dom";
 import Navigator from "../../components/navigator/navigator";
+import HomeAvatar from "../../components/avatar/avatar";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,6 @@ const Header = () => {
     if (history.location.pathname !== "/") history.push("/");
   };
 
-  // const appName = app === "amp" ? "Agile Metrics Panel" : "Key Indicators";
   const dark = !darkMode ? null : darkHeader;
   return (
     <>
@@ -54,7 +54,11 @@ const Header = () => {
             </div>
           </div>
           <Navigator />
-          <div className="header-title hello">hello panda</div>
+          <div className="logo-side">
+            <HomeAvatar />
+
+            <div className="header-title hello">Hello Panda</div>
+          </div>
         </Paper>
       )}
     </>

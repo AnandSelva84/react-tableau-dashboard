@@ -4,7 +4,18 @@
   color: white;
   background-color: #27323a;
   min-width: 15rem;
-  min-height: 4rem;
+  min-height: 60%;
   align-items: center;
   margin-right: 10rem;
+  text-align: center;
+}
+
+.nav-hero-title {
+  max-width: 7rem;
+  text-align: right;
+  margin: 0 2rem;
+}
+
+.nav-hero-title > p {
+  text-align: center;
 }
