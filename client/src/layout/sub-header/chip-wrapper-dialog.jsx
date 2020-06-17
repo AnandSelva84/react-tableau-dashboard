@@ -45,7 +45,6 @@ const ChipsWrapper = (props) => {
             display: "flex",
             flexWrap: "wrap",
             padding: "1rem 1.5rem",
-            minHeight: "35vh",
           }}
         >
           {props.values.map((value) => (
