@@ -12,3 +12,12 @@
 .hello {
   font-size: 1.1rem;
 }
+
+.logo-side {
+  display: flex;
+  align-items: center;
+}
+
+.logo-side > * {
+  margin: 0 0.3rem;
+}
