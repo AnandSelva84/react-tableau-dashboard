@@ -22,7 +22,7 @@ import {
   setUncompletedFilters,
   toggleResetButton,
 } from "../../redux/actions/shared";
-import { isExist } from "../../redux/methods/is-exist";
+// import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
 import Option from "../select/option";
 import CustomSelect from "../custom-auto-complete/custom-auto-complete";
@@ -75,6 +75,10 @@ const PrevSelect = (props) => {
     if (!!!props.values.length) setAllCheck(false);
   }, [props.values]);
 
+  const isExist = (ID) => {
+    return filterState.find((f) => f.ID === ID);
+  };
+
   React.useEffect(() => {
     if (loaded) {
       selectAll();
@@ -84,7 +88,6 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     if (!loaded) return;
-    debugger;
     let ids = filterState.map((f) => f.ID);
     let parents = filterState.map((f) => f.parentId);
     let locFilterState = filterState;
@@ -187,8 +190,8 @@ const PrevSelect = (props) => {
     const id = ParentName;
     // validate();
 
-    if (lvl === 0 && isExist(filterState, id, value, ID)) return;
-    !isExist(filterState, id, value, ID)
+    if (lvl === 0 && isExist(ID)) return;
+    !isExist(ID)
       ? dispatch(addFilter({ id, value, lvl, ID, parentId, filter_id }))
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId, filter_id }));
   };
@@ -427,11 +430,7 @@ const PrevSelect = (props) => {
                       .map((option) => (
                         <Option
                           onChange={handleOptionChange}
-                          checked={isExist(
-                            filterState,
-                            getTitle(),
-                            option.filter_value_text
-                          )}
+                          checked={isExist(option.filterOptionId)}
                           value={option.filter_value_text}
                           filterState={filterState}
                           id={option.filterOptionId}
