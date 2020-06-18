@@ -46,6 +46,26 @@ const PrevGlobalFilters = React.memo(() => {
   React.useEffect(() => {
     dispatch(editFilterState([...appliedFilters]));
   }, [drawer]);
+  React.useEffect(() => {
+    const ids = filterState.map((f) => f.ID);
+    const parents = filterState.map((f) => f.parentId);
+
+    console.log("error here all ids", ids);
+    console.log("error here all parents", parents);
+
+    console.log(
+      "error here all",
+      parents.every((e) => ids.includes(e))
+    );
+
+    // filterState.forEach((filter) => {
+    //   if (!filterState.map((f) => f.ID).includes(filter.parentId)) {
+    //     console.log("error here not included", filter);
+    //   } else {
+    //     console.log("error here included", filter);
+    //   }
+    // });
+  }, [filterState]);
 
   React.useEffect(() => {
     setViewedFilters([]);
