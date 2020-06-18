@@ -204,7 +204,7 @@ const Main = React.memo(() => {
     <div className={style}>
       {loading && <LaodingScreen />}
       {!!data && !loading && <HomePage data={data} />}
-      {/* <Snackbar /> */}
+      <Snackbar />
     </div>
   );
 });
