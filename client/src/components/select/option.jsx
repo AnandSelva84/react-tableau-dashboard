@@ -19,7 +19,30 @@ const Option = (props) => {
     const handledFilterStateChange = filterState.filter(
       (f) => !chosenIds.includes(f.parentFilterOptionId)
     );
-    console.log("onchange ", handledFilterStateChange);
+    // console.log("onchange ", handledFilterStateChange);
+    let locFilterState = filterState;
+    let i = 0;
+
+    while (i !== 4 && props.lvl === 1) {
+      let prevLength = locFilterState.length;
+
+      locFilterState = locFilterState.filter(
+        (f) =>
+          locFilterState.map((f) => f.ID).includes(f.parentId) || f.lvl === 0
+      );
+      const condition = locFilterState.length === prevLength;
+      if (locFilterState.length == prevLength && i !== 0) {
+        dispatch(editFilterState([...locFilterState]));
+        // setValuesUpdated(true);
+        console.log("match");
+      }
+      i++;
+
+      // if (i === 3) {
+      // dispatch(editFilterState([...locFilterState]));
+      // }
+      // if (i === 3)
+    }
   }, [checked]);
 
   return (

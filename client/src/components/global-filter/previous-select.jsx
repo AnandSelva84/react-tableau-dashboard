@@ -55,9 +55,11 @@ const PrevSelect = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [menuLoading, setMenuLoading] = useState(false);
   const [cleared, setCleared] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [checkedArray, setcheCheckedArray] = useState([]);
   const [unCompletedFilters, setUncompleted] = useState([]);
   const [allCheck, setAllCheck] = useState(false);
+  const [valuesUpdated, setValuesUpdated] = useState(false);
 
   const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
   const [localFilters, setLocalFilters] = useState(props.values);
@@ -79,6 +81,45 @@ const PrevSelect = (props) => {
       dispatch(toggleResetButton());
     }
   }, [resetState]);
+
+  React.useEffect(() => {
+    if (!loaded) return;
+    debugger;
+    let ids = filterState.map((f) => f.ID);
+    let parents = filterState.map((f) => f.parentId);
+    let locFilterState = filterState;
+    let i = 0;
+    console.log(valuesUpdated);
+
+    while (i !== 4 && props.lvl === 1) {
+      let prevLength = locFilterState.length;
+
+      locFilterState = locFilterState.filter(
+        (f) =>
+          locFilterState.map((f) => f.ID).includes(f.parentId) || f.lvl === 0
+      );
+      const condition = locFilterState.length === prevLength;
+      if (locFilterState.length == prevLength && i !== 0) {
+        // dispatch(editFilterState([...locFilterState]));
+        // setValuesUpdated(true);
+        ids = locFilterState.map((f) => f.ID);
+        parents = locFilterState.map((f) => f.parentId);
+      }
+      i++;
+
+      // if (i === 3) {
+      // dispatch(editFilterState([...locFilterState]));
+      // }
+      // if (i === 3)
+    }
+
+    // setValuesUpdated(true);
+
+    // const aFilterState = filterState.filter((f) =>
+    //   chosenIds.includes(f.parentId)
+    // );
+    // dispatch(editFilterState([...aFilterState]));
+  }, [filterState]);
 
   const newState = [
     ...props.values.map((value) => ({
@@ -259,8 +300,6 @@ const PrevSelect = (props) => {
   const getTitle = () => {
     return props.title;
   };
-
-  const [showMenu, setShowMenu] = useState(false);
 
   const isExistinArray = (array, element) => {
     return array.includes(element);
