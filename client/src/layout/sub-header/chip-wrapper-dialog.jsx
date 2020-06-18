@@ -51,11 +51,11 @@ const ChipsWrapper = (props) => {
             <Chip
               // ID = {value.ID}
               label={createChip(props.title, value.value)}
-              color={!!isApplied(value.ID) ? "primary" : ""}
+              color={"primary"}
               style={{
                 marginRight: "0.4rem",
                 //TODO make isApplied functional for mulitble and single values
-                backgroundColor: isApplied(value.ID),
+                backgroundColor: "#192734",
                 marginTop: "0.2rem",
                 // cursor: isClickable(filter.value),
               }}

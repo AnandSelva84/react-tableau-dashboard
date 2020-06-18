@@ -114,7 +114,7 @@ const SubHeader = () => {
     const color = !!appliedFilters.find((filter) => filter.ID === ID)
       ? "#192734"
       : "";
-    return color;
+    return "#192734";
   };
 
   const isClickable = (value, id) => {
@@ -210,11 +210,11 @@ const SubHeader = () => {
           {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}
-              color={!!isAllApplied(filter.filter_id) ? "primary" : ""}
+              color={"primary"}
               style={{
                 marginRight: "0.4rem",
                 //TODO make isApplied functional for mulitble and single values
-                backgroundColor: isAllApplied(filter.filter_id),
+                backgroundColor: "#192734",
                 // color: !!isApplied(filter.ID) ? "white" : "",
                 marginTop: "0.2rem",
                 // cursor: isClickable(filter.value),
