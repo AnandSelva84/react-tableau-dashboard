@@ -109,9 +109,13 @@ const Main = React.memo(() => {
   }, [data, loading]);
 
   const getRidOfUnassigned = (filters) => {
-    return filters.filter(
-      (filter) => filter.filter_display_text !== "Unassigned"
+    const afterFilter = filters.filter(
+      (filter) =>
+        !filter.values.map((f) => f.filter_display_text).includes("Bank")
     );
+    console.log("after cut", afterFilter);
+
+    return filters;
   };
 
   useEffect(() => {
