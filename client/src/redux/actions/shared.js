@@ -18,6 +18,25 @@ export const SET_ALL_ARE_SELECTED = "SET_ALL_ARE_SELECTED";
 export const SET_CURRENT_MAIN_FILTER = "SET_CURRENT_MAIN_FILTER";
 export const TOGGLE_RESET_BUTTON = "TOGGLE_RESET_BUTTON";
 export const SHOW_MESSAGE = "SHOW_MESSAGE";
+export const POP_HISTORY = "POP_HISTORY";
+export const PUSH_HISTORY = "PUSH_HISTORY";
+export const DATA_FETCHED = "DATA_FETCHED";
+
+export const setDataFetched = () => ({
+  type: DATA_FETCHED,
+});
+
+//times : number
+export const popHistory = (times) => ({
+  type: POP_HISTORY,
+  times,
+});
+
+// obj: HistoryObject
+export const pushHistory = (obj) => ({
+  type: PUSH_HISTORY,
+  obj,
+});
 
 export const showMessage = (msg, varient, open) => ({
   type: SHOW_MESSAGE,

@@ -43,6 +43,8 @@ const sharedState = {
     msg: "",
     varient: "info",
   },
+  historyStack: [{ path: "/", pathName: "home" }],
+  dataFetched: false,
 };
 
 export default sharedState;

@@ -34,6 +34,7 @@ const Main = React.memo(() => {
     newFilters,
     filterState,
     currentMainFilter,
+    dataFetched,
   } = useData().sharedReducer;
   const chosenIds = filterState.map((filter) => filter.ID) || [];
 
@@ -107,8 +108,15 @@ const Main = React.memo(() => {
     }
   }, [data, loading]);
 
+  const getRidOfUnassigned = (filters) => {
+    return filters.filter(
+      (filter) => filter.filter_display_text !== "Unassigned"
+    );
+  };
+
   useEffect(() => {
-    if (!!filters && !filtersLoading) dispatch(setFilters(filters.filters));
+    if (!!filters && !filtersLoading)
+      dispatch(setFilters(getRidOfUnassigned(filters.filters)));
   }, [filters, filtersLoading]);
 
   React.useEffect(() => {
@@ -202,7 +210,7 @@ const Main = React.memo(() => {
 
   return (
     <div className={style}>
-      {loading && <LaodingScreen />}
+      {loading && !!!newFilters && <LaodingScreen />}
       {!!data && !loading && <HomePage data={data} />}
       <Snackbar />
     </div>

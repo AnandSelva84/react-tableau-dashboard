@@ -20,6 +20,9 @@ import {
   SET_UNCOMPLETED_FILTERS,
   TOGGLE_RESET_BUTTON,
   SHOW_MESSAGE,
+  POP_HISTORY,
+  PUSH_HISTORY,
+  DATA_FETCHED,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -33,7 +36,34 @@ const sharedReducer = (state = sharedState, action) => {
     value: state.currentMainFilter,
   };
 
+  // history: HistoryObject[], times: number
+  const popHistory = (history, times) => {
+    for (let index = 0; index < times; index++) {
+      history.pop();
+    }
+    return history;
+  };
+
   switch (action.type) {
+    case DATA_FETCHED:
+      return {
+        ...state,
+        dataFetched: true,
+      };
+    case POP_HISTORY:
+      const popedHistory = popHistory(state.historyStack, action.times);
+      return {
+        ...state,
+        historyStack: popedHistory,
+      };
+
+    case PUSH_HISTORY:
+      let arr = state.historyStack;
+      arr.push(action.obj);
+      return {
+        ...state,
+        historyStack: arr,
+      };
     case SHOW_MESSAGE:
       return {
         ...state,

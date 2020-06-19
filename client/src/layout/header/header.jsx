@@ -40,7 +40,7 @@ const Header = () => {
   const dark = !darkMode ? null : darkHeader;
   return (
     <>
-      {!!appData && !appIsLoading && (
+      {!!appData?.application?.name && (
         <Paper style={{ ...header, ...dark, borderRadius: "0" }}>
           <div className="left-side">
             <ClickableIcon
