@@ -1,6 +1,10 @@
 import React from "react";
 import "./navigator.css";
-import { HomeOutlined, FolderOpenOutlined } from "@material-ui/icons";
+import {
+  HomeOutlined,
+  FolderOpenOutlined,
+  HelpOutlineOutlined,
+} from "@material-ui/icons";
 import ClickableIcon from "../icon-button";
 const Naviagtor = () => {
   return (
@@ -15,6 +19,13 @@ const Naviagtor = () => {
         </div>
         <div className="nav-hero-title">
           <p>Application Development</p>
+        </div>
+        <div className="">
+          <ClickableIcon
+            style={{ color: "#fff" }}
+            onClick={() => {}}
+            icon={<HelpOutlineOutlined />}
+          />
         </div>
         <div className="">
           <ClickableIcon

@@ -14,6 +14,7 @@ Router.get("/new", (req, res) => {
 });
 
 Router.get("/_new", (req, res) => {
+  setTimeout(() => {}, 5000);
   res.send(nf);
 });
 

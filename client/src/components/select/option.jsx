@@ -3,6 +3,7 @@ import { CardActionArea, Checkbox } from "@material-ui/core";
 import select from "../../theme/select";
 import { useDispatch } from "react-redux";
 import { editFilterState } from "../../redux/actions/shared";
+import { continuesFilter } from "../../redux/methods/continous-filter";
 
 const Option = (props) => {
   const dispatch = useDispatch();
@@ -14,35 +15,41 @@ const Option = (props) => {
     setLoaded(true);
   }, []);
 
+  const onFilterEnd = (filters) => {
+    dispatch(editFilterState([...filters]));
+  };
+
   React.useEffect(() => {
     props.onChange(checked, props.id, props.parentId);
     const handledFilterStateChange = filterState.filter(
       (f) => !chosenIds.includes(f.parentFilterOptionId)
     );
     // console.log("onchange ", handledFilterStateChange);
-    let locFilterState = filterState;
-    let i = 0;
+    continuesFilter(filterState, onFilterEnd);
+    // let locFilterState = filterState;
+    // let i = 0;
 
-    while (i !== 4 && props.lvl === 1) {
-      let prevLength = locFilterState.length;
+    // while (i !== 10) {
+    //   let prevLength = locFilterState.length;
 
-      locFilterState = locFilterState.filter(
-        (f) =>
-          locFilterState.map((f) => f.ID).includes(f.parentId) || f.lvl === 0
-      );
-      const condition = locFilterState.length === prevLength;
-      if (locFilterState.length == prevLength && i !== 0) {
-        dispatch(editFilterState([...locFilterState]));
-        // setValuesUpdated(true);
-        console.log("match");
-      }
-      i++;
+    //   locFilterState = locFilterState.filter(
+    //     (f) =>
+    //       locFilterState.map((f) => f.ID).includes(f.parentId) || f.lvl === 0
+    //   );
+    //   const condition = locFilterState.length === prevLength;
+    //   if (locFilterState.length == prevLength && i !== 0) {
+    //     dispatch(editFilterState([...locFilterState]));
+    //     // setValuesUpdated(true);
+    //     console.log("match");
+    //     break;
+    //   }
+    //   i++;
 
-      // if (i === 3) {
-      // dispatch(editFilterState([...locFilterState]));
-      // }
-      // if (i === 3)
-    }
+    //   // if (i === 3) {
+    //   // dispatch(editFilterState([...locFilterState]));
+    //   // }
+    //   // if (i === 3)
+    // }
   }, [checked]);
 
   return (

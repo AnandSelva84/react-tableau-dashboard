@@ -1,6 +1,6 @@
 const theme = {
   header: {
-    minHeight: "8vh",
+    minHeight: "5vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",

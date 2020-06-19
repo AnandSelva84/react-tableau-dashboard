@@ -17,7 +17,7 @@ const Router = () => {
         <SwipSideDrawer>
           <Header />
           <SubHeader />
-          <ToolBar />
+          {/* <ToolBar /> */}
           <Switch>
             <Route exact path="/" component={() => <Main />} />
             <Route exact path="/lvl3" component={() => <LVL_3 />} />

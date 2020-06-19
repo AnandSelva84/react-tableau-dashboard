@@ -215,15 +215,13 @@ const SubHeader = () => {
                 marginRight: "0.4rem",
                 //TODO make isApplied functional for mulitble and single values
                 backgroundColor: "#192734",
-                // color: !!isApplied(filter.ID) ? "white" : "",
                 marginTop: "0.2rem",
-                // cursor: isClickable(filter.value),
               }}
               onClick={() => handleOpen(filter.value, filter.id)}
-              onDelete={() => {
-                if (!!filter.lvl)
-                  handleClick(filter.id, filter.value, filter.lvl, true);
-              }}
+              // onDelete={() => {
+              //   if (!!filter.lvl)
+              //     handleClick(filter.id, filter.value, filter.lvl, true);
+              // }}
             />
           ))}
         </Paper>

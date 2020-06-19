@@ -37,6 +37,24 @@ const Header = () => {
     if (history.location.pathname !== "/") history.push("/");
   };
 
+  const StyledTitle = (props) => {
+    const subTitles = props.title.split(" ");
+    return (
+      <div style={{ display: "flex" }}>
+        {subTitles.map((singleTitle, index) => (
+          <div
+            className=""
+            style={{
+              color: index % 2 === 0 ? "rgb(208,207,206)" : "rgb(18,57,91)",
+            }}
+          >
+            {singleTitle}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const dark = !darkMode ? null : darkHeader;
   return (
     <>
@@ -50,7 +68,8 @@ const Header = () => {
               }}
             />
             <div onClick={onLogoClicked} className="header-title">
-              {appData.application.name}
+              {/* {appData.application.name} */}
+              <StyledTitle title={appData.application.name} />
             </div>
           </div>
           <Navigator />

@@ -4,6 +4,8 @@ import Dialog from "@material-ui/core/Dialog";
 import { Chip } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import useData from "../../hooks/useStore";
+import { continuesFilter } from "../../redux/methods/continous-filter";
+import { applyFilters } from "../../redux/actions/shared";
 
 const ChipsWrapper = (props) => {
   const dispatch = useDispatch();
@@ -27,6 +29,16 @@ const ChipsWrapper = (props) => {
     return !!filterState.find((f) => f.ID === ID)?.applied || false
       ? "#192734"
       : "";
+  };
+
+  const onFilterEnd = (filters) => {
+    dispatch(applyFilters([...filters]));
+  };
+
+  const onDelete = (ID) => {
+    // dispatch(applyFilters([...filters]));
+
+    continuesFilter(props.filterState, onFilterEnd);
   };
 
   return (
@@ -60,7 +72,7 @@ const ChipsWrapper = (props) => {
                 // cursor: isClickable(filter.value),
               }}
               onDelete={() => {
-                props.onDelete(props.title, value.value, props.lvl, value.ID);
+                onDelete(value.ID);
               }}
             />
           ))}
