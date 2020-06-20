@@ -1,17 +1,23 @@
 import React from "react";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
-import { Chip } from "@material-ui/core";
+import { Chip, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import useData from "../../hooks/useStore";
 import { continuesFilter } from "../../redux/methods/continous-filter";
 import { applyFilters } from "../../redux/actions/shared";
+import SearchBar from "../../components/search-bar/search-bar";
 
 const ChipsWrapper = (props) => {
   const dispatch = useDispatch();
   const { filterState } = useData().sharedReducer;
-
   const createChip = (id, value) => `${id} : ${value}`;
+
+  const chipsAfterSearch = props.values.filter((value) =>
+    createChip(props.title, value.value)
+      .toLocaleLowerCase()
+      .includes(props.searchValue.toLocaleLowerCase())
+  );
 
   const getChipId = (value) => {
     console.log(
@@ -54,28 +60,56 @@ const ChipsWrapper = (props) => {
         <div
           className=""
           style={{
-            display: "flex",
-            flexWrap: "wrap",
             padding: "1rem 1.5rem",
           }}
         >
-          {props.values.map((value) => (
-            <Chip
-              // ID = {value.ID}
-              label={createChip(props.title, value.value)}
-              color={"primary"}
-              style={{
-                marginRight: "0.4rem",
-                //TODO make isApplied functional for mulitble and single values
-                backgroundColor: "#192734",
-                marginTop: "0.2rem",
-                // cursor: isClickable(filter.value),
-              }}
-              onDelete={() => {
-                onDelete(value.ID);
-              }}
-            />
-          ))}
+          <SearchBar onChange={props.handleTextChange} />
+          <div
+            className=""
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+            }}
+          >
+            {chipsAfterSearch.map((value) => (
+              <Chip
+                // ID = {value.ID}
+                label={createChip(props.title, value.value)}
+                color={"primary"}
+                style={{
+                  marginRight: "0.4rem",
+                  //TODO make isApplied functional for mulitble and single values
+                  backgroundColor: "#192734",
+                  marginTop: "0.2rem",
+                  // cursor: isClickable(filter.value),
+                }}
+                onDelete={() => {
+                  onDelete(value.ID);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        <div
+          className=""
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "3.5rem",
+            marginBottom: "1.5rem",
+          }}
+          onClick={() => {
+            props.onClose();
+          }}
+        >
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ color: "#fff" }}
+          >
+            Cancel
+          </Button>
         </div>
       </Dialog>
     </>

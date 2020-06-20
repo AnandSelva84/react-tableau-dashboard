@@ -42,6 +42,7 @@ const SubHeader = () => {
   const [loaded, setLoaded] = useState(false);
   const [chosenDialog, seChosentShowDialog] = useState("");
   const [initialApplied, setInitialApplied] = useState([...appliedFilters]);
+  const [searchValue, setSearchValue] = React.useState("");
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
 
@@ -56,6 +57,11 @@ const SubHeader = () => {
   React.useEffect(() => {
     // if (loaded) dispatch(applyFilters([]));
   }, [currentMainFilter]);
+
+  const handleTextChange = (e) => {
+    const value = e?.target?.value || "";
+    setSearchValue(value);
+  };
 
   const addFilter = (id, value, lvl, ID, parentId) => {
     dispatch(addFilter({ id, value, lvl, ID, parentId }));
@@ -129,6 +135,7 @@ const SubHeader = () => {
   };
 
   const handleClose = () => {
+    setSearchValue("");
     setShowDialog(false);
   };
 
@@ -149,6 +156,12 @@ const SubHeader = () => {
     }
     return 0;
   }
+
+  React.useEffect(() => {
+    return () => {
+      setSearchValue("");
+    };
+  }, []);
 
   const reOrder = (array) => {
     if (!array.map((a) => a.id).includes("Time Interval")) return array;
@@ -227,6 +240,8 @@ const SubHeader = () => {
         </Paper>
       )}
       <ChipsWrapper
+        handleTextChange={handleTextChange}
+        searchValue={searchValue}
         open={showDialog}
         onClose={handleClose}
         filterState={filterState}
