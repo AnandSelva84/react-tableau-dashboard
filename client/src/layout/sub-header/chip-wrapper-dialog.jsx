@@ -10,7 +10,8 @@ import SearchBar from "../../components/search-bar/search-bar";
 
 const ChipsWrapper = (props) => {
   const dispatch = useDispatch();
-  const { filterState } = useData().sharedReducer;
+  const [deleteCases, setDeleteCases] = React.useState(0);
+  const { filterState, appliedFilters } = useData().sharedReducer;
   const createChip = (id, value) => `${id} : ${value}`;
 
   const chipsAfterSearch = props.values.filter((value) =>
@@ -42,10 +43,14 @@ const ChipsWrapper = (props) => {
   };
 
   const onDelete = (ID) => {
-    // dispatch(applyFilters([...filters]));
-
-    continuesFilter(props.filterState, onFilterEnd);
+    debugger;
+    const afterFilter = [...appliedFilters.filter((f) => f.ID !== ID)];
+    dispatch(applyFilters([...appliedFilters.filter((f) => f.ID !== ID)]));
   };
+
+  React.useEffect(() => {
+    continuesFilter(appliedFilters, onFilterEnd);
+  }, [deleteCases]);
 
   return (
     <>
@@ -85,6 +90,7 @@ const ChipsWrapper = (props) => {
                 }}
                 onDelete={() => {
                   onDelete(value.ID);
+                  setDeleteCases(deleteCases + 1);
                 }}
               />
             ))}

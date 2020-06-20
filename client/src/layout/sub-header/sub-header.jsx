@@ -240,6 +240,7 @@ const SubHeader = () => {
         </Paper>
       )}
       <ChipsWrapper
+        appliedFilters={appliedFilters}
         handleTextChange={handleTextChange}
         searchValue={searchValue}
         open={showDialog}
