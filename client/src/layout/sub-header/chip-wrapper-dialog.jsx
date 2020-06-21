@@ -15,7 +15,7 @@ const ChipsWrapper = (props) => {
   const createChip = (id, value) => `${id} : ${value}`;
 
   const chipsAfterSearch = props.values.filter((value) =>
-    createChip(props.title, value.value)
+    value.value
       .toLocaleLowerCase()
       .includes(props.searchValue.toLocaleLowerCase())
   );
@@ -43,7 +43,6 @@ const ChipsWrapper = (props) => {
   };
 
   const onDelete = (ID) => {
-    debugger;
     const afterFilter = [...appliedFilters.filter((f) => f.ID !== ID)];
     dispatch(applyFilters([...appliedFilters.filter((f) => f.ID !== ID)]));
   };
@@ -79,7 +78,7 @@ const ChipsWrapper = (props) => {
             {chipsAfterSearch.map((value) => (
               <Chip
                 // ID = {value.ID}
-                label={createChip(props.title, value.value)}
+                label={value.value}
                 color={"primary"}
                 style={{
                   marginRight: "0.4rem",
@@ -111,8 +110,7 @@ const ChipsWrapper = (props) => {
         >
           <Button
             variant="contained"
-            color="secondary"
-            style={{ color: "#fff" }}
+            style={{ backgroundColor: "rgb(171,8,14)", color: "#fff" }}
           >
             Cancel
           </Button>

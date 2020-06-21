@@ -1,10 +1,10 @@
 import React from "react";
-import { InputBase, Paper } from "@material-ui/core";
+import { InputBase, Paper, Card } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 const SearchBar = (props) => {
   return (
-    <Paper
+    <Card
       style={{
         minHeight: "2rem",
         padding: "0.5rem 0.5rem",
@@ -16,7 +16,7 @@ const SearchBar = (props) => {
     >
       <InputBase placeholder="Filters Search" {...props} fullWidth />
       <SearchIcon />
-    </Paper>
+    </Card>
   );
 };
 

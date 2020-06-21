@@ -65,6 +65,7 @@ const PrevSelect = (props) => {
   const [localFilters, setLocalFilters] = useState(props.values);
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
+  const hasAnyValuesInApplied = !!appliedFilters.find((f) => f.id === props.id);
 
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
@@ -276,13 +277,15 @@ const PrevSelect = (props) => {
   };
 
   const selectAll = () => {
-    setShowMenu(false);
+    // setShowMenu(false);
     // setAllCheck(true);
-    dispatch(editFilterState([...newState]));
+    if (!hasAnyValuesInApplied) {
+      dispatch(editFilterState([...newState]));
+    }
   };
 
   const unSelectAll = () => {
-    setShowMenu(false);
+    // setShowMenu(false);
     // setAllCheck(false);
 
     dispatch(editFilterState([...possibleAllSelect]));

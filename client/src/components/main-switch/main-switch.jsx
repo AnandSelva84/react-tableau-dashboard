@@ -43,12 +43,18 @@ const CustomSwitch = withStyles({
 })(Switch);
 
 const MainSwitch = React.memo((props) => {
-  const { currentMainFilter } = useData().sharedReducer;
+  const { currentMainFilter, appliedFilters } = useData().sharedReducer;
   const dispatch = useDispatch();
   const [loaded, setLoaded] = React.useState(false);
   const [current, setCurrent] = React.useState("Business");
   React.useEffect(() => {
     setLoaded(true);
+
+    return () => {
+      const originalValue = appliedFilters.find((f) => f.id === "Hierarchies")
+        ?.value;
+      if (!!originalValue) dispatch(setCurrentMainFilter(originalValue));
+    };
   }, []);
 
   const testForCheck = (name) => {
