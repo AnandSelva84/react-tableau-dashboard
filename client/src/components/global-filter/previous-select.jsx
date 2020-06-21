@@ -47,6 +47,7 @@ const PrevSelect = (props) => {
     storedViewedFilters,
     appliedFilters,
     resetState,
+    currentMainFilter,
   } = useData().sharedReducer;
 
   const fullStateStandardIds = storedViewedFilters.map((f) => f.id);
@@ -65,12 +66,20 @@ const PrevSelect = (props) => {
   const [localFilters, setLocalFilters] = useState(props.values);
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const chosenLvls = filterState.map((filter) => filter.lvl) || [];
-  const hasAnyValuesInApplied = !!appliedFilters.find((f) => f.id === props.id);
+  const isTheAppliedOne = !!appliedFilters.find((f) => f.id === props.id);
+  console.log("isTheAppliedOne", isTheAppliedOne);
+  const mainApplied = appliedFilters.find((f) => f.id === "Hierarchies")?.value;
 
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
   );
   // .filter((f) => f.lvl < props.lvl);
+
+  // React.useEffect(() => {
+  //   debugger;
+  //   if (mainApplied === currentMainFilter)
+  //     dispatch(editFilterState([...appliedFilters]));
+  // }, [currentMainFilter]);
 
   React.useEffect(() => {
     if (!!!props.values.length) setAllCheck(false);
@@ -124,8 +133,24 @@ const PrevSelect = (props) => {
     // );
     // dispatch(editFilterState([...aFilterState]));
   }, [filterState]);
+  const getFullState = () => {
+    const fullState = [
+      ...props.values.map((value) => ({
+        id: props.title,
+        ID: value.filterOptionId,
+        lvl: props.lvl,
+        parentId: value.parentFilterOptionId,
+        value: value.filter_value_text,
+        filter_id: props.id,
+      })),
+      ...possibleAllSelect,
+    ];
 
-  const newState = [
+    const full = currentMainFilter === mainApplied ? appliedFilters : fullState;
+    return full;
+  };
+
+  const fullState = [
     ...props.values.map((value) => ({
       id: props.title,
       ID: value.filterOptionId,
@@ -279,9 +304,7 @@ const PrevSelect = (props) => {
   const selectAll = () => {
     // setShowMenu(false);
     // setAllCheck(true);
-    if (!hasAnyValuesInApplied) {
-      dispatch(editFilterState([...newState]));
-    }
+    dispatch(editFilterState([...getFullState()]));
   };
 
   const unSelectAll = () => {
