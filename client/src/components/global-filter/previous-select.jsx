@@ -69,10 +69,21 @@ const PrevSelect = (props) => {
   const isTheAppliedOne = !!appliedFilters.find((f) => f.id === props.id);
   console.log("isTheAppliedOne", isTheAppliedOne);
   const mainApplied = appliedFilters.find((f) => f.id === "Hierarchies")?.value;
-
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
   );
+  const newState = [
+    ...props.values.map((value) => ({
+      id: props.title,
+      ID: value.filterOptionId,
+      lvl: props.lvl,
+      parentId: value.parentFilterOptionId,
+      value: value.filter_value_text,
+      filter_id: props.id,
+    })),
+    ...possibleAllSelect,
+  ];
+
   // .filter((f) => f.lvl < props.lvl);
 
   // React.useEffect(() => {
@@ -91,7 +102,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     if (loaded) {
-      onClickAll();
+      dispatch(editFilterState([...newState]));
       dispatch(toggleResetButton());
     }
   }, [resetState]);
@@ -154,6 +165,7 @@ const PrevSelect = (props) => {
   };
 
   const onClickAll = () => {
+    debugger;
     const initialFullState = [
       ...props.values.map((value) => ({
         id: props.title,
