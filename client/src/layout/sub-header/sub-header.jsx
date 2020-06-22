@@ -37,7 +37,6 @@ const SubHeader = () => {
   const dispatch = useDispatch();
   const createChip = (id, value) => `${id} : ${value}`;
   const isVisiable = filterState.length > 0;
-  const [ids, setIds] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [chosenDialog, seChosentShowDialog] = useState("");
@@ -45,6 +44,7 @@ const SubHeader = () => {
   const [searchValue, setSearchValue] = React.useState("");
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
+  const appliedIds = appliedFilters.map((filter) => filter.ID) || [];
 
   React.useEffect(() => {
     setLoaded(true);
@@ -74,6 +74,7 @@ const SubHeader = () => {
   };
 
   const isMultible = (chipsForIdValues, filter_Id) => {
+    if (!!filter_Id) getAllPossibleValues(filter_Id);
     const currentValuesLength = currentLength(filter_Id);
     console.log("currentValuesLength", currentValuesLength);
 
@@ -84,23 +85,26 @@ const SubHeader = () => {
   };
 
   const wrapChips = () => {
-    const reFormattedApplied = initialApplied.map((f) => ({
+    if (newFilters.length === 0) return [];
+    const reFormattedApplied = appliedFilters.map((f) => ({
       ...f,
       applied: true,
     }));
     let chipsArray = [];
     let onlyApplied = filterState.filter((f) => f.applied);
     reFormattedApplied.forEach((filter) => {
-      const chipsForId = initialApplied.filter((f) => f.id === filter.id);
+      const chipsForId = appliedFilters.filter((f) => f.id === filter.id);
       const chipsForIdValues = chipsForId.map((c) => ({
         value: c.value,
         ID: c.ID,
       }));
+      debugger;
+
       if (!chipsArray.map((c) => c.id).includes(filter.id))
         chipsArray.push({
           id: filter.id,
           values: chipsForIdValues,
-          value: isMultible(chipsForIdValues, filter.filter_id),
+          value: getStatus(filter.filter_id),
           lvl: filter.lvl,
           filter_id: filter.filter_id,
         });
@@ -177,6 +181,26 @@ const SubHeader = () => {
     return appliedValues.every((c) => c === true) ? "#192734" : "";
   };
 
+  const getAllPossibleValues = (filter_id) => {
+    debugger;
+    const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
+    const rawValues = rawFilter.values.filter((value) =>
+      appliedIds.includes(value.parent_filter_option)
+    );
+    return rawValues;
+  };
+  const getStatus = (filter_id) => {
+    let status = "";
+    const rawValues = getAllPossibleValues(filter_id);
+    const appliedValues = appliedFilters.filter(
+      (f) => f.filter_id === filter_id
+    );
+    if (appliedValues?.length === rawValues?.length) status = "All";
+    if (appliedValues?.length !== rawValues?.length) status = "Multiple";
+    if (appliedValues?.length === 1) status = appliedValues[0]?.value || "";
+    return status;
+  };
+
   React.useEffect(() => {
     console.log("values has changed chosen", chosenIds);
     console.log(
@@ -214,7 +238,7 @@ const SubHeader = () => {
 
   return (
     <div>
-      {isVisiable && (
+      {isVisiable && newFilters.length > 0 && (
         <Paper
           style={{
             ...theme.subHeader,
@@ -230,7 +254,11 @@ const SubHeader = () => {
                 backgroundColor: "#192734",
                 marginTop: "0.2rem",
               }}
-              onClick={() => handleOpen(filter.value, filter.id)}
+              onClick={() => {
+                handleOpen(filter.value, filter.id);
+                getStatus(filter.filter_id);
+                // getAllPossibleValues(filter.filter_id);
+              }}
               // onDelete={() => {
               //   if (!!filter.lvl)
               //     handleClick(filter.id, filter.value, filter.lvl, true);

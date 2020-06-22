@@ -68,7 +68,7 @@ const MainSwitch = React.memo((props) => {
         lvl: 0,
         ID: name,
         parentId: null,
-        filter_id: null,
+        filter_id: "Hierarchies",
         applied: true,
       })
     );
