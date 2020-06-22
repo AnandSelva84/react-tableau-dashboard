@@ -145,11 +145,25 @@ const PrevSelect = (props) => {
       })),
       ...possibleAllSelect,
     ];
-
+    debugger;
     const full = currentMainFilter === mainApplied ? appliedFilters : fullState;
     return full;
   };
 
+  const onClickAll = () => {
+    const initialFullState = [
+      ...props.values.map((value) => ({
+        id: props.title,
+        ID: value.filterOptionId,
+        lvl: props.lvl,
+        parentId: value.parentFilterOptionId,
+        value: value.filter_value_text,
+        filter_id: props.id,
+      })),
+      ...possibleAllSelect,
+    ];
+    dispatch(editFilterState([...initialFullState]));
+  };
   const fullState = [
     ...props.values.map((value) => ({
       id: props.title,
@@ -322,7 +336,8 @@ const PrevSelect = (props) => {
     if (allCheck) {
       unSelectAll();
     } else {
-      selectAll();
+      onClickAll();
+      // selectAll();
     }
   };
 

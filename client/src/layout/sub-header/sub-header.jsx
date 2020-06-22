@@ -98,7 +98,6 @@ const SubHeader = () => {
         value: c.value,
         ID: c.ID,
       }));
-      debugger;
 
       if (!chipsArray.map((c) => c.id).includes(filter.id))
         chipsArray.push({
@@ -182,7 +181,6 @@ const SubHeader = () => {
   };
 
   const getAllPossibleValues = (filter_id) => {
-    debugger;
     const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
     const rawValues = rawFilter.values.filter((value) =>
       appliedIds.includes(value.parent_filter_option)
