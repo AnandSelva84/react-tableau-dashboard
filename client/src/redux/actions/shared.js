@@ -21,6 +21,12 @@ export const SHOW_MESSAGE = "SHOW_MESSAGE";
 export const POP_HISTORY = "POP_HISTORY";
 export const PUSH_HISTORY = "PUSH_HISTORY";
 export const DATA_FETCHED = "DATA_FETCHED";
+export const SET_LOGO_URL = "SET_LOGO_URL";
+
+export const setLogoUrl = (url) => ({
+  type: SET_LOGO_URL,
+  url,
+});
 
 export const setDataFetched = () => ({
   type: DATA_FETCHED,

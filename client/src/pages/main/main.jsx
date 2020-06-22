@@ -16,6 +16,7 @@ import {
   editFilterState,
   applyFilters,
   setCurrentMainFilter,
+  setLogoUrl,
 } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
@@ -102,6 +103,7 @@ const Main = React.memo(() => {
     if (!!data && !loading) {
       dispatch(setAppLoading(false));
       dispatch(setApp(data.data));
+      dispatch(setLogoUrl(data.data.application.logo_path_url));
       dispatch(setBodyClass(data.data.application.app_body_css_class));
     } else {
       dispatch(setAppLoading(true));

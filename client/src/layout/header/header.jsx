@@ -12,6 +12,7 @@ import response from "../../models/getInfo";
 import { useHistory } from "react-router-dom";
 import Navigator from "../../components/navigator/navigator";
 import HomeAvatar from "../../components/avatar/avatar";
+import Logo from "./logo";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Header = () => {
     appIsLoading,
     app: appData,
     filterState,
+    logoUrl,
   } = useData().sharedReducer;
   console.log("initial ", filterState);
 
@@ -32,6 +34,7 @@ const Header = () => {
       id === "KID" ? dispatch(setDarkMode(true)) : dispatch(setDarkMode(false));
     }
   }, [appData]);
+  React.useEffect(() => {}, [logoUrl]);
 
   const onLogoClicked = () => {
     if (history.location.pathname !== "/") history.push("/");
@@ -67,15 +70,16 @@ const Header = () => {
                 dispatch(toggleDrawer());
               }}
             />
-            <div onClick={onLogoClicked} className="header-title">
-              {/* {appData.application.name} */}
-              <StyledTitle title={appData.application.name} />
+            <div className="" style={{ display: "flex", alignItems: "center" }}>
+              <Logo url={logoUrl} />
+              <div onClick={onLogoClicked} className="header-title">
+                <StyledTitle title={appData.application.name} />
+              </div>
             </div>
           </div>
           <Navigator />
           <div className="logo-side">
             <HomeAvatar />
-
             <div className="header-title hello">Hello Panda</div>
           </div>
         </Paper>

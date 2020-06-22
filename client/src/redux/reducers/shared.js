@@ -23,6 +23,7 @@ import {
   POP_HISTORY,
   PUSH_HISTORY,
   DATA_FETCHED,
+  SET_LOGO_URL,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -45,6 +46,11 @@ const sharedReducer = (state = sharedState, action) => {
   };
 
   switch (action.type) {
+    case SET_LOGO_URL:
+      return {
+        ...state,
+        logoUrl: action.url,
+      };
     case DATA_FETCHED:
       return {
         ...state,
