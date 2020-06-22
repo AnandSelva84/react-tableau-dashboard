@@ -85,6 +85,7 @@ const SubHeader = () => {
   };
 
   const wrapChips = () => {
+    debugger;
     if (newFilters.length === 0) return [];
     const reFormattedApplied = appliedFilters.map((f) => ({
       ...f,
@@ -143,6 +144,7 @@ const SubHeader = () => {
   };
 
   const getChosenValues = (id) => {
+    if (newFilters.length === 0) return [];
     return wrapChips().find((f) => f.id === id)?.values || [];
   };
 
@@ -181,10 +183,12 @@ const SubHeader = () => {
   };
 
   const getAllPossibleValues = (filter_id) => {
+    debugger;
     const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
-    const rawValues = rawFilter.values.filter((value) =>
-      appliedIds.includes(value.parent_filter_option)
-    );
+    const rawValues =
+      rawFilter?.values.filter((value) =>
+        appliedIds.includes(value?.parent_filter_option)
+      ) || [];
     return rawValues;
   };
   const getStatus = (filter_id) => {
@@ -236,7 +240,7 @@ const SubHeader = () => {
 
   return (
     <div>
-      {isVisiable && newFilters.length > 0 && (
+      {isVisiable && !!newFilters && newFilters.length > 0 && (
         <Paper
           style={{
             ...theme.subHeader,

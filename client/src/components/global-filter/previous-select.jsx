@@ -91,7 +91,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     if (loaded) {
-      selectAll();
+      onClickAll();
       dispatch(toggleResetButton());
     }
   }, [resetState]);
@@ -186,7 +186,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     setLoaded(true);
-    if (!props.custom) selectAll();
+    if (!props.custom) onClickAll();
     return () => {
       dispatch(
         setAllCheckArray([...allCheckArray.filter((f) => f !== props.title)])
