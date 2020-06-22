@@ -4,7 +4,7 @@ const ampInfo = {
       id: "AMP",
       name: "Agile Metrics Portal",
       default_view: "AMP_L1",
-      logo_path_url: "../assets/ampLogo.png",
+      logo_path_url: "../assets/images/ampLogo.png",
       app_body_css_class: "ampBody",
     },
     subject_area: {
