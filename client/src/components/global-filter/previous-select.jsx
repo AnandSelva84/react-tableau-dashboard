@@ -146,7 +146,10 @@ const PrevSelect = (props) => {
       ...possibleAllSelect,
     ];
     debugger;
-    const full = currentMainFilter === mainApplied ? appliedFilters : fullState;
+    let full = currentMainFilter === mainApplied ? appliedFilters : fullState;
+    if (appliedFilters.length < 2 && currentMainFilter === mainApplied)
+      full = fullState;
+
     return full;
   };
 
@@ -186,7 +189,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     setLoaded(true);
-    if (!props.custom) onClickAll();
+    if (!props.custom) selectAll();
     return () => {
       dispatch(
         setAllCheckArray([...allCheckArray.filter((f) => f !== props.title)])

@@ -85,7 +85,6 @@ const SubHeader = () => {
   };
 
   const wrapChips = () => {
-    debugger;
     if (newFilters.length === 0) return [];
     const reFormattedApplied = appliedFilters.map((f) => ({
       ...f,
@@ -183,7 +182,6 @@ const SubHeader = () => {
   };
 
   const getAllPossibleValues = (filter_id) => {
-    debugger;
     const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
     const rawValues =
       rawFilter?.values.filter((value) =>
