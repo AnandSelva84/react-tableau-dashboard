@@ -21,6 +21,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   cursor: pointer;
+  flex-direction: column;
 }
 
 .panel-content > * {
@@ -30,7 +31,7 @@
 .panel-title {
   cursor: pointer;
   color: #fff;
-  min-height: 3rem;
+  min-height: 2rem;
   background-color: #12395b;
   display: flex;
   align-items: center;

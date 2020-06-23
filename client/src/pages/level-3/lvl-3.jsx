@@ -40,8 +40,8 @@ const LVL_3 = React.memo((props) => {
   const showBoth = value === "both";
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center" }} className="">
-        {state?.title || "unknown"}
+      <div style={{ display: "flex", justifyContent: "center", fontWeight: 'bold', padding: "2rem" }} className="">
+        {state ?.title || "unknown"}
       </div>
       {showDetails && (
         <div

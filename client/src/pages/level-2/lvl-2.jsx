@@ -16,6 +16,9 @@ const LVL_2 = (props) => {
 
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "center", fontWeight: 'bold', padding: "2rem" }} className="">
+        {state ?.title || "unknown"}
+      </div>
       <div className="ampBody">
         {state.items.map((value) => (
           <div
