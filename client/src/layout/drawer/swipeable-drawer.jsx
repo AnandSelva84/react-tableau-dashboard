@@ -103,6 +103,7 @@ const SwipSideDrawer = (props) => {
     appIsLoading,
     app: appData,
     drawer,
+    showReport,
   } = useData().sharedReducer;
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -132,7 +133,7 @@ const SwipSideDrawer = (props) => {
     });
     return counter;
   };
-  const showReport = howManySlashes(pathname) > 1;
+  // const showReport = howManySlashes(pathname) > 1;
 
   const getWidth = () => {
     if (!drawer) return 0;
@@ -181,7 +182,10 @@ const SwipSideDrawer = (props) => {
           )}
         </div>
         <Divider />
-        <div className="global-filters">
+        <div
+          className="global-filters"
+          style={{ maxWidth: showReport ? "50%" : "100%" }}
+        >
           {/* <GlobalFilters /> */}
           <PrevGlobalFilters />
         </div>

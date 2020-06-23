@@ -46,6 +46,7 @@ const sharedState = {
   historyStack: [{ path: "/", pathName: "home" }],
   dataFetched: false,
   logoUrl: "",
+  showReport: false,
 };
 
 export default sharedState;

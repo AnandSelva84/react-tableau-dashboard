@@ -19,12 +19,21 @@ import { ButtonGroup, IconButton } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
+import { useDispatch } from "react-redux";
+import { toggleShowReport } from "../../redux/actions/shared";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [value, setValue] = React.useState("graph");
-
+  const dispatch = useDispatch();
   const { state } = useLocation();
+
+  React.useEffect(() => {
+    dispatch(toggleShowReport());
+    return () => {
+      dispatch(toggleShowReport());
+    };
+  }, []);
 
   const handleGraphClick = () => {
     setShowDetails(true);
@@ -40,8 +49,16 @@ const LVL_3 = React.memo((props) => {
   const showBoth = value === "both";
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", fontWeight: 'bold', padding: "2rem" }} className="">
-        {state ?.title || "unknown"}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          fontWeight: "bold",
+          padding: "2rem",
+        }}
+        className=""
+      >
+        {state?.title || "unknown"}
       </div>
       {showDetails && (
         <div

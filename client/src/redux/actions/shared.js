@@ -22,6 +22,11 @@ export const POP_HISTORY = "POP_HISTORY";
 export const PUSH_HISTORY = "PUSH_HISTORY";
 export const DATA_FETCHED = "DATA_FETCHED";
 export const SET_LOGO_URL = "SET_LOGO_URL";
+export const SHOW_REPORT_FILTERS = "SHOW_REPORT_FILTERS";
+
+export const toggleShowReport = () => ({
+  type: SHOW_REPORT_FILTERS,
+});
 
 export const setLogoUrl = (url) => ({
   type: SET_LOGO_URL,

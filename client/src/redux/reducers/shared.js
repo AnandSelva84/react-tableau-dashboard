@@ -24,6 +24,7 @@ import {
   PUSH_HISTORY,
   DATA_FETCHED,
   SET_LOGO_URL,
+  SHOW_REPORT_FILTERS,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -46,6 +47,11 @@ const sharedReducer = (state = sharedState, action) => {
   };
 
   switch (action.type) {
+    case SHOW_REPORT_FILTERS:
+      return {
+        ...state,
+        showReport: !state.showReport,
+      };
     case SET_LOGO_URL:
       return {
         ...state,
