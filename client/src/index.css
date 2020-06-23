@@ -11,6 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+:root {
+  --usaa_blue: #12395b;
+}
 
 * {
   padding: 0;
@@ -25,9 +28,7 @@ code {
 }
 
 .ampBody {
-
 }
 
 .kidBody {
-
 }

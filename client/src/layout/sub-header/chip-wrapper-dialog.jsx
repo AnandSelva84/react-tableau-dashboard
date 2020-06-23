@@ -7,6 +7,7 @@ import useData from "../../hooks/useStore";
 import { continuesFilter } from "../../redux/methods/continous-filter";
 import { applyFilters } from "../../redux/actions/shared";
 import SearchBar from "../../components/search-bar/search-bar";
+import { colors } from "../../constants/colors";
 
 const ChipsWrapper = (props) => {
   const dispatch = useDispatch();
@@ -82,10 +83,8 @@ const ChipsWrapper = (props) => {
                 color={"primary"}
                 style={{
                   marginRight: "0.4rem",
-                  //TODO make isApplied functional for mulitble and single values
-                  backgroundColor: "#192734",
+                  backgroundColor: colors.usaa_blue,
                   marginTop: "0.2rem",
-                  // cursor: isClickable(filter.value),
                 }}
                 onDelete={() => {
                   onDelete(value.ID);

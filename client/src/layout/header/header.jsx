@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import Navigator from "../../components/navigator/navigator";
 import HomeAvatar from "../../components/avatar/avatar";
 import Logo from "./logo";
+import { colors } from "../../constants/colors";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const Header = () => {
           <div
             className=""
             style={{
-              color: index % 2 === 0 ? "rgb(208,207,206)" : "rgb(18,57,91)",
+              color: index % 2 === 0 ? "rgb(208,207,206)" : colors.usaa_blue,
             }}
           >
             {singleTitle}

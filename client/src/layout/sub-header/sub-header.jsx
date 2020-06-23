@@ -23,6 +23,7 @@ import {
   getPossibleChoicesToFill,
 } from "../../redux/methods/re-format-response";
 import ChipsWrapper from "./chip-wrapper-dialog";
+import { colors } from "../../constants/colors";
 
 const SubHeader = () => {
   const {
@@ -251,7 +252,7 @@ const SubHeader = () => {
               style={{
                 marginRight: "0.4rem",
                 //TODO make isApplied functional for mulitble and single values
-                backgroundColor: "#192734",
+                backgroundColor: colors.usaa_blue,
                 marginTop: "0.2rem",
               }}
               onClick={() => {
