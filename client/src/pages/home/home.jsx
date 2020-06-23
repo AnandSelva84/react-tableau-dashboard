@@ -6,7 +6,7 @@ import Button from "../../components/button/button";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { pushHistory } from "../../redux/actions/shared";
-import { panels } from "../../data/panels";
+import { panels } from "../../data/panels_new";
 const Panel = (props) => {
   const history = useHistory();
 
@@ -18,8 +18,9 @@ const Panel = (props) => {
       <div
         className="panel-title"
         onClick={() => {
+          debugger;
           history.push({
-            pathname: `/${reformatPath(props.title)}`,
+            pathname: `/${props.route}`,
             state: { ...props },
           });
         }}
@@ -27,16 +28,17 @@ const Panel = (props) => {
         {props?.title || ""}
       </div>
       <div className="panel-content">
-        {props?.innerValues.map((value) => (
+        {props?.items.map((item) => (
           <div
             className=""
             onClick={() => {
-              history.push(
-                `/${reformatPath(props.title)}/${reformatPath(value)}`
-              );
+              history.push({
+                pathname: `/${item.route}`,
+                state: { ...item },
+              });
             }}
           >
-            {value}
+            {item.title}
           </div>
         ))}
       </div>

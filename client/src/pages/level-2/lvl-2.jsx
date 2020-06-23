@@ -7,7 +7,7 @@ import { pushHistory } from "../../redux/actions/shared";
 const LVL_2 = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { state = { innerValues: [] } } = useLocation();
+  const { state } = useLocation();
   // !!state && alert(JSON.stringify({ ...state }));
 
   const reformatPath = (path) => {
@@ -17,28 +17,29 @@ const LVL_2 = (props) => {
   return (
     <>
       <div className="ampBody">
-        {!!state.innerValues.length &&
-          state.innerValues.map((value) => (
+        {state.items.map((value) => (
+          <div
+            className="panel"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <div
-              className="panel"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+              className="panel-content"
+              onClick={() => {
+                debugger;
+                history.push({
+                  pathname: `/${value.route}`,
+                  state: { ...value },
+                });
               }}
             >
-              <div
-                className="panel-content"
-                onClick={() => {
-                  history.push(
-                    `/${reformatPath(state.title)}/${reformatPath(value)}`
-                  );
-                }}
-              >
-                {value}
-              </div>
+              {value.title}
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </>
   );

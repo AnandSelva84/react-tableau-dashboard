@@ -19,8 +19,8 @@
 
 .unit {
   min-height: 30vh;
-  border: 0.5px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
 }

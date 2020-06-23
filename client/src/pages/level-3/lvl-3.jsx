@@ -16,10 +16,15 @@ import {
   SwapVert,
 } from "@material-ui/icons";
 import { ButtonGroup, IconButton } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
+import SplitterLayout from "react-splitter-layout";
+import "react-splitter-layout/lib/index.css";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [value, setValue] = React.useState("graph");
+
+  const { state } = useLocation();
 
   const handleGraphClick = () => {
     setShowDetails(true);
@@ -35,6 +40,9 @@ const LVL_3 = React.memo((props) => {
   const showBoth = value === "both";
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "center" }} className="">
+        {state?.title || "unknown"}
+      </div>
       {showDetails && (
         <div
           className=""
@@ -76,14 +84,17 @@ const LVL_3 = React.memo((props) => {
           </ButtonGroup>
         </div>
       )}
-      <div className="split">
+      {/* <div className="split"> */}
+      <SplitterLayout vertical>
         {(showGraph || showBoth) && (
           <div className="unit" onClick={handleGraphClick}>
             This is a graph
           </div>
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
-      </div>
+      </SplitterLayout>
+
+      {/* </div> */}
     </>
   );
 });
