@@ -6,13 +6,14 @@ import {
   HelpOutlineOutlined,
 } from "@material-ui/icons";
 import ClickableIcon from "../icon-button";
+import { colors } from "../../constants/colors";
 const Naviagtor = () => {
   return (
     <>
-      <div className="nav-wrapper">
+      <div className="nav-wrapper" style={{ backgroundColor: colors.usaa_blue }}>
         <div className="">
           <ClickableIcon
-            onClick={() => {}}
+            onClick={() => { }}
             icon={<HomeOutlined />}
             style={{ color: "#fff" }}
           />
@@ -23,13 +24,13 @@ const Naviagtor = () => {
         <div className="">
           <ClickableIcon
             style={{ color: "#fff" }}
-            onClick={() => {}}
+            onClick={() => { }}
             icon={<HelpOutlineOutlined />}
           />
         </div>
         <div className="">
           <ClickableIcon
-            onClick={() => {}}
+            onClick={() => { }}
             icon={<FolderOpenOutlined />}
             style={{ color: "#fff" }}
           />
