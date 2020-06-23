@@ -20,8 +20,11 @@ const Router = () => {
           {/* <ToolBar /> */}
           <Switch>
             <Route exact path="/" component={() => <Main />} />
-            <Route exact path="/lvl3" component={() => <LVL_3 />} />
-            <Route exact path="/lvl2" component={() => <LVL_2 />} />
+            <Route exact path="/:panel_header" component={() => <LVL_2 />} />
+            <Route
+              path="/:panel_header/:panel_id"
+              component={() => <LVL_3 />}
+            />
           </Switch>
         </SwipSideDrawer>
       </div>
@@ -30,3 +33,6 @@ const Router = () => {
 };
 
 export default Router;
+
+// <Route exact path="/lvl3" component={() => <LVL_3 />} />
+//             <Route exact path="/lvl2" component={() => <LVL_2 />} />

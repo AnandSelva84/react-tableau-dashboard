@@ -122,9 +122,21 @@ const SwipSideDrawer = (props) => {
     dispatch(toggleDrawer());
   };
 
+  const howManySlashes = (text) => {
+    var letterArray = text.split("");
+    let counter = 0;
+    letterArray.forEach((letter) => {
+      if (letter === "/") {
+        counter += 1;
+      }
+    });
+    return counter;
+  };
+  const showReport = howManySlashes(pathname) > 1;
+
   const getWidth = () => {
     if (!drawer) return 0;
-    if (path === "lvl3") return "34rem";
+    if (showReport) return "34rem";
     else return "17rem";
   };
 
@@ -155,7 +167,7 @@ const SwipSideDrawer = (props) => {
             Filters
           </div>
 
-          {path === "lvl3" && (
+          {showReport && (
             <div
               style={{
                 fontSize: "1.3rem",

@@ -39,6 +39,17 @@ const PrevGlobalFilters = React.memo(() => {
   const { pathname } = history.location;
   const path = pathname.substr(1, pathname.length);
 
+  const howManySlashes = (text) => {
+    var letterArray = text.split("");
+    let counter = 0;
+    letterArray.forEach((letter) => {
+      if (letter === "/") {
+        counter += 1;
+      }
+    });
+    return counter;
+  };
+
   const heighestLvlFilter = Math.max(
     ...[...newFilters.map((filter) => filter.level)]
   );
@@ -195,7 +206,7 @@ const PrevGlobalFilters = React.memo(() => {
                     </React.Suspense>
                   );
               })}
-              {path !== "" && <DateControls />}
+              {howManySlashes(pathname) === 1 && !!path && <DateControls />}
             </div>
           )}
 
@@ -204,7 +215,9 @@ const PrevGlobalFilters = React.memo(() => {
           </div>
         </div>
 
-        {path === "lvl3" && <div className="private-filters"></div>}
+        {howManySlashes(pathname) > 1 && (
+          <div className="private-filters"></div>
+        )}
       </div>
     </>
   );

@@ -2,7 +2,6 @@ import React from "react";
 import logo from "../../assests/images/ampLogo.png";
 const Logo = (props) => {
   const { url } = props;
-  !!url && alert(url);
   //   const img = require(url);
   return (
     <>
