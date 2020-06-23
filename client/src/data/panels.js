@@ -72,4 +72,78 @@ export const panels = [
     ]
   },
 
+  {
+    title: "Program-level Diagnostics",
+    route: 'ProgramDiagnostics',
+    level: 2,
+    items: [
+      {
+        title: "Feature Cycle Time",
+        route: 'featureCycleTime',
+        level: 3
+      },
+      {
+        title: "Feature Total Lead Time",
+        route: 'featureLeadTime',
+        level: 3
+      },
+      {
+        title: "Feature Latency (Segmented)",
+        route: 'featureLatency',
+        level: 3
+      },
+      ,
+      {
+        title: "Feature Throughput",
+        route: 'featureThroughput',
+        level: 3
+      },
+      {
+        title: "Feature Completion on First Cycle",
+        route: 'featureFirstCycle',
+        level: 3
+      }
+    ]
+  },
+
+  {
+    title: "Work Tracking and Forecasting",
+    route: 'workTracking',
+    level: 2,
+    items: [
+      {
+        title: "Velocity",
+        route: 'storyVelocity',
+        level: 3
+      }
+    ]
+  },
+
+  {
+    title: "Census",
+    route: 'census',
+    level: 2,
+    items: [
+      {
+        title: "Team Count",
+        route: 'teamCount',
+        level: 3
+      },
+      {
+        title: "Team Size",
+        route: 'teamSize',
+        level: 3
+      },
+      {
+        title: "Team Locations",
+        route: 'teamLocations',
+        level: 3
+      },
+      {
+        title: "Team Members Mix",
+        route: 'teamMembers',
+        level: 3
+      }
+    ]
+  }
 ];
