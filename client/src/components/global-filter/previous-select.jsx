@@ -156,7 +156,6 @@ const PrevSelect = (props) => {
       })),
       ...possibleAllSelect,
     ];
-    debugger;
     let full = currentMainFilter === mainApplied ? appliedFilters : fullState;
     if (appliedFilters.length < 2 && currentMainFilter === mainApplied)
       full = fullState;
@@ -165,7 +164,6 @@ const PrevSelect = (props) => {
   };
 
   const onClickAll = () => {
-    debugger;
     const initialFullState = [
       ...props.values.map((value) => ({
         id: props.title,
@@ -230,6 +228,14 @@ const PrevSelect = (props) => {
     let hasId = chosenIds.find((id) => id === parentId);
     if (hasId === 0) hasId = 1;
     return !!hasId;
+  };
+
+  const handleAddFilter = (ParentName, value, lvl, ID, parentId, filter_id) => {
+    const id = ParentName;
+    dispatch(addFilter({ id, value, lvl, ID, parentId, filter_id }));
+    let i = 0;
+
+    while (i !== 4) {}
   };
 
   const handleClick = (ParentName, value, lvl, ID, parentId, filter_id) => {
