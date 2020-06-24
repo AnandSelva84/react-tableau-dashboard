@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Paper } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import ClickableIcon from "../../components/icon-button";
 import theme from "../../theme/layout";
 import "./header.css";
 import { useDispatch } from "react-redux";
-import { toggleDrawer, setApp, setDarkMode } from "../../redux/actions/shared";
+import {
+  toggleDrawer,
+  setApp,
+  setDarkMode,
+  applyFilters,
+  setLogoUrl,
+  setBodyClass,
+  setAppLoading,
+  setCurrentMainFilter,
+  setFilters,
+} from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
 import response from "../../models/getInfo";
@@ -14,9 +24,12 @@ import Navigator from "../../components/navigator/navigator";
 import HomeAvatar from "../../components/avatar/avatar";
 import Logo from "./logo";
 import { colors } from "../../constants/colors";
+import useFetch from "../../hooks/useFetch";
+import { newFiltersURL, getInfoURL } from "../../enviroment/urls";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const fullURL = window.location.href;
   const { header, darkHeader } = theme;
   const {
     darkMode,
@@ -24,8 +37,78 @@ const Header = () => {
     app: appData,
     filterState,
     logoUrl,
+    currentMainFilter,
   } = useData().sharedReducer;
   console.log("initial ", filterState);
+
+  const domain = fullURL.substring(
+    fullURL.lastIndexOf(":") + 1,
+    fullURL.lastIndexOf("/")
+  );
+
+  const getMainFilterAccordingToName = (name) => {
+    const filter =
+      name === "Business"
+        ? {
+            ID: "Business",
+            id: "Hierarchies",
+            lvl: 0,
+            parentId: null,
+            value: "Business",
+          }
+        : {
+            ID: "Legacy",
+            id: "Hierarchies",
+            lvl: 0,
+            parentId: null,
+            value: "Legacy",
+          };
+    return filter;
+  };
+
+  const app = domain === "3000" ? "amp" : "kid";
+  const { data, loading } = useFetch(`${getInfoURL}/${app}`);
+  const [initialLoaded, setInitialLoaded] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+  const [mainFilter, setMainFilter] = React.useState({
+    ID: "Business",
+    id: "Hierarchies",
+    lvl: 0,
+    parentId: null,
+    value: "Business",
+  });
+
+  const savedFilters = JSON.parse(localStorage.getItem("filters"));
+
+  const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
+
+  React.useEffect(() => {
+    const mainFilter =
+      savedFilters?.find((f) => f.id === "Hierarchies")?.value || "Business";
+    dispatch(setCurrentMainFilter(mainFilter));
+  }, []);
+
+  useEffect(() => {
+    setLoaded(true);
+    const savedFilters = JSON.parse(localStorage.getItem("filters"));
+    console.log("savedFilters", savedFilters);
+
+    if (!!savedFilters && savedFilters.length > 0) {
+      // dispatch(editFilterState(savedFilters));
+      dispatch(applyFilters(savedFilters));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!!data && !loading) {
+      dispatch(setAppLoading(false));
+      dispatch(setApp(data.data));
+      dispatch(setLogoUrl(data.data.application.logo_path_url));
+      dispatch(setBodyClass(data.data.application.app_body_css_class));
+    } else {
+      dispatch(setAppLoading(true));
+    }
+  }, [data, loading]);
 
   const history = useHistory();
 
@@ -36,6 +119,23 @@ const Header = () => {
     }
   }, [appData]);
   React.useEffect(() => {}, [logoUrl]);
+
+  React.useEffect(() => {
+    // setInitialLoaded(false);
+    if (loaded) {
+      setInitialLoaded(false);
+      console.log("current name al initial ", mainFilter);
+      setMainFilter(getMainFilterAccordingToName(currentMainFilter));
+      console.log(
+        "current name al",
+        getMainFilterAccordingToName(currentMainFilter)
+      );
+    }
+  }, [currentMainFilter]);
+
+  useEffect(() => {
+    if (!!filters && !filtersLoading) dispatch(setFilters(filters.filters));
+  }, [filters, filtersLoading]);
 
   const onLogoClicked = () => {
     if (history.location.pathname !== "/") history.push("/");
