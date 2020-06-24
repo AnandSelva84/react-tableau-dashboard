@@ -30,6 +30,7 @@ const PrevGlobalFilters = React.memo(() => {
     appliedFilters,
   } = useData().sharedReducer;
   const [viewedFilters, setViewedFilters] = React.useState([]);
+  const [reformattedNewFilters, setReformattedNewFilters] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
 
   const show = newFilters.length > 0;
@@ -38,6 +39,43 @@ const PrevGlobalFilters = React.memo(() => {
   const history = useHistory();
   const { pathname } = history.location;
   const path = pathname.substr(1, pathname.length);
+
+  //   filter_display_text: "Business"
+  // filter_option: "Business"
+  // filter_value: "Business"
+  // lvl: 1
+  // order: 2
+  // parent_filter_option: null
+
+  const findById = (data, ID) => {
+    return data.find((f) => f.ID === ID);
+  };
+
+  React.useEffect(() => {
+    if (!!newFilters && newFilters.length > 1) {
+      let data = newFilters.map((filter) => ({
+        ...filter,
+        values: filter.values.map((value) => ({
+          ...value,
+          lvl: filter.level,
+          id: filter.title,
+          filter_id: filter.filter_id,
+        })),
+      }));
+      data = data.map((filter) => filter.values).flat();
+      data = data.map((filter) => ({
+        ID: filter.filter_option,
+        value: filter.filter_value,
+        lvl: filter.lvl - 1,
+        id: filter.id,
+        parentId: filter.parent_filter_option,
+        filter_id: filter.filter_id,
+      }));
+      setReformattedNewFilters(data);
+      console.log("all new filters", data);
+      // findFamily("Business_Bank_AML_IT_Solutions_2", data);
+    }
+  }, [newFilters]);
 
   const howManySlashes = (text) => {
     var letterArray = text.split("");
@@ -195,6 +233,7 @@ const PrevGlobalFilters = React.memo(() => {
                   return (
                     <React.Suspense fallback={<>Loading...</>}>
                       <PrevSelect
+                        reformattedNewFilters={reformattedNewFilters}
                         maxLength={heighestLvlFilter - 1}
                         id={afterChange.filterId}
                         // values={filter.values}

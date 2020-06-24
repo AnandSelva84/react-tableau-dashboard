@@ -84,6 +84,21 @@ const PrevSelect = (props) => {
     ...possibleAllSelect,
   ];
 
+  const findFamily = (ID, data) => {
+    let family = [];
+    let searchID = [ID];
+
+    //starting lvl is 0 end is 4
+    while (1) {
+      const child = data.filter((f) => searchID.includes(f.parentId));
+      if (child.length === 0) break;
+      family = [...family, ...child];
+      searchID = child.map((f) => f.ID);
+    }
+    console.log("all new family", family);
+    return family;
+  };
+
   // .filter((f) => f.lvl < props.lvl);
 
   // React.useEffect(() => {
@@ -230,12 +245,16 @@ const PrevSelect = (props) => {
     return !!hasId;
   };
 
-  const handleAddFilter = (ParentName, value, lvl, ID, parentId, filter_id) => {
-    const id = ParentName;
+  const handleAddFilter = (id, value, lvl, ID, parentId, filter_id) => {
     dispatch(addFilter({ id, value, lvl, ID, parentId, filter_id }));
-    let i = 0;
 
-    while (i !== 4) {}
+    dispatch(
+      editFilterState([
+        ...filterState,
+        { id, value, lvl, ID, parentId, filter_id },
+        ...findFamily(ID, props.reformattedNewFilters),
+      ])
+    );
   };
 
   const handleClick = (ParentName, value, lvl, ID, parentId, filter_id) => {
@@ -253,7 +272,7 @@ const PrevSelect = (props) => {
 
     if (lvl === 0 && isExist(ID)) return;
     !isExist(ID)
-      ? dispatch(addFilter({ id, value, lvl, ID, parentId, filter_id }))
+      ? handleAddFilter(id, value, lvl, ID, parentId, filter_id)
       : dispatch(deleteFilter({ id, value, lvl, ID, parentId, filter_id }));
   };
 
