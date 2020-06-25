@@ -1,9 +1,9 @@
 .nav-wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   color: white;
   /* background-color: rgb(18, 57, 91); */
-  min-width: 15rem;
+  width: 35rem;
   min-height: 60%;
   align-items: center;
   margin-right: 10rem;
@@ -15,6 +15,7 @@
 .nav-hero-title {
   text-align: right;
   margin: 0 2rem;
+  width: 15rem;
 }
 
 .nav-hero-title > p {
