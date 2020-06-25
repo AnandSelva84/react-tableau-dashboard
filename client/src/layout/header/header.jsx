@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Paper } from "@material-ui/core";
-import { Menu } from "@material-ui/icons";
 import ClickableIcon from "../../components/icon-button";
 import theme from "../../theme/layout";
 import "./header.css";
@@ -165,12 +164,6 @@ const Header = () => {
       {!!appData?.application?.name && (
         <Paper style={{ ...header, ...dark, borderRadius: "0" }}>
           <div className="left-side">
-            <ClickableIcon
-              icon={<Menu />}
-              onClick={() => {
-                dispatch(toggleDrawer());
-              }}
-            />
             <div className="" style={{ display: "flex", alignItems: "center" }}>
               <Logo url={logoUrl} />
               <div onClick={onLogoClicked} className="header-title">

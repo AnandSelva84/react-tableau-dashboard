@@ -47,6 +47,7 @@ const sharedState = {
   dataFetched: false,
   logoUrl: "",
   showReport: false,
+  currentLocation: "",
 };
 
 export default sharedState;

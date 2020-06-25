@@ -6,7 +6,7 @@
 .left-side {
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 
 .hello {

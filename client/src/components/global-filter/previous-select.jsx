@@ -48,6 +48,7 @@ const PrevSelect = (props) => {
     appliedFilters,
     resetState,
     currentMainFilter,
+    savedFilters,
   } = useData().sharedReducer;
 
   const fullStateStandardIds = storedViewedFilters.map((f) => f.id);
@@ -117,6 +118,9 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     if (loaded) {
+      if (!!savedFilters && savedFilters.length > 2)
+        dispatch(editFilterState([...savedFilters]));
+
       dispatch(editFilterState([...newState]));
       dispatch(toggleResetButton());
     }

@@ -77,7 +77,6 @@ const ControlButtons = () => {
     dispatch(toggleResetButton());
   };
   const handleApply = () => {
-    debugger;
     if (!!unCompleted.length) {
       makeMessage(error, "error");
       return;
@@ -105,17 +104,17 @@ const ControlButtons = () => {
     <>
       <Button
         title="Apply Filters"
-        style={{ ...btnsTheme.apply }}
+        style={{ ...btnsTheme.apply, textTransform: "none" }}
         onClick={handleApply}
       />
       <Button
-        title=" Save Filters"
-        style={{ ...btnsTheme.save }}
+        title="Save As Default"
+        style={{ ...btnsTheme.save, textTransform: "none" }}
         onClick={handleSave}
       />
       <Button
-        title="Reset Filters"
-        style={{ ...btnsTheme.cancel }}
+        title="Restore Default"
+        style={{ ...btnsTheme.cancel, textTransform: "none" }}
         onClick={handleClear}
       />
     </>

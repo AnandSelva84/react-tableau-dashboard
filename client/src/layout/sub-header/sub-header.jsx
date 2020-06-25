@@ -7,12 +7,14 @@ import {
   TextField,
   ChipProps,
 } from "@material-ui/core";
+import { Menu } from "@material-ui/icons";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import {
   addFilter,
   deleteFilter,
   applyFilters,
+  toggleDrawer,
 } from "../../redux/actions/shared";
 import { isExist } from "../../redux/methods/is-exist";
 import theme from "../../theme/layout";
@@ -24,6 +26,7 @@ import {
 } from "../../redux/methods/re-format-response";
 import ChipsWrapper from "./chip-wrapper-dialog";
 import { colors } from "../../constants/colors";
+import ClickableIcon from "../../components/icon-button";
 
 const SubHeader = () => {
   const {
@@ -203,33 +206,6 @@ const SubHeader = () => {
   };
 
   React.useEffect(() => {
-    console.log("values has changed chosen", chosenIds);
-    console.log(
-      "values has changed parentIds in filterState",
-      filterState.map((f) => f.parentId)
-    );
-    const parents = filterState.map((f) => f.parentId);
-
-    console.log(
-      "values has changed parentIds in after filter",
-      filterState.filter(
-        (f) => chosenIds.includes(f.parentId) || f.parentId === null
-      )
-    );
-    console.log("values has changed length", storedViewedFilters.length);
-    // if (!drawer && storedViewedFilters.length === 4) {
-    //   dispatch(
-    //     applyFilters([
-    //       ...filterState.filter(
-    //         (f) => chosenIds.includes(f.parentId) || f.parentId === null
-    //       ),
-    //     ])
-    //   );
-    // }
-    // dispatch(editFilterState())
-  }, [filterState]);
-
-  React.useEffect(() => {
     filterState.forEach((elem) => {
       if (!chosenIds.includes(elem.parentId)) {
         console.log("this element isnt in state", elem);
@@ -245,25 +221,27 @@ const SubHeader = () => {
             ...theme.subHeader,
           }}
         >
+          <>
+            <ClickableIcon
+              icon={<Menu />}
+              onClick={() => {
+                dispatch(toggleDrawer());
+              }}
+              style={{ marginRight: "1rem" }}
+            />
+          </>
           {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
             <Chip
               label={createChip(filter.id, filter.value)}
-              color={"primary"}
               style={{
                 marginRight: "0.4rem",
-                //TODO make isApplied functional for mulitble and single values
-                backgroundColor: colors.usaa_blue,
+                // backgroundColor: colors.usaa_blue,
                 marginTop: "0.2rem",
               }}
               onClick={() => {
                 handleOpen(filter.value, filter.id);
                 getStatus(filter.filter_id);
-                // getAllPossibleValues(filter.filter_id);
               }}
-              // onDelete={() => {
-              //   if (!!filter.lvl)
-              //     handleClick(filter.id, filter.value, filter.lvl, true);
-              // }}
             />
           ))}
         </Paper>

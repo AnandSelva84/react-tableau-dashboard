@@ -80,10 +80,10 @@ const ChipsWrapper = (props) => {
               <Chip
                 // ID = {value.ID}
                 label={value.value}
-                color={"primary"}
+                // color={"primary"}
                 style={{
                   marginRight: "0.4rem",
-                  backgroundColor: colors.usaa_blue,
+                  // backgroundColor: colors.usaa_blue,
                   marginTop: "0.2rem",
                 }}
                 onDelete={() => {
