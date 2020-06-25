@@ -2,23 +2,22 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Button from "../../components/button/button";
 import { useDispatch } from "react-redux";
-import { pushHistory } from "../../redux/actions/shared";
+import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
+import useData from "../../hooks/useStore";
 
 const LVL_2 = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { state } = useLocation();
+  const { currentLocation } = useData().sharedReducer;
   // !!state && alert(JSON.stringify({ ...state }));
 
-  const reformatPath = (path) => {
-    return path.split(" ").join("_");
-  };
+  React.useEffect(() => {
+    !!state?.title && dispatch(setCurrentLocation(state.title));
+  }, [state]);
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", fontWeight: 'bold', padding: "2rem" }} className="">
-        {state ?.title || "unknown"}
-      </div>
       <div className="ampBody">
         {state.items.map((value) => (
           <div

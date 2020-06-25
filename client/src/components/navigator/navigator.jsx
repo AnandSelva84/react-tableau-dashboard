@@ -7,30 +7,36 @@ import {
 } from "@material-ui/icons";
 import ClickableIcon from "../icon-button";
 import { colors } from "../../constants/colors";
+import useData from "../../hooks/useStore";
 const Naviagtor = () => {
+  const { currentLocation } = useData().sharedReducer;
+
   return (
     <>
-      <div className="nav-wrapper" style={{ backgroundColor: colors.usaa_blue }}>
+      <div
+        className="nav-wrapper"
+        style={{ backgroundColor: colors.usaa_blue }}
+      >
         <div className="">
           <ClickableIcon
-            onClick={() => { }}
+            onClick={() => {}}
             icon={<HomeOutlined />}
             style={{ color: "#fff" }}
           />
         </div>
         <div className="nav-hero-title">
-          <p>Application Development</p>
+          <p>{currentLocation || ""}</p>
         </div>
         <div className="">
           <ClickableIcon
             style={{ color: "#fff" }}
-            onClick={() => { }}
+            onClick={() => {}}
             icon={<HelpOutlineOutlined />}
           />
         </div>
         <div className="">
           <ClickableIcon
-            onClick={() => { }}
+            onClick={() => {}}
             icon={<FolderOpenOutlined />}
             style={{ color: "#fff" }}
           />

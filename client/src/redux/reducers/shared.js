@@ -144,6 +144,7 @@ const sharedReducer = (state = sharedState, action) => {
       localStorage.setItem("filters", JSON.stringify(action.filters));
       return {
         ...state,
+        savedFilters: action.filters,
       };
     case FILTER_STATE_EDIT:
       return {

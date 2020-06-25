@@ -14,6 +14,7 @@ import {
   setAppLoading,
   setCurrentMainFilter,
   setFilters,
+  setCurrentLocation,
 } from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
@@ -37,6 +38,7 @@ const Header = () => {
     filterState,
     logoUrl,
     currentMainFilter,
+    currentLocation,
   } = useData().sharedReducer;
   console.log("initial ", filterState);
 
@@ -89,12 +91,12 @@ const Header = () => {
 
   useEffect(() => {
     setLoaded(true);
+    debugger;
     const savedFilters = JSON.parse(localStorage.getItem("filters"));
     console.log("savedFilters", savedFilters);
 
     if (!!savedFilters && savedFilters.length > 0) {
-      // dispatch(editFilterState(savedFilters));
-      dispatch(applyFilters(savedFilters));
+      dispatch(applyFilters([...savedFilters]));
     }
   }, []);
 
@@ -118,6 +120,10 @@ const Header = () => {
     }
   }, [appData]);
   React.useEffect(() => {}, [logoUrl]);
+
+  React.useEffect(() => {
+    !!app?.title && dispatch(setCurrentLocation(app.title));
+  }, []);
 
   React.useEffect(() => {
     // setInitialLoaded(false);
@@ -167,7 +173,7 @@ const Header = () => {
             <div className="" style={{ display: "flex", alignItems: "center" }}>
               <Logo url={logoUrl} />
               <div onClick={onLogoClicked} className="header-title">
-                <StyledTitle title={appData.application.name} />
+                <StyledTitle title={appData?.application?.name} />
               </div>
             </div>
           </div>

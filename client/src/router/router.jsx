@@ -10,6 +10,7 @@ import LVL_2 from "../pages/level-2/lvl-2";
 import SwipSideDrawer from "../layout/drawer/swipeable-drawer";
 import ToolBar from "../components/tool-bar/tool-bar";
 import SubRouter from "../pages/sub-router/sub-router";
+import Snackbar from "../components/snackbar/snackbar";
 
 const Router = () => {
   return (
@@ -31,6 +32,7 @@ const Router = () => {
               component={() => <LVL_3 />}
             />
           </Switch>
+          <Snackbar />
         </SwipSideDrawer>
       </div>
     </BrowserRouter>

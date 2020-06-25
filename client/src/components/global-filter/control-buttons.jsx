@@ -63,7 +63,8 @@ const ControlButtons = () => {
       makeMessage(`Filters Saved Successfully.`, "success");
     }
 
-    dispatch(saveFilters(filterState));
+    dispatch(saveFilters([...filterState]));
+    dispatch(applyFilters([...filterState]));
   };
   const handleClear = () => {
     // dispatch(clearFilter());

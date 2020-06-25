@@ -20,13 +20,20 @@ import { useLocation } from "react-router-dom";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import { useDispatch } from "react-redux";
-import { toggleShowReport } from "../../redux/actions/shared";
+import {
+  toggleShowReport,
+  setCurrentLocation,
+} from "../../redux/actions/shared";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [value, setValue] = React.useState("graph");
   const dispatch = useDispatch();
   const { state } = useLocation();
+
+  React.useEffect(() => {
+    !!state?.title && dispatch(setCurrentLocation(state.title));
+  }, [state]);
 
   React.useEffect(() => {
     dispatch(toggleShowReport());
@@ -49,17 +56,6 @@ const LVL_3 = React.memo((props) => {
   const showBoth = value === "both";
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          fontWeight: "bold",
-          padding: "2rem",
-        }}
-        className=""
-      >
-        {state?.title || "unknown"}
-      </div>
       {showDetails && (
         <div
           className=""
@@ -68,17 +64,6 @@ const LVL_3 = React.memo((props) => {
             justifyContent: "flex-end",
           }}
         >
-          {/* <ToggleButtonGroup value={value} exclusive onChange={handleAlignment}>
-            <ToggleButton value="graph" aria-label="left aligned">
-              <BarChart />
-            </ToggleButton>
-            <ToggleButton value="both" aria-label="centered">
-              <SwapVert />
-            </ToggleButton>
-            <ToggleButton value="table" aria-label="right aligned">
-              <TableChart />
-            </ToggleButton>
-          </ToggleButtonGroup> */}
           <ButtonGroup>
             <IconButton
               onClick={() => setValue("graph")}
@@ -117,3 +102,15 @@ const LVL_3 = React.memo((props) => {
 });
 
 export default LVL_3;
+
+//  <ToggleButtonGroup value={value} exclusive onChange={handleAlignment}>
+//       <ToggleButton value="graph" aria-label="left aligned">
+//         <BarChart />
+//       </ToggleButton>
+//       <ToggleButton value="both" aria-label="centered">
+//         <SwapVert />
+//       </ToggleButton>
+//       <ToggleButton value="table" aria-label="right aligned">
+//         <TableChart />
+//       </ToggleButton>
+//     </ToggleButtonGroup>

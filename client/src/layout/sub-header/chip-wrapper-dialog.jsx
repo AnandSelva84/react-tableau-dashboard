@@ -12,6 +12,7 @@ import { colors } from "../../constants/colors";
 const ChipsWrapper = (props) => {
   const dispatch = useDispatch();
   const [deleteCases, setDeleteCases] = React.useState(0);
+  const [loaded, setLoaded] = React.useState(0);
   const { filterState, appliedFilters } = useData().sharedReducer;
   const createChip = (id, value) => `${id} : ${value}`;
 
@@ -39,6 +40,10 @@ const ChipsWrapper = (props) => {
       : "";
   };
 
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   const onFilterEnd = (filters) => {
     dispatch(applyFilters([...filters]));
   };
@@ -49,7 +54,7 @@ const ChipsWrapper = (props) => {
   };
 
   React.useEffect(() => {
-    continuesFilter(appliedFilters, onFilterEnd);
+    if (loaded) continuesFilter(appliedFilters, onFilterEnd);
   }, [deleteCases]);
 
   return (
@@ -78,9 +83,7 @@ const ChipsWrapper = (props) => {
           >
             {chipsAfterSearch.map((value) => (
               <Chip
-                // ID = {value.ID}
                 label={value.value}
-                // color={"primary"}
                 style={{
                   marginRight: "0.4rem",
                   // backgroundColor: colors.usaa_blue,

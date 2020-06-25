@@ -63,12 +63,7 @@ const PrevSelect = (props) => {
   const [allCheck, setAllCheck] = useState(false);
   const [valuesUpdated, setValuesUpdated] = useState(false);
 
-  const values = props.values.map((value) => ({ ...value, lvl: props.lvl }));
-  const [localFilters, setLocalFilters] = useState(props.values);
   const chosenIds = filterState.map((filter) => filter.ID) || [];
-  const chosenLvls = filterState.map((filter) => filter.lvl) || [];
-  const isTheAppliedOne = !!appliedFilters.find((f) => f.id === props.id);
-  console.log("isTheAppliedOne", isTheAppliedOne);
   const mainApplied = appliedFilters.find((f) => f.id === "Hierarchies")?.value;
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
@@ -117,6 +112,7 @@ const PrevSelect = (props) => {
   };
 
   React.useEffect(() => {
+    if (props.custom) return;
     if (loaded) {
       if (!!savedFilters && savedFilters.length > 2)
         dispatch(editFilterState([...savedFilters]));
@@ -126,43 +122,6 @@ const PrevSelect = (props) => {
     }
   }, [resetState]);
 
-  React.useEffect(() => {
-    if (!loaded) return;
-    let ids = filterState.map((f) => f.ID);
-    let parents = filterState.map((f) => f.parentId);
-    let locFilterState = filterState;
-    let i = 0;
-    console.log(valuesUpdated);
-
-    while (i !== 4 && props.lvl === 1) {
-      let prevLength = locFilterState.length;
-
-      locFilterState = locFilterState.filter(
-        (f) =>
-          locFilterState.map((f) => f.ID).includes(f.parentId) || f.lvl === 0
-      );
-      const condition = locFilterState.length === prevLength;
-      if (locFilterState.length == prevLength && i !== 0) {
-        // dispatch(editFilterState([...locFilterState]));
-        // setValuesUpdated(true);
-        ids = locFilterState.map((f) => f.ID);
-        parents = locFilterState.map((f) => f.parentId);
-      }
-      i++;
-
-      // if (i === 3) {
-      // dispatch(editFilterState([...locFilterState]));
-      // }
-      // if (i === 3)
-    }
-
-    // setValuesUpdated(true);
-
-    // const aFilterState = filterState.filter((f) =>
-    //   chosenIds.includes(f.parentId)
-    // );
-    // dispatch(editFilterState([...aFilterState]));
-  }, [filterState]);
   const getFullState = () => {
     const fullState = [
       ...props.values.map((value) => ({
@@ -195,21 +154,6 @@ const PrevSelect = (props) => {
       ...possibleAllSelect,
     ];
     dispatch(editFilterState([...initialFullState]));
-  };
-  const fullState = [
-    ...props.values.map((value) => ({
-      id: props.title,
-      ID: value.filterOptionId,
-      lvl: props.lvl,
-      parentId: value.parentFilterOptionId,
-      value: value.filter_value_text,
-      filter_id: props.id,
-    })),
-    ...possibleAllSelect,
-  ];
-
-  const validate = () => {
-    return !!unCompletedFilters.length;
   };
 
   React.useEffect(() => {
@@ -294,7 +238,6 @@ const PrevSelect = (props) => {
   }, [menuLoading]);
 
   React.useEffect(() => {
-    // debugger;
     let unCompletedFilters = [];
     fullStateStandardIds.forEach((id) => {
       if (!!!filterState.find((f) => f.filter_id === id)) {
@@ -331,34 +274,6 @@ const PrevSelect = (props) => {
     return options;
   };
 
-  const getAllPossibleFilters = () => {
-    // const rawPossible =
-    //   newFilters.filter((filter) => filter.title === parentTitle)[0]?.values ||
-    //   [];
-    const parentTitle = getTitle();
-
-    const possible = getOptions().map((option) => ({
-      id: parentTitle,
-      ID: option.filterOptionId,
-      lvl: props.lvl,
-      parentId: option.parentFilterOptionId,
-      value: option.filter_value_text,
-    }));
-
-    return possible;
-  };
-
-  const isAllExisted = () => {
-    const toCompare = getAllPossibleFilters();
-    const existanceLength =
-      filterState.filter((value) => value.id === getTitle())?.length || 0;
-    const existance =
-      existanceLength === toCompare.length && toCompare.length !== 0;
-    // dispatch(setAllAreSelected({ title: getTitle(), hasAll: existance }));
-
-    return existance;
-  };
-
   const selectAll = () => {
     // setShowMenu(false);
     // setAllCheck(true);
@@ -368,20 +283,14 @@ const PrevSelect = (props) => {
   const unSelectAll = () => {
     // setShowMenu(false);
     // setAllCheck(false);
-
     dispatch(editFilterState([...possibleAllSelect]));
   };
 
   const handleSelectAll = () => {
-    const AllChecked = isAllExisted();
-    const currentSelected = filterState.filter(
-      (filter) => filter.id !== getTitle()
-    );
     if (allCheck) {
       unSelectAll();
     } else {
       onClickAll();
-      // selectAll();
     }
   };
 
@@ -434,12 +343,6 @@ const PrevSelect = (props) => {
   }, [allCheck]);
 
   React.useEffect(() => {
-    console.log("allCheckArray", allCheckArray);
-    if (allCheckArray.length === props.maxLength) {
-    }
-  }, [allCheckArray]);
-
-  React.useEffect(() => {
     if (!newAllChecked()) setAllCheck(false);
   }, [filterState]);
 
@@ -459,7 +362,6 @@ const PrevSelect = (props) => {
 
   const toggle = () => {
     setMenuLoading(true);
-
     showMenu ? hanldeClose() : handleOpen();
   };
 

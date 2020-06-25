@@ -17,6 +17,7 @@ import {
   applyFilters,
   setCurrentMainFilter,
   setLogoUrl,
+  setCurrentLocation,
 } from "../../redux/actions/shared";
 import response from "../../models/getInfo";
 import HomePage from "../home/home";
@@ -38,7 +39,6 @@ const Main = React.memo(() => {
     app: App,
     appIsLoading,
   } = useData().sharedReducer;
-
   const domain = fullURL.substring(
     fullURL.lastIndexOf(":") + 1,
     fullURL.lastIndexOf("/")
@@ -50,11 +50,15 @@ const Main = React.memo(() => {
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
+  React.useEffect(() => {
+    !!App?.application?.name &&
+      dispatch(setCurrentLocation(App?.application?.name));
+  }, [App]);
+
   return (
     <div className={style}>
       {appIsLoading && <LaodingScreen />}
       {!!App && !appIsLoading && <HomePage />}
-      <Snackbar />
     </div>
   );
 });
