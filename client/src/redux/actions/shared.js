@@ -24,6 +24,12 @@ export const DATA_FETCHED = "DATA_FETCHED";
 export const SET_LOGO_URL = "SET_LOGO_URL";
 export const SHOW_REPORT_FILTERS = "SHOW_REPORT_FILTERS";
 export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION";
+export const SET_CURRENT_SHOW_CONTROL = "SET_CURRENT_SHOW_CONTROL";
+
+export const setShowControl = (value) => ({
+  type: SET_CURRENT_SHOW_CONTROL,
+  value,
+});
 
 export const setCurrentLocation = (location) => ({
   type: SET_CURRENT_LOCATION,

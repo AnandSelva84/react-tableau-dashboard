@@ -22,15 +22,7 @@ const Router = () => {
           {/* <ToolBar /> */}
           <Switch>
             <Route exact path="/" component={() => <Main />} />
-            <Route
-              exact
-              path="/:panel_header"
-              component={() => <SubRouter />}
-            />
-            <Route
-              path="/:panel_header/:panel_id"
-              component={() => <LVL_3 />}
-            />
+            <Route exact path="/:id" component={() => <SubRouter />} />
           </Switch>
           <Snackbar />
         </SwipSideDrawer>

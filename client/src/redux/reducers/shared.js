@@ -26,6 +26,7 @@ import {
   SET_LOGO_URL,
   SHOW_REPORT_FILTERS,
   SET_CURRENT_LOCATION,
+  SET_CURRENT_SHOW_CONTROL,
 } from "../actions/shared";
 
 const sharedReducer = (state = sharedState, action) => {
@@ -48,6 +49,11 @@ const sharedReducer = (state = sharedState, action) => {
   };
 
   switch (action.type) {
+    case SET_CURRENT_SHOW_CONTROL:
+      return {
+        ...state,
+        showValue: action.value,
+      };
     case SET_CURRENT_LOCATION:
       return {
         ...state,

@@ -48,6 +48,7 @@ const sharedState = {
   logoUrl: "",
   showReport: false,
   currentLocation: "",
+  showValue: "graph",
 };
 
 export default sharedState;

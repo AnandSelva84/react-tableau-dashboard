@@ -27,6 +27,7 @@ import {
 import ChipsWrapper from "./chip-wrapper-dialog";
 import { colors } from "../../constants/colors";
 import ClickableIcon from "../../components/icon-button";
+import ShowGroup from "../../pages/level-3/button-group";
 
 const SubHeader = () => {
   const {
@@ -37,6 +38,7 @@ const SubHeader = () => {
     storedViewedFilters,
     currentMainFilter,
     drawer,
+    showReport,
   } = useData().sharedReducer;
   const dispatch = useDispatch();
   const createChip = (id, value) => `${id} : ${value}`;
@@ -179,12 +181,6 @@ const SubHeader = () => {
     return arr;
   };
 
-  const isAllApplied = (filter_id) => {
-    const chosen = initialApplied.filter((f) => f.filter_id === filter_id);
-    const appliedValues = chosen.map((c) => c?.applied || false);
-    return appliedValues.every((c) => c === true) ? "#192734" : "";
-  };
-
   const getAllPossibleValues = (filter_id) => {
     const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
     const rawValues =
@@ -216,34 +212,46 @@ const SubHeader = () => {
   return (
     <div>
       {isVisiable && !!newFilters && newFilters.length > 0 && (
-        <Paper
-          style={{
-            ...theme.subHeader,
-          }}
-        >
-          <>
-            <ClickableIcon
-              icon={<Menu />}
-              onClick={() => {
-                dispatch(toggleDrawer());
-              }}
-              style={{ marginRight: "1rem" }}
-            />
-          </>
-          {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
-            <Chip
-              label={createChip(filter.id, filter.value)}
+        <Paper>
+          <div
+            className=""
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div
               style={{
-                marginRight: "0.4rem",
-                // backgroundColor: colors.usaa_blue,
-                marginTop: "0.2rem",
+                ...theme.subHeader,
               }}
-              onClick={() => {
-                handleOpen(filter.value, filter.id);
-                getStatus(filter.filter_id);
-              }}
-            />
-          ))}
+            >
+              <>
+                <ClickableIcon
+                  icon={<Menu />}
+                  onClick={() => {
+                    dispatch(toggleDrawer());
+                  }}
+                  style={{ marginRight: "1rem" }}
+                />
+              </>
+              {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
+                <Chip
+                  label={createChip(filter.id, filter.value)}
+                  style={{
+                    marginRight: "0.4rem",
+                    // backgroundColor: colors.usaa_blue,
+                    marginTop: "0.2rem",
+                  }}
+                  onClick={() => {
+                    handleOpen(filter.value, filter.id);
+                    getStatus(filter.filter_id);
+                  }}
+                />
+              ))}
+            </div>
+            <div className="">{showReport && <ShowGroup />}</div>
+          </div>
         </Paper>
       )}
       <ChipsWrapper

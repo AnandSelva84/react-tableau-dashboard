@@ -16,24 +16,29 @@ import {
   SwapVert,
 } from "@material-ui/icons";
 import { ButtonGroup, IconButton } from "@material-ui/core";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import { useDispatch } from "react-redux";
 import {
   toggleShowReport,
   setCurrentLocation,
+  setShowControl,
 } from "../../redux/actions/shared";
+import useData from "../../hooks/useStore";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [value, setValue] = React.useState("graph");
   const dispatch = useDispatch();
   const { state } = useLocation();
+  const { showValue } = useData().sharedReducer;
+
+  let { id } = useParams();
 
   React.useEffect(() => {
-    !!state?.title && dispatch(setCurrentLocation(state.title));
-  }, [state]);
+    !!id && dispatch(setCurrentLocation(id));
+  }, [id]);
 
   React.useEffect(() => {
     dispatch(toggleShowReport());
@@ -43,17 +48,20 @@ const LVL_3 = React.memo((props) => {
   }, []);
 
   const handleGraphClick = () => {
-    setShowDetails(true);
-    setValue("both");
+    // setShowDetails(true);
+    // setValue("both");
+
+    dispatch(setShowControl("both"));
   };
 
   const handleAlignment = (e, selected) => {
     setValue(selected);
   };
 
-  const showTable = value === "table";
-  const showGraph = value === "graph";
-  const showBoth = value === "both";
+  const showTable = showValue === "table";
+  const showGraph = showValue === "graph";
+  const showBoth = showValue === "both";
+
   return (
     <>
       {showDetails && (
@@ -63,30 +71,8 @@ const LVL_3 = React.memo((props) => {
             display: "flex",
             justifyContent: "flex-end",
           }}
-        >
-          <ButtonGroup>
-            <IconButton
-              onClick={() => setValue("graph")}
-              style={{ backgroundColor: !!showGraph ? "#f4f4f4" : "" }}
-            >
-              <BarChart />
-            </IconButton>
-            <IconButton
-              style={{ backgroundColor: !!showBoth ? "#f4f4f4" : "" }}
-              onClick={() => setValue("both")}
-            >
-              <SwapVert />
-            </IconButton>
-            <IconButton
-              style={{ backgroundColor: !!showTable ? "#f4f4f4" : "" }}
-              onClick={() => setValue("table")}
-            >
-              <TableChart />
-            </IconButton>
-          </ButtonGroup>
-        </div>
+        ></div>
       )}
-      {/* <div className="split"> */}
       <SplitterLayout vertical>
         {(showGraph || showBoth) && (
           <div className="unit" onClick={handleGraphClick}>
@@ -95,8 +81,6 @@ const LVL_3 = React.memo((props) => {
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
       </SplitterLayout>
-
-      {/* </div> */}
     </>
   );
 });

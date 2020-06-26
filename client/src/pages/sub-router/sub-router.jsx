@@ -1,7 +1,9 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import LVL_2 from "../level-2/lvl-2";
 import LVL_3 from "../level-3/lvl-3";
+import { getLvl, getPanel } from "../../redux/methods/get-level";
+import { panels } from "../../data/panels_new";
 
 const ToRender = (props) => {
   React.useEffect(() => {
@@ -19,16 +21,16 @@ const ToRender = (props) => {
 };
 
 const SubRouter = (props) => {
+  const { id } = useParams();
   const { state } = useLocation();
 
   React.useEffect(() => {
-    // alert(state?.level);
+    // alert(getLvl(id));
+    // alert(JSON.stringify(getPanel(id)));
   }, [state]);
 
   return (
-    <div className="">
-      <ToRender {...state} />
-    </div>
+    <div className="">{!!getPanel(id) && <ToRender {...getPanel(id)} />}</div>
   );
 };
 
