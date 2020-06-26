@@ -4,6 +4,7 @@ import Button from "../../components/button/button";
 import { useDispatch } from "react-redux";
 import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
+import { getPanel } from "../../redux/methods/get-level";
 
 const LVL_2 = (props) => {
   const history = useHistory();
@@ -15,7 +16,7 @@ const LVL_2 = (props) => {
   let { id } = useParams();
 
   React.useEffect(() => {
-    !!id && dispatch(setCurrentLocation(id));
+    !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
   }, [id]);
 
   return (

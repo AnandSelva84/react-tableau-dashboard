@@ -26,6 +26,7 @@ import {
   setShowControl,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
+import { getPanel } from "../../redux/methods/get-level";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -37,7 +38,7 @@ const LVL_3 = React.memo((props) => {
   let { id } = useParams();
 
   React.useEffect(() => {
-    !!id && dispatch(setCurrentLocation(id));
+    !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
   }, [id]);
 
   React.useEffect(() => {

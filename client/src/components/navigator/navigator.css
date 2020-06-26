@@ -28,6 +28,7 @@
 
 .letter-group {
   display: flex;
+  position: relative;
 }
 
 .letter-group > * {

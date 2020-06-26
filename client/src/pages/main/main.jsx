@@ -52,7 +52,7 @@ const Main = React.memo(() => {
 
   React.useEffect(() => {
     !!App?.application?.name &&
-      dispatch(setCurrentLocation(App?.application?.name));
+      dispatch(setCurrentLocation(App?.subject_area?.name));
   }, [App]);
 
   return (
