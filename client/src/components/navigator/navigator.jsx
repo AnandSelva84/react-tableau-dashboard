@@ -8,8 +8,11 @@ import {
 import ClickableIcon from "../icon-button";
 import { colors } from "../../constants/colors";
 import useData from "../../hooks/useStore";
+import { panels } from "../../data/panels_new";
+import LetterGroup from "./letter-group";
 const Naviagtor = () => {
   const { currentLocation } = useData().sharedReducer;
+  const panelsLetters = panels.map((p) => p.title).map((word) => word[0]);
 
   return (
     <>
@@ -26,15 +29,14 @@ const Naviagtor = () => {
         </div>
         <div className="nav-hero-title">
           <p>{currentLocation || ""}</p>
+          <LetterGroup letters={panelsLetters} panels={panels} />
         </div>
-        <div className="">
+        <div className="" style={{ display: "flex" }}>
           <ClickableIcon
             style={{ color: "#fff" }}
             onClick={() => {}}
             icon={<HelpOutlineOutlined />}
           />
-        </div>
-        <div className="">
           <ClickableIcon
             onClick={() => {}}
             icon={<FolderOpenOutlined />}

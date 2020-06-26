@@ -16,8 +16,20 @@
   text-align: right;
   margin: 0 2rem;
   width: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-hero-title > p {
   text-align: center;
+}
+
+.letter-group {
+  display: flex;
+}
+
+.letter-group > * {
+  margin: 0 0.2rem;
 }

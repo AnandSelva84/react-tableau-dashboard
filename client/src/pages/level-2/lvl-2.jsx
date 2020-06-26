@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import Button from "../../components/button/button";
 import { useDispatch } from "react-redux";
 import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
@@ -12,14 +12,16 @@ const LVL_2 = (props) => {
   const { currentLocation } = useData().sharedReducer;
   // !!state && alert(JSON.stringify({ ...state }));
 
+  let { id } = useParams();
+
   React.useEffect(() => {
-    !!state?.title && dispatch(setCurrentLocation(state.title));
-  }, [state]);
+    !!id && dispatch(setCurrentLocation(id));
+  }, [id]);
 
   return (
     <>
       <div className="ampBody">
-        {state.items.map((value) => (
+        {props.items.map((value) => (
           <div
             className="panel"
             style={{
