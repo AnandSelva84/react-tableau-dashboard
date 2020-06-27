@@ -6,7 +6,6 @@ import { Typography } from "@material-ui/core";
 import Popover from "../popover/popover";
 const Letter = (props) => {
   const getTitle = () => {
-    debugger;
     return props.panels[props.index]?.title;
   };
 

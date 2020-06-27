@@ -81,8 +81,9 @@ const PrevSelect = (props) => {
   ];
 
   const findFamily = (ID, data) => {
+    debugger;
     let family = [];
-    let searchID = [ID];
+    let searchID = [ID].flat();
 
     //starting lvl is 0 end is 4
     while (1) {
@@ -153,7 +154,16 @@ const PrevSelect = (props) => {
       })),
       ...possibleAllSelect,
     ];
-    dispatch(editFilterState([...initialFullState]));
+    // dispatch(editFilterState([...initialFullState]));
+    dispatch(
+      editFilterState([
+        ...filterState,
+        ...findFamily(
+          initialFullState.map((f) => f.ID),
+          props.reformattedNewFilters
+        ),
+      ])
+    );
   };
 
   React.useEffect(() => {
@@ -233,9 +243,6 @@ const PrevSelect = (props) => {
     }
     return 0;
   }
-  React.useEffect(() => {
-    console.log("menuLoading", menuLoading);
-  }, [menuLoading]);
 
   React.useEffect(() => {
     let unCompletedFilters = [];
@@ -287,7 +294,7 @@ const PrevSelect = (props) => {
   };
 
   const handleSelectAll = () => {
-    if (allCheck) {
+    if (newAllChecked()) {
       unSelectAll();
     } else {
       onClickAll();
@@ -399,7 +406,7 @@ const PrevSelect = (props) => {
                   <>
                     {props.lvl !== 0 && (
                       <Option
-                        checked={allCheck}
+                        checked={newAllChecked()}
                         filterState={filterState}
                         onClick={() => {
                           // handleSelectAll();
