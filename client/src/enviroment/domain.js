@@ -1,13 +1,14 @@
 export const getDomain = () => {
+  debugger;
   const ampID = "3000";
   const kidID = "4000";
 
   const fullURL = window.location.href;
+  let lastColon = fullURL.lastIndexOf(":");
+  let afterCut = fullURL.substr(lastColon, fullURL.length);
+  let firstSlash = afterCut.search("/");
 
-  const domain = fullURL.substring(
-    fullURL.lastIndexOf(":") + 1,
-    fullURL.search("/")
-  );
+  const domain = afterCut.substr(1, firstSlash - 1);
   if (domain === ampID) return "amp";
   if (domain === kidID) return "kid";
   else return null;

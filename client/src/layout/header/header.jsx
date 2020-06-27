@@ -26,6 +26,7 @@ import Logo from "./logo";
 import { colors } from "../../constants/colors";
 import useFetch from "../../hooks/useFetch";
 import { newFiltersURL, getInfoURL } from "../../enviroment/urls";
+import { getDomain } from "../../enviroment/domain";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Header = () => {
     return filter;
   };
 
-  const app = domain === "3000" ? "amp" : "kid";
+  const app = getDomain();
   const { data, loading } = useFetch(`${getInfoURL}/${app}`);
   const [initialLoaded, setInitialLoaded] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
@@ -91,7 +92,6 @@ const Header = () => {
 
   useEffect(() => {
     setLoaded(true);
-    debugger;
     const savedFilters = JSON.parse(localStorage.getItem("filters"));
     console.log("savedFilters", savedFilters);
 
