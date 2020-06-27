@@ -2,10 +2,20 @@ import React from "react";
 import ClickableIcon from "../icon-button";
 import "./navigator.css";
 import { useHistory } from "react-router-dom";
-import Popover from "@material-ui/core/Popover";
 import { Typography } from "@material-ui/core";
+import Popover from "../popover/popover";
+const Letter = (props) => {
+  const getTitle = () => {
+    debugger;
+    return props.panels[props.index]?.title;
+  };
 
-const Letter = (props) => <div className="">{props.letter}</div>;
+  return (
+    <div className="">
+      <Popover content={getTitle()}>{props.letter}</Popover>
+    </div>
+  );
+};
 
 const LetterGroup = (props) => {
   const history = useHistory();
@@ -35,14 +45,14 @@ const LetterGroup = (props) => {
             //   setIndex(i);
             // }}
             // onMouseOut={handleClose}
-            icon={<Letter letter={letter} index={i} />}
+            icon={<Letter letter={letter} index={i} panels={props.panels} />}
             onClick={() => {
               haneleClick(i);
             }}
             style={{ color: "#fff" }}
             size="small"
           />
-          <Popover
+          {/* <Popover
             id={id}
             open={i === index}
             anchorEl={anchorEl}
@@ -57,7 +67,7 @@ const LetterGroup = (props) => {
             }}
           >
             <Typography>{props.panels[i]?.title}</Typography>
-          </Popover>
+          </Popover> */}
         </>
       ))}
     </div>
