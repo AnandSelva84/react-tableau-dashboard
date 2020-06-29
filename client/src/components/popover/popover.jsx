@@ -16,16 +16,18 @@ const Popover = (props) => {
         <Paper
           style={{
             position: "absolute",
-            top: 60,
+            top: 40,
             minWidth: "10rem",
             zIndex: 5000,
             left: "-50%",
             padding: "0.5rem 1rem",
             right: "-50%",
             transform: `translate(-50%, -50%)`,
+            fontSize: "0.8rem"
           }}
         >
-          {props?.content || ""}
+          {props ?.content || ""}
+
         </Paper>
       )}
     </div>

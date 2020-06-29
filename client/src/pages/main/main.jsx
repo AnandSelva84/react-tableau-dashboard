@@ -25,6 +25,7 @@ import { fromOptionsToChips } from "../../redux/methods/re-format-response";
 import CustomSelect from "../../components/custom-auto-complete/custom-auto-complete";
 import MainSwitch from "../../components/main-switch/main-switch";
 import Snackbar from "../../components/snackbar/snackbar";
+import { getDomain } from "../../enviroment/domain";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();
@@ -44,15 +45,15 @@ const Main = React.memo(() => {
     fullURL.lastIndexOf("/")
   );
 
-  const app = domain === "3000" ? "amp" : "kid";
+  const app = getDomain();
 
   //Change this to get css class from api and apply background
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
   React.useEffect(() => {
-    !!App?.application?.name &&
-      dispatch(setCurrentLocation(App?.subject_area?.name));
+    !!App ?.application ?.name &&
+      dispatch(setCurrentLocation(App ?.subject_area ?.name));
   }, [App]);
 
   return (
