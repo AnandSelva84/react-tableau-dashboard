@@ -81,7 +81,6 @@ const PrevSelect = (props) => {
   ];
 
   const findFamily = (ID, data) => {
-    debugger;
     let family = [];
     let searchID = [ID].flat();
 

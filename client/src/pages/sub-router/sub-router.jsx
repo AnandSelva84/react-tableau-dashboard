@@ -8,8 +8,6 @@ import { panels } from "../../data/panels_new";
 const ToRender = (props) => {
   React.useEffect(() => {
     console.log(props);
-
-    debugger;
   }, []);
   if (props.level === 2)
     return (

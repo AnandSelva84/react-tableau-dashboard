@@ -1,5 +1,4 @@
 export const getDomain = () => {
-  debugger;
   const ampID = "3000";
   const kidID = "4000";
 

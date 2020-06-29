@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import tableau from "tableau-api";
+import { Button } from "@material-ui/core";
 
 const useStyles = (theme) => ({
   respContainer: {
@@ -22,30 +23,51 @@ const useStyles = (theme) => ({
 class TableauViz extends Component {
   componentDidMount() {
     this.initViz();
-    alert("render");
+    // alert("render");
   }
 
   //Function call API
   initViz() {
     const vizUrl =
-      "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
+      // "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
+      "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
     const options = {
       height: "100vh",
       width: "100%",
       hideTabs: false,
       hideToolbar: true,
+      onFirstInteractive: function () {
+        // let viz = window.tableau.Viz(this.vizContainer, vizUrl, options);
+      },
     };
+    debugger;
+
     const vizContainer = this.vizContainer;
     let viz = new window.tableau.Viz(vizContainer, vizUrl, options);
+    const workbook = viz?.Workbook();
+    const activeSheet = workbook.getActiveSheet();
+  }
+
+  applyNewFilter() {
+    console.log("this", this.activeSheet);
+
+    // this.window.tableau.activeSheet.applyFilterAsync(
+    //   "Region",
+    //   "The Americas",
+    //   tableau.FilterUpdateType.REPLACE
+    // );
   }
 
   render() {
     return (
-      <div
-        ref={(div) => {
-          this.vizContainer = div;
-        }}
-      />
+      <div className="" style={{ width: "50rem", height: "100vh" }}>
+        <Button onClick={this.applyNewFilter.bind(this)}>update region</Button>
+        <div
+          ref={(div) => {
+            this.vizContainer = div;
+          }}
+        />
+      </div>
     );
   }
 }

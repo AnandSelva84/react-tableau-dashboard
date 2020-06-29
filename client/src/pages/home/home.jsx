@@ -18,7 +18,6 @@ const Panel = (props) => {
       <div
         className="panel-title"
         onClick={() => {
-          debugger;
           history.push({
             pathname: `/${props.route}`,
             state: { ...props },
