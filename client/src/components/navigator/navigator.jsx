@@ -10,9 +10,15 @@ import { colors } from "../../constants/colors";
 import useData from "../../hooks/useStore";
 import { panels } from "../../data/panels_new";
 import LetterGroup from "./letter-group";
+import { useHistory } from "react-router-dom";
+
 const Naviagtor = () => {
   const { currentLocation } = useData().sharedReducer;
   const panelsLetters = panels.map((p) => p.title).map((word) => word[0]);
+  const history = useHistory()
+  const onHomeClicked = () => {
+    history.push('/')
+  }
 
   return (
     <>
@@ -22,7 +28,7 @@ const Naviagtor = () => {
       >
         <div className="">
           <ClickableIcon
-            onClick={() => {}}
+            onClick={onHomeClicked}
             icon={<HomeOutlined />}
             style={{ color: "#fff" }}
           />
@@ -34,11 +40,11 @@ const Naviagtor = () => {
         <div className="" style={{ display: "flex" }}>
           <ClickableIcon
             style={{ color: "#fff" }}
-            onClick={() => {}}
+            onClick={() => { }}
             icon={<HelpOutlineOutlined />}
           />
           <ClickableIcon
-            onClick={() => {}}
+            onClick={() => { }}
             icon={<FolderOpenOutlined />}
             style={{ color: "#fff" }}
           />
