@@ -80,7 +80,7 @@ const LVL_3 = React.memo((props) => {
       <SplitterLayout vertical>
         {(showGraph || showBoth) && (
           <div className="unit" onClick={handleGraphClick}>
-            {tableauGraph && <TableauViz options={{ height: "70vh" }} />}
+            {tableauGraph && <TableauViz options={{ height: "80vh" }} />}
           </div>
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
