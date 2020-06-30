@@ -4,14 +4,21 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
 const { tableau } = window;
-const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
+const url =
+  "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
 const TableauViz = (props) => {
   const container = useRef(null);
   const [viz, setViz] = React.useState(null);
 
+  const options = {
+    hideTabs: true,
+    width: "100%",
+    ...props.options,
+  };
+
   const initViz = () => {
     // let viz = new tableau.Viz(container.current, url);
-    setViz(new tableau.Viz(container.current, url));
+    setViz(new tableau.Viz(container.current, url, options));
   };
 
   React.useEffect(() => {
@@ -40,7 +47,7 @@ const TableauViz = (props) => {
 
   return (
     <>
-      <button
+      {/* <button
         onClick={() => {
           yearFilter();
         }}
@@ -53,8 +60,14 @@ const TableauViz = (props) => {
         }}
       >
         africa filter
-      </button>
-      <div className="" id={"name"} ref={container}></div>
+      </button> */}
+      <div
+        className=""
+        style={{ width: "100%", height: "100%" }}
+        id={"name"}
+        ref={container}
+        // onClick={!!props.onClick && props.onClick()}
+      ></div>
     </>
   );
 };

@@ -26,7 +26,7 @@ const Router = () => {
           <Switch>
             <Route exact path="/" component={() => <Main />} />
             <Route exact path="/:id" component={() => <SubRouter />} />
-            <Route exact path="/r/report" component={() => <TableauViz />} />
+            {/* <Route exact path="/r/report" component={() => <TableauViz />} /> */}
           </Switch>
           <Snackbar />
         </SwipSideDrawer>

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
+import TableauViz from "../report/report";
 
 const LVL_2 = (props) => {
   const history = useHistory();
@@ -14,6 +15,7 @@ const LVL_2 = (props) => {
   // !!state && alert(JSON.stringify({ ...state }));
 
   let { id } = useParams();
+  const tableauGraph = id === "storyDeliveryTime";
 
   React.useEffect(() => {
     !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
@@ -29,20 +31,25 @@ const LVL_2 = (props) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              maxHeight: "50vh",
             }}
           >
-            <div
-              className="panel-content"
-              onClick={() => {
-                debugger;
-                history.push({
-                  pathname: `/${value.route}`,
-                  state: { ...value },
-                });
-              }}
-            >
-              {value.title}
-            </div>
+            {value.route !== "storyDeliveryTime" ? (
+              <div
+                className="panel-content"
+                onClick={() => {
+                  debugger;
+                  history.push({
+                    pathname: `/${value.route}`,
+                    state: { ...value },
+                  });
+                }}
+              >
+                {value.title}
+              </div>
+            ) : (
+              <TableauViz options={{ height: "35vh" }} />
+            )}
           </div>
         ))}
       </div>

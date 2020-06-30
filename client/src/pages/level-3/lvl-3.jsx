@@ -27,6 +27,7 @@ import {
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
+import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -63,6 +64,8 @@ const LVL_3 = React.memo((props) => {
   const showGraph = showValue === "graph";
   const showBoth = showValue === "both";
 
+  const tableauGraph = id === "storyDeliveryTime";
+
   return (
     <>
       {showDetails && (
@@ -77,7 +80,7 @@ const LVL_3 = React.memo((props) => {
       <SplitterLayout vertical>
         {(showGraph || showBoth) && (
           <div className="unit" onClick={handleGraphClick}>
-            This is a graph
+            {tableauGraph && <TableauViz options={{ height: "70vh" }} />}
           </div>
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
