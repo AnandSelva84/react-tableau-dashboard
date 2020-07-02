@@ -12,6 +12,8 @@ const TableauViz = (props) => {
   const container = useRef(null);
   const [viz, setViz] = React.useState(null);
   const [filters, setFilters] = React.useState(null);
+  const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
+  const [counter, setCounter] = React.useState(0);
   const { appliedFilters } = useData().sharedReducer;
   let url = "http://public.tableau.com/views/RegionalSampleWorkbook/College";
 
@@ -24,18 +26,21 @@ const TableauViz = (props) => {
     hideTabs: true,
     width: "100%",
     ...props.options,
-    // ...filters,
-    // Year: ["2009"],
   };
+
+  React.useEffect(() => {
+    if (!vizIsInteractive)
+      setTimeout(() => {
+        setCounter(counter + 1);
+      }, 200);
+  }, [counter]);
 
   const handleClcik = () => {
     sheet().clearFilterAsync("Region");
-
     setFilters(initFilters);
   };
 
   const initViz = () => {
-    // let viz = new tableau.Viz(container.current, url);
     setViz(new tableau.Viz(container.current, url, options));
   };
 
@@ -43,12 +48,26 @@ const TableauViz = (props) => {
     initViz();
   }, []);
 
+  React.useEffect(() => {
+    console.log("change in ui");
+    try {
+      if (isActiveSheet()) setVizIsInteractive(true);
+    } catch {}
+  });
+
   const sheet = () => {
     return viz.getWorkbook().getActiveSheet();
   };
 
+  const isActiveSheet = () => {
+    // alert(viz.getWorkbook().getActiveSheet().getIsActive());
+    return viz.getWorkbook().getActiveSheet().getIsActive();
+  };
+
   const applyfilter = (id = "", value = []) => {
-    sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
+    try {
+      sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
+    } catch {}
   };
 
   const handleApply = (filterObj = null) => {
@@ -62,12 +81,13 @@ const TableauViz = (props) => {
   };
 
   React.useEffect(() => {
-    if (!!viz) {
+    if (!!viz && vizIsInteractive) {
       console.log("initt values", fromAppliedToOptions(appliedFilters));
       const finalFormat = fromAppliedToOptions(appliedFilters);
-      // handleApply(initFilters);
+
+      handleApply(initFilters);
     }
-  }, [appliedFilters, !!viz]);
+  }, [appliedFilters, !!viz, vizIsInteractive]);
 
   const yearFilter = (year) => {
     sheet().applyFilterAsync(
