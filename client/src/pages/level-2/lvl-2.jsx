@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
-import TableauViz from "../report/report";
+import TableauViz from "../../components/report/report";
+// import TableauViz from "../report/report";
 
 const LVL_2 = (props) => {
   const history = useHistory();

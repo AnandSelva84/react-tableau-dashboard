@@ -2,18 +2,36 @@ import React, { Component, useRef } from "react";
 import { withStyles } from "@material-ui/core/styles";
 // import tableau from "tableau-api";
 import { Button } from "@material-ui/core";
+import { fromAppliedToOptions } from "../../redux/methods/tableau-methods";
+import useData from "../../hooks/useStore";
 
 const { tableau } = window;
-const url =
-  "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
+// const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
+// "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
 const TableauViz = (props) => {
   const container = useRef(null);
   const [viz, setViz] = React.useState(null);
+  const [filters, setFilters] = React.useState(null);
+  const { appliedFilters } = useData().sharedReducer;
+  let url = "http://public.tableau.com/views/RegionalSampleWorkbook/College";
+
+  const initFilters = {
+    College: ["Music"],
+    Gender: ["Men"],
+  };
 
   const options = {
     hideTabs: true,
     width: "100%",
     ...props.options,
+    // ...filters,
+    // Year: ["2009"],
+  };
+
+  const handleClcik = () => {
+    sheet().clearFilterAsync("Region");
+
+    setFilters(initFilters);
   };
 
   const initViz = () => {
@@ -29,38 +47,64 @@ const TableauViz = (props) => {
     return viz.getWorkbook().getActiveSheet();
   };
 
+  const applyfilter = (id = "", value = []) => {
+    sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
+  };
+
+  const handleApply = (filterObj = null) => {
+    debugger;
+    const allKeys = Object.keys(filterObj);
+    allKeys.forEach((key) => {
+      console.log(`id is ${key}`);
+      console.log("id is value is", filterObj[key]);
+      applyfilter(key, filterObj[key]);
+    });
+  };
+
+  React.useEffect(() => {
+    if (!!viz) {
+      console.log("initt values", fromAppliedToOptions(appliedFilters));
+      const finalFormat = fromAppliedToOptions(appliedFilters);
+      // handleApply(initFilters);
+    }
+  }, [appliedFilters, !!viz]);
+
   const yearFilter = (year) => {
     sheet().applyFilterAsync(
-      "Region",
-      "Asia",
+      "College",
+      "Music",
       tableau.FilterUpdateType.REPLACE
     );
   };
 
   const setAfrica = () => {
-    sheet().applyFilterAsync(
-      "Region",
-      ["Africa", "Asia"],
-      tableau.FilterUpdateType.REPLACE
-    );
+    applyfilter("Gender", ["Men"]);
+    applyfilter("College", ["Music"]);
+    applyfilter("Gender", ["Women"]);
+
+    // sheet().applyFilterAsync(
+    //   "Gender",
+    //   ["Men"],
+    //   tableau.FilterUpdateType.REPLACE
+    // );
   };
 
   return (
     <>
-      {/* <button
+      <button
         onClick={() => {
           yearFilter();
         }}
       >
-        asia filter
+        college filter
       </button>
       <button
         onClick={() => {
-          setAfrica();
+          handleApply(initFilters);
         }}
       >
-        africa filter
-      </button> */}
+        region filter
+      </button>
       <div
         className=""
         style={{ width: "100%", height: "100%" }}

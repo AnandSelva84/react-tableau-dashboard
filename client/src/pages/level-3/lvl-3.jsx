@@ -27,7 +27,8 @@ import {
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
-import TableauViz from "../report/report";
+import TableauViz from "../../components/report/report";
+// import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
   const [showDetails, setShowDetails] = useState(false);
