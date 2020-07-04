@@ -9,18 +9,20 @@ const { tableau } = window;
 // const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
 // "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
 const TableauViz = (props) => {
-  const container = useRef(null);
-  const [viz, setViz] = React.useState(null);
-  const [filters, setFilters] = React.useState(null);
-  const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
-  const [counter, setCounter] = React.useState(0);
-  const { appliedFilters } = useData().sharedReducer;
-  let url = "http://public.tableau.com/views/RegionalSampleWorkbook/College";
-
   const initFilters = {
     College: ["Music"],
     Gender: ["Men"],
   };
+
+  const container = useRef(null);
+  const [viz, setViz] = React.useState(null);
+  const [filters, setFilters] = React.useState({ ...initFilters });
+  const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
+  const [counter, setCounter] = React.useState(0);
+  const { appliedFilters } = useData().sharedReducer;
+  let url =
+    props?.url ||
+    "http://public.tableau.com/views/RegionalSampleWorkbook/College";
 
   const options = {
     hideTabs: true,
@@ -71,7 +73,6 @@ const TableauViz = (props) => {
   };
 
   const handleApply = (filterObj = null) => {
-    debugger;
     const allKeys = Object.keys(filterObj);
     allKeys.forEach((key) => {
       console.log(`id is ${key}`);
@@ -84,10 +85,15 @@ const TableauViz = (props) => {
     if (!!viz && vizIsInteractive) {
       console.log("initt values", fromAppliedToOptions(appliedFilters));
       const finalFormat = fromAppliedToOptions(appliedFilters);
-
-      handleApply(initFilters);
+      handleApply(filters);
     }
-  }, [appliedFilters, !!viz, vizIsInteractive]);
+  }, [!!viz, vizIsInteractive, filters]);
+
+  React.useEffect(() => {
+    if (!!viz && vizIsInteractive) {
+      setFilters({ Gender: ["Women"] });
+    }
+  }, [appliedFilters]);
 
   const yearFilter = (year) => {
     sheet().applyFilterAsync(
@@ -97,41 +103,33 @@ const TableauViz = (props) => {
     );
   };
 
-  const setAfrica = () => {
-    applyfilter("Gender", ["Men"]);
-    applyfilter("College", ["Music"]);
-    applyfilter("Gender", ["Women"]);
-
-    // sheet().applyFilterAsync(
-    //   "Gender",
-    //   ["Men"],
-    //   tableau.FilterUpdateType.REPLACE
-    // );
+  const resetFilters = () => {
+    setFilters({ Gender: ["Women"] });
   };
 
   return (
     <>
       <button
         onClick={() => {
-          yearFilter();
+          resetFilters();
         }}
       >
-        college filter
+        reset filter
       </button>
-      <button
-        onClick={() => {
-          handleApply(initFilters);
-        }}
-      >
-        region filter
-      </button>
-      <div
-        className=""
-        style={{ width: "100%", height: "100%" }}
-        id={"name"}
-        ref={container}
-        // onClick={!!props.onClick && props.onClick()}
-      ></div>
+      <div style={{ width: "100%", height: "100%" }}>
+        <div
+          className=""
+          style={{ width: "100%", height: "100%", position: "relative" }}
+          id={"name"}
+          ref={container}
+        >
+          <div
+            className=""
+            style={{ position: "absolute", top: 0 }}
+            onClick={() => {}}
+          ></div>
+        </div>
+      </div>
     </>
   );
 };
@@ -156,12 +154,12 @@ export default TableauViz;
 //       hideToolbar: true,
 //       onFirstInteractive: function () {
 //         // let viz = window.tableau.Viz(this.vizContainer, vizUrl, options);
-//         debugger;
+//         ;
 //         let workbook = viz.getWorkbook();
 //         let activeSheet = workbook.getActiveSheet();
 //       },
 //     };
-//     debugger;
+//     ;
 
 //     const vizContainer = this.vizContainer;
 //     let viz = new window.tableau.Viz(vizContainer, vizUrl, options);

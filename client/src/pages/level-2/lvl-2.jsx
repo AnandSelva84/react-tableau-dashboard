@@ -6,6 +6,7 @@ import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
 import TableauViz from "../../components/report/report";
+import { reportsUrls } from "../../data/reports-urls";
 // import TableauViz from "../report/report";
 
 const LVL_2 = (props) => {
@@ -22,10 +23,16 @@ const LVL_2 = (props) => {
     !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
   }, [id]);
 
+  const handleClick = (value) => {
+    history.push({
+      pathname: `/${value.route}`,
+    });
+  };
+
   return (
     <>
       <div className="ampBody">
-        {props.items.map((value) => (
+        {props.items.map((value, index) => (
           <div
             className="panel"
             style={{
@@ -34,22 +41,24 @@ const LVL_2 = (props) => {
               alignItems: "center",
               maxHeight: "50vh",
             }}
+            onClick={() => alert("click")}
           >
-            {value.route !== "storyDeliveryTime" ? (
+            {/* {value.route !== "storyDeliveryTime" ? ( */}
+            {id !== "effectivness" ? (
               <div
                 className="panel-content"
                 onClick={() => {
-                  debugger;
-                  history.push({
-                    pathname: `/${value.route}`,
-                    state: { ...value },
-                  });
+                  handleClick(value);
                 }}
               >
                 {value.title}
               </div>
             ) : (
-              <TableauViz options={{ height: "35vh" }} />
+              <TableauViz
+                options={{ height: "35vh" }}
+                url={reportsUrls[index]}
+                onClick={() => handleClick(value)}
+              />
             )}
           </div>
         ))}
