@@ -19,6 +19,52 @@ const ampInfo = {
       display_name: "Agile Metrics Portal Menu",
       type: "Application",
     },
+    focus_area: [
+      {
+        panel_id: "PORT_DETAIL_VIZ1",
+        panel_header_title: "Effectivness (KPIs)",
+        title_action_type: "Level 2",
+        title_action_url:
+          "http://public.tableau.com/views/RegionalSampleWorkbook/College",
+        focus_area_order: 1,
+        view_thumbnail_path: "",
+        view_display_name: "Effectivness (KPIs)",
+        route: "effectivness",
+        items: [
+          {
+            title: "Story Delivery Lead Time",
+            route: "storyDeliveryTime",
+            level: 3,
+          },
+          {
+            title: "Feature Delivery Lead Time",
+            route: "featureDeliveryLeadTime",
+            level: 3,
+          },
+          {
+            title: "Sprint Predictability/Volatility",
+            route: "sprintPredict",
+            level: 3,
+          },
+          ,
+          {
+            title: "PI Predictability/Volatility",
+            route: "piPredict",
+            level: 3,
+          },
+          {
+            title: "High & Medium Defect Backlog",
+            route: "defectBacklog",
+            level: 3,
+          },
+          {
+            title: "New High Defects",
+            route: "newDefects",
+            level: 3,
+          },
+        ],
+      },
+    ],
   },
 };
 

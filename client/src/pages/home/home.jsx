@@ -20,11 +20,10 @@ const Panel = (props) => {
         onClick={() => {
           history.push({
             pathname: `/${props.route}`,
-            state: { ...props },
           });
         }}
       >
-        {props?.title || ""}
+        {props?.panel_header_title || ""}
       </div>
       <div className="panel-content">
         {props?.items.map((item) => (
@@ -32,12 +31,11 @@ const Panel = (props) => {
             className=""
             onClick={() => {
               history.push({
-                pathname: `/${item.route}`,
-                state: { ...item },
+                pathname: `/${item?.route}`,
               });
             }}
           >
-            {item.title}
+            {item?.title}
           </div>
         ))}
       </div>
@@ -46,14 +44,15 @@ const Panel = (props) => {
 };
 
 const HomePage = (props) => {
+  const { body_class, app } = useData().sharedReducer;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { body_class } = useData().sharedReducer;
+  const focus_area = !!app ? app.focus_area : [];
   const css_class = body_class === "ampBody" ? "ampBody" : "kidBody";
   return (
     <div className="panel-wrapper">
       {/* {!!!body_class && <div className="home">Coming Soon...</div>} */}
-      {!!css_class && panels.map((panel) => <Panel {...panel} />)}
+      {!!css_class && focus_area.map((panel) => <Panel {...panel} />)}
     </div>
   );
 };
