@@ -216,15 +216,6 @@ const sharedReducer = (state = sharedState, action) => {
         // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter((filter) => filter.ID !== action.filter.ID);
 
-      const chosenIds = afterEdit.map((f) => f.ID);
-
-      console.log(
-        "values has changed parentIds in after filter",
-        afterEdit.filter(
-          (f) => chosenIds.includes(f.parentId) || f.parentId === null
-        )
-      );
-
       if (action.filter.value === "All") {
         afterEdit = state.filterState
           .filter((filter) => filter.lvl <= action.filter.lvl)

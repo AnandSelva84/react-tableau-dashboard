@@ -7,6 +7,7 @@ import {
   Paper,
   TextField,
   ClickAwayListener,
+  Chip,
 } from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -28,6 +29,7 @@ import Option from "../select/option";
 import CustomSelect from "../custom-auto-complete/custom-auto-complete";
 import MenuSkeleton from "../menu-skeletons/menu-skeletons";
 import OptionsWrapper from "./optionsWrapper";
+import SideChips from "./side-chips";
 
 //props.values should be filtered before passing it to it's component
 const PrevSelect = (props) => {
@@ -94,14 +96,6 @@ const PrevSelect = (props) => {
     console.log("all new family", family);
     return family;
   };
-
-  // .filter((f) => f.lvl < props.lvl);
-
-  // React.useEffect(() => {
-  //   debugger;
-  //   if (mainApplied === currentMainFilter)
-  //     dispatch(editFilterState([...appliedFilters]));
-  // }, [currentMainFilter]);
 
   React.useEffect(() => {
     if (!!!props.values.length) setAllCheck(false);
@@ -308,46 +302,6 @@ const PrevSelect = (props) => {
     return array.includes(element);
   };
 
-  const handleOptionChange = (checkState, id, parentId) => {
-    if (
-      isExistinArray(
-        checkedArray.map((c) => c.id),
-        id
-      ) &&
-      !checkState
-    ) {
-      setcheCheckedArray([...checkedArray.filter((c) => c.id !== id)]);
-    } else if (
-      !isExistinArray(
-        checkedArray.map((c) => c.id),
-        id
-      ) &&
-      checkState
-    ) {
-      setcheCheckedArray([...checkedArray, { id, checkState, parentId }]);
-    }
-  };
-
-  React.useEffect(() => {
-    const f = filterState.filter((filter) => filter.id === props.title).length;
-    if (f === props.values.length) {
-      setAllCheck(true);
-    } else {
-      setAllCheck(false);
-    }
-  }, [checkedArray]);
-
-  React.useEffect(() => {
-    if (allCheck && loaded) {
-      dispatch(setAllCheckArray([...allCheckArray, props.title]));
-    }
-    if (!allCheck && loaded) {
-      dispatch(
-        setAllCheckArray([...allCheckArray.filter((f) => f !== props.title)])
-      );
-    }
-  }, [allCheck]);
-
   React.useEffect(() => {
     if (!newAllChecked()) setAllCheck(false);
   }, [filterState]);
@@ -380,6 +334,8 @@ const PrevSelect = (props) => {
       return getOptions();
     }
   };
+  const sideChips = filterState.filter((f) => f.id === getTitle());
+
   if (props.lvl !== 0 || props.custom) {
     return (
       <ClickAwayListener onClickAway={hanldeClose}>
@@ -391,7 +347,13 @@ const PrevSelect = (props) => {
             onChange={handlechange}
             placeholder={!props.custom ? props?.title : props.placeholder}
             label={props?.title || "Unkown"}
+            InputProps={{
+              startAdornment: (
+                <SideChips chips={sideChips} length={props.values.length} />
+              ),
+            }}
           />
+
           {showMenu && (
             <OptionsWrapper
               onMenuHasLoaded={() => {
@@ -408,12 +370,10 @@ const PrevSelect = (props) => {
                         checked={newAllChecked()}
                         filterState={filterState}
                         onClick={() => {
-                          // handleSelectAll();
                           handleSelectAll();
                         }}
                         display={`All\t (${props.values?.length || 0})`}
                         onChange={() => {}}
-                        // onMenuHasLoaded = {()=>{}}
                       />
                     )}
                   </>
@@ -422,7 +382,7 @@ const PrevSelect = (props) => {
                       .sort(sortOptions)
                       .map((option) => (
                         <Option
-                          onChange={handleOptionChange}
+                          onChange={() => {}}
                           checked={isExist(option.filterOptionId)}
                           value={option.filter_value_text}
                           filterState={filterState}
