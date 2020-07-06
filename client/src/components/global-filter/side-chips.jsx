@@ -19,13 +19,20 @@ const SideChips = (props) => {
   //after delete check the number of chips as an event
   const length = chips.length - 2;
 
+  const reformatLabel = (label = "") => {
+    const length = label.length;
+    let toReturn = label;
+    if (length > 17) toReturn = label.slice(0, 17) + "...";
+    return toReturn;
+  };
+
   return (
     <>
       <div className="" style={{ display: "flex", alignItems: "center" }}>
         {afterCut.map((chip) => (
           <Chip
             style={{ fontSize: "0.57rem" }}
-            label={chip.value}
+            label={reformatLabel(chip.value)}
             onDelete={() => {
               handleDelete(chip);
             }}
