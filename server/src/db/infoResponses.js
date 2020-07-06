@@ -35,32 +35,44 @@ const ampInfo = {
             title: "Story Delivery Lead Time",
             route: "storyDeliveryTime",
             level: 3,
+            level2_action_url: "",
+            level3_action_url: ""
           },
           {
             title: "Feature Delivery Lead Time",
             route: "featureDeliveryLeadTime",
             level: 3,
+            level2_action_url: "",
+            level3_action_url: ""
           },
           {
             title: "Sprint Predictability/Volatility",
             route: "sprintPredict",
             level: 3,
+            level2_action_url: "",
+            level3_action_url: ""
           },
           ,
           {
             title: "PI Predictability/Volatility",
             route: "piPredict",
             level: 3,
+            level2_action_url: "",
+            level3_action_url: ""
           },
           {
             title: "High & Medium Defect Backlog",
             route: "defectBacklog",
             level: 3,
+            level2_action_url: "",
+            level3_action_url: ""
           },
           {
             title: "New High Defects",
             route: "newDefects",
             level: 3,
+            level2_action_url: "",
+            level3_action_url: ""
           },
         ],
       },
