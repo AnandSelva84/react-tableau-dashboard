@@ -350,9 +350,10 @@ const PrevSelect = (props) => {
           <TextField
             onClick={toggle}
             fullWidth
+            style={{ maxWidth: "20rem" }}
             variant="outlined"
             onChange={handlechange}
-            placeholder={!props.custom ? props?.title : props.placeholder}
+            // placeholder={!props.custom ? props?.title : props.placeholder}
             label={props?.title || "Unkown"}
             InputProps={{
               startAdornment: (
