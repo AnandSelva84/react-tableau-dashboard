@@ -109,13 +109,7 @@ const TableauViz = (props) => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          resetFilters();
-        }}
-      >
-        reset filter
-      </button>
+     
       <div style={{ width: "100%", height: "100%" }}>
         <div
           className=""

@@ -30,7 +30,6 @@ import useSwitchFetch from "../../hooks/switch-useFetch";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();
-  const [locked, setLocked] = useState(true);
   const fullURL = window.location.href;
   const {
     filters: Filters,
@@ -53,10 +52,7 @@ const Main = React.memo(() => {
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
-  const { data, loading } = useSwitchFetch(
-    "https://jsonplaceholder.typicode.com/todos/1",
-    !locked
-  );
+  
 
   React.useEffect(() => {
     !!App?.application?.name &&
@@ -67,13 +63,7 @@ const Main = React.memo(() => {
     <div className={style}>
       {appIsLoading && <LaodingScreen />}
       {!!App && !appIsLoading && <HomePage />}
-      <button
-        onClick={() => {
-          setLocked(false);
-        }}
-      >
-        fetch
-      </button>
+     
     </div>
   );
 });
