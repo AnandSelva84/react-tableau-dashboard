@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useData from "../../hooks/useStore";
 import AgileMetrics from "../amp/amp";
 import KeyIndicators from "../kid/kid";
@@ -26,10 +26,11 @@ import CustomSelect from "../../components/custom-auto-complete/custom-auto-comp
 import MainSwitch from "../../components/main-switch/main-switch";
 import Snackbar from "../../components/snackbar/snackbar";
 import { getDomain } from "../../enviroment/domain";
+import useSwitchFetch from "../../hooks/switch-useFetch";
 
 const Main = React.memo(() => {
   const dispatch = useDispatch();
-
+  const [locked, setLocked] = useState(true);
   const fullURL = window.location.href;
   const {
     filters: Filters,
@@ -52,6 +53,11 @@ const Main = React.memo(() => {
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
+  const { data, loading } = useSwitchFetch(
+    "https://jsonplaceholder.typicode.com/todos/1",
+    !locked
+  );
+
   React.useEffect(() => {
     !!App?.application?.name &&
       dispatch(setCurrentLocation(App?.subject_area?.name));
@@ -61,6 +67,13 @@ const Main = React.memo(() => {
     <div className={style}>
       {appIsLoading && <LaodingScreen />}
       {!!App && !appIsLoading && <HomePage />}
+      <button
+        onClick={() => {
+          setLocked(false);
+        }}
+      >
+        fetch
+      </button>
     </div>
   );
 });
