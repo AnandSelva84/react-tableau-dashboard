@@ -82,6 +82,15 @@ const PrevSelect = (props) => {
     ...possibleAllSelect,
   ];
 
+  const deleteDuplicate = (array) => {
+    let dataToReturn = [];
+    array.forEach((filter) => {
+      if (!dataToReturn.map((f) => f.ID).includes(filter.ID))
+        dataToReturn.push(filter);
+    });
+    return dataToReturn;
+  };
+
   const findFamily = (ID, data) => {
     let family = [];
     let searchID = [ID].flat();
@@ -155,15 +164,15 @@ const PrevSelect = (props) => {
       ...possibleAllSelect,
     ];
     // dispatch(editFilterState([...initialFullState]));
-    dispatch(
-      editFilterState([
-        ...filterState,
-        ...findFamily(
-          initialFullState.map((f) => f.ID),
-          props.reformattedNewFilters
-        ),
-      ])
-    );
+    const data = [
+      ...filterState,
+      ...findFamily(
+        initialFullState.map((f) => f.ID),
+        props.reformattedNewFilters
+      ),
+    ];
+    const afterDuplicateFree = deleteDuplicate(data);
+    dispatch(editFilterState([...afterDuplicateFree]));
   };
 
   React.useEffect(() => {

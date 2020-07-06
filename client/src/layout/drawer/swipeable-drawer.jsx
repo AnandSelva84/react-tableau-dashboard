@@ -137,8 +137,8 @@ const SwipSideDrawer = (props) => {
 
   const getWidth = () => {
     if (!drawer) return 0;
-    if (showReport) return "34rem";
-    else return "17rem";
+    if (showReport) return "39.8rem";
+    else return "19.9rem";
   };
 
   return (
@@ -184,7 +184,7 @@ const SwipSideDrawer = (props) => {
         <Divider />
         <div
           className="global-filters"
-          style={{ maxWidth: showReport ? "50%" : "100%" }}
+          // style={{ maxWidth: showReport ? "50%" : "100%" }}
         >
           {/* <GlobalFilters /> */}
           <PrevGlobalFilters />
