@@ -6,7 +6,7 @@ import { continuesFilter } from "../../redux/methods/continous-filter";
 
 const SideChips = (props) => {
   const { chips = [] } = props;
-  const afterCut = chips.splice(0, 2);
+  const afterCut = chips.slice(0, 2);
   const dispatch = useDispatch();
   console.log("side chips", chips);
 
@@ -14,6 +14,9 @@ const SideChips = (props) => {
     dispatch(deleteFilter({ ...chip }));
   };
 
+  console.log("chip len", props.chips);
+
+  //after delete check the number of chips as an event
   const length = chips.length - 2;
 
   return (
@@ -28,7 +31,9 @@ const SideChips = (props) => {
             }}
           />
         ))}
-        {props.length > 2 && <div className="">+{props.length - 2}</div>}
+        {props.chips.length > 2 && (
+          <div className="">+{props.chips.length - 2}</div>
+        )}
       </div>
     </>
   );

@@ -28,6 +28,7 @@ import {
   SET_CURRENT_LOCATION,
   SET_CURRENT_SHOW_CONTROL,
 } from "../actions/shared";
+import { continuesFilter } from "../methods/continous-filter";
 
 const sharedReducer = (state = sharedState, action) => {
   const initialfilter = {
@@ -215,6 +216,8 @@ const sharedReducer = (state = sharedState, action) => {
       let afterEdit = state.filterState
         // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter((filter) => filter.ID !== action.filter.ID);
+
+      afterEdit = continuesFilter(afterEdit, () => {});
 
       if (action.filter.value === "All") {
         afterEdit = state.filterState

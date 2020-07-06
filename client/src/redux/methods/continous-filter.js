@@ -1,7 +1,7 @@
 export const continuesFilter = (filterState, onFilterEnd) => {
   let locFilterState = filterState;
   let i = 0;
-
+  debugger;
   while (i !== 10) {
     let prevLength = locFilterState.length;
 
@@ -13,6 +13,7 @@ export const continuesFilter = (filterState, onFilterEnd) => {
       onFilterEnd(locFilterState);
       // setValuesUpdated(true);
       console.log("match", locFilterState);
+      return locFilterState;
       break;
     }
     i++;

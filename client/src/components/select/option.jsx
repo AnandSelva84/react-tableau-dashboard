@@ -22,7 +22,7 @@ const Option = (props) => {
   React.useEffect(() => {
     props.onChange(checked, props.id, props.parentId);
 
-    continuesFilter(filterState, onFilterEnd);
+    // continuesFilter(filterState, onFilterEnd);
   }, [checked]);
 
   return (

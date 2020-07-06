@@ -94,7 +94,14 @@ const PrevSelect = (props) => {
       searchID = child.map((f) => f.ID);
     }
     console.log("all new family", family);
-    return family;
+    let dataToReturn = [];
+    family.forEach((filter) => {
+      if (!dataToReturn.map((f) => f.ID).includes(filter.ID))
+        dataToReturn.push(filter);
+    });
+
+    console.log("all new family after delete ", dataToReturn);
+    return dataToReturn;
   };
 
   React.useEffect(() => {
@@ -349,7 +356,11 @@ const PrevSelect = (props) => {
             label={props?.title || "Unkown"}
             InputProps={{
               startAdornment: (
-                <SideChips chips={sideChips} length={props.values.length} />
+                <SideChips
+                  chips={sideChips}
+                  length={props.values.length}
+                  filterState={filterState}
+                />
               ),
             }}
           />
