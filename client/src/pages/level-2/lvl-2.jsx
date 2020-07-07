@@ -10,14 +10,24 @@ import { reportsUrls } from "../../data/reports-urls";
 // import TableauViz from "../report/report";
 
 const LVL_2 = (props) => {
+  debugger;
   const history = useHistory();
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const { currentLocation } = useData().sharedReducer;
+  const { currentLocation, app } = useData().sharedReducer;
   // !!state && alert(JSON.stringify({ ...state }));
 
   let { id } = useParams();
+  const { focus_area } = app;
   const tableauGraph = id === "storyDeliveryTime";
+
+  const getPanelData = () => {
+    let found = focus_area.find((panel) => panel.route === id);
+    debugger;
+    console.log("panel data", found);
+    if (!!!found) found = { items: [] };
+    return found;
+  };
 
   React.useEffect(() => {
     !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
@@ -32,7 +42,7 @@ const LVL_2 = (props) => {
   return (
     <>
       <div className="ampBody">
-        {props.items.map((value, index) => (
+        {getPanelData().items.map((item, index) => (
           <div
             className="panel"
             style={{
@@ -43,21 +53,11 @@ const LVL_2 = (props) => {
             }}
             onClick={() => alert("click")}
           >
-            {/* {value.route !== "storyDeliveryTime" ? ( */}
-            {id !== "effectivness" ? (
-              <div
-                className="panel-content"
-                onClick={() => {
-                  handleClick(value);
-                }}
-              >
-                {value.title}
-              </div>
-            ) : (
+            {!!item?.level2_action_url && (
               <TableauViz
                 options={{ height: "35vh" }}
-                url={reportsUrls[index]}
-                onClick={() => handleClick(value)}
+                url={item.level2_action_url}
+                onClick={() => handleClick(item)}
               />
             )}
           </div>
@@ -68,20 +68,3 @@ const LVL_2 = (props) => {
 };
 
 export default LVL_2;
-
-{
-  /* <Button
-title="Navigate to Graph!"
-style={{ backgroundColor: "#f4f4f4" }}
-onClick={() => {
-  history.push("/lvl3");
-  dispatch(pushHistory({ path: "/lvl3", pathName: "Lvl 3" }));
-}}
-/> */
-}
-
-// <div className="panel"></div>
-// <div className="panel"></div>
-// <div className="panel"></div>
-// <div className="panel"></div>
-// <div className="panel"></div>

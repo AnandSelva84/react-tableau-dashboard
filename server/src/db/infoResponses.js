@@ -35,8 +35,10 @@ const ampInfo = {
             title: "Story Delivery Lead Time",
             route: "storyDeliveryTime",
             level: 3,
-            level2_action_url: "",
-            level3_action_url: "",
+            level2_action_url:
+              "http://public.tableau.com/views/RegionalSampleWorkbook/Economy",
+            level3_action_url:
+              "http://public.tableau.com/views/RegionalSampleWorkbook/Flights",
           },
           {
             title: "Feature Delivery Lead Time",
