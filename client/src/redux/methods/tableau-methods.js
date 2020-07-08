@@ -27,7 +27,8 @@ const getFilterValues = (appliedFilters = [], id = "") => {
 const fromArrayToObject = (array = []) => {
   let data = {};
   array.forEach((elem) => {
-    const key = Object.keys(elem)[0];
+    let key = Object.keys(elem)[0];
+    if (!!!key) key = "Hierarchies";
     data = {
       ...data,
 
