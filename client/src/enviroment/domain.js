@@ -1,5 +1,5 @@
 export const getDomain = () => {
-  const ampID = "3000";
+  const ampID = "3001";
   const kidID = "4000";
 
   const fullURL = window.location.href;

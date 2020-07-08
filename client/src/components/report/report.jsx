@@ -19,15 +19,18 @@ const TableauViz = (props) => {
   const [filters, setFilters] = React.useState({ ...initFilters });
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
-  const { appliedFilters } = useData().sharedReducer;
+  const { appliedFilters, savedFilters } = useData().sharedReducer;
   let url =
     props?.url ||
     "http://public.tableau.com/views/RegionalSampleWorkbook/College";
+
+  const reportFilters = fromAppliedToOptions(appliedFilters);
 
   const options = {
     hideTabs: true,
     width: "100%",
     ...props.options,
+    ...reportFilters,
   };
 
   React.useEffect(() => {
@@ -83,16 +86,15 @@ const TableauViz = (props) => {
 
   React.useEffect(() => {
     if (!!viz && vizIsInteractive) {
-      console.log("initt values", fromAppliedToOptions(appliedFilters));
-      const finalFormat = fromAppliedToOptions(appliedFilters);
-      handleApply(filters);
+      console.log("initt values", reportFilters);
+      handleApply(reportFilters);
     }
-  }, [!!viz, vizIsInteractive, filters]);
+  }, [!!viz, vizIsInteractive, filters, appliedFilters, savedFilters]);
 
   React.useEffect(() => {
-    if (!!viz && vizIsInteractive) {
-      setFilters({ Gender: ["Women"] });
-    }
+    // if (!!viz && vizIsInteractive) {
+    //   setFilters({ Gender: ["Women"] });
+    // }
   }, [appliedFilters]);
 
   const yearFilter = (year) => {
