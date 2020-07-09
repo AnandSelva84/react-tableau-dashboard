@@ -24,9 +24,22 @@ const getFilterValues = (appliedFilters = [], id = "") => {
   }
 };
 
+const fromArrayToObject = (array = []) => {
+  let data = {};
+  array.forEach((elem) => {
+    const key = Object.keys(elem)[0];
+    data = {
+      ...data,
+
+      [key]: elem[key],
+    };
+  });
+  return data;
+};
+
 export const fromAppliedToOptions = (appliedFilters = []) => {
   const duplicated = appliedFilters.map((filter) => ({
-    ...createObj(filter.id, getFilterValues(appliedFilters, filter.id)),
+    ...createObj(filter.filter_id, getFilterValues(appliedFilters, filter.id)),
   }));
-  return deleteDuplicate(duplicated);
+  return fromArrayToObject(deleteDuplicate(duplicated));
 };

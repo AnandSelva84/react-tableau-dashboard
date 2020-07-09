@@ -29,6 +29,7 @@ const sharedState = {
       parentId: null,
       value: "Business",
       applied: true,
+      filter_id: "Hierarchies",
     },
   ],
   body_class: null,

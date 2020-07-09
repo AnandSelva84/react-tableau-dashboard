@@ -35,9 +35,16 @@ const LVL_3 = React.memo((props) => {
   const [value, setValue] = React.useState("graph");
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const { showValue } = useData().sharedReducer;
-
+  const { showValue, app } = useData().sharedReducer;
+  const { focus_area } = app;
   let { id } = useParams();
+
+  const getUrlData = () => {
+    const allItems = focus_area.map((p) => p.items).flat();
+    let found = allItems.find((item) => item.route === id);
+    let url = found?.level3_action_url || "";
+    return url;
+  };
 
   React.useEffect(() => {
     !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
@@ -81,7 +88,9 @@ const LVL_3 = React.memo((props) => {
       <SplitterLayout vertical>
         {(showGraph || showBoth) && (
           <div className="unit" onClick={handleGraphClick}>
-            {tableauGraph && <TableauViz options={{ height: "80vh" }} />}
+            {tableauGraph && (
+              <TableauViz options={{ height: "80vh" }} url={getUrlData()} />
+            )}
           </div>
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}

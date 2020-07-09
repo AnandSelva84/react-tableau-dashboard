@@ -35,22 +35,24 @@ const ampInfo = {
             title: "Story Delivery Lead Time",
             route: "storyDeliveryTime",
             level: 3,
-            level2_action_url: "",
-            level3_action_url: ""
+            level2_action_url:
+              "http://public.tableau.com/views/RegionalSampleWorkbook/Economy",
+            level3_action_url:
+              "http://public.tableau.com/views/RegionalSampleWorkbook/Flights",
           },
           {
             title: "Feature Delivery Lead Time",
             route: "featureDeliveryLeadTime",
             level: 3,
             level2_action_url: "",
-            level3_action_url: ""
+            level3_action_url: "",
           },
           {
             title: "Sprint Predictability/Volatility",
             route: "sprintPredict",
             level: 3,
             level2_action_url: "",
-            level3_action_url: ""
+            level3_action_url: "",
           },
           ,
           {
@@ -58,21 +60,180 @@ const ampInfo = {
             route: "piPredict",
             level: 3,
             level2_action_url: "",
-            level3_action_url: ""
+            level3_action_url: "",
           },
           {
             title: "High & Medium Defect Backlog",
             route: "defectBacklog",
             level: 3,
             level2_action_url: "",
-            level3_action_url: ""
+            level3_action_url: "",
           },
           {
             title: "New High Defects",
             route: "newDefects",
             level: 3,
             level2_action_url: "",
-            level3_action_url: ""
+            level3_action_url: "",
+          },
+        ],
+      },
+      {
+        panel_id: "PORT_DETAIL_VIZ1",
+        panel_header_title: "Team-level Diagnostics",
+        title_action_type: "Level 2",
+        title_action_url:
+          "http://public.tableau.com/views/RegionalSampleWorkbook/College",
+        focus_area_order: 1,
+        view_thumbnail_path: "",
+        view_display_name: "Team-level Diagnostics",
+        route: "teamDiagnostics",
+        items: [
+          {
+            title: "Story Cycle Time",
+            route: "storyCycleTime",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Story Single Cycle Probability",
+            route: "featureFirstCycle",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Story Latency (Segmented)",
+            route: "storyLatency",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          ,
+          {
+            title: "Story Total Lead Time",
+            route: "storyLatency",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Story Throughput",
+            route: "storyThroughput",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+        ],
+      },
+      {
+        panel_id: "PORT_DETAIL_VIZ1",
+        panel_header_title: "Program-level Diagnostics",
+        title_action_type: "Level 2",
+        title_action_url:
+          "http://public.tableau.com/views/RegionalSampleWorkbook/College",
+        focus_area_order: 1,
+        view_thumbnail_path: "",
+        view_display_name: "Program-level Diagnostics",
+        route: "ProgramDiagnostics",
+        items: [
+          {
+            title: "Feature Cycle Time",
+            route: "featureCycleTime",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Feature Total Lead Time",
+            route: "featureLeadTime",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Feature Latency (Segmented)",
+            route: "featureLatency",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          ,
+          {
+            title: "Feature Throughput",
+            route: "featureThroughput",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Feature Completion on First Cycle",
+            route: "featureFirstCycle",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+        ],
+      },
+      {
+        panel_id: "PORT_DETAIL_VIZ1",
+        panel_header_title: "Work Tracking and Forecasting",
+        title_action_type: "Level 2",
+        title_action_url:
+          "http://public.tableau.com/views/RegionalSampleWorkbook/College",
+        focus_area_order: 1,
+        view_thumbnail_path: "",
+        view_display_name: "Work Tracking and Forecasting",
+        route: "workTracking",
+        items: [
+          {
+            title: "Velocity",
+            route: "storyVelocity",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+        ],
+      },
+      {
+        panel_id: "PORT_DETAIL_VIZ1",
+        panel_header_title: "Census",
+        title_action_type: "Level 2",
+        title_action_url:
+          "http://public.tableau.com/views/RegionalSampleWorkbook/College",
+        focus_area_order: 1,
+        view_thumbnail_path: "",
+        view_display_name: "Census",
+        route: "census",
+        items: [
+          {
+            title: "Team Count",
+            route: "teamCount",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Team Size",
+            route: "teamSize",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Team Locations",
+            route: "teamLocations",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
+          },
+          {
+            title: "Team Members Mix",
+            route: "teamMembers",
+            level: 3,
+            level2_action_url: "",
+            level3_action_url: "",
           },
         ],
       },
