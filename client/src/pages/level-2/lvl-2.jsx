@@ -10,7 +10,6 @@ import { reportsUrls } from "../../data/reports-urls";
 // import TableauViz from "../report/report";
 
 const LVL_2 = (props) => {
-  debugger;
   const history = useHistory();
   const dispatch = useDispatch();
   const { state } = useLocation();
@@ -23,7 +22,6 @@ const LVL_2 = (props) => {
 
   const getPanelData = () => {
     let found = focus_area.find((panel) => panel.route === id);
-    debugger;
     console.log("panel data", found);
     if (!!!found) found = { items: [] };
     return found;

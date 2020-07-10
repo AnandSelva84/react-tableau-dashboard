@@ -40,7 +40,10 @@ const fromArrayToObject = (array = []) => {
 
 export const fromAppliedToOptions = (appliedFilters = []) => {
   const duplicated = appliedFilters.map((filter) => ({
-    ...createObj(filter.filter_id, getFilterValues(appliedFilters, filter.id)),
+    ...createObj(
+      filter?.filter_id || "Hierarchies",
+      getFilterValues(appliedFilters, filter.id)
+    ),
   }));
   return fromArrayToObject(deleteDuplicate(duplicated));
 };

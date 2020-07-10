@@ -4,6 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import { fromAppliedToOptions } from "../../redux/methods/tableau-methods";
 import useData from "../../hooks/useStore";
+import { applyFilters } from "../../redux/actions/shared";
+import { useDispatch } from "react-redux";
 
 const { tableau } = window;
 // const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
@@ -15,6 +17,8 @@ const TableauViz = (props) => {
   };
 
   const container = useRef(null);
+  const dispatch = useDispatch();
+
   const [viz, setViz] = React.useState(null);
   const [filters, setFilters] = React.useState({ ...initFilters });
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
@@ -31,14 +35,17 @@ const TableauViz = (props) => {
     width: "100%",
     ...props.options,
     ...reportFilters,
+    onFirstInteractive: function () {
+      setVizIsInteractive(true);
+    },
   };
 
-  React.useEffect(() => {
-    if (!vizIsInteractive)
-      setTimeout(() => {
-        setCounter(counter + 1);
-      }, 200);
-  }, [counter]);
+  // React.useEffect(() => {
+  //   if (!vizIsInteractive)
+  //     setTimeout(() => {
+  //       setCounter(counter + 1);
+  //     }, 200);
+  // }, [counter]);
 
   const handleClcik = () => {
     sheet().clearFilterAsync("Region");
@@ -111,9 +118,22 @@ const TableauViz = (props) => {
 
   if (!!!props.url) return null;
 
+  const handleFChange = () => {
+    dispatch(
+      applyFilters([
+        ...appliedFilters,
+        {
+          filter_id: "Gender",
+          value: "Men",
+        },
+      ])
+    );
+  };
+
   return (
     <>
       <div style={{ width: "100%", height: "100%" }}>
+        {/* <button onClick={handleFChange}>change filters</button> */}
         <div
           className=""
           style={{ width: "100%", height: "100%", position: "relative" }}
