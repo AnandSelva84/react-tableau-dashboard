@@ -11,6 +11,7 @@ import {
   setStoredViewdFilters,
   addFilter,
   showMessage,
+  toggleDrawer,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 // import { useSnackbar } from "notistack";
@@ -97,6 +98,7 @@ const ControlButtons = () => {
     //   return;
     // }
 
+    dispatch(toggleDrawer());
     dispatch(editFilterState(filterStateAfterApply));
     dispatch(applyFilters([...filterStateAfterApply]));
   };
