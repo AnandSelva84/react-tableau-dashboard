@@ -7,6 +7,7 @@ export default function useSwitchFetch(url, switchCase = false) {
   const [error, serError] = useState("");
 
   const fetchData = async () => {
+    debugger
     setLoading(true);
     try {
       const rawResponse = await fetch(url);

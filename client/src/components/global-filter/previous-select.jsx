@@ -352,6 +352,18 @@ const PrevSelect = (props) => {
   };
   const sideChips = filterState.filter((f) => f.id === getTitle());
 
+  const maxSliceLength = getOptionsAfterSearch()?.length
+
+  const [sliceIndex , setSliceIndex] = React.useState(10)
+
+  const handleScroll = ()=>{
+    console.log('new scroll',sliceIndex);
+if(sliceIndex < maxSliceLength)
+setSliceIndex(sliceIndex+1)
+  }
+
+  const virtulaizedOptions = getOptionsAfterSearch().slice(0 , sliceIndex)
+
   if (props.lvl !== 0 || props.custom) {
     return (
       <ClickAwayListener onClickAway={hanldeClose}>
@@ -377,14 +389,10 @@ const PrevSelect = (props) => {
 
           {showMenu && (
             <OptionsWrapper
-              onMenuHasLoaded={() => {
-                setTimeout(() => {
-                  setMenuLoading(false);
-                }, 100);
-              }}
+           onScroll = {handleScroll}
+           onClose ={()=>setSliceIndex(10)}
             >
-              {!menuLoading ? (
-                <>
+            
                   <>
                     {props.lvl !== 0 && (
                       <Option
@@ -399,7 +407,7 @@ const PrevSelect = (props) => {
                     )}
                   </>
                   <>
-                    {getOptionsAfterSearch()
+                    {virtulaizedOptions
                       .sort(sortOptions)
                       .map((option) => (
                         <Option
@@ -424,10 +432,7 @@ const PrevSelect = (props) => {
                         />
                       ))}
                   </>
-                </>
-              ) : (
-                <MenuSkeleton />
-              )}{" "}
+             
             </OptionsWrapper>
           )}
         </div>

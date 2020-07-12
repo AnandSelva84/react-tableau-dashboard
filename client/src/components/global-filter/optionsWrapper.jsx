@@ -5,9 +5,13 @@ const OptionsWrapper = (props) => {
   const [loaded, setLoaded] = React.useState();
 
   React.useEffect(() => {
-    setLoaded(true);
-    if (loaded) props.onMenuHasLoaded();
-  }, [loaded]);
+    // setLoaded(true);
+    // if (loaded) props.onMenuHasLoaded();
+
+    return ()=>{
+      props.onClose()
+    }
+  }, []);
 
   return (
     <>
@@ -22,6 +26,9 @@ const OptionsWrapper = (props) => {
           top: "4.5rem",
           minWidth: "100%",
           zIndex: "100",
+        }}
+        onScroll={(e)=>{
+          props.onScroll()
         }}
       >
         {props.children}

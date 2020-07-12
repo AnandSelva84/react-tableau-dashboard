@@ -15,6 +15,7 @@ import {
   setCurrentMainFilter,
   setFilters,
   setCurrentLocation,
+  setPanelDefinitions,
 } from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
@@ -25,8 +26,9 @@ import HomeAvatar from "../../components/avatar/avatar";
 import Logo from "./logo";
 import { colors } from "../../constants/colors";
 import useFetch from "../../hooks/useFetch";
-import { newFiltersURL, getInfoURL } from "../../enviroment/urls";
+import { newFiltersURL, getInfoURL, getPanelDefs } from "../../enviroment/urls";
 import { getDomain } from "../../enviroment/domain";
+import useSwitchFetch from "../../hooks/switch-useFetch";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -69,9 +71,15 @@ const Header = () => {
   };
 
   const app = getDomain();
+  const history = useHistory();
+
   const { data, loading } = useFetch(`${getInfoURL}/${app}`);
+  const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
+  const { data : panels, loading : panelsLoading } = useSwitchFetch(`${getPanelDefs}/${appData?.application?.id}`,!!appData);
+
   const [initialLoaded, setInitialLoaded] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
+
   const [mainFilter, setMainFilter] = React.useState({
     ID: "Business",
     id: "Hierarchies",
@@ -82,7 +90,6 @@ const Header = () => {
 
   const savedFilters = JSON.parse(localStorage.getItem("filters"));
 
-  const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
 
   React.useEffect(() => {
     const mainFilter =
@@ -111,7 +118,14 @@ const Header = () => {
     }
   }, [data, loading]);
 
-  const history = useHistory();
+
+  useEffect(() => {
+    if (!!panels ) {
+      dispatch(setPanelDefinitions(panels.panel_definitions));
+    } 
+  }, [!!panels, panelsLoading]);
+
+  
 
   React.useEffect(() => {
     if (!!appData) {

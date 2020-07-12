@@ -27,6 +27,7 @@ import {
   SHOW_REPORT_FILTERS,
   SET_CURRENT_LOCATION,
   SET_CURRENT_SHOW_CONTROL,
+  SET_PANEL_DEFINITIONS,
 } from "../actions/shared";
 import { continuesFilter } from "../methods/continous-filter";
 
@@ -54,6 +55,11 @@ const sharedReducer = (state = sharedState, action) => {
       return {
         ...state,
         showValue: action.value,
+      };
+      case SET_PANEL_DEFINITIONS:
+      return {
+        ...state,
+        panels: action.panels,
       };
     case SET_CURRENT_LOCATION:
       return {

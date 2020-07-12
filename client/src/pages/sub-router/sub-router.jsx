@@ -32,7 +32,7 @@ const SubRouter = (props) => {
 
   return (
     <div className="">
-      {!!getPanel(id) && !!app && <ToRender {...getPanel(id)} />}
+      {/* {!!getPanel(id) && !!app && <ToRender {...getPanel(id)} />} */}
     </div>
   );
 };

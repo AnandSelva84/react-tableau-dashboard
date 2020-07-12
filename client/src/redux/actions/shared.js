@@ -24,8 +24,14 @@ export const DATA_FETCHED = "DATA_FETCHED";
 export const SET_LOGO_URL = "SET_LOGO_URL";
 export const SHOW_REPORT_FILTERS = "SHOW_REPORT_FILTERS";
 export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION";
+export const SET_PANEL_DEFINITIONS = "SET_PANEL_DEFINITIONS";
 export const SET_CURRENT_SHOW_CONTROL = "SET_CURRENT_SHOW_CONTROL";
 
+
+export const setPanelDefinitions = (panels)=>({
+  type : SET_PANEL_DEFINITIONS,
+  panels
+})
 export const setShowControl = (value) => ({
   type: SET_CURRENT_SHOW_CONTROL,
   value,
