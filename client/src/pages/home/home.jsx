@@ -11,7 +11,6 @@ const Panel = (props) => {
   const history = useHistory();
   debugger;
   const panel = props;
-
   const allEmbeded = panel.embedded_fields
     .map((p) => p.embedded_field_options)
     .flat();

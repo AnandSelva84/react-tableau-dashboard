@@ -28,18 +28,6 @@ const panelDefs = {
               option_order: 1,
               option_thumbnail: "",
             },
-          ],
-        },
-        {
-          field_id: "PORT_VIZ1_LINK_LIST",
-          field_impact_type: "Link List",
-          field_label: null,
-          field_location: "Top Left",
-          field_type: "Link List",
-          field_impact_field: null,
-          field_impact_parameter: null,
-          field_default_value: "",
-          embedded_field_options: [
             {
               text: "Sprint Predictability/Volatility",
               value: "",
