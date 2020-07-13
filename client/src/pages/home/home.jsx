@@ -9,12 +9,16 @@ import { pushHistory } from "../../redux/actions/shared";
 import { panels } from "../../data/panels_new";
 const Panel = (props) => {
   const history = useHistory();
-debugger
-  const panel = props
+  debugger;
+  const panel = props;
 
-  const allEmbeded = panel.embedded_fields.map(p => p.embedded_feild_options).flat()
+  const allEmbeded = panel.embedded_fields
+    .map((p) => p.embedded_field_options)
+    .flat();
 
-  const allEmbededOptions = allEmbeded.map(A =>({ text :  A.text } ))
+  if (!!!allEmbeded) return null;
+
+  const allEmbededOptions = allEmbeded.map((A) => ({ text: A.text }));
 
   const reformatPath = (path) => {
     return path.split(" ").join("_");
@@ -50,7 +54,7 @@ debugger
 };
 
 const HomePage = (props) => {
-  const { body_class, app , panels = [] } = useData().sharedReducer;
+  const { body_class, app, panels = [] } = useData().sharedReducer;
   const dispatch = useDispatch();
   const history = useHistory();
   const focus_area = !!app ? app.focus_area : [];
