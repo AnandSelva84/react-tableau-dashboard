@@ -38,7 +38,7 @@ const PrevSelect = (props) => {
     filter_display_text,
     filter_value_text,
   } = filterModel.values[0];
-
+  const { reformattedNewFilters } = props;
   const dispatch = useDispatch();
 
   const {
@@ -60,17 +60,19 @@ const PrevSelect = (props) => {
   const [menuLoading, setMenuLoading] = useState(false);
   const [cleared, setCleared] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [checkedArray, setcheCheckedArray] = useState([]);
-  const [unCompletedFilters, setUncompleted] = useState([]);
   const [allCheck, setAllCheck] = useState(false);
-  const [valuesUpdated, setValuesUpdated] = useState(false);
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const mainApplied = appliedFilters.find((f) => f.id === "Hierarchies")?.value;
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
   );
-  const newState = [
+
+  React.useEffect(() => {
+    console.log({ reformattedNewFilters });
+  }, [reformattedNewFilters]);
+
+  const formattedOptions = [
     ...props.values.map((value) => ({
       id: props.title,
       ID: value.filterOptionId,
@@ -92,6 +94,7 @@ const PrevSelect = (props) => {
   };
 
   const findFamily = (ID, data) => {
+    debugger;
     let family = [];
     let searchID = [ID].flat();
 
@@ -127,7 +130,7 @@ const PrevSelect = (props) => {
       if (!!savedFilters && savedFilters.length > 2)
         dispatch(editFilterState([...savedFilters]));
 
-      dispatch(editFilterState([...newState]));
+      dispatch(editFilterState([...formattedOptions]));
       dispatch(toggleResetButton());
     }
   }, [resetState]);
@@ -161,15 +164,14 @@ const PrevSelect = (props) => {
         value: value.filter_value_text,
         filter_id: props.id,
       })),
-      ...possibleAllSelect,
     ];
-    // dispatch(editFilterState([...initialFullState]));
     const data = [
       ...filterState,
       ...findFamily(
         initialFullState.map((f) => f.ID),
         props.reformattedNewFilters
       ),
+      ...initialFullState,
     ];
     const afterDuplicateFree = deleteDuplicate(data);
     dispatch(editFilterState([...afterDuplicateFree]));
@@ -254,24 +256,6 @@ const PrevSelect = (props) => {
   }
 
   React.useEffect(() => {
-    let unCompletedFilters = [];
-    fullStateStandardIds.forEach((id) => {
-      if (!!!filterState.find((f) => f.filter_id === id)) {
-        console.log("not available", id);
-        unCompletedFilters.push(
-          newFilters.find((f) => f.filter_id === id)?.title
-        );
-      }
-    });
-    setUncompleted([...unCompletedFilters]);
-  }, [filterState]);
-
-  React.useEffect(() => {
-    console.log("uncompleted", unCompletedFilters);
-    dispatch(setUncompletedFilters([...unCompletedFilters]));
-  }, [unCompletedFilters]);
-
-  React.useEffect(() => {
     if (!!!props.values.length && !cleared) {
       dispatch(
         editFilterState(filterState.filter((f) => f.filter_id !== props.id))
@@ -291,14 +275,10 @@ const PrevSelect = (props) => {
   };
 
   const selectAll = () => {
-    // setShowMenu(false);
-    // setAllCheck(true);
     dispatch(editFilterState([...getFullState()]));
   };
 
   const unSelectAll = () => {
-    // setShowMenu(false);
-    // setAllCheck(false);
     dispatch(editFilterState([...possibleAllSelect]));
   };
 
@@ -352,17 +332,16 @@ const PrevSelect = (props) => {
   };
   const sideChips = filterState.filter((f) => f.id === getTitle());
 
-  const maxSliceLength = getOptionsAfterSearch()?.length
+  const maxSliceLength = getOptionsAfterSearch()?.length;
 
-  const [sliceIndex , setSliceIndex] = React.useState(10)
+  const [sliceIndex, setSliceIndex] = React.useState(10);
 
-  const handleScroll = ()=>{
-    console.log('new scroll',sliceIndex);
-if(sliceIndex < maxSliceLength)
-setSliceIndex(sliceIndex+1)
-  }
+  const handleScroll = () => {
+    console.log("new scroll", sliceIndex);
+    if (sliceIndex < maxSliceLength) setSliceIndex(sliceIndex + 1);
+  };
 
-  const virtulaizedOptions = getOptionsAfterSearch().slice(0 , sliceIndex)
+  const virtulaizedOptions = getOptionsAfterSearch().slice(0, sliceIndex);
 
   if (props.lvl !== 0 || props.custom) {
     return (
@@ -389,50 +368,46 @@ setSliceIndex(sliceIndex+1)
 
           {showMenu && (
             <OptionsWrapper
-           onScroll = {handleScroll}
-           onClose ={()=>setSliceIndex(10)}
+              onScroll={handleScroll}
+              onClose={() => setSliceIndex(10)}
             >
-            
-                  <>
-                    {props.lvl !== 0 && (
-                      <Option
-                        checked={newAllChecked()}
-                        filterState={filterState}
-                        onClick={() => {
-                          handleSelectAll();
-                        }}
-                        display={`All\t (${props.values?.length || 0})`}
-                        onChange={() => {}}
-                      />
-                    )}
-                  </>
-                  <>
-                    {virtulaizedOptions
-                      .sort(sortOptions)
-                      .map((option) => (
-                        <Option
-                          onChange={() => {}}
-                          checked={isExist(option.filterOptionId)}
-                          value={option.filter_value_text}
-                          filterState={filterState}
-                          id={option.filterOptionId}
-                          parentId={option.parentFilterOptionId}
-                          lvl={props.lvl}
-                          display={option.filter_display_text}
-                          onClick={() =>
-                            handleClick(
-                              getTitle(),
-                              option.filter_value_text,
-                              props.lvl,
-                              option.filterOptionId,
-                              option.parentFilterOptionId,
-                              props.id
-                            )
-                          }
-                        />
-                      ))}
-                  </>
-             
+              <>
+                {props.lvl !== 0 && (
+                  <Option
+                    checked={newAllChecked()}
+                    filterState={filterState}
+                    onClick={() => {
+                      handleSelectAll();
+                    }}
+                    display={`All\t (${props.values?.length || 0})`}
+                    onChange={() => {}}
+                  />
+                )}
+              </>
+              <>
+                {virtulaizedOptions.sort(sortOptions).map((option) => (
+                  <Option
+                    onChange={() => {}}
+                    checked={isExist(option.filterOptionId)}
+                    value={option.filter_value_text}
+                    filterState={filterState}
+                    id={option.filterOptionId}
+                    parentId={option.parentFilterOptionId}
+                    lvl={props.lvl}
+                    display={option.filter_display_text}
+                    onClick={() =>
+                      handleClick(
+                        getTitle(),
+                        option.filter_value_text,
+                        props.lvl,
+                        option.filterOptionId,
+                        option.parentFilterOptionId,
+                        props.id
+                      )
+                    }
+                  />
+                ))}
+              </>
             </OptionsWrapper>
           )}
         </div>

@@ -9,7 +9,6 @@ import { pushHistory } from "../../redux/actions/shared";
 import { panels } from "../../data/panels_new";
 const Panel = (props) => {
   const history = useHistory();
-  debugger;
   const panel = props;
   const allEmbeded = panel.embedded_fields
     .map((p) => p.embedded_field_options)
