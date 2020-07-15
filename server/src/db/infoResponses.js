@@ -19,6 +19,33 @@ const ampInfo = {
       display_name: "Agile Metrics Portal Menu",
       type: "Application",
     },
+    all_views : [
+      {
+        id: "AMP_L1",
+        route: "",
+        depth_level: "Level 1"
+      },
+      {
+        id: "PORT_1_L2",
+        route: "effectiveness",
+        depth_level: "Level 2"
+      },
+      {
+        id: "PORT_2_L2",
+        route: "teamDiagnostics",
+        depth_level: "Level 2"
+      },
+      {
+        id: "PORT_11_L3",
+        route: "storyDeliveryLeadTime",
+        depth_level: "Level 3"
+      },
+      {
+        id: "PORT_12_L3",
+        route: "sprintPredictabilityVolatility",
+        depth_level: "Level 3"
+      }
+    ]
     // focus_area: [
     //   {
     //     panel_id: "PORT_DETAIL_VIZ1",
