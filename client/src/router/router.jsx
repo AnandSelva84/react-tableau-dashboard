@@ -11,6 +11,7 @@ import SwipSideDrawer from "../layout/drawer/swipeable-drawer";
 import ToolBar from "../components/tool-bar/tool-bar";
 import SubRouter from "../pages/sub-router/sub-router";
 import Snackbar from "../components/snackbar/snackbar";
+import LoadingWrapper from "../components/loading-hoc";
 //import Report from "../pages/report/tableau-report";
 // import TableauViz from "../pages/report/report";
 // import TableauViz from "../pages/report/report";
@@ -24,8 +25,12 @@ const Router = () => {
           <SubHeader />
           {/* <ToolBar /> */}
           <Switch>
-            <Route exact path="/" component={() => <Main />} />
-            <Route exact path="/:id" component={() => <SubRouter />} />
+            <Route exact path="/" component={() => LoadingWrapper(Main)} />
+            <Route
+              exact
+              path="/:id"
+              component={() => LoadingWrapper(SubRouter)}
+            />
             {/* <Route exact path="/r/report" component={() => <TableauViz />} /> */}
           </Switch>
           <Snackbar />

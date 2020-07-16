@@ -5,34 +5,39 @@ import LVL_3 from "../level-3/lvl-3";
 import { getLvl, getPanel } from "../../redux/methods/get-level";
 import { panels } from "../../data/panels_new";
 import useData from "../../hooks/useStore";
+import {
+  getViewData,
+  getViewDataByRoute,
+} from "./../../redux/methods/panel-pocessing";
 
 const ToRender = (props) => {
-  React.useEffect(() => {
-    console.log(props);
-  }, []);
-  if (props.level === 2)
+  const { panel } = props;
+  debugger;
+  if (panel.depth_level === "Level 2")
     return (
       <>
         <LVL_2 {...props} />
+        <h3>lvl 2</h3>
       </>
     );
-  else return <LVL_3 {...props} />;
+  else
+    return (
+      // <LVL_3 {...props} />
+      <h3>lvl 3</h3>
+    );
 };
 
 const SubRouter = (props) => {
-  const { app, appIsLoading } = useData().sharedReducer;
-
+  const { app, panels } = useData().sharedReducer;
+  const { all_views = [] } = app;
   const { id } = useParams();
-  const { state } = useLocation();
 
-  React.useEffect(() => {
-    // alert(getLvl(id));
-    // alert(JSON.stringify(getPanel(id)));
-  }, [state]);
+  //{value , id , depth_level}
+  const panel = getViewDataByRoute(id, all_views) || null;
 
   return (
     <div className="">
-      {/* {!!getPanel(id) && !!app && <ToRender {...getPanel(id)} />} */}
+      {!!panel && !!app && !!panels && <ToRender panel={panel} />}
     </div>
   );
 };
