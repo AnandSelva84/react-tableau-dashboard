@@ -32,8 +32,8 @@ const TableauViz = (props) => {
   const options = {
     hideTabs: true,
     width: "100%",
-    ...props.options,
-    ...reportFilters,
+    // ...props.options,
+    // ...reportFilters,
     onFirstInteractive: function () {
       setVizIsInteractive(true);
     },
@@ -93,7 +93,7 @@ const TableauViz = (props) => {
   React.useEffect(() => {
     if (!!viz && vizIsInteractive) {
       console.log("initt values", reportFilters);
-      handleApply(reportFilters);
+      // handleApply(reportFilters);
     }
   }, [!!viz, vizIsInteractive, filters, appliedFilters, savedFilters]);
 

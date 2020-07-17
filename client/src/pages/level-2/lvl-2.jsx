@@ -11,38 +11,16 @@ import {
   getAllSiblings,
   getViewDataByRoute,
 } from "../../redux/methods/panel-pocessing";
+import "./level-2.css";
 // import TableauViz from "../report/report";
 
 const LVL_2 = (props) => {
-  debugger;
   let { id: route } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const { app, panels } = useData().sharedReducer;
   const { all_views } = app;
   const { vizUrls } = props;
-  console.log({ vizUrls });
-  // const { id } = getViewDataByRoute(route, all_views);
-
-  // const panel = panels.find((panel) => panel.title_action_code === id);
-
-  // const panelValues = panel.embedded_fields[0].embedded_field_options;
-
-  // const allEmbeded = panel.embedded_fields
-  // .map((p) => p.embedded_field_options)
-  // .flat()
-
-  // const siblings = getAllSiblings(route, all_views);
-
-  const tableauGraph = route === "storyDeliveryTime";
-
-  const getPanelData = () => {
-    // let found = focus_area.find((panel) => panel.route === route);
-    // console.log("panel data", found);
-    // if (!!!found) found = { items: [] };
-    // return found;
-  };
-
   React.useEffect(() => {
     !!route && dispatch(setCurrentLocation(getPanel(route)?.title || ""));
   }, [route]);
@@ -53,26 +31,19 @@ const LVL_2 = (props) => {
     });
   };
 
+  const panelHeaderTitle = (url) => props.getVizDataByUrl(url);
+
   return (
     <>
       {!!vizUrls && (
         <div className="ampBody">
-          {vizUrls.map((item, index) => (
-            <div
-              className="panel"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                maxHeight: "50vh",
-              }}
-              onClick={() => alert("click")}
-            >
-              <TableauViz
-                options={{ height: "35vh" }}
-                url={item}
-                // onClick={() => handleClick()}
-              />
+          {vizUrls.map((url, index) => (
+            <div className="panel">
+              <div className="panel-title">
+                <h3>{panelHeaderTitle(url)}</h3>
+              </div>
+
+              <TableauViz options={{ height: "70vh" }} url={url} />
             </div>
           ))}
         </div>
