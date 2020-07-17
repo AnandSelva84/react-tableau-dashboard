@@ -34,7 +34,7 @@ const SubRouter = (props) => {
   const { app, panels } = useData().sharedReducer;
   const { all_views = [] } = app;
   const { id: route } = useParams();
-  const [vizUrls, setVizUrls] = useState();
+  const [vizResponse, setVizResponse] = useState({ urls: [], vizData: [] });
   //{value , id , depth_level}
   const panel = getViewDataByRoute(route, all_views) || null;
   const { data, loading } = useFetch(
@@ -43,16 +43,33 @@ const SubRouter = (props) => {
 
   //RESULT IS TWO OBJECTS
   useEffect(() => {
-    if (!!data) {
-      console.log({ data });
-      const responseVizUrls = data.panel_definitions
-        .map((p) => p.embedded_viz)
-        .flat()
-        .map((viz) => viz.embed_url);
-      setVizUrls(responseVizUrls);
-      console.log({ responseVizUrls });
+    if (!!data && !!data.panel_definitions) {
+      debugger;
+      const responseVizData = data.panel_definitions
+        .map((p) => ({ url: p.embedded_viz[0].embed_url, data: p }))
+        .flat();
+      const urls = responseVizData.map((viz) => viz.url);
+      const vizData = responseVizData.map((viz) => viz.data);
+      setVizResponse({ urls, vizData });
     }
   }, [data, loading]);
+
+  useEffect(() => {
+    if (!!vizResponse.vizData.length) {
+      getVizDataByUrl(
+        "http://public.tableau.com/views/RegionalSampleWorkbook/College"
+      );
+    }
+  }, [vizResponse]);
+
+  const getVizDataByUrl = (url) => {
+    debugger;
+    const vizDataArray = vizResponse.vizData;
+    const found =
+      vizDataArray.find((v) => v.embedded_viz[0].embed_url === url)
+        ?.panel_header_title || "";
+    return found;
+  };
 
   const getLvl = (panel = "") => {
     return panel.depth_level[panel.depth_level.length - 1];
@@ -60,14 +77,18 @@ const SubRouter = (props) => {
 
   return (
     <div className="">
-      {!!panel && !!app && !!panels && (
-        <ToRender
-          panel={panel}
-          panels={panels}
-          lvl={getLvl(panel)}
-          vizUrls={vizUrls}
-        />
-      )}
+      <>
+        {!!panel && !!app && !!panels && (
+          <ToRender
+            panel={panel}
+            panels={panels}
+            lvl={getLvl(panel)}
+            vizUrls={vizResponse.urls}
+            getVizDataByUrl={getVizDataByUrl}
+          />
+        )}
+      </>
+      <>{!!app && vizResponse.length === 0 && <div>no data!</div>}</>
     </div>
   );
 };
