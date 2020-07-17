@@ -162,6 +162,23 @@ const level2PanelDefs = {
             }
           ]
         }
+
+        // //Current Filter object
+        // {
+        //   "Hierarchies": "Business",
+        //   "TIABusinessPortfolio": ["", ""],
+        //   "TIACosa": ["", ""],
+        //   "TIAProgram": ["", ""],
+        //   "TIATeam": ["", ""]
+        // }
+        // //New Filter Object
+        // {
+        //   "Hierarchies": "Business",
+        //   "Portfolio": ["", ""],
+        //   "cosa": ["", ""],
+        //   "Program": ["", ""],
+        //   "Team": ["", ""]
+        // }
       ],
       embedded_fields: [
         {
