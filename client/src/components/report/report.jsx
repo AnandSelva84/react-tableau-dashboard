@@ -15,7 +15,6 @@ const TableauViz = (props) => {
     College: ["Music"],
     Gender: ["Men"],
   };
-
   const container = useRef(null);
   const dispatch = useDispatch();
 

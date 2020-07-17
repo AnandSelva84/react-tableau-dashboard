@@ -20,12 +20,13 @@ const LVL_2 = (props) => {
   const dispatch = useDispatch();
   const { app, panels } = useData().sharedReducer;
   const { all_views } = app;
+  const { vizUrls } = props;
+  console.log({ vizUrls });
+  // const { id } = getViewDataByRoute(route, all_views);
 
-  const { id } = getViewDataByRoute(route, all_views);
+  // const panel = panels.find((panel) => panel.title_action_code === id);
 
-  const panel = panels.find((panel) => panel.title_action_code === id);
-
-  const panelValues = panel.embedded_fields[0].embedded_field_options;
+  // const panelValues = panel.embedded_fields[0].embedded_field_options;
 
   // const allEmbeded = panel.embedded_fields
   // .map((p) => p.embedded_field_options)
@@ -54,9 +55,9 @@ const LVL_2 = (props) => {
 
   return (
     <>
-      {!!panel && (
+      {!!vizUrls && (
         <div className="ampBody">
-          {[].map((item, index) => (
+          {vizUrls.map((item, index) => (
             <div
               className="panel"
               style={{
@@ -67,13 +68,11 @@ const LVL_2 = (props) => {
               }}
               onClick={() => alert("click")}
             >
-              {!!item?.level2_action_url && (
-                <TableauViz
-                  options={{ height: "35vh" }}
-                  url={item.level2_action_url}
-                  onClick={() => handleClick(item)}
-                />
-              )}
+              <TableauViz
+                options={{ height: "35vh" }}
+                url={item}
+                // onClick={() => handleClick()}
+              />
             </div>
           ))}
         </div>
