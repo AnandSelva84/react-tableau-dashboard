@@ -10,6 +10,7 @@ import { reportsUrls } from "../../data/reports-urls";
 import {
   getAllSiblings,
   getViewDataByRoute,
+  filterMappingResult,
 } from "../../redux/methods/panel-pocessing";
 import "./level-2.css";
 // import TableauViz from "../report/report";
@@ -21,6 +22,7 @@ const LVL_2 = (props) => {
   const { app, panels } = useData().sharedReducer;
   const { all_views } = app;
   const { vizUrls } = props;
+
   React.useEffect(() => {
     !!route && dispatch(setCurrentLocation(getPanel(route)?.title || ""));
   }, [route]);
@@ -31,7 +33,11 @@ const LVL_2 = (props) => {
     });
   };
 
-  const panelHeaderTitle = (url) => props.getVizDataByUrl(url);
+  const filterMapping = (url) =>
+    props.getVizDataByUrl(url).embedded_viz[0].filter_mapping;
+
+  const panelHeaderTitle = (url) =>
+    props.getVizDataByUrl(url).panel_header_title;
 
   return (
     <>
@@ -40,10 +46,21 @@ const LVL_2 = (props) => {
           {vizUrls.map((url, index) => (
             <div className="panel">
               <div className="panel-title">
-                <h3>{panelHeaderTitle(url)}</h3>
+                <h3
+                  onClick={() => {
+                    filterMapping(url);
+                  }}
+                >
+                  {panelHeaderTitle(url)}
+                </h3>
               </div>
 
-              <TableauViz options={{ height: "70vh" }} url={url} />
+              <TableauViz
+                options={{ height: "50vh" }}
+                url={url}
+                filterMappingResult={filterMappingResult}
+                filterMapping={filterMapping(url)}
+              />
             </div>
           ))}
         </div>

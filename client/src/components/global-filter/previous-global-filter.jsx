@@ -93,7 +93,7 @@ const PrevGlobalFilters = React.memo(() => {
   );
 
   React.useEffect(() => {
-    dispatch(editFilterState([...appliedFilters]));
+    if (appliedFilters.length) dispatch(editFilterState([...appliedFilters]));
   }, [drawer]);
   React.useEffect(() => {
     const ids = filterState.map((f) => f.ID);

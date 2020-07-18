@@ -31,52 +31,52 @@ import TableauViz from "../../components/report/report";
 // import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
-  const [showDetails, setShowDetails] = useState(false);
-  const [value, setValue] = React.useState("graph");
-  const dispatch = useDispatch();
-  const { state } = useLocation();
-  const { showValue, app } = useData().sharedReducer;
-  const { focus_area } = app;
-  let { id } = useParams();
+  // const [showDetails, setShowDetails] = useState(false);
+  // const [value, setValue] = React.useState("graph");
+  // const dispatch = useDispatch();
+  // const { state } = useLocation();
+  // const { showValue, app } = useData().sharedReducer;
+  // const { focus_area } = app;
+  // let { id } = useParams();
 
-  const getUrlData = () => {
-    const allItems = focus_area.map((p) => p.items).flat();
-    let found = allItems.find((item) => item.route === id);
-    let url = found?.level3_action_url || "";
-    return url;
-  };
+  // const getUrlData = () => {
+  //   const allItems = focus_area.map((p) => p.items).flat();
+  //   let found = allItems.find((item) => item.route === id);
+  //   let url = found?.level3_action_url || "";
+  //   return url;
+  // };
 
-  React.useEffect(() => {
-    !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
-  }, [id]);
+  // React.useEffect(() => {
+  //   !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
+  // }, [id]);
 
-  React.useEffect(() => {
-    dispatch(toggleShowReport());
-    return () => {
-      dispatch(toggleShowReport());
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(toggleShowReport());
+  //   return () => {
+  //     dispatch(toggleShowReport());
+  //   };
+  // }, []);
 
-  const handleGraphClick = () => {
-    // setShowDetails(true);
-    // setValue("both");
+  // const handleGraphClick = () => {
+  //   // setShowDetails(true);
+  //   // setValue("both");
 
-    dispatch(setShowControl("both"));
-  };
+  //   dispatch(setShowControl("both"));
+  // };
 
-  const handleAlignment = (e, selected) => {
-    setValue(selected);
-  };
+  // const handleAlignment = (e, selected) => {
+  //   setValue(selected);
+  // };
 
-  const showTable = showValue === "table";
-  const showGraph = showValue === "graph";
-  const showBoth = showValue === "both";
+  // const showTable = showValue === "table";
+  // const showGraph = showValue === "graph";
+  // const showBoth = showValue === "both";
 
-  const tableauGraph = id === "storyDeliveryTime";
+  // const tableauGraph = id === "storyDeliveryTime";
 
   return (
     <>
-      {showDetails && (
+      {/* {showDetails && (
         <div
           className=""
           style={{
@@ -94,7 +94,8 @@ const LVL_3 = React.memo((props) => {
           </div>
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
-      </SplitterLayout>
+      </SplitterLayout> */}
+      <TableauViz options={{ height: "200vh" }} />
     </>
   );
 });

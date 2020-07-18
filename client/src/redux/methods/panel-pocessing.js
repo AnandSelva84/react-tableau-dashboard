@@ -18,3 +18,28 @@ export const getAllSiblings = (id, all_views = []) => {
 export const getVizData = (panelDefs, id) => {
   const found = panelDefs.find((p) => p.panel_id === id.slice());
 };
+
+const ObjectGen = (key, value) => ({
+  [key]: value,
+});
+
+export const findNewKey = (key, filterMappings = []) => {
+  debugger;
+  const found = filterMappings.find((f) => f.id === key);
+  return found.value;
+};
+
+export const filterMappingResult = (
+  refactoredFilters = {},
+  filterMappings = []
+) => {
+  debugger;
+  const keys = Object.keys(refactoredFilters);
+  let afterMapping = {};
+  keys.forEach((key, index) => {
+    const newKey = findNewKey(key, filterMappings);
+    const obj = ObjectGen(newKey, refactoredFilters[key]);
+    afterMapping = { ...obj, ...afterMapping };
+  });
+  return afterMapping;
+};
