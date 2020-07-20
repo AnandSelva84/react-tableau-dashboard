@@ -8,18 +8,19 @@ import {
 import ClickableIcon from "../icon-button";
 import { colors } from "../../constants/colors";
 import useData from "../../hooks/useStore";
-import { panels } from "../../data/panels_new";
+// import { panels } from "../../data/panels_new";
 import LetterGroup from "./letter-group";
 import { useHistory } from "react-router-dom";
 import { getRouteById } from "../../redux/methods/panel-pocessing";
 
 const Naviagtor = (props) => {
   debugger
-  // const { panels } = props
+  const { panels, app } = props
+  const { all_views } = app
   const { currentLocation } = useData().sharedReducer;
-  // const panelsLetters = panels.panel_definitions.map((p) => p.panel_header_title).map((word) => word[0]);
-  const panelsLetters = panels.map((p) => p.title).map((word) => word[0]);
-  // const routes = panels.panel_definitions.map(panel => getRouteById(panel.view_id))
+  const titles = panels.panel_definitions.map((p) => p.panel_header_title)
+  const panelsLetters = titles.map((word) => word[0]);
+  const routes = panels.panel_definitions.map(panel => getRouteById(all_views, panel.title_action_code))
   const history = useHistory()
   const onHomeClicked = () => {
     history.push('/')
@@ -40,7 +41,7 @@ const Naviagtor = (props) => {
         </div>
         <div className="nav-hero-title">
           <p>{currentLocation || ""}</p>
-          <LetterGroup letters={panelsLetters} panels={panels} />
+          <LetterGroup letters={panelsLetters} titles={titles} routes={routes} />
         </div>
         <div className="" style={{ display: "flex" }}>
           <ClickableIcon

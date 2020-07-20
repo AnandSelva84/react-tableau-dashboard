@@ -50,5 +50,7 @@ export const getUrlfromRoute = (panels, route) => {
 }
 
 export const getRouteById = (all_views, id) => {
+  debugger
   const found = all_views.find(view => view.id === id)
+  return found.route
 }

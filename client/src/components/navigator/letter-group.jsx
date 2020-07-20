@@ -6,7 +6,7 @@ import { Typography } from "@material-ui/core";
 import Popover from "../popover/popover";
 const Letter = (props) => {
   const getTitle = () => {
-    return props.panels[props.index]?.title;
+    return props.titles[props.index]
   };
 
   return (
@@ -21,7 +21,7 @@ const LetterGroup = (props) => {
   const [index, setIndex] = React.useState(null);
 
   const haneleClick = (index) => {
-    const route = props.panels[index]?.route;
+    const route = props.routes[index];
     if (!!route) history.push(`./${route}`);
   };
 
@@ -44,7 +44,7 @@ const LetterGroup = (props) => {
             //   setIndex(i);
             // }}
             // onMouseOut={handleClose}
-            icon={<Letter letter={letter} index={i} panels={props.panels} />}
+            icon={<Letter letter={letter} index={i} panels={props.panels} titles={props.titles} />}
             onClick={() => {
               haneleClick(i);
             }}
