@@ -29,7 +29,6 @@ const Snackbar = () => {
   };
 
   const handleClick = () => {
-    alert("cleck");
     dispatch(showMessage("this is message ", "error", true));
   };
   const handleClose = () => {

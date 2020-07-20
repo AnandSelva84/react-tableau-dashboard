@@ -28,9 +28,28 @@ import {
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
 import TableauViz from "../../components/report/report";
+import { getViewDataByRoute, filterMappingResult } from "../../redux/methods/panel-pocessing";
 // import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
+
+  const { url } = props
+  const filterMapping =
+    props.getVizDataByUrl(url).embedded_viz[0].filter_mapping;
+  debugger
+
+
+
+  // const { app, panels } = useData().sharedReducer;
+  // const { all_views = [] } = app;
+  // const { id: route } = useParams()
+  // const panel = getViewDataByRoute(route, all_views) || null;
+  // alert('render')
+  // const { vizData } = props
+  // console.log({ vizData });
+  // debugger
+  // const url = vizData[0]?.embedded_viz[0]?.embed_url
+
   // const [showDetails, setShowDetails] = useState(false);
   // const [value, setValue] = React.useState("graph");
   // const dispatch = useDispatch();
@@ -95,7 +114,7 @@ const LVL_3 = React.memo((props) => {
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
       </SplitterLayout> */}
-      <TableauViz options={{ height: "200vh" }} />
+      {!!props.url && <TableauViz options={{ height: "200vh" }} url={props.url} filterMappingResult={filterMappingResult} filterMapping={filterMapping} />}
     </>
   );
 });

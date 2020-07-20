@@ -52,7 +52,7 @@ const level2PanelDefs = {
               tableau_type: "Filter",
             },
             {
-              id: "TIACOSA",
+              id: "TIACosa",
               value: "Cosa",
               tableau_type: "Filter",
             },

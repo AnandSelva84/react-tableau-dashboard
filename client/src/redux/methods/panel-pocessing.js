@@ -25,8 +25,8 @@ const ObjectGen = (key, value) => ({
 
 export const findNewKey = (key, filterMappings = []) => {
   debugger;
-  const found = filterMappings.find((f) => f.id === key);
-  return found.value;
+  const found = filterMappings.find((f) => f.id.toLowerCase() === key.toLowerCase());
+  return found?.value || 'unkown';
 };
 
 export const filterMappingResult = (
@@ -41,5 +41,10 @@ export const filterMappingResult = (
     const obj = ObjectGen(newKey, refactoredFilters[key]);
     afterMapping = { ...obj, ...afterMapping };
   });
+  console.log({ afterMapping });
   return afterMapping;
 };
+
+export const getUrlfromRoute = (panels, route) => {
+  const found = panels.find(panel => panel.embedded_viz[0])
+}

@@ -65,7 +65,7 @@ const TableauViz = (props) => {
     console.log("change in ui");
     try {
       if (isActiveSheet()) setVizIsInteractive(true);
-    } catch {}
+    } catch { }
   });
 
   const sheet = () => {
@@ -80,7 +80,7 @@ const TableauViz = (props) => {
   const applyfilter = (id = "", value = []) => {
     try {
       sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
-    } catch {}
+    } catch { }
   };
 
   const handleApply = (filterObj = null) => {
@@ -144,7 +144,7 @@ const TableauViz = (props) => {
           <div
             className=""
             style={{ position: "absolute", top: 0 }}
-            onClick={() => {}}
+            onClick={() => { }}
           ></div>
         </div>
       </div>

@@ -13,8 +13,10 @@ import {
 } from "./../../redux/methods/panel-pocessing";
 
 const ToRender = (props) => {
+  debugger
   const { panel, vizUrls } = props;
   const lvl = +props.lvl;
+  const { id } = panel
 
   if (lvl === 2)
     return (
@@ -25,8 +27,8 @@ const ToRender = (props) => {
     );
   else
     return (
-      // <LVL_3 {...props} />
-      <h3>lvl 3</h3>
+      <LVL_3 {...props} url={vizUrls[0]} />
+      // <h3>lvl 3</h3>
     );
 };
 
@@ -76,12 +78,13 @@ const SubRouter = (props) => {
   return (
     <div className="">
       <>
-        {!!panel && !!app && !!panels && (
+        {!!panel && !!app && !!panels && !!vizResponse.vizData.length && (
           <ToRender
             panel={panel}
             panels={panels}
             lvl={getLvl(panel)}
             vizUrls={vizResponse.urls}
+            vizData={vizResponse.vizData}
             getVizDataByUrl={getVizDataByUrl}
           />
         )}
