@@ -24,7 +24,7 @@ const LVL_2 = (props) => {
   const { vizUrls } = props;
 
   React.useEffect(() => {
-    !!route && dispatch(setCurrentLocation(getPanel(route)?.title || ""));
+    !!route && dispatch(setCurrentLocation(props.title));
   }, [route]);
 
   const handleClick = (value) => {

@@ -56,7 +56,7 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         showValue: action.value,
       };
-      case SET_PANEL_DEFINITIONS:
+    case SET_PANEL_DEFINITIONS:
       return {
         ...state,
         panels: action.panels,
@@ -223,7 +223,7 @@ const sharedReducer = (state = sharedState, action) => {
         // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter((filter) => filter.ID !== action.filter.ID);
 
-      afterEdit = continuesFilter(afterEdit, () => {});
+      afterEdit = continuesFilter(afterEdit, () => { });
 
       if (action.filter.value === "All") {
         afterEdit = state.filterState

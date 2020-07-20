@@ -48,3 +48,7 @@ export const filterMappingResult = (
 export const getUrlfromRoute = (panels, route) => {
   const found = panels.find(panel => panel.embedded_viz[0])
 }
+
+export const getRouteById = (all_views, id) => {
+  const found = all_views.find(view => view.id === id)
+}

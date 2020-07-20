@@ -11,10 +11,15 @@ import useData from "../../hooks/useStore";
 import { panels } from "../../data/panels_new";
 import LetterGroup from "./letter-group";
 import { useHistory } from "react-router-dom";
+import { getRouteById } from "../../redux/methods/panel-pocessing";
 
-const Naviagtor = () => {
+const Naviagtor = (props) => {
+  debugger
+  // const { panels } = props
   const { currentLocation } = useData().sharedReducer;
+  // const panelsLetters = panels.panel_definitions.map((p) => p.panel_header_title).map((word) => word[0]);
   const panelsLetters = panels.map((p) => p.title).map((word) => word[0]);
+  // const routes = panels.panel_definitions.map(panel => getRouteById(panel.view_id))
   const history = useHistory()
   const onHomeClicked = () => {
     history.push('/')

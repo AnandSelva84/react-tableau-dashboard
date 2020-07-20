@@ -3,11 +3,12 @@ import useData from "./../hooks/useStore";
 import LaodingScreen from "./loading/loading";
 
 export default function LoadingWrapper(Component) {
-  const { app } = useData().sharedReducer;
+  debugger
+  const { app, panels } = useData().sharedReducer;
   return (
     <>
-      {!!app && <Component />}
-      {!!!app && <LaodingScreen />}
+      {!!app && !!panels && <Component />}
+      {!!!app && !!panels && <LaodingScreen />}
     </>
   );
 }

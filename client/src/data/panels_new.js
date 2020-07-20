@@ -1,7 +1,7 @@
 export const panels = [
   {
     title: "Effectivness (KPIs)",
-    route: "effectivness",
+    route: "effectiveness",
     level: 2,
     items: [
       {

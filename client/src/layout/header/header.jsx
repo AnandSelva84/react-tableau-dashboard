@@ -54,19 +54,19 @@ const Header = () => {
     const filter =
       name === "Business"
         ? {
-            ID: "Business",
-            id: "Hierarchies",
-            lvl: 0,
-            parentId: null,
-            value: "Business",
-          }
+          ID: "Business",
+          id: "Hierarchies",
+          lvl: 0,
+          parentId: null,
+          value: "Business",
+        }
         : {
-            ID: "Legacy",
-            id: "Hierarchies",
-            lvl: 0,
-            parentId: null,
-            value: "Legacy",
-          };
+          ID: "Legacy",
+          id: "Hierarchies",
+          lvl: 0,
+          parentId: null,
+          value: "Legacy",
+        };
     return filter;
   };
 
@@ -75,7 +75,7 @@ const Header = () => {
 
   const { data, loading } = useFetch(`${getInfoURL}/${app}`);
   const { data: filters, loading: filtersLoading } = useFetch(newFiltersURL);
-  const { data : panels, loading : panelsLoading } = useSwitchFetch(`${getPanelDefs}/${appData?.application?.id}`,!!appData);
+  const { data: panels, loading: panelsLoading } = useSwitchFetch(`${getPanelDefs}/${appData?.application?.id}`, !!appData);
 
   const [initialLoaded, setInitialLoaded] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
@@ -120,12 +120,12 @@ const Header = () => {
 
 
   useEffect(() => {
-    if (!!panels ) {
+    if (!!panels) {
       dispatch(setPanelDefinitions(panels.panel_definitions));
-    } 
+    }
   }, [!!panels, panelsLoading]);
 
-  
+
 
   React.useEffect(() => {
     if (!!appData) {
@@ -133,7 +133,7 @@ const Header = () => {
       id === "KID" ? dispatch(setDarkMode(true)) : dispatch(setDarkMode(false));
     }
   }, [appData]);
-  React.useEffect(() => {}, [logoUrl]);
+  React.useEffect(() => { }, [logoUrl]);
 
   React.useEffect(() => {
     !!app?.title && dispatch(setCurrentLocation(app.title));
@@ -191,7 +191,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <Navigator />
+          {!!panels && < Navigator panels={panels} app={appData} />}
           <div className="logo-side">
             <HomeAvatar />
             <div className="header-title hello">Hello Panda</div>

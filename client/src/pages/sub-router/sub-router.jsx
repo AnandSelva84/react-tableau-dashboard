@@ -13,45 +13,44 @@ import {
 } from "./../../redux/methods/panel-pocessing";
 
 const ToRender = (props) => {
-  debugger
-  const { panel, vizUrls } = props;
+  const { vizUrls } = props;
   const lvl = +props.lvl;
-  const { id } = panel
 
   if (lvl === 2)
     return (
-      <>
-        <LVL_2 {...props} />
-        <h3>lvl 2</h3>
-      </>
+      <LVL_2 {...props} />
     );
   else
     return (
       <LVL_3 {...props} url={vizUrls[0]} />
-      // <h3>lvl 3</h3>
     );
 };
 
 const SubRouter = (props) => {
+  debugger
   const { app, panels } = useData().sharedReducer;
   const { all_views = [] } = app;
   const { id: route } = useParams();
   const [vizResponse, setVizResponse] = useState({ urls: [], vizData: [] });
-  //{value , id , depth_level}
+  const [topTitle, setTopTitle] = useState('')
   const panel = getViewDataByRoute(route, all_views) || null;
   const { data, loading } = useFetch(
     panelDataUrl(app.application.id, panel.id)
   );
 
-  //RESULT IS TWO OBJECTS
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
-      debugger;
+      const { view_id } = data.panel_definitions[0]
+      const found = panels.find(p => p.title_action_code)
+      const title = found?.panel_header_title || ''
+
       const responseVizData = data.panel_definitions
         .map((p) => ({ url: p.embedded_viz[0].embed_url, data: p }))
         .flat();
       const urls = responseVizData.map((viz) => viz.url);
       const vizData = responseVizData.map((viz) => viz.data);
+
+      setTopTitle(title)
       setVizResponse({ urls, vizData });
     }
   }, [data, loading]);
@@ -86,6 +85,7 @@ const SubRouter = (props) => {
             vizUrls={vizResponse.urls}
             vizData={vizResponse.vizData}
             getVizDataByUrl={getVizDataByUrl}
+            title={topTitle}
           />
         )}
       </>
