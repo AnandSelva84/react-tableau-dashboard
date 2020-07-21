@@ -25,8 +25,10 @@ const ObjectGen = (key, value) => ({
 
 export const findNewKey = (key, filterMappings = []) => {
   // debugger;
-  const found = filterMappings.find((f) => f.id.toLowerCase() === key.toLowerCase());
-  return found?.value || 'unkown';
+  const found = filterMappings.find(
+    (f) => f.id.toLowerCase() === key.toLowerCase()
+  );
+  return found?.value || "unkown";
 };
 
 export const filterMappingResult = (
@@ -46,11 +48,11 @@ export const filterMappingResult = (
 };
 
 export const getUrlfromRoute = (panels, route) => {
-  const found = panels.find(panel => panel.embedded_viz[0])
-}
+  const found = panels.find((panel) => panel.embedded_viz[0]);
+};
 
 export const getRouteById = (all_views, id) => {
-  // debugger
-  const found = all_views.find(view => view.id === id)
-  return found.route
-}
+  debugger;
+  const found = all_views.find((view) => view.id === id);
+  return found.route;
+};

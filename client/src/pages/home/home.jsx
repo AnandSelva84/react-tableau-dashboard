@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../loading/laoding.css";
 import "./home.css";
 import useData from "../../hooks/useStore";
@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { pushHistory } from "../../redux/actions/shared";
 import { panels } from "../../data/panels_new";
 import { getViewData } from "./../../redux/methods/panel-pocessing";
+import { setCurrentLocation } from "./../../redux/actions/shared";
 const Panel = (props) => {
   const history = useHistory();
 
@@ -58,12 +59,14 @@ const Panel = (props) => {
 };
 
 const HomePage = (props) => {
-  const { body_class, app, panels = [] } = useData().sharedReducer;
+  const { app, panels = [] } = useData().sharedReducer;
   const { all_views = [] } = app;
   const dispatch = useDispatch();
-  const history = useHistory();
-  const focus_area = !!app ? app.focus_area : [];
-  const css_class = body_class === "ampBody" ? "ampBody" : "kidBody";
+
+  useEffect(() => {
+    if (!!app) dispatch(setCurrentLocation(app?.subject_area?.name));
+  }, []);
+
   return (
     <div className="panel-wrapper">
       {!!panels &&

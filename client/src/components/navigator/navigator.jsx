@@ -13,16 +13,18 @@ import { useHistory } from "react-router-dom";
 import { getRouteById } from "../../redux/methods/panel-pocessing";
 
 const Naviagtor = (props) => {
-  const { panels, app } = props
-  const { all_views } = app
+  const { panels, app } = props;
+  const { all_views } = app;
   const { currentLocation } = useData().sharedReducer;
-  const titles = panels.panel_definitions.map((p) => p.panel_header_title)
+  const titles = panels.panel_definitions.map((p) => p.panel_header_title);
   const panelsLetters = titles.map((word) => word[0]);
-  const routes = panels.panel_definitions.map(panel => getRouteById(all_views, panel.title_action_code))
-  const history = useHistory()
+  const routes = panels.panel_definitions.map((panel) =>
+    getRouteById(all_views, panel.title_action_code)
+  );
+  const history = useHistory();
   const onHomeClicked = () => {
-    history.push('/')
-  }
+    history.push("/");
+  };
 
   return (
     <>
@@ -39,16 +41,20 @@ const Naviagtor = (props) => {
         </div>
         <div className="nav-hero-title">
           <p>{currentLocation || ""}</p>
-          <LetterGroup letters={panelsLetters} titles={titles} routes={routes} />
+          <LetterGroup
+            letters={panelsLetters}
+            titles={titles}
+            routes={routes}
+          />
         </div>
         <div className="" style={{ display: "flex" }}>
           <ClickableIcon
             style={{ color: "#fff" }}
-            onClick={() => { }}
+            onClick={() => {}}
             icon={<HelpOutlineOutlined />}
           />
           <ClickableIcon
-            onClick={() => { }}
+            onClick={() => {}}
             icon={<FolderOpenOutlined />}
             style={{ color: "#fff" }}
           />

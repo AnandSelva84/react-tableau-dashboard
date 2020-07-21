@@ -16,23 +16,16 @@ const ToRender = (props) => {
   const { vizUrls } = props;
   const lvl = props.lvl;
 
-  if (lvl === 2)
-    return (
-      <LVL_2 {...props} />
-    );
-  else
-    return (
-      <LVL_3 {...props} url={vizUrls[0]} />
-    );
+  if (lvl === 2) return <LVL_2 {...props} />;
+  else return <LVL_3 {...props} url={vizUrls[0]} />;
 };
 
 const SubRouter = (props) => {
-  debugger
   const { app, panels } = useData().sharedReducer;
   const { all_views = [] } = app;
   const { id: route } = useParams();
   const [vizResponse, setVizResponse] = useState({ urls: [], vizData: [] });
-  const [topTitle, setTopTitle] = useState('')
+  const [topTitle, setTopTitle] = useState("");
   const panel = getViewDataByRoute(route, all_views) || null;
   const { data, loading } = useFetch(
     panelDataUrl(app.application.id, panel.id)
@@ -40,10 +33,10 @@ const SubRouter = (props) => {
 
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
-      debugger
-      const { view_id } = data.panel_definitions[0]
-      const found = panels.find(p => p.title_action_code)
-      const title = found?.panel_header_title || ''
+      debugger;
+      const { view_id } = data.panel_definitions[0];
+      const found = panels.find((p) => p.title_action_code);
+      const title = found?.panel_header_title || "";
 
       const responseVizData = data.panel_definitions
         .map((p) => ({ url: p.embedded_viz[0].embed_url, data: p }))
@@ -51,10 +44,8 @@ const SubRouter = (props) => {
       const urls = responseVizData.map((viz) => viz.url);
       const vizData = responseVizData.map((viz) => viz.data);
 
-      setTopTitle(title)
+      setTopTitle(title);
       setVizResponse({ urls, vizData });
-
-
     }
   }, [data, loading]);
 
@@ -75,7 +66,7 @@ const SubRouter = (props) => {
 
   const getLvl = (panel = "") => {
     const lvl = +panel.depth_level[panel.depth_level.length - 1];
-    return lvl
+    return lvl;
   };
 
   return (
