@@ -127,7 +127,7 @@ const LVL_3 = React.memo((props) => {
       </SplitterLayout> */}
       {!!props.url && (
         <TableauViz
-          options={{ height: "200vh" }}
+          options={{ height: "80vh" }}
           url={props.url}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}

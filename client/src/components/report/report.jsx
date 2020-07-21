@@ -1,4 +1,4 @@
-import React, { Component, useRef } from "react";
+import React, { Component, useRef, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 // import tableau from "tableau-api";
 import { Button } from "@material-ui/core";
@@ -6,7 +6,7 @@ import { fromAppliedToOptions } from "../../redux/methods/tableau-methods";
 import useData from "../../hooks/useStore";
 import { applyFilters } from "../../redux/actions/shared";
 import { useDispatch } from "react-redux";
-
+import "./report.css";
 const { tableau } = window;
 // const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
 // "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
@@ -17,7 +17,7 @@ const TableauViz = (props) => {
   };
   const container = useRef(null);
   const dispatch = useDispatch();
-
+  const [showOverFlow, setShowOverFlow] = useState(false);
   const [viz, setViz] = React.useState(null);
   const [filters, setFilters] = React.useState({ ...initFilters });
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
@@ -141,8 +141,18 @@ const TableauViz = (props) => {
 
   return (
     <>
-      <div style={{ width: "100%", height: "100%" }}>
+      <div
+        style={{ width: "100%", height: "100%" }}
+        className="dark-hover"
+        onMouseEnter={() => setShowOverFlow(true)}
+        onMouseLeave={() => setShowOverFlow(false)}
+      >
         {/* <button onClick={handleFChange}>change filters</button> */}
+        {showOverFlow && (
+          <div className="dark-over-flow">
+            <div className="view-btn">View</div>
+          </div>
+        )}
         <div
           className=""
           style={{ width: "100%", height: "100%", position: "relative" }}
