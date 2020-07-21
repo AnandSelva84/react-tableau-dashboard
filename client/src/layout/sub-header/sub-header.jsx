@@ -237,11 +237,11 @@ const SubHeader = () => {
               </>
               {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
                 <Chip
+                  size="small"
                   label={createChip(filter.id, filter.value)}
                   style={{
                     marginRight: "0.4rem",
                     // backgroundColor: colors.usaa_blue,
-                    marginTop: "0.2rem",
                   }}
                   onClick={() => {
                     handleOpen(filter.value, filter.id);

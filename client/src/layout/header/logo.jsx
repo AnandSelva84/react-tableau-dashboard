@@ -10,7 +10,7 @@ const Logo = (props) => {
           <img
             src={require("../../assets/images/ampLogo.png")}
             alt="panda img"
-            style={{ width: "5.5rem", height: "auto" }}
+            style={{ width: "4rem", height: "auto" }}
           />
         </div>
       )}
