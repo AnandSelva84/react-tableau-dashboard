@@ -35,8 +35,10 @@ const TableauViz = (props) => {
 
   const options = {
     hideTabs: true,
+    hideToolbar: props.hideToolbar,
     width: "100%",
     ...props.options,
+    ...mappedfilters,
     // ...reportFilters,
     onFirstInteractive: function () {
       setVizIsInteractive(true);

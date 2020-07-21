@@ -60,6 +60,7 @@ const LVL_2 = (props) => {
                 url={url}
                 filterMappingResult={filterMappingResult}
                 filterMapping={filterMapping(url)}
+                hideToolbar={true}
               />
             </div>
           ))}

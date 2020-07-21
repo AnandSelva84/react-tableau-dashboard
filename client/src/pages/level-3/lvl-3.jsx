@@ -131,6 +131,7 @@ const LVL_3 = React.memo((props) => {
           url={props.url}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}
+          hideToolbar={false}
         />
       )}
     </>
