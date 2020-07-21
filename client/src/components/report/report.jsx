@@ -97,7 +97,11 @@ const TableauViz = (props) => {
   React.useEffect(() => {
     if (!!viz && vizIsInteractive) {
       console.log("initt values", reportFilters);
-      // handleApply(reportFilters);
+      console.log("final filter to apply ", mappedfilters);
+      const mockFilters = {
+        College: "Music",
+      };
+      handleApply(mappedfilters);
     }
   }, [!!viz, vizIsInteractive, filters, appliedFilters, savedFilters]);
 
