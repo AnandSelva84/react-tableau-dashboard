@@ -64,7 +64,7 @@ const HomePage = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!!app) dispatch(setCurrentLocation(app?.subject_area?.name));
+    if (!!app) dispatch(setCurrentLocation(app?.subject_area[0]?.name));
   }, []);
 
   return (

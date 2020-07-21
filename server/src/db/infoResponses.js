@@ -7,45 +7,47 @@ const ampInfo = {
       logo_path_url: "../../assests/images/ampLogo.png",
       app_body_css_class: "ampBody",
     },
-    subject_area: {
-      id: "PORT",
-      name: "Application Development",
-      css_class: "panelPortfolio",
-      default_view_id: "AMP_L1",
-    },
+    subject_area: [
+      {
+        id: "PORT",
+        name: "Application Development",
+        css_class: "panelPortfolio",
+        default_view_id: "AMP_L1",
+      },
+    ],
     default_view: {
       id: "AMP_L1",
       depth_level: "Level 1",
       display_name: "Agile Metrics Portal Menu",
       type: "Application",
     },
-    all_views : [
+    all_views: [
       {
         id: "AMP_L1",
         route: "",
-        depth_level: "Level 1"
+        depth_level: "Level 1",
       },
       {
         id: "PORT_1_L2",
         route: "effectiveness",
-        depth_level: "Level 2"
+        depth_level: "Level 2",
       },
       {
         id: "PORT_2_L2",
         route: "teamDiagnostics",
-        depth_level: "Level 2"
+        depth_level: "Level 2",
       },
       {
         id: "PORT_11_L3",
         route: "storyDeliveryLeadTime",
-        depth_level: "Level 3"
+        depth_level: "Level 3",
       },
       {
         id: "PORT_12_L3",
         route: "sprintPredictabilityVolatility",
-        depth_level: "Level 3"
-      }
-    ]
+        depth_level: "Level 3",
+      },
+    ],
     // focus_area: [
     //   {
     //     panel_id: "PORT_DETAIL_VIZ1",

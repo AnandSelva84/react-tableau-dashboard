@@ -1,7 +1,6 @@
 export const continuesFilter = (filterState, onFilterEnd) => {
   let locFilterState = filterState;
   let i = 0;
-  debugger;
   while (i !== 10) {
     let prevLength = locFilterState.length;
 

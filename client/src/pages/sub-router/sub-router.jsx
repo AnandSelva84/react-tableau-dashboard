@@ -33,7 +33,6 @@ const SubRouter = (props) => {
 
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
-      debugger;
       const { view_id } = data.panel_definitions[0];
       const found = panels.find((p) => p.title_action_code);
       const title = found?.panel_header_title || "";
@@ -58,7 +57,6 @@ const SubRouter = (props) => {
   }, [vizResponse]);
 
   const getVizDataByUrl = (url) => {
-    // debugger;
     const vizDataArray = vizResponse.vizData;
     const found = vizDataArray.find((v) => v.embedded_viz[0].embed_url === url);
     return found;

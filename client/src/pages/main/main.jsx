@@ -52,10 +52,10 @@ const Main = React.memo(() => {
   const mainStyle = app === "amp" ? "" : "dark";
   const style = !!app ? mainStyle : "no-data";
 
-  React.useEffect(() => {
-    !!App?.application?.name &&
-      dispatch(setCurrentLocation(App?.subject_area?.name));
-  }, [App]);
+  // React.useEffect(() => {
+  //   !!App?.application?.name &&
+  //     dispatch(setCurrentLocation(App?.subject_area?.name));
+  // }, [App]);
 
   return (
     <div className={style}>

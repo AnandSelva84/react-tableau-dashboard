@@ -28,30 +28,28 @@ import {
 import useData from "../../hooks/useStore";
 import { getPanel } from "../../redux/methods/get-level";
 import TableauViz from "../../components/report/report";
-import { getViewDataByRoute, filterMappingResult } from "../../redux/methods/panel-pocessing";
+import {
+  getViewDataByRoute,
+  filterMappingResult,
+} from "../../redux/methods/panel-pocessing";
 // import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
-  debugger
-  const { id: route } = useParams()
-  const { vizData } = props
+  const { id: route } = useParams();
+  const { vizData } = props;
   //we cant get from props.vizData the id and titl
   //from route get the id
   const { app } = useData().sharedReducer;
-  const { all_views } = app
+  const { all_views } = app;
 
+  const { id } = all_views.find((view) => view.route === route);
 
-  const { id } = all_views.find(view => view.route === route)
+  const found = vizData.find((viz) => viz.view_id === id);
 
-  const found = vizData.find(viz => viz.view_id === id)
-
-  const { url } = props
-  const filterMapping =
-    props.getVizDataByUrl(url).embedded_viz[0].filter_mapping;
-  const title = props.getVizDataByUrl(url).panel_header_title
-  debugger
-
-
+  const { url } = props;
+  const filterMapping = props.getVizDataByUrl(url).embedded_viz[0]
+    .filter_mapping;
+  const title = props.getVizDataByUrl(url).panel_header_title;
 
   // const { app, panels } = useData().sharedReducer;
   // const { all_views = [] } = app;
@@ -127,7 +125,14 @@ const LVL_3 = React.memo((props) => {
         )}
         {(showTable || showBoth) && <div className="unit">This is a table</div>}
       </SplitterLayout> */}
-      {!!props.url && <TableauViz options={{ height: "200vh" }} url={props.url} filterMappingResult={filterMappingResult} filterMapping={filterMapping} />}
+      {!!props.url && (
+        <TableauViz
+          options={{ height: "200vh" }}
+          url={props.url}
+          filterMappingResult={filterMappingResult}
+          filterMapping={filterMapping}
+        />
+      )}
     </>
   );
 });
