@@ -28,6 +28,10 @@ const TableauViz = (props) => {
     "http://public.tableau.com/views/RegionalSampleWorkbook/College";
 
   const reportFilters = fromAppliedToOptions(appliedFilters);
+  const mappedfilters = props.filterMappingResult(
+    reportFilters,
+    props.filterMapping
+  );
 
   const options = {
     hideTabs: true,
@@ -57,15 +61,13 @@ const TableauViz = (props) => {
 
   React.useEffect(() => {
     initViz();
-
-    props.filterMappingResult(reportFilters, props.filterMapping);
   }, []);
 
   React.useEffect(() => {
     console.log("change in ui");
     try {
       if (isActiveSheet()) setVizIsInteractive(true);
-    } catch { }
+    } catch {}
   });
 
   const sheet = () => {
@@ -80,7 +82,7 @@ const TableauViz = (props) => {
   const applyfilter = (id = "", value = []) => {
     try {
       sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
-    } catch { }
+    } catch {}
   };
 
   const handleApply = (filterObj = null) => {
@@ -144,7 +146,7 @@ const TableauViz = (props) => {
           <div
             className=""
             style={{ position: "absolute", top: 0 }}
-            onClick={() => { }}
+            onClick={() => {}}
           ></div>
         </div>
       </div>
