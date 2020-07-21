@@ -32,10 +32,23 @@ import { getViewDataByRoute, filterMappingResult } from "../../redux/methods/pan
 // import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
+  debugger
+  const { id: route } = useParams()
+  const { vizData } = props
+  //we cant get from props.vizData the id and titl
+  //from route get the id
+  const { app } = useData().sharedReducer;
+  const { all_views } = app
+
+
+  const { id } = all_views.find(view => view.route === route)
+
+  const found = vizData.find(viz => viz.view_id === id)
 
   const { url } = props
   const filterMapping =
     props.getVizDataByUrl(url).embedded_viz[0].filter_mapping;
+  const title = props.getVizDataByUrl(url).panel_header_title
   debugger
 
 
@@ -52,7 +65,7 @@ const LVL_3 = React.memo((props) => {
 
   // const [showDetails, setShowDetails] = useState(false);
   // const [value, setValue] = React.useState("graph");
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { state } = useLocation();
   // const { showValue, app } = useData().sharedReducer;
   // const { focus_area } = app;
@@ -65,9 +78,9 @@ const LVL_3 = React.memo((props) => {
   //   return url;
   // };
 
-  // React.useEffect(() => {
-  //   !!id && dispatch(setCurrentLocation(getPanel(id)?.title || ""));
-  // }, [id]);
+  React.useEffect(() => {
+    dispatch(setCurrentLocation(title));
+  }, [title]);
 
   // React.useEffect(() => {
   //   dispatch(toggleShowReport());

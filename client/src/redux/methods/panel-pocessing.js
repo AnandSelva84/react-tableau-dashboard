@@ -24,7 +24,7 @@ const ObjectGen = (key, value) => ({
 });
 
 export const findNewKey = (key, filterMappings = []) => {
-  debugger;
+  // debugger;
   const found = filterMappings.find((f) => f.id.toLowerCase() === key.toLowerCase());
   return found?.value || 'unkown';
 };
@@ -33,7 +33,7 @@ export const filterMappingResult = (
   refactoredFilters = {},
   filterMappings = []
 ) => {
-  debugger;
+  // debugger;
   const keys = Object.keys(refactoredFilters);
   let afterMapping = {};
   keys.forEach((key, index) => {
@@ -50,7 +50,7 @@ export const getUrlfromRoute = (panels, route) => {
 }
 
 export const getRouteById = (all_views, id) => {
-  debugger
+  // debugger
   const found = all_views.find(view => view.id === id)
   return found.route
 }

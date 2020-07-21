@@ -2,71 +2,27 @@ import React from "react";
 import ClickableIcon from "../icon-button";
 import "./navigator.css";
 import { useHistory } from "react-router-dom";
-import { Typography } from "@material-ui/core";
-import Popover from "../popover/popover";
-const Letter = (props) => {
-  const getTitle = () => {
-    return props.titles[props.index]
-  };
-
-  return (
-    <div className="">
-      <Popover content={getTitle()}>{props.letter}</Popover>
-    </div>
-  );
-};
+import LetterIcon from "./LetterIcon";
 
 const LetterGroup = (props) => {
   const history = useHistory();
-  const [index, setIndex] = React.useState(null);
-
   const haneleClick = (index) => {
     const route = props.routes[index];
     if (!!route) history.push(`./${route}`);
   };
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setIndex(null);
-  };
-
-  const open = !!anchorEl;
-  const id = open ? "simple-popover" : undefined;
 
   return (
     <div className="letter-group">
       {props.letters.map((letter, i) => (
         <>
           <ClickableIcon
-            // onMouseOver={() => {
-            //   setIndex(i);
-            // }}
-            // onMouseOut={handleClose}
-            icon={<Letter letter={letter} index={i} panels={props.panels} titles={props.titles} />}
+            icon={<LetterIcon letter={letter} index={i} panels={props.panels} titles={props.titles} />}
             onClick={() => {
               haneleClick(i);
             }}
             style={{ color: "#fff" }}
             size="small"
           />
-          {/* <Popover
-            id={id}
-            open={i === index}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-          >
-            <Typography>{props.panels[i]?.title}</Typography>
-          </Popover> */}
         </>
       ))}
     </div>

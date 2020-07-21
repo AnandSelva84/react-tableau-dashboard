@@ -14,7 +14,7 @@ import {
 
 const ToRender = (props) => {
   const { vizUrls } = props;
-  const lvl = +props.lvl;
+  const lvl = props.lvl;
 
   if (lvl === 2)
     return (
@@ -40,6 +40,7 @@ const SubRouter = (props) => {
 
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
+      debugger
       const { view_id } = data.panel_definitions[0]
       const found = panels.find(p => p.title_action_code)
       const title = found?.panel_header_title || ''
@@ -52,6 +53,8 @@ const SubRouter = (props) => {
 
       setTopTitle(title)
       setVizResponse({ urls, vizData });
+
+
     }
   }, [data, loading]);
 
@@ -64,14 +67,15 @@ const SubRouter = (props) => {
   }, [vizResponse]);
 
   const getVizDataByUrl = (url) => {
-    debugger;
+    // debugger;
     const vizDataArray = vizResponse.vizData;
     const found = vizDataArray.find((v) => v.embedded_viz[0].embed_url === url);
     return found;
   };
 
   const getLvl = (panel = "") => {
-    return panel.depth_level[panel.depth_level.length - 1];
+    const lvl = +panel.depth_level[panel.depth_level.length - 1];
+    return lvl
   };
 
   return (
