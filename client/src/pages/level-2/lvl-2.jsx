@@ -59,19 +59,19 @@ const LVL_2 = (props) => {
           {vizUrls.map((url, index) => (
             <div className="panel">
               <div className="panel-title no-clickable">
-                <h3
+                <span
                   onClick={() => {
                     filterMapping(url);
                   }}
                 >
                   {panelHeaderTitle(url)}
-                </h3>
+                </span>
 
                 <h3
                   className="report-link"
                   onClick={() => handleTitleClick(url, index)}
                 >
-                  Report
+                  View Report
                 </h3>
               </div>
 

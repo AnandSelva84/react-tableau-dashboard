@@ -5,8 +5,9 @@
 
 .report-link {
   color: #fff;
-  font-weight: 600;
+  font-weight: 300;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .no-clickable {
