@@ -14,6 +14,7 @@ import {
 } from "../../redux/methods/panel-pocessing";
 import "./level-2.css";
 // import TableauViz from "../report/report";
+import { getViewData } from "./../../redux/methods/panel-pocessing";
 
 const LVL_2 = (props) => {
   let { id: route } = useParams();
@@ -39,19 +40,38 @@ const LVL_2 = (props) => {
   const panelHeaderTitle = (url) =>
     props.getVizDataByUrl(url).panel_header_title;
 
+  const handleTitleClick = (url, index) => {
+    // debugger;
+    const found = all_views.find((p) => p.route === route);
+    const { id } = found;
+    const mainPanelData = panels.find((p) => p.title_action_code === id);
+    const embededFeilds = mainPanelData.embedded_fields;
+    const { value } = embededFeilds[0].embedded_field_options[index];
+    const panelById = all_views.find((p) => p.id === value);
+    const { route: panelRoute } = panelById;
+    history.push(`./${panelRoute}`);
+  };
+
   return (
     <>
       {!!vizUrls && (
         <div className="ampBody">
           {vizUrls.map((url, index) => (
             <div className="panel">
-              <div className="panel-title">
+              <div className="panel-title no-clickable">
                 <h3
                   onClick={() => {
                     filterMapping(url);
                   }}
                 >
                   {panelHeaderTitle(url)}
+                </h3>
+
+                <h3
+                  className="report-link"
+                  onClick={() => handleTitleClick(url, index)}
+                >
+                  Report
                 </h3>
               </div>
 

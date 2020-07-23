@@ -35,16 +35,16 @@ import {
 // import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
+  debugger;
   const { id: route } = useParams();
-  const { vizData } = props;
+  const { vizData, parentID } = props;
   //we cant get from props.vizData the id and titl
   //from route get the id
-  const { app } = useData().sharedReducer;
+  const { app, panels } = useData().sharedReducer;
   const { all_views } = app;
 
-  const { id } = all_views.find((view) => view.route === route);
-
-  const found = vizData.find((viz) => viz.view_id === id);
+  const parentPanel = panels.find((p) => p.view_id === parentID);
+  const { id: currentPanelID } = all_views.find((view) => view.route === route);
 
   const { url } = props;
   const filterMapping = props.getVizDataByUrl(url).embedded_viz[0]

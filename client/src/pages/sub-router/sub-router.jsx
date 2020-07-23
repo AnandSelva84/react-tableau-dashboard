@@ -27,13 +27,17 @@ const SubRouter = (props) => {
   const [vizResponse, setVizResponse] = useState({ urls: [], vizData: [] });
   const [topTitle, setTopTitle] = useState("");
   const panel = getViewDataByRoute(route, all_views) || null;
+  const [parentID, setParentID] = useState("");
   const { data, loading } = useFetch(
     panelDataUrl(app.application.id, panel.id)
   );
 
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
-      const { view_id } = data.panel_definitions[0];
+      debugger;
+
+      const parentId = data.panel_definitions[0].view_id;
+      setParentID(parentId);
       const found = panels.find((p) => p.title_action_code);
       const title = found?.panel_header_title || "";
 
@@ -79,6 +83,7 @@ const SubRouter = (props) => {
             vizData={vizResponse.vizData}
             getVizDataByUrl={getVizDataByUrl}
             title={topTitle}
+            parentID={parentID}
           />
         )}
       </>

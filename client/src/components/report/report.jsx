@@ -45,13 +45,6 @@ const TableauViz = (props) => {
     },
   };
 
-  // React.useEffect(() => {
-  //   if (!vizIsInteractive)
-  //     setTimeout(() => {
-  //       setCounter(counter + 1);
-  //     }, 200);
-  // }, [counter]);
-
   const handleClcik = () => {
     sheet().clearFilterAsync("Region");
     setFilters(initFilters);
@@ -107,12 +100,6 @@ const TableauViz = (props) => {
     }
   }, [!!viz, vizIsInteractive, filters, appliedFilters, savedFilters]);
 
-  React.useEffect(() => {
-    // if (!!viz && vizIsInteractive) {
-    //   setFilters({ Gender: ["Women"] });
-    // }
-  }, [appliedFilters]);
-
   const yearFilter = (year) => {
     sheet().applyFilterAsync(
       "College",
@@ -141,18 +128,7 @@ const TableauViz = (props) => {
 
   return (
     <>
-      <div
-        style={{ width: "100%", height: "100%" }}
-        className="dark-hover"
-        onMouseEnter={() => setShowOverFlow(true)}
-        onMouseLeave={() => setShowOverFlow(false)}
-      >
-        {/* <button onClick={handleFChange}>change filters</button> */}
-        {showOverFlow && (
-          <div className="dark-over-flow">
-            <div className="view-btn">View</div>
-          </div>
-        )}
+      <div style={{ width: "100%", height: "100%" }} className="dark-hover">
         <div
           className=""
           style={{ width: "100%", height: "100%", position: "relative" }}
