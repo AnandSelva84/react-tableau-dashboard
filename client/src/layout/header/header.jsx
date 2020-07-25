@@ -29,6 +29,7 @@ import useFetch from "../../hooks/useFetch";
 import { newFiltersURL, getInfoURL, getPanelDefs } from "../../enviroment/urls";
 import { getDomain } from "../../enviroment/domain";
 import useSwitchFetch from "../../hooks/switch-useFetch";
+import StyledTitle from "../../components/styled-title/styled-title";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -134,10 +135,6 @@ const Header = () => {
   }, [appData]);
   React.useEffect(() => {}, [logoUrl]);
 
-  // React.useEffect(() => {
-  //   !!app?.title && dispatch(setCurrentLocation(app.title));
-  // }, []);
-
   React.useEffect(() => {
     // setInitialLoaded(false);
     if (loaded) {
@@ -157,24 +154,6 @@ const Header = () => {
 
   const onLogoClicked = () => {
     if (history.location.pathname !== "/") history.push("/");
-  };
-
-  const StyledTitle = (props) => {
-    const subTitles = props.title.split(" ");
-    return (
-      <div style={{ display: "flex" }}>
-        {subTitles.map((singleTitle, index) => (
-          <div
-            className=""
-            style={{
-              color: index % 2 === 0 ? "rgb(208,207,206)" : colors.usaa_blue,
-            }}
-          >
-            {singleTitle}
-          </div>
-        ))}
-      </div>
-    );
   };
 
   const dark = !darkMode ? null : darkHeader;
