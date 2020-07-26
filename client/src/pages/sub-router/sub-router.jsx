@@ -21,20 +21,41 @@ const ToRender = (props) => {
 };
 
 const SubRouter = (props) => {
+  debugger;
   const { app, panels } = useData().sharedReducer;
   const { all_views = [] } = app;
+  const [currentLvl, setCurrentLvl] = useState(null);
   const { id: route } = useParams();
   const [vizResponse, setVizResponse] = useState({ urls: [], vizData: [] });
+  const [singleReportData, setSingleReportData] = useState(null);
+  const [mlutiReportData, setMlutiReportData] = useState(null);
   const [topTitle, setTopTitle] = useState("");
   const panel = getViewDataByRoute(route, all_views) || null;
   const [parentID, setParentID] = useState("");
   const { data, loading } = useFetch(
-    panelDataUrl(app.application.id, panel.id)
+    panelDataUrl(app.application.id, panel.id),
+    "GET",
+    route
   );
+
+  React.useEffect(() => {
+    setCurrentLvl(null);
+  }, [route]);
 
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
       debugger;
+      const { view_id: panelViewId } = data.panel_definitions[0];
+
+      if (panelViewId[panelViewId.length - 1] === "3") {
+        setCurrentLvl(3);
+        setSingleReportData(data.panel_definitions[0]);
+        setMlutiReportData(null);
+      } else if (panelViewId[panelViewId.length - 1] === "2") {
+        setCurrentLvl(2);
+        setMlutiReportData(data.panel_definitions);
+        setSingleReportData(null);
+      }
 
       const parentId = data.panel_definitions[0].view_id;
       setParentID(parentId);
@@ -50,7 +71,7 @@ const SubRouter = (props) => {
       setTopTitle(title);
       setVizResponse({ urls, vizData });
     }
-  }, [data, loading]);
+  }, [data, loading, route]);
 
   useEffect(() => {
     if (!!vizResponse.vizData.length) {
@@ -76,9 +97,11 @@ const SubRouter = (props) => {
       <>
         {!!panel && !!app && !!panels && !!vizResponse.vizData.length && (
           <ToRender
+            singleReportData={singleReportData}
+            mlutiReportData={mlutiReportData}
             panel={panel}
             panels={panels}
-            lvl={getLvl(panel)}
+            lvl={currentLvl}
             vizUrls={vizResponse.urls}
             vizData={vizResponse.vizData}
             getVizDataByUrl={getVizDataByUrl}

@@ -32,103 +32,30 @@ import {
   getViewDataByRoute,
   filterMappingResult,
 } from "../../redux/methods/panel-pocessing";
-// import TableauViz from "../report/report";
 
 const LVL_3 = React.memo((props) => {
   debugger;
-  const { id: route } = useParams();
-  const { vizData, parentID } = props;
-  //we cant get from props.vizData the id and titl
-  //from route get the id
-  const { app, panels } = useData().sharedReducer;
-  const { all_views } = app;
-
-  const parentPanel = panels.find((p) => p.view_id === parentID);
-  const { id: currentPanelID } = all_views.find((view) => view.route === route);
+  const { singleReportData } = props;
+  const { panel_header_title: ReportTitle, embedded_viz } = singleReportData;
+  const { embed_url: ReportURL } = embedded_viz[0];
 
   const { url } = props;
   const filterMapping = props.getVizDataByUrl(url).embedded_viz[0]
     .filter_mapping;
   const title = props.getVizDataByUrl(url).panel_header_title;
 
-  // const { app, panels } = useData().sharedReducer;
-  // const { all_views = [] } = app;
-  // const { id: route } = useParams()
-  // const panel = getViewDataByRoute(route, all_views) || null;
-  // alert('render')
-  // const { vizData } = props
-  // console.log({ vizData });
-  // debugger
-  // const url = vizData[0]?.embedded_viz[0]?.embed_url
-
-  // const [showDetails, setShowDetails] = useState(false);
-  // const [value, setValue] = React.useState("graph");
   const dispatch = useDispatch();
-  // const { state } = useLocation();
-  // const { showValue, app } = useData().sharedReducer;
-  // const { focus_area } = app;
-  // let { id } = useParams();
-
-  // const getUrlData = () => {
-  //   const allItems = focus_area.map((p) => p.items).flat();
-  //   let found = allItems.find((item) => item.route === id);
-  //   let url = found?.level3_action_url || "";
-  //   return url;
-  // };
 
   React.useEffect(() => {
-    dispatch(setCurrentLocation(title));
+    dispatch(setCurrentLocation(ReportTitle));
   }, [title]);
-
-  // React.useEffect(() => {
-  //   dispatch(toggleShowReport());
-  //   return () => {
-  //     dispatch(toggleShowReport());
-  //   };
-  // }, []);
-
-  // const handleGraphClick = () => {
-  //   // setShowDetails(true);
-  //   // setValue("both");
-
-  //   dispatch(setShowControl("both"));
-  // };
-
-  // const handleAlignment = (e, selected) => {
-  //   setValue(selected);
-  // };
-
-  // const showTable = showValue === "table";
-  // const showGraph = showValue === "graph";
-  // const showBoth = showValue === "both";
-
-  // const tableauGraph = id === "storyDeliveryTime";
 
   return (
     <>
-      {/* {showDetails && (
-        <div
-          className=""
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        ></div>
-      )}
-      <SplitterLayout vertical>
-        {(showGraph || showBoth) && (
-          <div className="unit" onClick={handleGraphClick}>
-            {tableauGraph && (
-              <TableauViz options={{ height: "80vh" }} url={getUrlData()} />
-            )}
-          </div>
-        )}
-        {(showTable || showBoth) && <div className="unit">This is a table</div>}
-      </SplitterLayout> */}
       {!!props.url && (
         <TableauViz
           options={{ height: "80vh" }}
-          url={props.url}
+          url={ReportURL}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}
           hideToolbar={false}
@@ -139,15 +66,3 @@ const LVL_3 = React.memo((props) => {
 });
 
 export default LVL_3;
-
-//  <ToggleButtonGroup value={value} exclusive onChange={handleAlignment}>
-//       <ToggleButton value="graph" aria-label="left aligned">
-//         <BarChart />
-//       </ToggleButton>
-//       <ToggleButton value="both" aria-label="centered">
-//         <SwapVert />
-//       </ToggleButton>
-//       <ToggleButton value="table" aria-label="right aligned">
-//         <TableChart />
-//       </ToggleButton>
-//     </ToggleButtonGroup>
