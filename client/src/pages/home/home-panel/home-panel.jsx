@@ -36,12 +36,12 @@ export default function HomePanel(props) {
         Effectivnes
       </div>
       <div className="units-container">
-        {allEmbeded.map(({ text, value }) => (
+        {allEmbeded.map(({ text, value: id }) => (
           <div
             className="panel-unit"
             onClick={() => {
               history.push({
-                pathname: `/${getRoute(value)}`,
+                pathname: `/${getRoute(id)}`,
               });
             }}
           >

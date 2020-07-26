@@ -11,6 +11,7 @@ import { getViewData } from "./../../redux/methods/panel-pocessing";
 import { setCurrentLocation } from "./../../redux/actions/shared";
 import StyledTitle from "../../components/styled-title/styled-title";
 import HomePanel from "./home-panel/home-panel";
+import { ChevronRight, ChevronLeft } from "@material-ui/icons";
 
 const HomePage = (props) => {
   const { app, panels = [] } = useData().sharedReducer;
@@ -27,7 +28,7 @@ const HomePage = (props) => {
   };
 
   const handleLeft = () => {
-    setCarouselValue(carouselValue - 10);
+    if (carouselValue !== 0) setCarouselValue(carouselValue - 10);
   };
 
   return (
@@ -35,8 +36,7 @@ const HomePage = (props) => {
       <div className="landing-container">
         <div className="wellcome-message">
           <div>Hello Timothy!</div>
-          <button onClick={handleRight}>right</button>
-          <button onClick={handleLeft}>left</button>
+
           <div className="app-name-words">
             <span>Wellcome to the</span>
             <StyledTitle
@@ -47,13 +47,28 @@ const HomePage = (props) => {
           </div>
           {panels && (
             <div className="panles-container">
-              <div
-                className="carousel"
-                style={{ transform: `translateX(${carouselValue}rem)` }}
-              >
-                {panels.map((panel) => (
-                  <HomePanel panel={panel} all_views={all_views} />
-                ))}
+              <div className="triangle right-scroll-btn ">
+                <ChevronRight
+                  style={{ cursor: "pointer", width: "7rem", height: "7rem" }}
+                  onClick={handleRight}
+                />
+              </div>
+
+              <div className="triangle left-scroll-btn ">
+                <ChevronLeft
+                  style={{ cursor: "pointer", width: "7rem", height: "7rem" }}
+                  onClick={handleLeft}
+                />
+              </div>
+              <div className="carousel-container">
+                <div
+                  className="carousel"
+                  style={{ transform: `translateX(${carouselValue}rem)` }}
+                >
+                  {panels.map((panel) => (
+                    <HomePanel panel={panel} all_views={all_views} />
+                  ))}
+                </div>
               </div>
             </div>
           )}
