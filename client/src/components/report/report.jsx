@@ -11,6 +11,7 @@ const { tableau } = window;
 // const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
 // "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
 const TableauViz = (props) => {
+  debugger;
   const initFilters = {
     College: ["Music"],
     Gender: ["Men"],
@@ -126,8 +127,13 @@ const TableauViz = (props) => {
     );
   };
 
+  const testNativeFilterMethod = () => {
+    sheet().applyFilterAsync("Cosa", "Bank", tableau.FilterUpdateType.REPLACE);
+  };
+
   return (
     <>
+      <button onClick={testNativeFilterMethod}> Test</button>
       <div style={{ width: "100%", height: "100%" }} className="dark-hover">
         <div
           className=""
