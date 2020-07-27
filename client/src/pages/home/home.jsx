@@ -24,11 +24,11 @@ const HomePage = (props) => {
   }, []);
 
   const handleRight = () => {
-    setCarouselValue(carouselValue + 10);
+    setCarouselValue(carouselValue - 10);
   };
 
   const handleLeft = () => {
-    if (carouselValue !== 0) setCarouselValue(carouselValue - 10);
+    if (carouselValue !== 0) setCarouselValue(carouselValue + 10);
   };
 
   return (

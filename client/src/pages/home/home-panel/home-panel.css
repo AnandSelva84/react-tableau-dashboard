@@ -10,8 +10,19 @@
   text-align: left;
 }
 
+.reports-count {
+  color: #fff;
+  font-size: 22px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .units-container {
   margin-top: 3rem;
+  position: absolute;
+  top: 30px;
 }
 
 .panel-units {
@@ -28,10 +39,11 @@
 }
 
 .home-panel .home-panel-title {
-  font-size: 30px;
+  font-size: 20px;
   color: #086972;
   font-weight: 500;
   cursor: pointer;
+  max-width: 70%;
 }
 
 .reports-count {

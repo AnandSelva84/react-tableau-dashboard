@@ -24,7 +24,7 @@ export default function HomePanel(props) {
 
   return (
     <div className="home-panel">
-      <div className="reports-count"></div>
+      <div className="reports-count">{allEmbeded.length}</div>
       <div
         className="home-panel-title"
         onClick={() => {
