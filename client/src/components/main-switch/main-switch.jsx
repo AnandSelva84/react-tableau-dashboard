@@ -49,12 +49,10 @@ const MainSwitch = React.memo((props) => {
   const [current, setCurrent] = React.useState("Business");
   React.useEffect(() => {
     setLoaded(true);
-
-    return () => {
-      const originalValue = appliedFilters.find((f) => f.id === "Hierarchies")
-        ?.value;
-      if (!!originalValue) dispatch(setCurrentMainFilter(originalValue));
-    };
+    debugger;
+    const originalValue = appliedFilters.find((f) => f.id === "Hierarchies")
+      ?.value;
+    if (!!originalValue) dispatch(setCurrentMainFilter(originalValue));
   }, []);
 
   const testForCheck = (name) => {
