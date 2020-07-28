@@ -15,6 +15,7 @@ import {
 import "./level-2.css";
 // import TableauViz from "../report/report";
 import { getViewData } from "./../../redux/methods/panel-pocessing";
+import WrappedReport from "../../components/report/report";
 
 const LVL_2 = (props) => {
   let { id: route } = useParams();
@@ -87,7 +88,7 @@ const LVL_2 = (props) => {
                 </h3>
               </div>
 
-              <TableauViz
+              <WrappedReport
                 options={{ height: "50vh" }}
                 url={singlePanel.embedded_viz[0].embed_url}
                 filterMappingResult={filterMappingResult}

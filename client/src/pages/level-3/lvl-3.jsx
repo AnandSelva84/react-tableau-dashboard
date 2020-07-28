@@ -32,6 +32,7 @@ import {
   getViewDataByRoute,
   filterMappingResult,
 } from "../../redux/methods/panel-pocessing";
+import WrappedReport from "../../components/report/report";
 
 const LVL_3 = React.memo((props) => {
   const { singleReportData } = props;
@@ -52,7 +53,7 @@ const LVL_3 = React.memo((props) => {
   return (
     <>
       {!!props.url && (
-        <TableauViz
+        <WrappedReport
           options={{ height: "80vh" }}
           url={ReportURL}
           filterMappingResult={filterMappingResult}
