@@ -18,7 +18,7 @@ const TableauViz = (props) => {
   const [workbook, setWorkBook] = React.useState(null);
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
   const { appliedFilters, savedFilters } = useData().sharedReducer;
-  let url = props?.url;
+  let url = props.url;
 
   const reportFilters = fromAppliedToOptions(appliedFilters);
   const mappedfilters = props.filterMappingResult(
@@ -79,10 +79,8 @@ const TableauViz = (props) => {
     if (!!workbook) {
       console.log("initt values", reportFilters);
       console.log("final filter to apply ", mappedfilters);
-      const mockFilters = {
-        College: "Music",
-      };
-      handleApply(mockFilters);
+
+      // handleApply(mappedfilters);
     }
   }, [!!viz, vizIsInteractive, appliedFilters, savedFilters, workbook]);
 
