@@ -8,26 +8,17 @@ import { applyFilters } from "../../redux/actions/shared";
 import { useDispatch } from "react-redux";
 import "./report.css";
 const { tableau } = window;
-// const url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
-// "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
+
 const TableauViz = (props) => {
   debugger;
-  const initFilters = {
-    College: ["Music"],
-    Gender: ["Men"],
-  };
+
   const container = useRef(null);
   const dispatch = useDispatch();
-  const [showOverFlow, setShowOverFlow] = useState(false);
   const [viz, setViz] = React.useState(null);
   const [workbook, setWorkBook] = React.useState(null);
-  const [filters, setFilters] = React.useState({ ...initFilters });
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
-  const [counter, setCounter] = React.useState(0);
   const { appliedFilters, savedFilters } = useData().sharedReducer;
-  let url =
-    props?.url ||
-    "http://public.tableau.com/views/RegionalSampleWorkbook/College";
+  let url = props?.url;
 
   const reportFilters = fromAppliedToOptions(appliedFilters);
   const mappedfilters = props.filterMappingResult(
@@ -47,11 +38,6 @@ const TableauViz = (props) => {
     },
   };
 
-  const handleClcik = () => {
-    sheet().clearFilterAsync("Region");
-    setFilters(initFilters);
-  };
-
   const initViz = () => {
     setViz(new tableau.Viz(container.current, url, options));
   };
@@ -60,10 +46,7 @@ const TableauViz = (props) => {
     initViz();
   }, []);
 
-  React.useEffect(() => {}, [workbook]);
-
   React.useEffect(() => {
-    console.log("change in ui");
     if (vizIsInteractive) {
       setWorkBook(viz.getWorkbook().getActiveSheet());
       setVizIsInteractive(true);
@@ -101,52 +84,12 @@ const TableauViz = (props) => {
       };
       handleApply(mockFilters);
     }
-  }, [
-    !!viz,
-    vizIsInteractive,
-    filters,
-    appliedFilters,
-    savedFilters,
-    workbook,
-  ]);
-
-  const yearFilter = (year) => {
-    sheet().applyFilterAsync(
-      "College",
-      "Music",
-      tableau.FilterUpdateType.REPLACE
-    );
-  };
-
-  const resetFilters = () => {
-    setFilters({ Gender: ["Women"] });
-  };
+  }, [!!viz, vizIsInteractive, appliedFilters, savedFilters, workbook]);
 
   if (!!!props.url) return null;
 
-  const handleFChange = () => {
-    dispatch(
-      applyFilters([
-        ...appliedFilters,
-        {
-          filter_id: "Gender",
-          value: "Men",
-        },
-      ])
-    );
-  };
-
-  const testNativeFilterMethod = () => {
-    sheet().applyFilterAsync(
-      "College",
-      "Music",
-      tableau.FilterUpdateType.REPLACE
-    );
-  };
-
   return (
     <>
-      <button onClick={testNativeFilterMethod}> Test</button>
       <div style={{ width: "100%", height: "100%" }} className="dark-hover">
         <div
           className=""
@@ -166,77 +109,3 @@ const TableauViz = (props) => {
 };
 
 export default TableauViz;
-
-// class TableauViz extends Component {
-//   componentDidMount() {
-//     this.initViz();
-//     // alert("render");
-//   }
-
-//   //Function call API
-//   initViz() {
-//     const vizUrl =
-//       // "https://public.tableau.com/views/Run_COVID_19/Dashboard?:display_count=y&:origin=viz_share_link";
-//       "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
-//     const options = {
-//       height: "100vh",
-//       width: "100%",
-//       hideTabs: false,
-//       hideToolbar: true,
-//       onFirstInteractive: function () {
-//         // let viz = window.tableau.Viz(this.vizContainer, vizUrl, options);
-//         ;
-//         let workbook = viz.getWorkbook();
-//         let activeSheet = workbook.getActiveSheet();
-//       },
-//     };
-//     ;
-
-//     const vizContainer = this.vizContainer;
-//     let viz = new window.tableau.Viz(vizContainer, vizUrl, options);
-//     // const workbook = viz?.Workbook();
-//     // const activeSheet = workbook.getActiveSheet();
-//   }
-
-//   applyNewFilter() {
-//     console.log("this", this.activeSheet);
-
-//     // this.window.tableau.activeSheet.applyFilterAsync(
-//     //   "Region",
-//     //   "The Americas",
-//     //   tableau.FilterUpdateType.REPLACE
-//     // );
-//   }
-
-//   render() {
-//     return (
-//       <div className="" style={{ width: "50rem", height: "100vh" }}>
-//         <Button onClick={this.applyNewFilter.bind(this)}>update region</Button>
-//         <div
-//           ref={(div) => {
-//             this.vizContainer = div;
-//           }}
-//         />
-//       </div>
-//     );
-//   }
-// }
-
-// export default TableauViz;
-
-// const useStyles = (theme) => ({
-//   respContainer: {
-//     position: "relative",
-//     paddingBottom: "56.25%",
-//     paddingTop: "100px",
-//     height: "100vh",
-//     overflow: "hidden",
-//   },
-//   videoContainer: {
-//     position: "absolute",
-//     top: "0",
-//     left: "0",
-//     width: "100%",
-//     height: "100%",
-//   },
-// });
