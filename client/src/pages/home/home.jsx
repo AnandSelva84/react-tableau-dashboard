@@ -54,10 +54,10 @@ const HomePage = (props) => {
     <div className="home-landing-page">
       <div className="landing-container">
         <div className="wellcome-message">
-          <div>Hello Timothy!</div>
+          <div>Hello Panda!</div>
 
           <div className="app-name-words">
-            <span>Wellcome to the</span>
+            <span>Welcome to the</span>
             <StyledTitle
               middleColor="yellow"
               title={app?.application?.name}

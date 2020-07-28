@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/images/usaa-logo.svg";
+import logo from "../../assets/images/usaa.png";
 const Logo = (props) => {
   const { url } = props;
   //   const img = require(url);

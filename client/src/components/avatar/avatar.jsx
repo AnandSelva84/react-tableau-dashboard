@@ -1,6 +1,7 @@
 import React from "react";
 import "./avatar.css";
-import img from "../../assets/images/panda.png";
+import img from "../../assets/images/Head-512.png";
+
 const HomeAvatar = () => (
   <div className="logo">
     <img
