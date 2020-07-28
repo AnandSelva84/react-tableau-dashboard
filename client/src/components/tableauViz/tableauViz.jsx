@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 import { Promise } from "es6-promise";
 import _ from "loadash";
 
@@ -17,27 +17,29 @@ class TableauViz extends Component {
 
     this.vizRef = React.createRef();
     this.dashboardMeta = {};
-    this.tableauViz;
-    this.workbook;
+    this.tableauViz = null;
+    this.workbook = null;
     this.currentwidth = -1;
     this.currentHeight = -1;
-    this.appliedFilterValues - {};
+    this.appliedFilterValues = {};
     this.appliedParmvalues = {};
-    this.needMetadataRefresh - true;
-    this.selectedMarks - {};
+    this.needMetadataRefresh = true;
+    this.selectedMarks = {};
 
     this.firstInteractive = this.firstInteractive.bind(this);
     this.initializeTableau = this.initializeTableau.bind(this);
-    this.checkResize - this.checkResize.bind(this);
-    this.handleF1lterChangeFromProps -
-      this.handleFilterChangeFromProps.bind(this);
+    this.checkResize = this.checkResize.bind(this);
+    this.handleF1lterChangeFromProps = this.handleFilterChangeFromProps.bind(
+      this
+    );
     this.handleParameterChangeFromProps = this.handleParameterChangeFromProps.bind(
       this
     );
     this.updateRowCounts = this.updateRowCounts.bind(this);
     this.retrieveSelectedMarks = this.retrieveSelectedMarks.bind(this);
-    this.handleParameterChangeFromViz -
-      this.handleParameterChangeFromViz.bind(this);
+    this.handleParameterChangeFromViz = this.handleParameterChangeFromViz.bind(
+      this
+    );
   }
 
   componentDidMount() {

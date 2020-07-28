@@ -5,9 +5,8 @@ import { getViewData } from "./../../../redux/methods/panel-pocessing";
 
 export default function HomePanel(props) {
   const history = useHistory();
-
   const { all_views, panel } = props;
-  const { title_action_code: panelId } = panel;
+  const { title_action_code: panelId, panel_header_title } = panel;
 
   const allEmbeded = panel.embedded_fields
     .map((p) => p.embedded_field_options)
@@ -33,7 +32,7 @@ export default function HomePanel(props) {
           });
         }}
       >
-        Effectivnes
+        {panel_header_title}
       </div>
       <div className="units-container">
         {allEmbeded.map(({ text, value: id }) => (

@@ -49,7 +49,6 @@ const MainSwitch = React.memo((props) => {
   const [current, setCurrent] = React.useState("Business");
   React.useEffect(() => {
     setLoaded(true);
-    debugger;
     const originalValue = appliedFilters.find((f) => f.id === "Hierarchies")
       ?.value;
     if (!!originalValue) dispatch(setCurrentMainFilter(originalValue));

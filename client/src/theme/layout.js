@@ -10,6 +10,7 @@ const theme = {
   darkHeader: {
     backgroundColor: "#192734",
     color: "#61dafb",
+    minHeight: "8vh",
   },
   subHeader: {
     padding: "0rem 1rem ",

@@ -28,6 +28,7 @@ import ChipsWrapper from "./chip-wrapper-dialog";
 import { colors } from "../../constants/colors";
 import ClickableIcon from "../../components/icon-button";
 import ShowGroup from "../../pages/level-3/button-group";
+import { useLocation } from "react-router-dom";
 
 const SubHeader = () => {
   const {
@@ -40,6 +41,8 @@ const SubHeader = () => {
     drawer,
     showReport,
   } = useData().sharedReducer;
+
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const createChip = (id, value) => `${id} : ${value}`;
   const isVisiable = filterState.length > 0;
@@ -208,6 +211,8 @@ const SubHeader = () => {
       }
     });
   }, [filterState]);
+
+  if (pathname == "/") return null;
 
   return (
     <div>

@@ -20,6 +20,7 @@ const TableauViz = (props) => {
   const dispatch = useDispatch();
   const [showOverFlow, setShowOverFlow] = useState(false);
   const [viz, setViz] = React.useState(null);
+  const [workbook, setWorkBook] = React.useState(null);
   const [filters, setFilters] = React.useState({ ...initFilters });
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
@@ -59,11 +60,14 @@ const TableauViz = (props) => {
     initViz();
   }, []);
 
+  React.useEffect(() => {}, [workbook]);
+
   React.useEffect(() => {
     console.log("change in ui");
-    try {
-      if (isActiveSheet()) setVizIsInteractive(true);
-    } catch {}
+    if (vizIsInteractive) {
+      setWorkBook(viz.getWorkbook().getActiveSheet());
+      setVizIsInteractive(true);
+    }
   });
 
   const sheet = () => {
@@ -76,9 +80,7 @@ const TableauViz = (props) => {
   };
 
   const applyfilter = (id = "", value = []) => {
-    try {
-      sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
-    } catch {}
+    sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
   };
 
   const handleApply = (filterObj = null) => {
@@ -91,15 +93,22 @@ const TableauViz = (props) => {
   };
 
   React.useEffect(() => {
-    if (!!viz && vizIsInteractive) {
+    if (!!workbook) {
       console.log("initt values", reportFilters);
       console.log("final filter to apply ", mappedfilters);
       const mockFilters = {
         College: "Music",
       };
-      handleApply(mappedfilters);
+      handleApply(mockFilters);
     }
-  }, [!!viz, vizIsInteractive, filters, appliedFilters, savedFilters]);
+  }, [
+    !!viz,
+    vizIsInteractive,
+    filters,
+    appliedFilters,
+    savedFilters,
+    workbook,
+  ]);
 
   const yearFilter = (year) => {
     sheet().applyFilterAsync(
@@ -128,7 +137,11 @@ const TableauViz = (props) => {
   };
 
   const testNativeFilterMethod = () => {
-    sheet().applyFilterAsync("Cosa", "Bank", tableau.FilterUpdateType.REPLACE);
+    sheet().applyFilterAsync(
+      "College",
+      "Music",
+      tableau.FilterUpdateType.REPLACE
+    );
   };
 
   return (

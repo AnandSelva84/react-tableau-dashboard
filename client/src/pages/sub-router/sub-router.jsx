@@ -21,7 +21,6 @@ const ToRender = (props) => {
 };
 
 const SubRouter = (props) => {
-  debugger;
   const { app, panels } = useData().sharedReducer;
   const { all_views = [] } = app;
   const [currentLvl, setCurrentLvl] = useState(null);
@@ -44,7 +43,6 @@ const SubRouter = (props) => {
 
   useEffect(() => {
     if (!!data && !!data.panel_definitions) {
-      debugger;
       const { view_id: panelViewId } = data.panel_definitions[0];
 
       if (panelViewId[panelViewId.length - 1] === "3") {

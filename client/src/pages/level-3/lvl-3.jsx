@@ -34,7 +34,6 @@ import {
 } from "../../redux/methods/panel-pocessing";
 
 const LVL_3 = React.memo((props) => {
-  debugger;
   const { singleReportData } = props;
   const { panel_header_title: ReportTitle, embedded_viz } = singleReportData;
   const { embed_url: ReportURL } = embedded_viz[0];

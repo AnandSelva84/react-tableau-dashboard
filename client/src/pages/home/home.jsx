@@ -14,22 +14,41 @@ import HomePanel from "./home-panel/home-panel";
 import { ChevronRight, ChevronLeft } from "@material-ui/icons";
 
 const HomePage = (props) => {
+  const dispatch = useDispatch();
   const { app, panels = [] } = useData().sharedReducer;
   const { all_views = [] } = app;
   const [carouselValue, setCarouselValue] = useState(0);
-  const dispatch = useDispatch();
+
+  const maxNumberOfScrolls = Math.ceil(panels.length / 3);
+  const disableRightCondition =
+    Math.abs(carouselValue / 57) !== maxNumberOfScrolls;
 
   useEffect(() => {
     if (!!app) dispatch(setCurrentLocation(app?.subject_area[0]?.name));
   }, []);
 
   const handleRight = () => {
-    setCarouselValue(carouselValue - 10);
+    if (disableRightCondition) setCarouselValue(carouselValue - 57);
   };
 
   const handleLeft = () => {
-    if (carouselValue !== 0) setCarouselValue(carouselValue + 10);
+    if (carouselValue !== 0) setCarouselValue(carouselValue + 57);
   };
+
+  const leftDisabelCarsoulStyle =
+    carouselValue !== 0
+      ? {}
+      : {
+          cursor: "default",
+          opacity: "0.4",
+        };
+
+  const rightDisabelCarsoulStyle = disableRightCondition
+    ? {}
+    : {
+        cursor: "default",
+        opacity: "0.4",
+      };
 
   return (
     <div className="home-landing-page">
@@ -45,33 +64,43 @@ const HomePage = (props) => {
               className="home-styled-title"
             />
           </div>
+        </div>
+        <div className="carosel-new-container">
+          <div className="scrolling-btn left-scroll-btn ">
+            <ChevronLeft
+              style={{
+                cursor: "pointer",
+                width: "7rem",
+                height: "7rem",
+                color: "#f4f4f4",
+                ...leftDisabelCarsoulStyle,
+              }}
+              onClick={handleLeft}
+            />
+          </div>
           {panels && (
-            <div className="panles-container">
-              <div className="triangle right-scroll-btn ">
-                <ChevronRight
-                  style={{ cursor: "pointer", width: "7rem", height: "7rem" }}
-                  onClick={handleRight}
-                />
-              </div>
-
-              <div className="triangle left-scroll-btn ">
-                <ChevronLeft
-                  style={{ cursor: "pointer", width: "7rem", height: "7rem" }}
-                  onClick={handleLeft}
-                />
-              </div>
-              <div className="carousel-container">
-                <div
-                  className="carousel"
-                  style={{ transform: `translateX(${carouselValue}rem)` }}
-                >
-                  {panels.map((panel) => (
-                    <HomePanel panel={panel} all_views={all_views} />
-                  ))}
-                </div>
-              </div>
+            <div
+              className="new-carousel"
+              style={{ transform: `translateX(${carouselValue}rem)` }}
+            >
+              {panels.map((panel) => (
+                <HomePanel panel={panel} all_views={all_views} />
+              ))}
             </div>
           )}
+
+          <div className="scrolling-btn right-scroll-btn ">
+            <ChevronRight
+              style={{
+                cursor: "pointer",
+                width: "7rem",
+                height: "7rem",
+                color: "#f4f4f4",
+                ...rightDisabelCarsoulStyle,
+              }}
+              onClick={handleRight}
+            />
+          </div>
         </div>
       </div>
     </div>

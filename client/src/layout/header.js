@@ -14,7 +14,9 @@ const Header = () => {
   const { header, darkHeader } = theme;
   const { currentApp } = useData().sharedReducer;
 
-  const query = useQuery();
+     const query = useQuery();
+
+
   const app = query.get("app");
 
   React.useEffect(() => {

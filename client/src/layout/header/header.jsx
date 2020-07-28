@@ -20,7 +20,7 @@ import {
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
 import response from "../../models/getInfo";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Navigator from "../../components/navigator/navigator";
 import HomeAvatar from "../../components/avatar/avatar";
 import Logo from "./logo";
@@ -44,12 +44,13 @@ const Header = () => {
     currentMainFilter,
     currentLocation,
   } = useData().sharedReducer;
-  console.log("initial ", filterState);
 
   const domain = fullURL.substring(
     fullURL.lastIndexOf(":") + 1,
     fullURL.lastIndexOf("/")
   );
+
+  const { pathname } = useLocation();
 
   const getMainFilterAccordingToName = (name) => {
     const filter =
@@ -155,8 +156,11 @@ const Header = () => {
   const onLogoClicked = () => {
     if (history.location.pathname !== "/") history.push("/");
   };
+  const landingPageStyleCondition = useLocation().pathname == "/";
 
-  const dark = !darkMode ? null : darkHeader;
+  const dark = !landingPageStyleCondition ? null : darkHeader;
+
+  const middleColor = landingPageStyleCondition ? "yellow" : null;
   return (
     <>
       {!!appData?.application?.name && (
@@ -165,11 +169,16 @@ const Header = () => {
             <div className="" style={{ display: "flex", alignItems: "center" }}>
               <Logo url={logoUrl} />
               <div onClick={onLogoClicked} className="header-title">
-                <StyledTitle title={appData?.application?.name} />
+                <StyledTitle
+                  title={appData?.application?.name}
+                  middleColor={middleColor}
+                />
               </div>
             </div>
           </div>
-          {!!panels && <Navigator panels={panels} app={appData} />}
+          {!!panels && pathname != "/" && (
+            <Navigator panels={panels} app={appData} />
+          )}
           <div className="logo-side">
             <HomeAvatar />
             <div className="header-title hello">Hello Panda</div>

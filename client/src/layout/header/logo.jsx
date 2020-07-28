@@ -1,16 +1,16 @@
 import React from "react";
-import logo from "../../assets/images/ampLogo.png";
+import logo from "../../assets/images/usaa-logo.svg";
 const Logo = (props) => {
   const { url } = props;
   //   const img = require(url);
   return (
     <>
       {!!url && (
-        <div style={{ maxWidth: "4rem", height: "100%" }}>
+        <div className="usaa-logo-container">
           <img
-            src={require("../../assets/images/ampLogo.png")}
+            src={logo}
             alt="panda img"
-            style={{ width: "4rem", height: "auto" }}
+            style={{ width: "100%", height: "auto" }}
           />
         </div>
       )}

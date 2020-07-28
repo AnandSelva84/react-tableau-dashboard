@@ -17,7 +17,6 @@ import "./level-2.css";
 import { getViewData } from "./../../redux/methods/panel-pocessing";
 
 const LVL_2 = (props) => {
-  debugger;
   let { id: route } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -42,8 +41,6 @@ const LVL_2 = (props) => {
     props.getVizDataByUrl(url).panel_header_title;
 
   const handleTitleClick = (singlePanel, index) => {
-    debugger;
-
     history.push(`./storyDeliveryLeadTime`);
 
     const { view_id } = singlePanel;
