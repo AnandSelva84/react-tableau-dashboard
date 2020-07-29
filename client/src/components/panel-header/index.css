@@ -1,0 +1,15 @@
+.panel-header-container {
+  font-weight: 400;
+  color: #ffff;
+  min-height: 54px;
+  background-color: #12395b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+}
+
+.panel-header-container {
+  font-size: 16px;
+  cursor: pointer;
+}

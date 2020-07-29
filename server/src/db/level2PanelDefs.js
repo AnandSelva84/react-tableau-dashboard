@@ -84,14 +84,14 @@ const level2PanelDefs = {
             {
               text: "Bar",
               value:
-                "http://public.tableau.com/views/RegionalSampleWorkbook/College_Bar",
+                "http://public.tableau.com/views/RegionalSampleWorkbook/College",
               option_order: 1,
               option_thumbnail: null,
             },
             {
               text: "Box",
               value:
-                "http://public.tableau.com/views/RegionalSampleWorkbook/Colleg_Box",
+                "http://public.tableau.com/views/RegionalSampleWorkbook/Flights",
               option_order: 2,
               option_thumbnail: "",
             },

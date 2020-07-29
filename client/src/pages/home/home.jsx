@@ -12,6 +12,7 @@ import { setCurrentLocation } from "./../../redux/actions/shared";
 import StyledTitle from "../../components/styled-title/styled-title";
 import HomePanel from "./home-panel/home-panel";
 import { ChevronRight, ChevronLeft } from "@material-ui/icons";
+import SimpleSelect from "../../components/simple-select/simple-select";
 
 const HomePage = (props) => {
   const dispatch = useDispatch();
@@ -55,7 +56,6 @@ const HomePage = (props) => {
       <div className="landing-container">
         <div className="wellcome-message">
           <div>Hello Panda!</div>
-
           <div className="app-name-words">
             <span>Welcome to the</span>
             <StyledTitle

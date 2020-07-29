@@ -16,7 +16,7 @@ const WrappedReport = (props) => {
 
   useEffect(() => {
     setRender(false);
-  }, [appliedFilters]);
+  }, [appliedFilters, props.url]);
 
   useEffect(() => {
     setLoaded(true);
@@ -34,8 +34,6 @@ const WrappedReport = (props) => {
 };
 
 const TableauViz = (props) => {
-  debugger;
-
   const container = useRef(null);
   const dispatch = useDispatch();
   const [viz, setViz] = React.useState(null);

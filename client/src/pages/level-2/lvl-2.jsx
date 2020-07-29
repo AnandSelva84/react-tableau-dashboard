@@ -16,6 +16,9 @@ import "./level-2.css";
 // import TableauViz from "../report/report";
 import { getViewData } from "./../../redux/methods/panel-pocessing";
 import WrappedReport from "../../components/report/report";
+import { ToggleSwitch } from "./../../components/switch/switch";
+import PanelHeader from "../../components/panel-header/panel-header";
+import Panel from "./panel/panel";
 
 const LVL_2 = (props) => {
   let { id: route } = useParams();
@@ -65,13 +68,21 @@ const LVL_2 = (props) => {
     // const { value } = embededFeilds[0].embedded_field_options[index];
   };
 
+  const onSwitchOff = () => {
+    alert("switch is off");
+  };
+
+  const onSwitchOn = () => {
+    alert("switch is on");
+  };
+
   return (
     <>
       {!!vizUrls && (
         <div className="ampBody">
           {mlutiReportData.map((singlePanel, index) => (
             <div className="panel">
-              <div className="panel-title no-clickable">
+              {/* <div className="panel-title no-clickable">
                 <span
                   onClick={() => {
                     filterMapping(singlePanel);
@@ -86,7 +97,19 @@ const LVL_2 = (props) => {
                 >
                   View Report
                 </h3>
-              </div>
+              </div> */}
+
+              <Panel
+                singlePanel={singlePanel}
+                filterMappingResult={filterMappingResult}
+                filterMapping={filterMapping}
+              />
+              {/* <PanelHeader
+                title={singlePanel.panel_header_title}
+                {...singlePanel}
+                onSwitchOn={onSwitchOn}
+                onSwitchOff={onSwitchOff}
+              />
 
               <WrappedReport
                 options={{ height: "50vh" }}
@@ -96,7 +119,7 @@ const LVL_2 = (props) => {
                   singlePanel.embedded_viz[0].embed_url
                 )}
                 hideToolbar={true}
-              />
+              /> */}
             </div>
           ))}
         </div>
