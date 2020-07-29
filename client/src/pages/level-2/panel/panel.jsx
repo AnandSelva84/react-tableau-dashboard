@@ -6,7 +6,7 @@ export default function Panel(props) {
   debugger;
   let url = "";
   const [chartState, setChartState] = useState("Bar");
-  const { singlePanel, filterMappingResult, filterMapping } = props;
+  const { singlePanel, filterMappingResult, filterMapping, index } = props;
   const { embedded_viz } = singlePanel;
   const { embed_url } = embedded_viz[0];
   const { embedded_fields } = singlePanel;
@@ -26,11 +26,16 @@ export default function Panel(props) {
     // alert(chartState);
   }, [chartState]);
 
+  const handleViewClick = () => {
+    props.handleTitleClick(singlePanel, index);
+  };
+
   return (
     <div>
       <PanelHeader
         title={singlePanel.panel_header_title}
         {...singlePanel}
+        handleViewClick={handleViewClick}
         onSwitchChange={onSwitchChange}
       />
 

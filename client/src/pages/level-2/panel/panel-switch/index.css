@@ -1,0 +1,6 @@
+.switch-container {
+  display: flex;
+  gap: 0.8rem;
+  color: #fff;
+  align-items: center;
+}

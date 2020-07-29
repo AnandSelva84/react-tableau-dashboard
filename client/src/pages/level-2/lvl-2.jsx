@@ -100,9 +100,11 @@ const LVL_2 = (props) => {
               </div> */}
 
               <Panel
+                index={index}
                 singlePanel={singlePanel}
                 filterMappingResult={filterMappingResult}
                 filterMapping={filterMapping}
+                handleTitleClick={handleTitleClick}
               />
               {/* <PanelHeader
                 title={singlePanel.panel_header_title}
