@@ -12,6 +12,7 @@ import ToolBar from "../components/tool-bar/tool-bar";
 import SubRouter from "../pages/sub-router/sub-router";
 import Snackbar from "../components/snackbar/snackbar";
 import LoadingWrapper from "../components/loading-hoc";
+import Footer from "../layout/footer";
 //import Report from "../pages/report/tableau-report";
 // import TableauViz from "../pages/report/report";
 // import TableauViz from "../pages/report/report";
@@ -34,6 +35,7 @@ const Router = () => {
             {/* <Route exact path="/r/report" component={() => <TableauViz />} /> */}
           </Switch>
           <Snackbar />
+          <Footer />
         </SwipSideDrawer>
       </div>
     </BrowserRouter>
