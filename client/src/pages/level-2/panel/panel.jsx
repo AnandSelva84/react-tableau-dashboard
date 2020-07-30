@@ -3,7 +3,6 @@ import PanelHeader from "../../../components/panel-header/panel-header";
 import WrappedReport from "../../../components/report/report";
 
 export default function Panel(props) {
-  debugger;
   let url = "";
   const [chartState, setChartState] = useState("Bar");
   const { singlePanel, filterMappingResult, filterMapping, index } = props;

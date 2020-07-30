@@ -8,7 +8,7 @@ import useQuery from "./hooks/useQuery";
 
 function App() {
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       {/* <SnackbarProvider
         maxSnack={3}
         anchorOrigin={{

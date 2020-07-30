@@ -1,4 +1,10 @@
 .app-container {
   position: relative;
-  min-height: 100vh;
+  padding-bottom: 50px;
+  height: 100%;
+}
+
+body,
+html {
+  height: 100%;
 }

@@ -171,7 +171,7 @@ const Header = () => {
               <div onClick={onLogoClicked} className="header-title">
                 <StyledTitle
                   title={appData?.application?.name}
-                  middleColor={middleColor}
+                  middleColor="yellow"
                 />
               </div>
             </div>

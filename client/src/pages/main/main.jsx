@@ -58,10 +58,12 @@ const Main = React.memo(() => {
   // }, [App]);
 
   return (
-    <div className={style}>
+    // <div className={style} style={{ height: "100%" }}>
+    <>
       {appIsLoading && <LaodingScreen />}
       {!!App && !appIsLoading && <HomePage />}
-    </div>
+    </>
+    /* </div> */
   );
 });
 
