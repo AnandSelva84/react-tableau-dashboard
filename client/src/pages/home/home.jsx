@@ -66,7 +66,7 @@ const HomePage = (props) => {
           </div>
         </div>
 
-        <div className="home-reports-container">
+        {/* <div className="home-reports-container">
           {panels && (
             <>
               {panels.map((panel) => (
@@ -74,8 +74,8 @@ const HomePage = (props) => {
               ))}
             </>
           )}
-        </div>
-        {/* <div className="carosel-new-container">
+        </div> */}
+        <div className="carosel-new-container">
           <div className="scrolling-btn left-scroll-btn ">
             <ChevronLeft
               style={{
@@ -111,7 +111,7 @@ const HomePage = (props) => {
               onClick={handleRight}
             />
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
