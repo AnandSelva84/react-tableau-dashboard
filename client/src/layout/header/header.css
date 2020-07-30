@@ -23,7 +23,7 @@
 
 .logo-side {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .logo-side > * {

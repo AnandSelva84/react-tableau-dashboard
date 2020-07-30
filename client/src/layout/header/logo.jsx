@@ -9,7 +9,7 @@ const Logo = (props) => {
         <div className="usaa-logo-container">
           <img
             src={logo}
-            alt="panda img"
+            alt="usaa logo"
             style={{ width: "100%", height: "auto" }}
           />
         </div>

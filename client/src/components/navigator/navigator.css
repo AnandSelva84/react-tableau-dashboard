@@ -1,13 +1,12 @@
 .nav-wrapper {
   display: flex;
   color: white;
-  min-height: 60%;
-  max-height: 2rem;
   align-items: center;
   margin-right: 10rem;
   text-align: center;
   border-radius: 0 0 0.5rem 0.5rem;
   background-color: var(--usaa_blue);
+  min-height: 100%;
 }
 
 .nav-hero-title {

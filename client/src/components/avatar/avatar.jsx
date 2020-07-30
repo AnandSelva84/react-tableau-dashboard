@@ -4,11 +4,7 @@ import img from "../../assets/images/Head-512.png";
 
 const HomeAvatar = () => (
   <div className="logo">
-    <img
-      src={img}
-      alt="panda img"
-      style={{ width: "2.0rem", height: "auto" }}
-    />
+    <img src={img} alt="panda img" style={{ width: "48px", height: "auto" }} />
   </div>
 );
 

@@ -164,7 +164,7 @@ const Header = () => {
   return (
     <>
       {!!appData?.application?.name && (
-        <Paper style={{ ...header, ...dark, borderRadius: "0" }}>
+        <Paper style={{ ...header, ...darkHeader, borderRadius: "0" }}>
           <div className="left-side">
             <div className="" style={{ display: "flex", alignItems: "center" }}>
               <Logo url={logoUrl} />
