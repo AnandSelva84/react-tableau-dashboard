@@ -65,6 +65,16 @@ const HomePage = (props) => {
             />
           </div>
         </div>
+
+        {/* <div className="home-reports-container">
+          {panels && (
+            <>
+              {panels.map((panel) => (
+                <HomePanel panel={panel} all_views={all_views} />
+              ))}
+            </>
+          )}
+        </div> */}
         <div className="carosel-new-container">
           <div className="scrolling-btn left-scroll-btn ">
             <ChevronLeft

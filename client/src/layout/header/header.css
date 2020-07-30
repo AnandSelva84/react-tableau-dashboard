@@ -2,6 +2,7 @@
   font-size: 1.1rem;
   margin: 0 1rem;
   cursor: pointer;
+  color: #fff;
 }
 .left-side {
   display: flex;
@@ -23,7 +24,7 @@
 
 .logo-side {
   display: flex;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .logo-side > * {

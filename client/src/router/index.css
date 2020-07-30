@@ -1,0 +1,10 @@
+.app-container {
+  position: relative;
+  padding-bottom: 50px;
+  height: 100%;
+}
+
+body,
+html {
+  height: 100%;
+}

@@ -6,7 +6,7 @@ import { getViewData } from "./../../../redux/methods/panel-pocessing";
 export default function HomePanel(props) {
   const history = useHistory();
   const { all_views, panel } = props;
-  const { title_action_code: panelId, panel_header_title } = panel;
+  const { title_action_code: panelId, panel_header_title, is_active } = panel;
 
   const allEmbeded = panel.embedded_fields
     .map((p) => p.embedded_field_options)
@@ -21,17 +21,17 @@ export default function HomePanel(props) {
     return route;
   };
 
+  const handleTitleClick = () => {
+    if (is_active)
+      history.push({
+        pathname: `/${getRoute(panelId)}`,
+      });
+  };
+
   return (
     <div className="home-panel">
       <div className="reports-count">{allEmbeded.length}</div>
-      <div
-        className="home-panel-title"
-        onClick={() => {
-          history.push({
-            pathname: `/${getRoute(panelId)}`,
-          });
-        }}
-      >
+      <div className="home-panel-title" onClick={handleTitleClick}>
         {panel_header_title}
       </div>
       <div className="units-container">
