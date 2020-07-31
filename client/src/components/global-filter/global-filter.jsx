@@ -22,15 +22,6 @@ const GlobalFilters = React.memo(() => {
     if (!!saved) dispatch(editFilterState(saved));
   }, []);
 
-  // const getValues = (title) => {
-  //   console.log(filterState);
-
-  //   ;
-  //   return filterState
-  //     .filter((value) => value.id === title)
-  //     .map((value) => value.id);
-  // };
-
   return (
     <div className="global-wrapper">
       {show && !!newFilters && (

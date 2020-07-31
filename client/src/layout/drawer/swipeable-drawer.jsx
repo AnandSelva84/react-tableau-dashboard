@@ -133,7 +133,6 @@ const SwipSideDrawer = (props) => {
     });
     return counter;
   };
-  // const showReport = howManySlashes(pathname) > 1;
 
   const getWidth = () => {
     if (!drawer) return 0;
@@ -149,9 +148,6 @@ const SwipSideDrawer = (props) => {
         anchor="left"
         open={drawer}
         onClose={handleDrawerClose}
-        // classes={{
-        //   paper: classes.drawerPaper,
-        // }}
       >
         <div
           className={classes.drawerHeader}
@@ -182,11 +178,7 @@ const SwipSideDrawer = (props) => {
           )}
         </div>
         <Divider />
-        <div
-          className="global-filters"
-          // style={{ maxWidth: showReport ? "50%" : "100%" }}
-        >
-          {/* <GlobalFilters /> */}
+        <div className="global-filters">
           <PrevGlobalFilters />
         </div>
       </Drawer>

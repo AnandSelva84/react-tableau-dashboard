@@ -82,23 +82,6 @@ const LVL_2 = (props) => {
         <div className="ampBody">
           {mlutiReportData.map((singlePanel, index) => (
             <div className="panel">
-              {/* <div className="panel-title no-clickable">
-                <span
-                  onClick={() => {
-                    filterMapping(singlePanel);
-                  }}
-                >
-                  {singlePanel.panel_header_title}
-                </span>
-
-                <h3
-                  className="report-link"
-                  onClick={() => handleTitleClick(singlePanel, index)}
-                >
-                  View Report
-                </h3>
-              </div> */}
-
               <Panel
                 index={index}
                 singlePanel={singlePanel}
@@ -106,22 +89,6 @@ const LVL_2 = (props) => {
                 filterMapping={filterMapping}
                 handleTitleClick={handleTitleClick}
               />
-              {/* <PanelHeader
-                title={singlePanel.panel_header_title}
-                {...singlePanel}
-                onSwitchOn={onSwitchOn}
-                onSwitchOff={onSwitchOff}
-              />
-
-              <WrappedReport
-                options={{ height: "50vh" }}
-                url={singlePanel.embedded_viz[0].embed_url}
-                filterMappingResult={filterMappingResult}
-                filterMapping={filterMapping(
-                  singlePanel.embedded_viz[0].embed_url
-                )}
-                hideToolbar={true}
-              /> */}
             </div>
           ))}
         </div>

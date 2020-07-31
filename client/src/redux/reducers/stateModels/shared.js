@@ -50,6 +50,7 @@ const sharedState = {
   showReport: false,
   currentLocation: "",
   showValue: "graph",
+  timeFilters: [],
 };
 
 export default sharedState;

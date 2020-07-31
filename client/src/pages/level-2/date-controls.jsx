@@ -16,19 +16,7 @@ const DateControls = () => {
     filterState.find((f) => f.id === "Date Select")?.value || "Date Select"
   );
 
-  return (
-    <>
-      <PrevSelect
-        values={dateOptions}
-        title="Time Interval"
-        lvl={0}
-        custom
-        placeholder="Time Interval"
-        onValuesChanged={() => {}}
-      />
-      {!!showPickers && <DatePickers />}
-    </>
-  );
+  return <>{!!showPickers && <DatePickers />}</>;
 };
 
 export default DateControls;

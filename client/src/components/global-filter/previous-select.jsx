@@ -312,7 +312,9 @@ const PrevSelect = (props) => {
   };
 
   const hanldeClose = () => {
-    setShowMenu(false);
+    try {
+      setShowMenu(false);
+    } catch (error) {}
   };
 
   const toggle = () => {

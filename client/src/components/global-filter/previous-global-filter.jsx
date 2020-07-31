@@ -18,6 +18,8 @@ import MainSwitch from "../main-switch/main-switch";
 import { useHistory } from "react-router-dom";
 import DateControls from "../../pages/level-2/date-controls";
 import SimpleSelect from "../simple-select/simple-select";
+import TimeFilters from "./time-filters/index";
+
 const PrevSelect = React.lazy(() => import("./previous-select"));
 
 const PrevGlobalFilters = React.memo(() => {
@@ -246,7 +248,7 @@ const PrevGlobalFilters = React.memo(() => {
                     </React.Suspense>
                   );
               })}
-              {howManySlashes(pathname) === 1 && !!path && <SimpleSelect />}
+              {howManySlashes(pathname) === 1 && !!path && <TimeFilters />}
             </div>
           )}
 

@@ -31,6 +31,7 @@ import ShowGroup from "../../pages/level-3/button-group";
 import { useLocation } from "react-router-dom";
 
 const SubHeader = () => {
+  debugger;
   const {
     filters,
     filterState,

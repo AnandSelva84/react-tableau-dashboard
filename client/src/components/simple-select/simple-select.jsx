@@ -11,7 +11,7 @@ const Option = (props) => {
       <CardActionArea
         ref={props.ref}
         style={{ ...select.option, minHeight: "42px", padding: "auto 1rem" }}
-        onClick={() => {}}
+        onClick={() => props.onClick()}
       >
         <div style={{ paddingLeft: "1rem", fontSize: "16px" }}>
           {props.display}
@@ -22,10 +22,15 @@ const Option = (props) => {
 };
 
 const SimpleSelect = (props) => {
+  debugger;
   const [showMenu, setShowMenu] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+  const { options, handleChange } = props;
 
   const hanldeClose = () => {
-    setShowMenu(false);
+    try {
+      setShowMenu(false);
+    } catch (error) {}
   };
 
   const handleOpen = () => {
@@ -34,6 +39,22 @@ const SimpleSelect = (props) => {
 
   const toggle = () => {
     showMenu ? hanldeClose() : handleOpen();
+  };
+
+  // const options = [
+  //   {
+  //     title: "hello",
+  //   },
+  //   {
+  //     title: "hello 1",
+  //   },
+  //   {
+  //     title: "hello2",
+  //   },
+  // ];
+
+  const handleClick = (value) => {
+    setSelectedValue(value);
   };
 
   return (
@@ -46,11 +67,18 @@ const SimpleSelect = (props) => {
           variant="outlined"
           // placeholder={!props.custom ? props?.title : props.placeholder}
           label={"Time Interval"}
+          value={props?.value?.value || ""}
+          InputProps={{
+            readOnly: true,
+          }}
         />
         {showMenu && (
           <OptionsWrapper onScroll={() => {}} onClose={() => {}}>
-            {[1, 2, 3].map((value) => (
-              <Option display={"value"} />
+            {options.map((option) => (
+              <Option
+                display={option.filter_display_text}
+                onClick={() => handleChange(option)}
+              />
             ))}
           </OptionsWrapper>
         )}

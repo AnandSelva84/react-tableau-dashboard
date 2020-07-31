@@ -16,6 +16,7 @@ import {
   setFilters,
   setCurrentLocation,
   setPanelDefinitions,
+  setTimeFilters,
 } from "../../redux/actions/shared";
 import useQuery from "../../hooks/useQuery";
 import useData from "../../hooks/useStore";
@@ -30,6 +31,7 @@ import { newFiltersURL, getInfoURL, getPanelDefs } from "../../enviroment/urls";
 import { getDomain } from "../../enviroment/domain";
 import useSwitchFetch from "../../hooks/switch-useFetch";
 import StyledTitle from "../../components/styled-title/styled-title";
+import { extractFilters } from "./../../redux/methods/filters-processing";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -150,7 +152,10 @@ const Header = () => {
   }, [currentMainFilter]);
 
   useEffect(() => {
-    if (!!filters && !filtersLoading) dispatch(setFilters(filters.filters));
+    //  dispatch(setFilters(filters.filters));
+    if (!!filters && !filtersLoading)
+      dispatch(setFilters(extractFilters(filters).reportFilters));
+    dispatch(setTimeFilters(extractFilters(filters).timeFilters));
   }, [filters, filtersLoading]);
 
   const onLogoClicked = () => {

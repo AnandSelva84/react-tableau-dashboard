@@ -1,5 +1,5 @@
 .footer {
-  position: absolute;
+  position: fixed;
   height: fit-content;
   bottom: 0px;
   width: 100%;
