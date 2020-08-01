@@ -58,6 +58,7 @@ const PrevSelect = (props) => {
   const [searchValue, setSearchValue] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [menuLoading, setMenuLoading] = useState(false);
+  const [unCompletedFilters, setUncompleted] = useState([]);
   const [cleared, setCleared] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
@@ -288,6 +289,22 @@ const PrevSelect = (props) => {
       onClickAll();
     }
   };
+
+  React.useEffect(() => {
+    let unCompletedFilters = [];
+    fullStateStandardIds.forEach((id) => {
+      if (!!!filterState.find((f) => f.filter_id === id)) {
+        unCompletedFilters.push(
+          newFilters.find((f) => f.filter_id === id)?.title
+        );
+      }
+    });
+    setUncompleted([...unCompletedFilters]);
+  }, [filterState]);
+
+  React.useEffect(() => {
+    dispatch(setUncompletedFilters([...unCompletedFilters]));
+  }, [unCompletedFilters]);
 
   const getTitle = () => {
     return props.title;
