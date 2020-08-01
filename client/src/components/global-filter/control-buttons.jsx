@@ -63,19 +63,14 @@ const ControlButtons = () => {
     } else {
       makeMessage(`Filters Saved Successfully.`, "success");
     }
-
+    dispatch(toggleDrawer());
     dispatch(saveFilters([...filterState]));
     dispatch(applyFilters([...filterState]));
   };
   const handleClear = () => {
-    // dispatch(clearFilter());
     dispatch(setStoredViewdFilters([]));
     handleStoreUpdate(currentMainFilter);
     makeMessage(`Filters Reset Successfully.`, "info");
-    // props.onSwitch();
-    // const newName = currentMainFilter === "Legacy" ? "Business" : "Legacy";
-    // handleStoreUpdate(newName);
-
     dispatch(toggleResetButton());
   };
   const handleApply = () => {
@@ -92,11 +87,6 @@ const ControlButtons = () => {
         applied: true,
       })),
     ];
-
-    // if (!!unCompleted.length) {
-    //   alert(`${unCompleted} are empty, please check atleast one option.`);
-    //   return;
-    // }
 
     dispatch(toggleDrawer());
     dispatch(editFilterState(filterStateAfterApply));
