@@ -22,7 +22,6 @@ const Option = (props) => {
 };
 
 const SimpleSelect = (props) => {
-  debugger;
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   const { options, handleChange } = props;
@@ -53,8 +52,9 @@ const SimpleSelect = (props) => {
   //   },
   // ];
 
-  const handleClick = (value) => {
-    setSelectedValue(value);
+  const handleClick = (option) => {
+    handleChange(option);
+    setShowMenu(false);
   };
 
   return (
@@ -77,7 +77,7 @@ const SimpleSelect = (props) => {
             {options.map((option) => (
               <Option
                 display={option.filter_display_text}
-                onClick={() => handleChange(option)}
+                onClick={() => handleClick(option)}
               />
             ))}
           </OptionsWrapper>

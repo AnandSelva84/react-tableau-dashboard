@@ -9,7 +9,6 @@ import {
 import { editFilterState } from "./../../../../redux/actions/shared";
 
 export default function TimeFilter(props) {
-  debugger;
   const dispatch = useDispatch();
   const { timeFilters, filterState, timeFilterState } = useData().sharedReducer;
 
@@ -19,7 +18,6 @@ export default function TimeFilter(props) {
   const values = firstLvlFilters.map((f) => f.values).flat();
 
   const addToState = (filter_option, filter_value) => {
-    debugger;
     let newFilterState = filterState;
     const filter = {
       ID: filter_option,
@@ -32,7 +30,6 @@ export default function TimeFilter(props) {
   };
 
   const handleChange = ({ filter_option, filter_value }) => {
-    debugger;
     addToState(filter_option, filter_value);
   };
 

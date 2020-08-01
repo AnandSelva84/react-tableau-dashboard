@@ -25,16 +25,21 @@ export default function TimeFilters(props) {
       value,
       ...rangeStartData,
     };
-    dispatch(
-      editTimeFilterState([...timeFilterState, { ...rangeStartFilter }])
+    const deletePrev = timeFilterState.filter(
+      (f) => f.filter_type !== "Range Start"
     );
+
+    dispatch(editTimeFilterState([...deletePrev, { ...rangeStartFilter }]));
   };
   const handleEndChange = (value) => {
     const rangeEndFilter = {
       value,
       ...rangeEndData,
     };
-    dispatch(editTimeFilterState([...timeFilterState, { ...rangeEndFilter }]));
+    const deletePrev = timeFilterState.filter(
+      (f) => f.filter_type !== "Range End"
+    );
+    dispatch(editTimeFilterState([...deletePrev, { ...rangeEndFilter }]));
   };
 
   return (

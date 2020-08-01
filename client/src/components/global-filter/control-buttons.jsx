@@ -23,8 +23,12 @@ const ControlButtons = () => {
     filterState,
     unCompleted,
     currentMainFilter,
+    timeFilterState,
   } = useData().sharedReducer;
   const [error, setError] = React.useState("");
+  const hasCustomRange = timeFilterState.find(
+    (f) => f.value === "Custom_Range"
+  );
 
   const handleStoreUpdate = (name) => {
     dispatch(
@@ -41,9 +45,13 @@ const ControlButtons = () => {
   };
 
   React.useEffect(() => {
+    console.log({ specError: error });
+  }, [error]);
+
+  React.useEffect(() => {
     if (unCompleted.length)
       setError(`${unCompleted} are empty, Please select at least one option.`);
-    else setError("");
+    else if (!!!unCompleted.length && !!!error) setError("");
   }, [unCompleted]);
 
   const makeMessage = (msg, variant) => {
@@ -54,6 +62,31 @@ const ControlButtons = () => {
 
   const isNotValid = () => {
     return !!unCompleted.length;
+  };
+
+  const areValidDates = (start, end) => {
+    const startDate = Date.parse(start);
+    const endDate = Date.parse(end);
+    return endDate > startDate;
+  };
+
+  const validateTimeFilters = () => {
+    debugger;
+
+    if (timeFilterState.length === 0) return;
+    if (hasCustomRange && timeFilterState.length < 3) {
+      setError(
+        "time interval has custom range, please specify the start, end date."
+      );
+      return;
+    }
+    const startDate = timeFilterState.find(
+      (f) => f.filter_type === "Range Start"
+    );
+    const endDate = timeFilterState.find((f) => f.filter_type === "Range End");
+
+    const validDate = areValidDates(startDate, endDate);
+    if (!validDate) setError("end date should be after start date.");
   };
 
   const handleSave = () => {
@@ -74,10 +107,17 @@ const ControlButtons = () => {
     dispatch(toggleResetButton());
   };
   const handleApply = () => {
+    debugger;
+    validateTimeFilters();
+    if (!!error) {
+      makeMessage(error, "error");
+      return;
+    }
     if (!!unCompleted.length) {
       makeMessage(error, "error");
       return;
-    } else {
+    }
+    if (!!!error) {
       makeMessage(`Filters Applied Successfully.`, "success");
     }
 
