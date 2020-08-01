@@ -8,6 +8,7 @@ export const SET_APPLICATION = "SET_APPLICATION";
 export const SET_FILTERS = "SET_FILTERS";
 export const SET_TIME_FILTERS = "SET_TIME_FILTERS";
 export const FILTER_STATE_EDIT = "FILTER_STATE_EDIT";
+export const TIME_FILTER_STATE_EDIT = "TIME_FILTER_STATE_EDIT";
 export const SAVE_FILTERS = "SAVE_FILTERS";
 export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_ALL_CHECKED_ARRAY = "SET_ALL_CHECKED_ARRAY";
@@ -27,6 +28,11 @@ export const SHOW_REPORT_FILTERS = "SHOW_REPORT_FILTERS";
 export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION";
 export const SET_PANEL_DEFINITIONS = "SET_PANEL_DEFINITIONS";
 export const SET_CURRENT_SHOW_CONTROL = "SET_CURRENT_SHOW_CONTROL";
+
+export const editTimeFilterState = (timeFilterState) => ({
+  type: TIME_FILTER_STATE_EDIT,
+  timeFilterState,
+});
 
 export const setTimeFilters = (timeFilters) => ({
   type: SET_TIME_FILTERS,

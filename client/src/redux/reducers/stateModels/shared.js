@@ -51,6 +51,7 @@ const sharedState = {
   currentLocation: "",
   showValue: "graph",
   timeFilters: [],
+  timeFilterState: [],
 };
 
 export default sharedState;
