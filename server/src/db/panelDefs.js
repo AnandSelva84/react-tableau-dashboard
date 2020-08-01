@@ -49,7 +49,7 @@ const panelDefs = {
       is_max_version: false,
       panel_header_title: "Effectiviness (KPIs)",
       header_css_class: "panelPortfolio",
-      is_active: true,
+      is_active: false,
       embedded_viz: [],
       embedded_fields: [
         {

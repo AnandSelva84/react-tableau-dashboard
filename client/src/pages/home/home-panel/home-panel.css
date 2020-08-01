@@ -12,6 +12,14 @@
   flex: 1;
 }
 
+.home-panel.disabled {
+  background-color: #c9c7c7;
+}
+
+.home-panel.disabled * {
+  cursor: default;
+}
+
 .reports-count {
   color: #fff;
   font-size: 22px;
@@ -38,7 +46,7 @@
   cursor: pointer;
 }
 
-.home-panel .home-panel-title {
+.home-panel-title {
   font-size: 20px;
   color: #086972;
   font-weight: 500;

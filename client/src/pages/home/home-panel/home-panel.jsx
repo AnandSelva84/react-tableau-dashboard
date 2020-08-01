@@ -28,10 +28,20 @@ export default function HomePanel(props) {
       });
   };
 
+  const handleIsActive = (className) => {
+    let newClassName = className;
+
+    if (!is_active) newClassName = `${className} disabled`;
+    return newClassName;
+  };
+
   return (
-    <div className="home-panel">
+    <div className={handleIsActive("home-panel")}>
       <div className="reports-count">{allEmbeded.length}</div>
-      <div className="home-panel-title" onClick={handleTitleClick}>
+      <div
+        className={handleIsActive("home-panel-title")}
+        onClick={handleTitleClick}
+      >
         {panel_header_title}
       </div>
       <div className="units-container">
