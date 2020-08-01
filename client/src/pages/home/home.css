@@ -15,13 +15,17 @@
 .home-landing-page {
   width: 100%;
   display: flex;
-  height: 100%;
+  height: 94%;
   justify-content: center;
   position: relative;
   background: linear-gradient(rgba(0, 0, 0, 0.486), rgba(0, 0, 0, 0.514)),
     url("../../assets/images/slider01.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative;
+}
+
+.carsosel-btns-container {
   position: relative;
 }
 
@@ -50,15 +54,15 @@
 
 .scrolling-btn {
   position: absolute;
-  top: 50%;
+  top: 35%;
 }
 
 .right-scroll-btn {
-  right: 8rem;
+  right: 8vw;
 }
 
 .left-scroll-btn {
-  left: 8rem;
+  left: 8vw;
 }
 
 .panles-container {

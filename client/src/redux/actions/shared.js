@@ -28,10 +28,16 @@ export const SHOW_REPORT_FILTERS = "SHOW_REPORT_FILTERS";
 export const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION";
 export const SET_PANEL_DEFINITIONS = "SET_PANEL_DEFINITIONS";
 export const SET_CURRENT_SHOW_CONTROL = "SET_CURRENT_SHOW_CONTROL";
+export const APPLY_TIME_FILTER = "APPLY_TIME_FILTER";
 
 export const editTimeFilterState = (timeFilterState) => ({
   type: TIME_FILTER_STATE_EDIT,
   timeFilterState,
+});
+
+export const applyTimeFilterState = (timeFilters) => ({
+  type: APPLY_TIME_FILTER,
+  timeFilters,
 });
 
 export const setTimeFilters = (timeFilters) => ({

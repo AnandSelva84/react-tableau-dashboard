@@ -22,7 +22,7 @@ const HomePage = (props) => {
 
   const maxNumberOfScrolls = Math.ceil(panels.length / 3);
   const disableRightCondition =
-    Math.abs(carouselValue / 57) !== maxNumberOfScrolls;
+    Math.abs(carouselValue / 57) !== maxNumberOfScrolls - 1;
 
   useEffect(() => {
     if (!!app) dispatch(setCurrentLocation(app?.subject_area[0]?.name));
@@ -65,42 +65,43 @@ const HomePage = (props) => {
             />
           </div>
         </div>
-
-        <div className="carosel-new-container">
-          <div className="scrolling-btn left-scroll-btn ">
-            <ChevronLeft
-              style={{
-                cursor: "pointer",
-                width: "7rem",
-                height: "7rem",
-                color: "#f4f4f4",
-                ...leftDisabelCarsoulStyle,
-              }}
-              onClick={handleLeft}
-            />
-          </div>
-          {panels && (
-            <div
-              className="new-carousel"
-              style={{ transform: `translateX(${carouselValue}rem)` }}
-            >
-              {panels.map((panel) => (
-                <HomePanel panel={panel} all_views={all_views} />
-              ))}
+        <div className="carsosel-btns-container">
+          <div className="carosel-new-container">
+            <div className="scrolling-btn left-scroll-btn ">
+              <ChevronLeft
+                style={{
+                  cursor: "pointer",
+                  width: "7rem",
+                  height: "7rem",
+                  color: "#f4f4f4",
+                  ...leftDisabelCarsoulStyle,
+                }}
+                onClick={handleLeft}
+              />
             </div>
-          )}
+            {panels && (
+              <div
+                className="new-carousel"
+                style={{ transform: `translateX(${carouselValue}rem)` }}
+              >
+                {panels.map((panel) => (
+                  <HomePanel panel={panel} all_views={all_views} />
+                ))}
+              </div>
+            )}
 
-          <div className="scrolling-btn right-scroll-btn ">
-            <ChevronRight
-              style={{
-                cursor: "pointer",
-                width: "7rem",
-                height: "7rem",
-                color: "#f4f4f4",
-                ...rightDisabelCarsoulStyle,
-              }}
-              onClick={handleRight}
-            />
+            <div className="scrolling-btn right-scroll-btn ">
+              <ChevronRight
+                style={{
+                  cursor: "pointer",
+                  width: "7rem",
+                  height: "7rem",
+                  color: "#f4f4f4",
+                  ...rightDisabelCarsoulStyle,
+                }}
+                onClick={handleRight}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -31,6 +31,8 @@
 
 .units-container {
   margin-top: 3rem;
+  max-height: 18rem;
+  overflow-y: auto;
 }
 
 .panel-units {

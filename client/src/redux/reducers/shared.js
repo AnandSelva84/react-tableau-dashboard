@@ -30,6 +30,7 @@ import {
   SET_PANEL_DEFINITIONS,
   SET_TIME_FILTERS,
   TIME_FILTER_STATE_EDIT,
+  APPLY_TIME_FILTER,
 } from "../actions/shared";
 import { continuesFilter } from "../methods/continous-filter";
 
@@ -53,6 +54,11 @@ const sharedReducer = (state = sharedState, action) => {
   };
 
   switch (action.type) {
+    case APPLY_TIME_FILTER:
+      return {
+        ...state,
+        appliedTimeIntervals: action.timeFilters,
+      };
     case TIME_FILTER_STATE_EDIT:
       return {
         ...state,
@@ -161,7 +167,6 @@ const sharedReducer = (state = sharedState, action) => {
         filterState: [initialfilter],
       };
     case APPLY_FILTERS:
-      debugger;
       return {
         ...state,
         appliedFilters: action.filters,
