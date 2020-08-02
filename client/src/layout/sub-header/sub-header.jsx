@@ -40,6 +40,7 @@ const SubHeader = () => {
     currentMainFilter,
     drawer,
     showReport,
+    appliedTimeIntervals,
   } = useData().sharedReducer;
 
   const { pathname } = useLocation();
@@ -51,6 +52,10 @@ const SubHeader = () => {
   const [chosenDialog, seChosentShowDialog] = useState("");
   const [initialApplied, setInitialApplied] = useState([...appliedFilters]);
   const [searchValue, setSearchValue] = React.useState("");
+
+  const timeIntervalFilter = appliedTimeIntervals.find(
+    (f) => f.filter_id === "DateInterval"
+  );
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const appliedIds = appliedFilters.map((filter) => filter.ID) || [];
@@ -254,6 +259,12 @@ const SubHeader = () => {
                   }}
                 />
               ))}
+              {!!timeIntervalFilter && (
+                <Chip
+                  size="small"
+                  label={createChip("Date Interval", timeIntervalFilter?.value)}
+                />
+              )}
             </div>
             <div className="">{showReport && <ShowGroup />}</div>
           </div>

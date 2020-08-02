@@ -15,6 +15,7 @@ import {
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
 // import { useSnackbar } from "notistack";
+import { applyTimeFilterState } from "./../../redux/actions/shared";
 
 const ControlButtons = () => {
   // const { enqueueSnackbar } = useSnackbar();
@@ -29,6 +30,10 @@ const ControlButtons = () => {
   const hasCustomRange = timeFilterState.find(
     (f) => f.value === "Custom_Range"
   );
+  const startDate = timeFilterState.find((f) => f.filter_type === "Range Start")
+    ?.value;
+  const endDate = timeFilterState.find((f) => f.filter_type === "Range End")
+    ?.value;
 
   const handleStoreUpdate = (name) => {
     dispatch(
@@ -45,23 +50,30 @@ const ControlButtons = () => {
   };
 
   React.useEffect(() => {
-    console.log({ specError: error });
-  }, [error]);
-
-  React.useEffect(() => {
     if (unCompleted.length)
       setError(`${unCompleted} are empty, Please select at least one option.`);
     else if (!!!unCompleted.length && !!!error) setError("");
   }, [unCompleted]);
 
+  React.useEffect(() => {
+    if (hasCustomRange && timeFilterState.length < 3) {
+      setError(
+        "time interval has custom range, please specify the start, end date."
+      );
+      return;
+    } else if (hasCustomRange && timeFilterState.length === 3) setError("");
+
+    if (!!!startDate && !!!endDate) return;
+
+    const validDate = areValidDates(startDate, endDate);
+    if (!validDate) setError("end date should be after start date.");
+    else setError("");
+  }, [timeFilterState]);
+
   const makeMessage = (msg, variant) => {
     // variant could be success, error, warning, info, or default
     // enqueueSnackbar(msg, { variant });
     dispatch(showMessage(msg, variant, true));
-  };
-
-  const isNotValid = () => {
-    return !!unCompleted.length;
   };
 
   const areValidDates = (start, end) => {
@@ -70,27 +82,8 @@ const ControlButtons = () => {
     return endDate > startDate;
   };
 
-  const validateTimeFilters = () => {
-    debugger;
-
-    if (timeFilterState.length === 0) return;
-    if (hasCustomRange && timeFilterState.length < 3) {
-      setError(
-        "time interval has custom range, please specify the start, end date."
-      );
-      return;
-    }
-    const startDate = timeFilterState.find(
-      (f) => f.filter_type === "Range Start"
-    );
-    const endDate = timeFilterState.find((f) => f.filter_type === "Range End");
-
-    const validDate = areValidDates(startDate, endDate);
-    if (!validDate) setError("end date should be after start date.");
-  };
-
   const handleSave = () => {
-    if (!!unCompleted.length) {
+    if (!!error) {
       makeMessage(error, "error");
       return;
     } else {
@@ -108,7 +101,6 @@ const ControlButtons = () => {
   };
   const handleApply = () => {
     debugger;
-    validateTimeFilters();
     if (!!error) {
       makeMessage(error, "error");
       return;
@@ -128,6 +120,7 @@ const ControlButtons = () => {
       })),
     ];
 
+    dispatch(applyTimeFilterState([...timeFilterState]));
     dispatch(toggleDrawer());
     dispatch(editFilterState(filterStateAfterApply));
     dispatch(applyFilters([...filterStateAfterApply]));

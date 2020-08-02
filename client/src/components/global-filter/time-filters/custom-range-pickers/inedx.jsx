@@ -1,7 +1,9 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
 
-export default function CustomRange(props) {
+export default function DateSelect(props) {
+  const { value } = props;
+  const defaultValue = !!value ? value : "1-8-2020";
   const handleChange = (e) => {
     const { value } = e.target;
     props.onChange(value);
@@ -11,7 +13,7 @@ export default function CustomRange(props) {
       id="date"
       label={props?.label || "unkown"}
       type="date"
-      defaultValue={new Date().toLocaleDateString()}
+      defaultValue={defaultValue}
       InputLabelProps={{
         shrink: true,
       }}

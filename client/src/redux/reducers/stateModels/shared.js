@@ -32,7 +32,7 @@ const sharedState = {
       filter_id: "Hierarchies",
     },
   ],
-  appliedTimeIntervals: null,
+  appliedTimeIntervals: [],
   body_class: null,
   hasAllSelected: [],
   currentMainFilter: "Business",
