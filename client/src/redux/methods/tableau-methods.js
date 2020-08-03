@@ -1,4 +1,4 @@
-const createObj = (key, value) => ({
+export const createObj = (key, value) => ({
   [key]: value,
 });
 
@@ -24,7 +24,7 @@ const getFilterValues = (appliedFilters = [], id = "") => {
   }
 };
 
-const fromArrayToObject = (array = []) => {
+export const fromArrayToObject = (array = []) => {
   let data = {};
   array.forEach((elem) => {
     let key = Object.keys(elem)[0];

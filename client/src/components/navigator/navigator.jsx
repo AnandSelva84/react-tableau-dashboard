@@ -17,6 +17,7 @@ const Naviagtor = (props) => {
   const { all_views } = app;
   const { currentLocation } = useData().sharedReducer;
   const titles = panels.panel_definitions.map((p) => p.panel_header_title);
+  const isActiveArray = panels.panel_definitions.map((p) => p.is_active);
   const panelsLetters = titles.map((word) => word[0]);
   const routes = panels.panel_definitions.map((panel) =>
     getRouteById(all_views, panel.title_action_code)
@@ -45,6 +46,7 @@ const Naviagtor = (props) => {
             letters={panelsLetters}
             titles={titles}
             routes={routes}
+            isActiveArray={isActiveArray}
           />
         </div>
         <div className="" style={{ display: "flex" }}>

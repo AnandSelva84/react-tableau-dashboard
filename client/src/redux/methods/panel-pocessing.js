@@ -1,4 +1,6 @@
 //RECEIVE ID AND RETURN ROUTE AND DEPTH
+import { fromArrayToObject } from "./tableau-methods";
+import { createObj } from "./tableau-methods";
 
 export const getViewData = (id, all_views = []) => {
   const view = all_views.find((_view) => _view.id === id);
@@ -24,7 +26,7 @@ const ObjectGen = (key, value) => ({
 });
 
 export const findNewKey = (key, filterMappings = []) => {
-  // debugger;
+  debugger;
   const found = filterMappings.find(
     (f) => f.id.toLowerCase() === key.toLowerCase()
   );
@@ -35,7 +37,6 @@ export const filterMappingResult = (
   refactoredFilters = {},
   filterMappings = []
 ) => {
-  // debugger;
   const keys = Object.keys(refactoredFilters);
   let afterMapping = {};
   keys.forEach((key, index) => {
@@ -54,4 +55,31 @@ export const getUrlfromRoute = (panels, route) => {
 export const getRouteById = (all_views, id) => {
   const found = all_views.find((view) => view.id === id);
   return found?.route || "404";
+};
+
+const formArraytoObj = (array = []) => {
+  let obj = {};
+  debugger;
+  array.forEach((ObjValue) => {
+    const key = Object.values(ObjValue);
+    const newObj = createObj(key[0], key[1]);
+    obj = { ...obj, ...newObj };
+  });
+  return obj;
+};
+
+export const refactorTimeIntervalFilters = (
+  timeIntervals,
+  filterMappings = []
+) => {
+  debugger;
+  const newTimeFiltersArrayForm = timeIntervals.map((t) => ({
+    [findNewKey(t.filter_id, filterMappings)]: t.value,
+  }));
+  console.log({ newTimeFiltersArrayForm });
+  if (newTimeFiltersArrayForm.length === 1) return newTimeFiltersArrayForm[0];
+
+  const newTimeFiltersObjectForm = fromArrayToObject(newTimeFiltersArrayForm);
+  console.log({ newTimeFiltersObjectForm });
+  return newTimeFiltersObjectForm;
 };

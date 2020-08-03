@@ -22,18 +22,18 @@ const HomePage = (props) => {
 
   const maxNumberOfScrolls = Math.ceil(panels.length / 3);
   const disableRightCondition =
-    Math.abs(carouselValue / 57) !== maxNumberOfScrolls - 1;
+    Math.abs(carouselValue / 56) !== maxNumberOfScrolls - 1;
 
   useEffect(() => {
     if (!!app) dispatch(setCurrentLocation(app?.subject_area[0]?.name));
   }, []);
 
   const handleRight = () => {
-    if (disableRightCondition) setCarouselValue(carouselValue - 57);
+    if (disableRightCondition) setCarouselValue(carouselValue - 56);
   };
 
   const handleLeft = () => {
-    if (carouselValue !== 0) setCarouselValue(carouselValue + 57);
+    if (carouselValue !== 0) setCarouselValue(carouselValue + 56);
   };
 
   const leftDisabelCarsoulStyle =

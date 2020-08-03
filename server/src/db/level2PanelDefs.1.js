@@ -22,6 +22,21 @@ const level2PanelDefs = {
           disable_on_filter: [],
           filter_mapping: [
             {
+              id: "DateInterval",
+              value: "Time Interval",
+              tableau_type: "Parameter",
+            },
+            {
+              id: "CustomRangeStart",
+              value: "Initial Date",
+              tableau_type: "Parameter",
+            },
+            {
+              id: "CustomRangeEnd",
+              value: "End Date",
+              tableau_type: "Parameter",
+            },
+            {
               id: "Hierarchies",
               value: "Hierarchies",
               tableau_type: "Filter",
@@ -71,6 +86,24 @@ const level2PanelDefs = {
       ],
       embedded_fields: [
         {
+          field_id: "PORT_L2_1_VIZ1_DUR",
+          field_impact_type: "Parameter",
+          field_label: "Only incl. duration >= (in days)",
+          field_location: "Top Left",
+          field_type: "Numeric",
+          field_impact_field: null,
+          field_impact_parameter: "Days_cut_off",
+          field_default_value: "1",
+          embedded_field_options: [
+            {
+              text: null,
+              value: null,
+              option_order: null,
+              option_thumbnail: null,
+            },
+          ],
+        },
+        {
           field_id: "PORT_L2_1_VIZ1_GRAPH",
           field_impact_type: "URL",
           field_label: null,
@@ -97,24 +130,6 @@ const level2PanelDefs = {
             },
           ],
         },
-        {
-          field_id: "PORT_L2_1_VIZ1_DUR",
-          field_impact_type: "Parameter",
-          field_label: "Only incl. duration >= (in days)",
-          field_location: "Top Left",
-          field_type: "Numeric",
-          field_impact_field: null,
-          field_impact_parameter: "Days_cut_off",
-          field_default_value: "1",
-          embedded_field_options: [
-            {
-              text: null,
-              value: null,
-              option_order: null,
-              option_thumbnail: null,
-            }
-          ],
-        }
       ],
     },
     {
@@ -138,6 +153,21 @@ const level2PanelDefs = {
           width_of_12: 12,
           disable_on_filter: [],
           filter_mapping: [
+            {
+              id: "DateInterval",
+              value: "Time Interval",
+              tableau_type: "Parameter",
+            },
+            {
+              id: "CustomRangeStart",
+              value: "Initial Date",
+              tableau_type: "Parameter",
+            },
+            {
+              id: "CustomRangeEnd",
+              value: "End Date",
+              tableau_type: "Parameter",
+            },
             {
               id: "Hierarchies",
               value: "Hierarchies",

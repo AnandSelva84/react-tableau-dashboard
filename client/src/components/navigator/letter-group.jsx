@@ -5,10 +5,11 @@ import { useHistory } from "react-router-dom";
 import LetterIcon from "./LetterIcon";
 
 const LetterGroup = (props) => {
+  const { isActiveArray } = props;
   const history = useHistory();
   const haneleClick = (index) => {
     const route = props.routes[index];
-    if (!!route) history.push(`./${route}`);
+    if (isActiveArray[index] && !!route) history.push(`./${route}`);
   };
 
   return (
@@ -16,7 +17,15 @@ const LetterGroup = (props) => {
       {props.letters.map((letter, i) => (
         <>
           <ClickableIcon
-            icon={<LetterIcon letter={letter} index={i} panels={props.panels} titles={props.titles} />}
+            icon={
+              <LetterIcon
+                letter={letter}
+                index={i}
+                panels={props.panels}
+                titles={props.titles}
+                isActive={isActiveArray[i]}
+              />
+            }
             onClick={() => {
               haneleClick(i);
             }}

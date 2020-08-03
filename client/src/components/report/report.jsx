@@ -7,6 +7,7 @@ import useData from "../../hooks/useStore";
 import { applyFilters } from "../../redux/actions/shared";
 import { useDispatch } from "react-redux";
 import "./report.css";
+import { refactorTimeIntervalFilters } from "./../../redux/methods/panel-pocessing";
 const { tableau } = window;
 
 const WrappedReport = (props) => {
@@ -16,7 +17,7 @@ const WrappedReport = (props) => {
 
   useEffect(() => {
     setRender(false);
-  }, [appliedFilters, props.url]);
+  }, [appliedFilters, props.url, props.parameter]);
 
   useEffect(() => {
     setLoaded(true);
@@ -39,21 +40,37 @@ const TableauViz = (props) => {
   const [viz, setViz] = React.useState(null);
   const [workbook, setWorkBook] = React.useState(null);
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
-  const { appliedFilters, savedFilters } = useData().sharedReducer;
+  const {
+    appliedFilters,
+    savedFilters,
+    appliedTimeIntervals,
+  } = useData().sharedReducer;
   let url = props.url;
 
+  const timeIntervalFilters = refactorTimeIntervalFilters(
+    appliedTimeIntervals,
+    props.filterMapping
+  );
   const reportFilters = fromAppliedToOptions(appliedFilters);
+  // const reportTimeFilters = { ...reportFilters, ...timeIntervalFilters };
+  // console.log({ reportTimeFilters });
   const mappedfilters = props.filterMappingResult(
     reportFilters,
     props.filterMapping
   );
+  const mappedfiltersMergedWithTimeIntervals = {
+    ...mappedfilters,
+    ...timeIntervalFilters,
+  };
+
+  console.log({ mappedfiltersMergedWithTimeIntervals });
 
   const options = {
     hideTabs: true,
     hideToolbar: props.hideToolbar,
     width: "100%",
     ...props.options,
-    ...mappedfilters,
+    ...mappedfiltersMergedWithTimeIntervals,
     // ...reportFilters,
     onFirstInteractive: function () {
       setVizIsInteractive(true);

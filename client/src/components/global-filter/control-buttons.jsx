@@ -58,15 +58,15 @@ const ControlButtons = () => {
   React.useEffect(() => {
     if (hasCustomRange && timeFilterState.length < 3) {
       setError(
-        "time interval has custom range, please specify the start, end date."
+        "Time Interval has Custom Range, Please select the Start Date and End Date."
       );
       return;
-    } else if (hasCustomRange && timeFilterState.length === 3) setError("");
+    } else if (!hasCustomRange) setError("");
 
     if (!!!startDate && !!!endDate) return;
 
     const validDate = areValidDates(startDate, endDate);
-    if (!validDate) setError("end date should be after start date.");
+    if (!validDate) setError("End Date should be greater than Start Date.");
     else setError("");
   }, [timeFilterState]);
 
@@ -100,7 +100,6 @@ const ControlButtons = () => {
     dispatch(toggleResetButton());
   };
   const handleApply = () => {
-    debugger;
     if (!!error) {
       makeMessage(error, "error");
       return;

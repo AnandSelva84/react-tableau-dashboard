@@ -35,6 +35,13 @@ export default function HomePanel(props) {
     return newClassName;
   };
 
+  const handleUnitClick = (id) => {
+    if (is_active)
+      history.push({
+        pathname: `/${getRoute(id)}`,
+      });
+  };
+
   return (
     <div className={handleIsActive("home-panel")}>
       <div className="reports-count">{allEmbeded.length}</div>
@@ -46,14 +53,7 @@ export default function HomePanel(props) {
       </div>
       <div className="units-container">
         {allEmbeded.map(({ text, value: id }) => (
-          <div
-            className="panel-unit"
-            onClick={() => {
-              history.push({
-                pathname: `/${getRoute(id)}`,
-              });
-            }}
-          >
+          <div className="panel-unit" onClick={handleUnitClick}>
             {text}
           </div>
         ))}

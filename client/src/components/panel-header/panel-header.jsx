@@ -15,7 +15,7 @@ export default function PanelHeader(props) {
   return (
     <div className="panel-header-container">
       <div className="panel-title-private">{props.title}</div>
-      {field_type === "Switch" && <PanelSwitch onChange={handleChange} />}
+      {/* {field_type === "Switch" && <PanelSwitch onChange={handleChange} />} */}
       <h3 className="report-link" onClick={handleViewClick}>
         View Report
       </h3>

@@ -9,8 +9,15 @@ const Popover = (props) => {
 
   const handleClose = () => setShow(false);
 
+  const isDisabled = !props.disabeld;
+
   return (
-    <div className="pop-over" onMouseOver={handleOpen} onMouseOut={handleClose}>
+    <div
+      className="pop-over"
+      style={{ cursor: isDisabled ? "default" : "pointer" }}
+      onMouseOver={handleOpen}
+      onMouseOut={handleClose}
+    >
       <>{props.children}</>
       {show && (
         <Paper
@@ -23,11 +30,11 @@ const Popover = (props) => {
             padding: "0.5rem 1rem",
             right: "-50%",
             transform: `translate(-50%, -50%)`,
-            fontSize: "0.8rem"
+            fontSize: "0.8rem",
+            backgroundColor: isDisabled ? "#D3D3D3" : "",
           }}
         >
-          {props ?.content || ""}
-
+          {props?.content || ""}
         </Paper>
       )}
     </div>

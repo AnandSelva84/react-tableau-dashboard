@@ -1,50 +1,73 @@
 import React, { useState, useEffect } from "react";
 import PanelHeader from "../../../components/panel-header/panel-header";
 import WrappedReport from "../../../components/report/report";
+import { stylePosition } from "./embeded-feilds/pos-styles";
+import EmbededFeilds from "./embeded-feilds/index";
 
 export default function Panel(props) {
   let url = "";
   const [chartState, setChartState] = useState("Bar");
+  const [numericValue, setNumericValue] = useState("");
   const { singlePanel, filterMappingResult, filterMapping, index } = props;
   const { embedded_viz } = singlePanel;
   const { embed_url } = embedded_viz[0];
+  const [chartUrl, setChartUrl] = useState(embed_url);
   const { embedded_fields } = singlePanel;
-  const { field_type } = embedded_fields[0];
-  const panelUrls = embedded_fields[0].embedded_field_options || [];
-
-  const { value: currentUrl } =
-    chartState === "Bar" ? panelUrls[0] : panelUrls[1];
-
-  url = field_type === "Switch" ? currentUrl : embed_url;
+  const hasSwitch = embedded_fields.find((f) => f.field_type === "Switch");
+  const hasNumeric = embedded_fields.find((f) => f.field_type === "Numeric");
 
   const onSwitchChange = (checked) => {
     checked ? setChartState("Box") : setChartState("Bar");
   };
 
   useEffect(() => {
-    // alert(chartState);
+    if (!!hasSwitch) {
+      const panelUrls =
+        embedded_fields.find((f) => f.field_type === "Switch")
+          .embedded_field_options || [];
+      const { value: currentUrl } =
+        chartState === "Bar" ? panelUrls[0] : panelUrls[1];
+      setChartUrl(currentUrl);
+    }
   }, [chartState]);
 
   const handleViewClick = () => {
     props.handleTitleClick(singlePanel, index);
   };
 
+  const feildsArray = embedded_fields.map((feild) => ({
+    ...feild,
+    field_location: {
+      ...stylePosition(feild.field_location),
+    },
+  }));
+
+  const onNumericChange = (value) => {
+    setNumericValue(value);
+  };
+
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      <EmbededFeilds
+        feilds={feildsArray}
+        onSwitchChange={onSwitchChange}
+        onNumericChange={onNumericChange}
+      />
       <PanelHeader
         title={singlePanel.panel_header_title}
         {...singlePanel}
         handleViewClick={handleViewClick}
-        onSwitchChange={onSwitchChange}
       />
-
-      <WrappedReport
-        options={{ height: "50vh" }}
-        url={url}
-        filterMappingResult={filterMappingResult}
-        filterMapping={filterMapping(singlePanel.embedded_viz[0].embed_url)}
-        hideToolbar={true}
-      />
+      <div className="" style={{ paddingTop: "5rem" }}>
+        <WrappedReport
+          options={{ height: "50vh" }}
+          url={chartUrl}
+          parameter={numericValue}
+          filterMappingResult={filterMappingResult}
+          filterMapping={filterMapping(singlePanel.embedded_viz[0].embed_url)}
+          hideToolbar={true}
+        />
+      </div>
     </div>
   );
 }

@@ -40,18 +40,6 @@ const SimpleSelect = (props) => {
     showMenu ? hanldeClose() : handleOpen();
   };
 
-  // const options = [
-  //   {
-  //     title: "hello",
-  //   },
-  //   {
-  //     title: "hello 1",
-  //   },
-  //   {
-  //     title: "hello2",
-  //   },
-  // ];
-
   const handleClick = (option) => {
     handleChange(option);
     setShowMenu(false);
@@ -59,17 +47,18 @@ const SimpleSelect = (props) => {
 
   return (
     <ClickAwayListener onClickAway={hanldeClose}>
-      <div style={{ position: "relative", paddingTop: "1rem" }}>
+      <div style={{ position: "relative", paddingTop: "1rem", ...props.style }}>
         <TextField
+          size={props?.size}
           onClick={toggle}
           fullWidth
           style={{ maxWidth: "20rem" }}
           variant="outlined"
           // placeholder={!props.custom ? props?.title : props.placeholder}
-          label={"Time Interval"}
+          label={props?.label || "Time Interval"}
           value={props?.value?.value || ""}
           InputProps={{
-            readOnly: true,
+            readOnly: !!props.readWrite ? false : true,
           }}
         />
         {showMenu && (

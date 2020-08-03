@@ -2,7 +2,7 @@ const express = require("express");
 const Router = express.Router();
 const { ampInfo, kidInfo } = require("../db/infoResponses");
 const { panelDefs } = require("../db/panelDefs");
-const { level2PanelDefs } = require("../db/level2PanelDefs");
+const { level2PanelDefs } = require("../db/level2PanelDefs.1");
 const { level3PanelDefs } = require("../db/level3PanelDefs");
 
 Router.get("/:id/:viewid", (req, res) => {
