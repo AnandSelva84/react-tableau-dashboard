@@ -3,6 +3,7 @@ import { fromArrayToObject } from "./tableau-methods";
 import { createObj } from "./tableau-methods";
 
 export const getViewData = (id, all_views = []) => {
+  debugger;
   const view = all_views.find((_view) => _view.id === id);
   return view;
 };
