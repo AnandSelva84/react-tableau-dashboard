@@ -4,6 +4,7 @@ import OptionsWrapper from "./../global-filter/optionsWrapper";
 import { TextField } from "@material-ui/core";
 import select from "./../../theme/select";
 import Checkbox from "@material-ui/core/Checkbox";
+import DeleteBtn from "./deleteBtn/index";
 
 const Option = (props) => {
   return (
@@ -24,7 +25,7 @@ const Option = (props) => {
 const SimpleSelect = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
-  const { options, handleChange } = props;
+  const { options, handleChange, deleteable, onDelete } = props;
 
   const hanldeClose = () => {
     try {
@@ -70,6 +71,9 @@ const SimpleSelect = (props) => {
               />
             ))}
           </OptionsWrapper>
+        )}
+        {deleteable && (
+          <DeleteBtn onClick={onDelete} style={{ left: "50px" }} />
         )}
       </div>
     </ClickAwayListener>

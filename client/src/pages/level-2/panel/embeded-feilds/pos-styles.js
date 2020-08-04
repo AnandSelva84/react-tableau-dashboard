@@ -3,10 +3,10 @@ const positionStyles = {
     top: "8px",
     translate: "transform(-50%,-50%)",
     left: "50%",
-    width: "285",
+    width: "38%",
   },
-  TopLeftStyle: { top: "4rem", left: "24px", width: "28%" },
-  TopRightStyle: { top: "4rem", Right: "24px", width: "28%" },
+  TopLeftStyle: { top: "4rem", left: "24px", width: "38%" },
+  TopRightStyle: { top: "4rem", Right: "24px", width: "38%" },
 };
 
 export const stylePosition = (position) => {

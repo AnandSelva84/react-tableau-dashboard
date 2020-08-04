@@ -35,9 +35,15 @@ export default function TimeFilter(props) {
     addToState(option);
   };
 
+  const hadnleDelete = () => {
+    dispatch(editTimeFilterState([]));
+  };
+
   return (
     <>
       <SimpleSelect
+        deleteable={!!current}
+        onDelete={hadnleDelete}
         options={values}
         handleChange={handleChange}
         value={current?.filter_display_text}
