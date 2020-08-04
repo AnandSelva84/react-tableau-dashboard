@@ -12,7 +12,7 @@ const getToday = () => {
 
 export default function DateSelect(props) {
   const { value } = props;
-  const defaultValue = !!value ? value : getToday();
+  const defaultValue = !!value ? value : "";
   const handleChange = (e) => {
     const { value } = e.target;
     props.onChange(value);

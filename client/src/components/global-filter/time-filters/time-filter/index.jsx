@@ -16,21 +16,23 @@ export default function TimeFilter(props) {
   const filtersID = firstLvlFilters[0].filter_id;
   const current = timeFilterState.find((f) => f.filter_id === filtersID);
   const values = firstLvlFilters.map((f) => f.values).flat();
-
-  const addToState = (filter_option, filter_value) => {
+  !!current && console.log({ current });
+  const addToState = ({ filter_option, filter_value, filter_display_text }) => {
     let newFilterState = filterState;
     const filter = {
       ID: filter_option,
       value: filter_value,
       filter_id: filtersID,
+      filter_display_text,
       lvl: 1,
       parentId: null,
     };
     dispatch(editTimeFilterState([filter]));
   };
 
-  const handleChange = ({ filter_option, filter_value }) => {
-    addToState(filter_option, filter_value);
+  const handleChange = (option) => {
+    // const handleChange = ({ filter_option, filter_value }) => {
+    addToState(option);
   };
 
   return (
@@ -38,7 +40,7 @@ export default function TimeFilter(props) {
       <SimpleSelect
         options={values}
         handleChange={handleChange}
-        value={current}
+        value={current?.filter_display_text}
       />
     </>
   );

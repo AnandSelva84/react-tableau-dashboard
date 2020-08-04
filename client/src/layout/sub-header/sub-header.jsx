@@ -262,7 +262,10 @@ const SubHeader = () => {
               {!!timeIntervalFilter && (
                 <Chip
                   size="small"
-                  label={createChip("Date Interval", timeIntervalFilter?.value)}
+                  label={createChip(
+                    "Date Interval",
+                    timeIntervalFilter?.filter_display_text
+                  )}
                 />
               )}
             </div>

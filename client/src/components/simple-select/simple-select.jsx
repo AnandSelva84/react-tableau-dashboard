@@ -56,7 +56,7 @@ const SimpleSelect = (props) => {
           variant="outlined"
           // placeholder={!props.custom ? props?.title : props.placeholder}
           label={props?.label || "Time Interval"}
-          value={props?.value?.value || ""}
+          value={props?.value || ""}
           InputProps={{
             readOnly: !!props.readWrite ? false : true,
           }}
