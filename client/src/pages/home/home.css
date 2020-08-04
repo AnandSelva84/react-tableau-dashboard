@@ -81,8 +81,7 @@
   text-align: center;
   margin-top: 5rem;
   color: #fff;
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 25px;
 }
 
 .wellcome-message h3 {
@@ -95,7 +94,7 @@
 }
 
 .home-styled-title {
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .home {

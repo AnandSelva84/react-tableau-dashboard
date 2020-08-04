@@ -22,7 +22,7 @@
 
 .reports-count {
   color: #fff;
-  font-size: 22px;
+  font-size: 18px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -42,15 +42,14 @@
 
 .panel-unit {
   color: #1b262c;
-  font-size: 14px;
-  border-top: 3px gray solid;
+  font-size: 12px;
+  border-top: 1px darkgray solid;
   padding: 0.5rem 0;
-  margin: 0.5rem 0;
   cursor: pointer;
 }
 
 .home-panel-title {
-  font-size: 20px;
+  font-size: 14px;
   color: #086972;
   font-weight: 500;
   cursor: pointer;
@@ -62,7 +61,7 @@
   top: 0;
   right: 10%;
   width: 3rem;
-  height: 4rem;
+  height: 3rem;
   background-color: #1b262c;
   border-radius: 0px 0px 10px 10px;
 }

@@ -57,11 +57,11 @@ const HomePage = (props) => {
         <div className="wellcome-message">
           <div>Hello Panda!</div>
           <div className="app-name-words">
-            <span>Welcome to the</span>
+            <span className="home-styled-title">Welcome to the  </span>
             <StyledTitle
               middleColor="yellow"
               title={app?.application?.name}
-              className="home-styled-title"
+              
             />
           </div>
         </div>
