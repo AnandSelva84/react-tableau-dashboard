@@ -54,7 +54,7 @@ const LVL_3 = React.memo((props) => {
     <>
       {!!props.url && (
         <WrappedReport
-          options={{ height: "80vh" }}
+          options={{ height: "82vh" }}
           url={ReportURL}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}

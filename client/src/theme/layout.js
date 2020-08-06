@@ -7,7 +7,7 @@ const theme = {
     overFlow: "hidden",
   },
   darkHeader: {
-    backgroundColor: "#192734",
+    backgroundColor: "rgb(18, 57, 91)",
     color: "#61dafb",
     minHeight: "3.5rem",
   },
