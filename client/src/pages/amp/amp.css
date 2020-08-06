@@ -1,6 +1,8 @@
 .panel {
   min-width: 49%;
+  flex: 1;
   min-height: 25vh;
+  justify-content: space-between;
   border: 0.5px solid black;
   max-width: 30rem;
   margin: 0.5rem 0;
@@ -11,4 +13,10 @@
   /* border: 0.5px solid skyblue; */
   display: flex;
   justify-content: space-between;
+}
+
+@media (min-width: 1950px) {
+  .panel {
+    min-width: 32.7%;
+  }
 }

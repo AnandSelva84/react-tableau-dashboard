@@ -52,8 +52,7 @@ const TableauViz = (props) => {
     props.filterMapping
   );
   const reportFilters = fromAppliedToOptions(appliedFilters);
-  // const reportTimeFilters = { ...reportFilters, ...timeIntervalFilters };
-  // console.log({ reportTimeFilters });
+
   const mappedfilters = props.filterMappingResult(
     reportFilters,
     props.filterMapping
@@ -118,16 +117,30 @@ const TableauViz = (props) => {
     if (!!workbook) {
       console.log("initt values", reportFilters);
       console.log("final filter to apply ", mappedfilters);
-
-      // handleApply(mappedfilters);
+      const dummyFilters = {
+        Gender: "Men",
+      };
+      handleApply(dummyFilters);
     }
   }, [!!viz, vizIsInteractive, appliedFilters, savedFilters, workbook]);
 
   if (!!!props.url) return null;
 
+  const applyDate = () => {
+    sheet().applyRangeFilterAsync(
+      "Select Date",
+      {
+        min: new Date(Date.UTC(2013, 1, 5)),
+        max: new Date(Date.UTC(2013, 10, 31)),
+      },
+      tableau.FilterUpdateType.REPLACE
+    );
+  };
+
   return (
     <>
       <div style={{ width: "100%", height: "100%" }} className="dark-hover">
+        {/* <button onClick={applyDate}>change date</button> */}
         <div
           className=""
           style={{ width: "100%", height: "100%", position: "relative" }}

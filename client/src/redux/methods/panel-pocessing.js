@@ -3,7 +3,6 @@ import { fromArrayToObject } from "./tableau-methods";
 import { createObj } from "./tableau-methods";
 
 export const getViewData = (id, all_views = []) => {
-  debugger;
   const view = all_views.find((_view) => _view.id === id);
   return view;
 };
@@ -27,7 +26,6 @@ const ObjectGen = (key, value) => ({
 });
 
 export const findNewKey = (key, filterMappings = []) => {
-  debugger;
   const found = filterMappings.find(
     (f) => f.id.toLowerCase() === key.toLowerCase()
   );
@@ -60,7 +58,6 @@ export const getRouteById = (all_views, id) => {
 
 const formArraytoObj = (array = []) => {
   let obj = {};
-  debugger;
   array.forEach((ObjValue) => {
     const key = Object.values(ObjValue);
     const newObj = createObj(key[0], key[1]);
@@ -73,7 +70,6 @@ export const refactorTimeIntervalFilters = (
   timeIntervals,
   filterMappings = []
 ) => {
-  debugger;
   const newTimeFiltersArrayForm = timeIntervals.map((t) => ({
     [findNewKey(t.filter_id, filterMappings)]: t.value,
   }));
