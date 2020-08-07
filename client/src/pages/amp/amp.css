@@ -1,7 +1,7 @@
 .panel {
   min-width: 49%;
   flex: 1;
-  min-height: 25vh;
+  min-height: 10vh;
   justify-content: space-between;
   border: 0.5px solid black;
   max-width: 30rem;
