@@ -33,6 +33,9 @@ import {
   filterMappingResult,
 } from "../../redux/methods/panel-pocessing";
 import WrappedReport from "../../components/report/report";
+// import LegacyReport from "./../../components/tableauViz/tableauViz";
+import ClassReport from "./../../components/class-report/index";
+import WrappedClass from "../../components/class-report/wrapped-class";
 
 const LVL_3 = React.memo((props) => {
   const { singleReportData } = props;
@@ -52,15 +55,20 @@ const LVL_3 = React.memo((props) => {
 
   return (
     <>
-      {!!props.url && (
+      {/* {!!props.url && (
         <WrappedReport
-          options={{ height: "82vh" }}
+          options={{ height: "100%" }}
           url={ReportURL}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}
           hideToolbar={false}
         />
-      )}
+      )} */}
+      <WrappedClass
+        url={ReportURL}
+        filterMappingResult={filterMappingResult}
+        filterMapping={filterMapping}
+      />
     </>
   );
 });

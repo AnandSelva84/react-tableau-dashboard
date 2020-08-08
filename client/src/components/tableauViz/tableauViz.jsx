@@ -7,7 +7,7 @@ import _ from "loadash";
 
 /*eslint-disable no-console */
 
-class TableauViz extends Component {
+class LegacyReport extends Component {
   constructor(props) {
     super(props);
 
@@ -58,7 +58,7 @@ class TableauViz extends Component {
       let promiseCollection = [];
 
       if (!_.isEqual(prevProps.filtervalues, this.props.filterValues))
-        promisecollection.push(this.handleFilterChangeFromProps());
+        promiseCollection.push(this.handleFilterChangeFromProps());
 
       if (!_.isEqual(prevProps.parmValues, this.props.parmValues))
         promiseCollection.push(this.handleParameterchangeFromProps());
@@ -115,11 +115,11 @@ class TableauViz extends Component {
             this.props.filtervalues[key].value.length !== 0
           ) {
             if ("text" in this.props.filterMappings[key]) {
-              filteroptions[
+              filterOptions[
                 this.props.filterMappings[key].text
               ] = this.props.filterValues[key].text;
             } else {
-              filteroptions[
+              filterOptions[
                 this.props.filterMappings[key].value
               ] = this.props.filterValues[key].value;
             }
@@ -128,7 +128,7 @@ class TableauViz extends Component {
       }
     }
 
-    console.log("filterOptions", filteroptions);
+    console.log("filterOptions", filterOptions);
 
     const options = {
       ...filterOptions,
@@ -167,7 +167,7 @@ class TableauViz extends Component {
 
     // define an array of promises of each Sheet returning the fulfilled promise of the filter reterival
 
-    const promiseArr = activesheetsInDashboard.map((sheet, index) => {
+    const promiseArr = activeSheetsInDashboard.map((sheet, index) => {
       return sheet.getFiltersAsync().then((filterDefArray) => {
         return {
           sheetName: sheet.getName(),
@@ -525,7 +525,7 @@ class TableauViz extends Component {
   }
 }
 
-Tableauviz.propTypes = {
+LegacyReport.propTypes = {
   filterMappings: PropTypes.object,
   filterValues: PropTypes.object,
   hideTabs: PropTypes.bool.isRequired,
@@ -538,4 +538,4 @@ Tableauviz.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-export default Tableauviz;
+export default LegacyReport;

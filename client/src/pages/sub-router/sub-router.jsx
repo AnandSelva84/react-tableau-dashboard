@@ -91,7 +91,7 @@ const SubRouter = (props) => {
   };
 
   return (
-    <div className="">
+    <div className="" style={{ height: "88%" }}>
       <>
         {!!panel && !!app && !!panels && !!vizResponse.vizData.length && (
           <ToRender

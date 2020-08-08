@@ -160,6 +160,7 @@
   padding: 0.5rem 1.5rem;
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 2rem;
 }
 
 .kidBody {

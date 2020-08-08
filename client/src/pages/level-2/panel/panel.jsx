@@ -3,6 +3,7 @@ import PanelHeader from "../../../components/panel-header/panel-header";
 import WrappedReport from "../../../components/report/report";
 import { stylePosition } from "./embeded-feilds/pos-styles";
 import EmbededFeilds from "./embeded-feilds/index";
+import WrappedClass from "./../../../components/class-report/wrapped-class/index";
 
 export default function Panel(props) {
   let url = "";
@@ -59,8 +60,8 @@ export default function Panel(props) {
         handleViewClick={handleViewClick}
       />
       <div className="" style={{ paddingTop: "5rem" }}>
-        <WrappedReport
-          options={{ height: "50vh" }}
+        <WrappedClass
+          options={{ height: "25vh" }}
           url={chartUrl}
           parameter={numericValue}
           filterMappingResult={filterMappingResult}
