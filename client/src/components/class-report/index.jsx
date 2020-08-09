@@ -42,34 +42,28 @@ export default class ClassReport extends PureComponent {
     const activeSheet = this.workbook.getActiveSheet();
     this.sheet = activeSheet;
 
+    this.props.onReportReady();
+
     // !!this.sheet && alert("is interactive");
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (this?.props?.counter !== prevProps?.counter) {
-    //   console.log({ prevProps, props: this.props });
-    //   this.sheet.applyFilterAsync(
-    //     "College",
-    //     "Music",
-    //     tableau.FilterUpdateType.REPLACE
-    //   );
-    // }
     const { props } = this;
 
     const currentFilters = props.filters;
     const prevFilters = prevProps.filters;
-
-    console.log({ current: getArrayValue(currentFilters) });
-    console.log({ prev: getArrayValue(prevFilters) });
-
     const match = isEquelObj(currentFilters, prevFilters);
 
-    console.log({ props, prevProps, match });
-    console.log({ newMapped: this.props.filters });
+    //initial Apply
+    if (
+      !!this.props.reportState &&
+      this.props.reportState !== prevProps.reportState
+    )
+      this.handleApply({ Gender: "Men" });
+
     if (this.props?.filters !== prevProps.filters && !!this.sheet && !match) {
-      if (!!this.sheet) this.handleApply({ ...currentFilters });
-      // alert("apply is called!");
-      // this.handleApply(this.props.filters);
+      //  this.handleApply({ College: "Music" });
+      this.handleApply({ ...currentFilters });
     }
   }
 

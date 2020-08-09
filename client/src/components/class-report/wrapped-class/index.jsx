@@ -8,6 +8,7 @@ export default function WrappedClass(props) {
   const { url } = props;
   const [loaded, setLoaded] = useState(false);
   const [render, setRender] = useState(true);
+  const [reportState, setReportState] = useState("");
 
   const { appliedFilters } = useData().sharedReducer;
 
@@ -17,6 +18,11 @@ export default function WrappedClass(props) {
     reportFilters,
     props.filterMapping
   );
+
+  const onReportReady = () => {
+    alert("report is ready!");
+    setReportState("ready");
+  };
 
   useEffect(() => {
     setRender(false);
@@ -32,5 +38,16 @@ export default function WrappedClass(props) {
     }
   }, [render]);
 
-  return <>{render && <ClassReport url={url} filters={mappedfilters} />}</>;
+  return (
+    <>
+      {render && (
+        <ClassReport
+          url={url}
+          reportState={reportState}
+          onReportReady={onReportReady}
+          filters={mappedfilters}
+        />
+      )}
+    </>
+  );
 }
