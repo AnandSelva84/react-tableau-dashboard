@@ -50,9 +50,9 @@ const ControlButtons = () => {
   };
 
   React.useEffect(() => {
-    if (unCompleted.length)
+    if (!!unCompleted.length)
       setError(`${unCompleted} are empty, Please select at least one option.`);
-    else if (!!!unCompleted.length && !!!error) setError("");
+    else if (!!!unCompleted.length) setError("");
   }, [unCompleted]);
 
   React.useEffect(() => {

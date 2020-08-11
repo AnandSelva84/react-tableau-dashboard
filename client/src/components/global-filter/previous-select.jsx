@@ -297,12 +297,15 @@ const PrevSelect = (props) => {
         unCompletedFilters.push(
           newFilters.find((f) => f.filter_id === id)?.title
         );
+      } else {
+        unCompletedFilters.filter((f) => f.filter_id === id);
       }
     });
     setUncompleted([...unCompletedFilters]);
   }, [filterState]);
 
   React.useEffect(() => {
+    console.log({ unCompletedFilters });
     dispatch(setUncompletedFilters([...unCompletedFilters]));
   }, [unCompletedFilters]);
 
