@@ -4,7 +4,6 @@ import btnsTheme from "../../theme/btn-control";
 import { useDispatch } from "react-redux";
 import {
   saveFilters,
-  clearFilter,
   applyFilters,
   editFilterState,
   toggleResetButton,
@@ -14,11 +13,9 @@ import {
   toggleDrawer,
 } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
-// import { useSnackbar } from "notistack";
 import { applyTimeFilterState } from "./../../redux/actions/shared";
 
 const ControlButtons = () => {
-  // const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const {
     filterState,
@@ -35,6 +32,12 @@ const ControlButtons = () => {
   const endDate = timeFilterState.find((f) => f.filter_type === "Range End")
     ?.value;
 
+  const areValidDates = (start, end) => {
+    const _startDate = Date.parse(start);
+    const _endDate = Date.parse(end);
+    return _endDate > _startDate;
+  };
+
   const handleStoreUpdate = (name) => {
     dispatch(
       addFilter({
@@ -50,9 +53,9 @@ const ControlButtons = () => {
   };
 
   React.useEffect(() => {
-    if (!!unCompleted.length)
+    if (unCompleted.length)
       setError(`${unCompleted} are empty, Please select at least one option.`);
-    else if (!!!unCompleted.length) setError("");
+    else if (!unCompleted.length) setError("");
   }, [unCompleted]);
 
   React.useEffect(() => {
@@ -63,7 +66,7 @@ const ControlButtons = () => {
       return;
     } else if (!hasCustomRange) setError("");
 
-    if (!!!startDate && !!!endDate) return;
+    if (!startDate && !endDate) return;
 
     const validDate = areValidDates(startDate, endDate);
     if (!validDate) setError("End Date should be greater than Start Date.");
@@ -76,14 +79,8 @@ const ControlButtons = () => {
     dispatch(showMessage(msg, variant, true));
   };
 
-  const areValidDates = (start, end) => {
-    const startDate = Date.parse(start);
-    const endDate = Date.parse(end);
-    return endDate > startDate;
-  };
-
   const handleSave = () => {
-    if (!!error) {
+    if (error) {
       makeMessage(error, "error");
       return;
     } else {
@@ -100,15 +97,15 @@ const ControlButtons = () => {
     dispatch(toggleResetButton());
   };
   const handleApply = () => {
-    if (!!error) {
+    if (error) {
       makeMessage(error, "error");
       return;
     }
-    if (!!unCompleted.length) {
+    if (unCompleted.length) {
       makeMessage(error, "error");
       return;
     }
-    if (!!!error) {
+    if (!error) {
       makeMessage(`Filters Applied Successfully.`, "success");
     }
 
