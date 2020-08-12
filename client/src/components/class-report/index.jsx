@@ -1,9 +1,7 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { PureComponent } from "react";
-import { isEquelObj, getArrayValue } from "../../redux/methods/array-handling";
-
-const url = "http://public.tableau.com/views/RegionalSampleWorkbook/College";
+import { isEquelObj } from "../../redux/methods/array-handling";
+import { PropTypes } from "prop-types";
 const { tableau } = window;
 
 export default class ClassReport extends PureComponent {
@@ -23,7 +21,6 @@ export default class ClassReport extends PureComponent {
   }
 
   handleApply(filterObj) {
-    console.error("change should be applied");
     const allKeys = Object.keys(filterObj);
     allKeys.forEach((key) => {
       this.applyfilter(key, filterObj[key]);
@@ -47,7 +44,7 @@ export default class ClassReport extends PureComponent {
     // !!this.sheet && alert("is interactive");
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { props } = this;
 
     const currentFilters = props.filters;
@@ -59,12 +56,10 @@ export default class ClassReport extends PureComponent {
       !!this.props.reportState &&
       this.props.reportState !== prevProps.reportState
     )
-      this.handleApply({ Gender: "Men" });
-
-    if (this.props?.filters !== prevProps.filters && !!this.sheet && !match) {
-      //  this.handleApply({ College: "Music" });
-      this.handleApply({ ...currentFilters });
-    }
+      if (this.props?.filters !== prevProps.filters && !!this.sheet && !match) {
+        //  this.handleApply({ College: "Music" });
+        this.handleApply({ ...currentFilters });
+      }
   }
 
   initViz() {
@@ -90,3 +85,11 @@ export default class ClassReport extends PureComponent {
     return <div ref={this.vizRef}></div>;
   }
 }
+
+ClassReport.propTypes = {
+  filters: PropTypes.object,
+  onReportReady: PropTypes.func,
+  url: PropTypes.string,
+  reportState: PropTypes.bool,
+  option: PropTypes.object,
+};

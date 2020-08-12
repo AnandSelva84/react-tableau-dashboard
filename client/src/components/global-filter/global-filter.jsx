@@ -6,20 +6,14 @@ import ControlButtons from "./control-buttons";
 import { useDispatch } from "react-redux";
 import { editFilterState } from "../../redux/actions/shared";
 
-const GlobalFilters = React.memo(() => {
-  const {
-    filters,
-    newFilters,
-    filterState,
-    savedFilters,
-  } = useData().sharedReducer;
+const GlobalFilters = () => {
+  const { newFilters } = useData().sharedReducer;
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = React.useState(false);
 
   React.useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("filters"));
-    if (!!saved) dispatch(editFilterState(saved));
+    if (saved) dispatch(editFilterState(saved));
   }, []);
 
   return (
@@ -30,7 +24,6 @@ const GlobalFilters = React.memo(() => {
             <Select
               id={filter.filterId}
               values={filter.values}
-              // selected={getValues(filter.title)}
               title={filter.title}
               lvl={filter.level}
               multi={filter.filterType === "Multi-Select"}
@@ -44,5 +37,5 @@ const GlobalFilters = React.memo(() => {
       </div>
     </div>
   );
-});
+};
 export default GlobalFilters;

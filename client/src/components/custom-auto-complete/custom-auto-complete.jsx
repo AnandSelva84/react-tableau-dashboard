@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { TextField, Paper, ClickAwayListener } from "@material-ui/core";
+import { TextField, ClickAwayListener } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const CustomSelect = (props) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -48,6 +49,13 @@ const CustomSelect = (props) => {
       </div>
     </ClickAwayListener>
   );
+};
+
+CustomSelect.propTypes = {
+  filterMapping: PropTypes.object,
+  onTextChange: PropTypes.func,
+  title: PropTypes.string,
+  children: PropTypes.any,
 };
 
 export default CustomSelect;

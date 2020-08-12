@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import ClassReport from "..";
 import useData from "./../../../hooks/useStore";
 import { fromAppliedToOptions } from "./../../../redux/methods/tableau-methods";
+import { PropTypes } from "prop-types";
 
 export default function WrappedClass(props) {
-  const [counter, setCounter] = useState(0);
   const { url } = props;
-  const [loaded, setLoaded] = useState(false);
   const [render, setRender] = useState(true);
   const [reportState, setReportState] = useState("");
 
@@ -20,17 +19,12 @@ export default function WrappedClass(props) {
   );
 
   const onReportReady = () => {
-    alert("report is ready!");
     setReportState("ready");
   };
 
   useEffect(() => {
     setRender(false);
   }, [props.url]);
-
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
 
   useEffect(() => {
     if (!render) {
@@ -51,3 +45,9 @@ export default function WrappedClass(props) {
     </>
   );
 }
+
+WrappedClass.propTypes = {
+  filterMapping: PropTypes.object,
+  filterMappingResult: PropTypes.func,
+  url: PropTypes.string,
+};
