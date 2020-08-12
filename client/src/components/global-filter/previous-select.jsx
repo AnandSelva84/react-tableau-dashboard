@@ -1,48 +1,27 @@
 import React, { useState } from "react";
-import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  Typography,
-  ExpansionPanelDetails,
-  Paper,
-  TextField,
-  ClickAwayListener,
-  Chip,
-} from "@material-ui/core";
-import InputBase from "@material-ui/core/InputBase";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { TextField, ClickAwayListener } from "@material-ui/core";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import {
   addFilter,
   deleteFilter,
   editFilterState,
-  setAllAreSelected,
   setAllCheckArray,
   setStoredViewdFilters,
   setUncompletedFilters,
   toggleResetButton,
 } from "../../redux/actions/shared";
-// import { isExist } from "../../redux/methods/is-exist";
 import { filterModel } from "../../models/filter";
 import Option from "../select/option";
-import CustomSelect from "../custom-auto-complete/custom-auto-complete";
-import MenuSkeleton from "../menu-skeletons/menu-skeletons";
 import OptionsWrapper from "./optionsWrapper";
 import SideChips from "./side-chips";
 
 //props.values should be filtered before passing it to it's component
 const PrevSelect = (props) => {
-  const {
-    filterOptionId,
-    filter_display_text,
-    filter_value_text,
-  } = filterModel.values[0];
   const { reformattedNewFilters } = props;
   const dispatch = useDispatch();
 
   const {
-    filters,
     filterState,
     newFilters,
     allCheckArray,
@@ -57,7 +36,6 @@ const PrevSelect = (props) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [menuLoading, setMenuLoading] = useState(false);
   const [unCompletedFilters, setUncompleted] = useState([]);
   const [cleared, setCleared] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -68,10 +46,6 @@ const PrevSelect = (props) => {
   const possibleAllSelect = filterState.filter(
     (filter) => filter.id !== props.title
   );
-
-  React.useEffect(() => {
-    console.log({ reformattedNewFilters });
-  }, [reformattedNewFilters]);
 
   const formattedOptions = [
     ...props.values.map((value) => ({
@@ -105,20 +79,13 @@ const PrevSelect = (props) => {
       family = [...family, ...child];
       searchID = child.map((f) => f.ID);
     }
-    console.log("all new family", family);
     let dataToReturn = [];
     family.forEach((filter) => {
       if (!dataToReturn.map((f) => f.ID).includes(filter.ID))
         dataToReturn.push(filter);
     });
-
-    console.log("all new family after delete ", dataToReturn);
     return dataToReturn;
   };
-
-  React.useEffect(() => {
-    if (!!!props.values.length) setAllCheck(false);
-  }, [props.values]);
 
   const isExist = (ID) => {
     return filterState.find((f) => f.ID === ID);
@@ -199,7 +166,6 @@ const PrevSelect = (props) => {
         ...storedViewedFilters.filter((f) => f.id !== props.id),
         editedValues,
       ];
-      console.log("edit Values ", storedAfterChange);
       dispatch(setStoredViewdFilters([...storedAfterChange]));
     }
   }, [filterState]);
@@ -305,21 +271,12 @@ const PrevSelect = (props) => {
   }, [filterState]);
 
   React.useEffect(() => {
-    console.log({ unCompletedFilters });
     dispatch(setUncompletedFilters([...unCompletedFilters]));
   }, [unCompletedFilters]);
 
   const getTitle = () => {
     return props.title;
   };
-
-  const isExistinArray = (array, element) => {
-    return array.includes(element);
-  };
-
-  React.useEffect(() => {
-    if (!newAllChecked()) setAllCheck(false);
-  }, [filterState]);
 
   const newAllChecked = () => {
     const allOptionsIds = props.values.map((v) => v.filterOptionId);
@@ -338,7 +295,6 @@ const PrevSelect = (props) => {
   };
 
   const toggle = () => {
-    setMenuLoading(true);
     showMenu ? hanldeClose() : handleOpen();
   };
 
@@ -358,7 +314,6 @@ const PrevSelect = (props) => {
   const [sliceIndex, setSliceIndex] = React.useState(10);
 
   const handleScroll = () => {
-    console.log("new scroll", sliceIndex);
     if (sliceIndex < maxSliceLength) setSliceIndex(sliceIndex + 1);
   };
 

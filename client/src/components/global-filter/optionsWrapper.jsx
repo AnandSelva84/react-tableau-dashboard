@@ -1,16 +1,12 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const OptionsWrapper = (props) => {
-  const [loaded, setLoaded] = React.useState();
-
   React.useEffect(() => {
-    // setLoaded(true);
-    // if (loaded) props.onMenuHasLoaded();
-
-    return ()=>{
-      props.onClose()
-    }
+    return () => {
+      props.onClose();
+    };
   }, []);
 
   return (
@@ -27,14 +23,20 @@ const OptionsWrapper = (props) => {
           minWidth: "100%",
           zIndex: "100",
         }}
-        onScroll={(e)=>{
-          props.onScroll()
+        onScroll={() => {
+          props.onScroll();
         }}
       >
         {props.children}
       </Paper>
     </>
   );
+};
+
+OptionsWrapper.propTypes = {
+  children: PropTypes.any,
+  onScroll: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 export default OptionsWrapper;

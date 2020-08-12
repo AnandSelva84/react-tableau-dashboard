@@ -1,30 +1,21 @@
 import React from "react";
-// import Select from "../select/select";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import {
   editFilterState,
-  toggleDrawer,
   setStoredViewdFilters,
 } from "../../redux/actions/shared";
-import { filterModel } from "../../models/filter";
 import ControlButtons from "./control-buttons";
 import "./global-filters.css";
-import {
-  reFormat,
-  fromOptionsToChips,
-} from "../../redux/methods/re-format-response";
+
 import MainSwitch from "../main-switch/main-switch";
 import { useHistory } from "react-router-dom";
-import DateControls from "../../pages/level-2/date-controls";
-import SimpleSelect from "../simple-select/simple-select";
 import TimeFilters from "./time-filters/index";
 
 const PrevSelect = React.lazy(() => import("./previous-select"));
 
-const PrevGlobalFilters = React.memo(() => {
+const PrevGlobalFilters = () => {
   const {
-    filters,
     newFilters,
     filterState,
     storedViewedFilters,
@@ -34,7 +25,6 @@ const PrevGlobalFilters = React.memo(() => {
   } = useData().sharedReducer;
   const [viewedFilters, setViewedFilters] = React.useState([]);
   const [reformattedNewFilters, setReformattedNewFilters] = React.useState([]);
-  const [loaded, setLoaded] = React.useState(false);
 
   const show = newFilters.length > 0;
   const dispatch = useDispatch();
@@ -43,19 +33,8 @@ const PrevGlobalFilters = React.memo(() => {
   const { pathname } = history.location;
   const path = pathname.substr(1, pathname.length);
 
-  //   filter_display_text: "Business"
-  // filter_option: "Business"
-  // filter_value: "Business"
-  // lvl: 1
-  // order: 2
-  // parent_filter_option: null
-
-  const findById = (data, ID) => {
-    return data.find((f) => f.ID === ID);
-  };
-
   React.useEffect(() => {
-    if (!!newFilters && newFilters.length > 1) {
+    if (newFilters && newFilters.length > 1) {
       let data = newFilters.map((filter) => ({
         ...filter,
         values: filter.values.map((value) => ({
@@ -75,8 +54,6 @@ const PrevGlobalFilters = React.memo(() => {
         filter_id: filter.filter_id,
       }));
       setReformattedNewFilters(data);
-      console.log("all new filters", data);
-      // findFamily("Business_Bank_AML_IT_Solutions_2", data);
     }
   }, [newFilters]);
 
@@ -98,26 +75,6 @@ const PrevGlobalFilters = React.memo(() => {
   React.useEffect(() => {
     if (appliedFilters.length) dispatch(editFilterState([...appliedFilters]));
   }, [drawer]);
-  React.useEffect(() => {
-    const ids = filterState.map((f) => f.ID);
-    const parents = filterState.map((f) => f.parentId);
-
-    console.log("error here all ids", ids);
-    console.log("error here all parents", parents);
-
-    console.log(
-      "error here all",
-      parents.every((e) => ids.includes(e))
-    );
-
-    // filterState.forEach((filter) => {
-    //   if (!filterState.map((f) => f.ID).includes(filter.parentId)) {
-    //     console.log("error here not included", filter);
-    //   } else {
-    //     console.log("error here included", filter);
-    //   }
-    // });
-  }, [filterState]);
 
   React.useEffect(() => {
     setViewedFilters([]);
@@ -147,16 +104,11 @@ const PrevGlobalFilters = React.memo(() => {
           chosenIds.includes(value.parentFilterOptionId)
         );
         //you will get filtered values and after with be the chosen filter so return it -- a is values and after is filter
-        console.log("Anew values for id ", after.filterId);
         const afterChange = {
           ...after,
           values: [...a],
         };
-        if (!!!a.length) {
-          console.log("Anew filter in case no values ", {
-            ...after,
-            values: [],
-          });
+        if (!a.length) {
           filterToReturn = {
             ...after,
             values: [],
@@ -167,7 +119,7 @@ const PrevGlobalFilters = React.memo(() => {
           filterToReturn = { ...after };
         }
         if (a.length) {
-          if (!viewedFilters.map((a) => a.id).includes(after.filterId)) {
+          if (!viewedFilters.map((f) => f.id).includes(after.filterId)) {
             // if (storedViewedFilters.length)
             setViewedFilters([
               ...viewedFilters,
@@ -175,7 +127,6 @@ const PrevGlobalFilters = React.memo(() => {
             ]);
           }
 
-          console.log("Anew filter in case there is  ", afterChange);
           filterToReturn = { ...afterChange };
         }
       }
@@ -185,24 +136,10 @@ const PrevGlobalFilters = React.memo(() => {
   };
 
   React.useEffect(() => {
-    console.log("viewed max ", heighestLvlFilter);
-    console.log("viewed current ", viewedFilters);
     if (viewedFilters.length === heighestLvlFilter - 1)
       dispatch(setStoredViewdFilters([...viewedFilters]));
-    return () => {
-      console.log("on unmount viewed", viewedFilters);
-    };
+    return () => {};
   }, [viewedFilters]);
-
-  React.useEffect(() => {
-    setLoaded(true);
-  }, []);
-  React.useEffect(() => {
-    if (loaded) {
-      // dispatch(setStoredViewdFilters([]));
-      // setViewedFilters([]);
-    }
-  }, [currentMainFilter]);
 
   const handleValuesChange = (valuesLength, id) => {
     dispatch(
@@ -217,7 +154,7 @@ const PrevGlobalFilters = React.memo(() => {
     <>
       <div className="drawer-wrapper">
         <div className="global-wrapper">
-          {show && !!newFilters && (
+          {show && newFilters && (
             <div className="filters-wrapper">
               <MainSwitch
                 onSwitch={() => {
@@ -227,11 +164,10 @@ const PrevGlobalFilters = React.memo(() => {
               />
 
               {newFilters.map((filter) => {
-                let toRender;
                 const afterChange = format(filter.filter_id);
                 if (
                   afterChange.values.length ||
-                  !!storedViewedFilters.find((f) => f.id === filter.filter_id)
+                  storedViewedFilters.find((f) => f.id === filter.filter_id)
                 )
                   return (
                     <React.Suspense fallback={<>Loading...</>}>
@@ -248,7 +184,7 @@ const PrevGlobalFilters = React.memo(() => {
                     </React.Suspense>
                   );
               })}
-              {howManySlashes(pathname) === 1 && !!path && <TimeFilters />}
+              {howManySlashes(pathname) === 1 && path && <TimeFilters />}
             </div>
           )}
 
@@ -263,5 +199,5 @@ const PrevGlobalFilters = React.memo(() => {
       </div>
     </>
   );
-});
+};
 export default PrevGlobalFilters;
