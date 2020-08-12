@@ -112,7 +112,6 @@ const Select = (props) => {
       {localFilters.length > 0 && (
         <>
           <AutoComplete
-            // disableCloseOnSelect={props.disableCloseOnSelect}
             filterState={filterState}
             title={props.title}
             options={props.values}
@@ -139,34 +138,6 @@ const Select = (props) => {
               } catch {}
             }}
           />
-          {/* <PrevSelect
-            // disableCloseOnSelect={props.disableCloseOnSelect}
-            filterState={filterState}
-            title={props.title}
-            values={props.values}
-            // value={[...createOptions()]}
-            multiple={props.multi}
-            // onChange={(e, obj, reason) => {
-            //   try {
-            //     if (!props.multi)
-            //       handleClick(
-            //         props.title,
-            //         obj.filter_value_text,
-            //         props.lvl,
-            //         obj.filterOptionId,
-            //         obj.parentFilterOptionId
-            //       );
-            //     else
-            //       handleClick(
-            //         props.title,
-            //         e.target.innerText,
-            //         props.lvl,
-            //         obj[obj.length - 1].filterOptionId,
-            //         obj[obj.length - 1].parentFilterOptionId
-            //       );
-            //   } catch {}
-            // }}
-          /> */}
         </>
       )}
     </>
@@ -174,52 +145,3 @@ const Select = (props) => {
 };
 
 export default Select;
-
-/* <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Typography style={{ fontSize: "1rem" }}>
-                {props.title}
-              </Typography>
-              <Chosen filters={getChosen()} />
-            </div>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              {props.values.sort(sortOptions).map((option) => (
-                <Option
-                  checked={isExist(
-                    filterState,
-                    props.title,
-                    option.filter_value_text
-                  )}
-                  value={option.filter_value_text}
-                  filterState={filterState}
-                  id={option.filterOptionId}
-                  parentId={option.parentFilterOptionId}
-                  lvl={props.lvl}
-                  display={option.filter_display_text}
-                  onClick={() =>
-                    handleClick(
-                      props.title,
-                      option.filter_value_text,
-                      props.lvl,
-                      option.filterOptionId,
-                      option.parentFilterOptionId
-                    )
-                  }
-                />
-              ))}
-            </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel> */
