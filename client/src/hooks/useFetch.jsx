@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function useFetch(url, method, deps) {
   const [data, setData] = useState(null);
@@ -14,9 +14,9 @@ export default function useFetch(url, method, deps) {
       setLoading(false);
 
       setData(response);
-    } catch (error) {
+    } catch (_error) {
       setLoading(false);
-      serError(error);
+      serError(_error);
     }
   };
 

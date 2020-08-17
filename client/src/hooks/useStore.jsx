@@ -1,8 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
 
 const useData = () => {
-  const state = useSelector((state) => state);
+  const state = useSelector((_state) => _state);
   return state;
 };
 

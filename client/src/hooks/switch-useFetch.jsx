@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function useSwitchFetch(url, switchCase = false) {
   const [data, setData] = useState(null);
@@ -14,14 +14,14 @@ export default function useSwitchFetch(url, switchCase = false) {
       setLoading(false);
 
       setData(response);
-    } catch (error) {
+    } catch (_error) {
       setLoading(false);
-      serError(error);
+      serError(_error);
     }
   };
 
   useEffect(() => {
-    if (!!switchCase) fetchData();
+    if (switchCase) fetchData();
   }, [url, switchCase]);
   return { data, loading, error };
 }
