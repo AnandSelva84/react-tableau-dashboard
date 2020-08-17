@@ -16,7 +16,7 @@ const deleteDuplicate = (appliedFilters) => {
 };
 
 const getFilterValues = (appliedFilters = [], id = "") => {
-  if (!!id) {
+  if (id) {
     const duplicatedFilters = appliedFilters
       .filter((filter) => filter.id === id)
       .map((v) => v.value);
@@ -28,7 +28,7 @@ export const fromArrayToObject = (array = []) => {
   let data = {};
   array.forEach((elem) => {
     let key = Object.keys(elem)[0];
-    if (!!!key) key = "Hierarchies";
+    if (!key) key = "Hierarchies";
     data = {
       ...data,
 

@@ -99,20 +99,22 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         dataFetched: true,
       };
-    case POP_HISTORY:
+    case POP_HISTORY: {
       const popedHistory = popHistory(state.historyStack, action.times);
       return {
         ...state,
         historyStack: popedHistory,
       };
+    }
 
-    case PUSH_HISTORY:
+    case PUSH_HISTORY: {
       let arr = state.historyStack;
       arr.push(action.obj);
       return {
         ...state,
         historyStack: arr,
       };
+    }
     case SHOW_MESSAGE:
       return {
         ...state,
@@ -140,7 +142,7 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         allCheckArray: action.array,
       };
-    case SET_ALL_ARE_SELECTED:
+    case SET_ALL_ARE_SELECTED: {
       const { hasAll, title } = action.filter;
       const newHasAll = hasAll
         ? [...state.hasAllSelected, action.filter]
@@ -150,6 +152,7 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         hasAllSelected: [...newHasAll],
       };
+    }
 
     case SET_CURRENT_MAIN_FILTER:
       return {
@@ -202,28 +205,10 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         darkMode: action.state,
       };
-    case ADD_FILTER:
-      console.log("action", action.filter);
-
-      const hasParentTest = (id) => {
-        state.filterState.find((value) => value.ID === id);
-      };
-      const hasParent = state.filterState.find(
-        (filter) => hasParentTest(filter.parentId) && filter.lvl !== 0
+    case ADD_FILTER: {
+      const filterd = state.filterState.filter(
+        (filter) => filter.ID !== action.filter.ID
       );
-      console.log(!!hasParent);
-
-      const filterd = state.filterState
-        // .filter((filter) => filter.lvl <= action.filter.lvl)
-        .filter((filter) => filter.ID !== action.filter.ID);
-      const hasSameParent = state.filterState.find(
-        (filter) => filter.id === action.filter.id
-      );
-      // const newFilterState =
-      //   !!hasSameParent && action.filter.lvl === 0
-      //     ? [...filterd, action.filter]
-      //     : [...state.filterState, action.filter];
-
       const newFilterState = [...filterd, action.filter];
       if (action.filter.lvl === 0) {
         return {
@@ -236,7 +221,8 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         filterState: newFilterState,
       };
-    case DELETE_FILTER:
+    }
+    case DELETE_FILTER: {
       let afterEdit = state.filterState
         // .filter((filter) => filter.lvl <= action.filter.lvl)
         .filter((filter) => filter.ID !== action.filter.ID);
@@ -252,6 +238,7 @@ const sharedReducer = (state = sharedState, action) => {
         ...state,
         filterState: [...afterEdit],
       };
+    }
     case SET_APP:
       return {
         ...state,
