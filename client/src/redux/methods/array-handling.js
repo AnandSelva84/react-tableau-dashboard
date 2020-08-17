@@ -9,7 +9,6 @@ export function sortOptions(a, b) {
 }
 
 const matchedArray = (array_1, array_2) => {
-  debugger;
   let match = true;
   if (array_1.length !== array_2.length) match = false;
   array_1.forEach((elem, index) => {

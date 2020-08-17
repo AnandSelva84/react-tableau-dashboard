@@ -1,12 +1,12 @@
-const { panels } = require("../../data/panels_new");
+import { panels } from "./../../data/panels_new";
 
 const lvl_2_routes = panels.map((p) => p.route);
 const lvl_3 = panels.map((p) => p.items).flat();
 const lvl_3_routes = lvl_3.map((f) => f.route);
 
 export const getLvl = (route) => {
-  if (!!lvl_2_routes.find((p) => p === route)) return 2;
-  if (!!lvl_3_routes.find((p) => p === route)) return 3;
+  if (lvl_2_routes.find((p) => p === route)) return 2;
+  if (lvl_3_routes.find((p) => p === route)) return 3;
   return 0;
 };
 

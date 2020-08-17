@@ -9,6 +9,6 @@ export const isExist = (filterState, id, value) => {
 };
 
 export const newIsExist = (filterState, id) => {
-  const isExist = filterState.find((filter) => filter.id === id);
-  return isExist;
+  const _isExist = filterState.find((filter) => filter.id === id);
+  return _isExist;
 };
