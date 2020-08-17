@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import useData from "./../../hooks/useStore";
 import { useDispatch } from "react-redux";
 import { popHistory } from "../../redux/actions/shared";
+import { PropTypes } from "prop-types";
 
 // export interface HistoryObject {
 //     path: string;
@@ -20,17 +21,10 @@ const Arrow = () => (
 );
 
 // props: INavigator
-const NavigationBar = (props) => {
-  const rawPath = props.path.substr(1); //full
+const NavigationBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const paths = rawPath.split("/");
   const { historyStack } = useData().sharedReducer;
-
-  const getPath = (index) => {
-    const pathArray = paths.splice(0, index + 1);
-    return pathArray.join("/");
-  };
 
   //   obj: HistoryObject
   const findInexOf = (pathName) => {
@@ -77,6 +71,10 @@ const NavigationBar = (props) => {
       </div>
     </>
   );
+};
+
+NavigationBar.propTypes = {
+  path: PropTypes.any,
 };
 
 export default NavigationBar;

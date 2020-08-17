@@ -2,13 +2,6 @@ import React from "react";
 import { TextField } from "@material-ui/core";
 
 const DatePickers = () => {
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
   return (
     <>
       {/* <MuiPickersUtilsProvider utils={DateFnsUtils}> */}

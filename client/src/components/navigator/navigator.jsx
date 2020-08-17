@@ -11,6 +11,7 @@ import useData from "../../hooks/useStore";
 import LetterGroup from "./letter-group";
 import { useHistory } from "react-router-dom";
 import { getRouteById } from "../../redux/methods/panel-pocessing";
+import { PropTypes } from "prop-types";
 
 const Naviagtor = (props) => {
   const { panels, app } = props;
@@ -64,6 +65,11 @@ const Naviagtor = (props) => {
       </div>
     </>
   );
+};
+
+Naviagtor.propTypes = {
+  app: PropTypes.any,
+  panels: PropTypes.any,
 };
 
 export default Naviagtor;
