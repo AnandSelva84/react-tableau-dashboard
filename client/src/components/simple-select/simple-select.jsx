@@ -3,8 +3,8 @@ import { ClickAwayListener, CardActionArea } from "@material-ui/core";
 import OptionsWrapper from "./../global-filter/optionsWrapper";
 import { TextField } from "@material-ui/core";
 import select from "./../../theme/select";
-import Checkbox from "@material-ui/core/Checkbox";
 import DeleteBtn from "./deleteBtn/index";
+import { PropTypes } from "prop-types";
 
 const Option = (props) => {
   return (
@@ -22,15 +22,22 @@ const Option = (props) => {
   );
 };
 
+Option.propTypes = {
+  ref: PropTypes.any,
+  display: PropTypes.any,
+  onClick: PropTypes.func,
+};
+
 const SimpleSelect = (props) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
   const { options, handleChange, deleteable, onDelete } = props;
 
   const hanldeClose = () => {
     try {
       setShowMenu(false);
-    } catch (error) {}
+    } catch (error) {
+      return;
+    }
   };
 
   const handleOpen = () => {
@@ -59,7 +66,7 @@ const SimpleSelect = (props) => {
           label={props?.label || "Time Interval"}
           value={props?.value || ""}
           InputProps={{
-            readOnly: !!props.readWrite ? false : true,
+            readOnly: props.readWrite ? false : true,
           }}
         />
         {showMenu && (
@@ -78,6 +85,18 @@ const SimpleSelect = (props) => {
       </div>
     </ClickAwayListener>
   );
+};
+
+SimpleSelect.propTypes = {
+  style: PropTypes.any,
+  label: PropTypes.any,
+  value: PropTypes.any,
+  size: PropTypes.any,
+  readWrite: PropTypes.any,
+  options: PropTypes.any,
+  handleChange: PropTypes.any,
+  deleteable: PropTypes.any,
+  onDelete: PropTypes.any,
 };
 
 export default SimpleSelect;

@@ -1,7 +1,5 @@
 import React from "react";
 import { Snackbar as Snack } from "@material-ui/core";
-import Slide from "@material-ui/core/Slide";
-import Button from "@material-ui/core/Button";
 import MuiAlert from "@material-ui/lab/Alert";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
@@ -9,10 +7,6 @@ import { showMessage } from "../../redux/actions/shared";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
 }
 
 const Snackbar = () => {
@@ -28,9 +22,6 @@ const Snackbar = () => {
     dispatch(showMessage("", "", false));
   };
 
-  const handleClick = () => {
-    dispatch(showMessage("this is message ", "error", true));
-  };
   const handleClose = () => {
     closeSncak();
   };

@@ -2,23 +2,18 @@ import React from "react";
 import SimpleSelect from "../../../simple-select/simple-select";
 import useData from "./../../../../hooks/useStore";
 import { useDispatch } from "react-redux";
-import {
-  addFilter,
-  editTimeFilterState,
-} from "../../../../redux/actions/shared";
-import { editFilterState } from "./../../../../redux/actions/shared";
+import { editTimeFilterState } from "../../../../redux/actions/shared";
 
-export default function TimeFilter(props) {
+export default function TimeFilter() {
   const dispatch = useDispatch();
-  const { timeFilters, filterState, timeFilterState } = useData().sharedReducer;
+  const { timeFilters, timeFilterState } = useData().sharedReducer;
 
   const firstLvlFilters = timeFilters.filter((f) => f.level === 1);
   const filtersID = firstLvlFilters[0].filter_id;
   const current = timeFilterState.find((f) => f.filter_id === filtersID);
   const values = firstLvlFilters.map((f) => f.values).flat();
-  !!current && console.log({ current });
+
   const addToState = ({ filter_option, filter_value, filter_display_text }) => {
-    let newFilterState = filterState;
     const filter = {
       ID: filter_option,
       value: filter_value,

@@ -1,16 +1,9 @@
 import React from "react";
 import "./index.css";
-import { ToggleSwitch } from "../switch/switch";
-import PanelSwitch from "../../pages/level-2/panel/panel-switch";
+import { PropTypes } from "prop-types";
 
 export default function PanelHeader(props) {
-  const { embedded_fields, onSwitchChange, handleViewClick } = props;
-  const { field_type } = embedded_fields[0];
-
-  const handleChange = (e) => {
-    const { checked } = e.target;
-    onSwitchChange(checked);
-  };
+  const { handleViewClick } = props;
 
   return (
     <div className="panel-header-container">
@@ -22,3 +15,8 @@ export default function PanelHeader(props) {
     </div>
   );
 }
+
+PanelHeader.propTypes = {
+  handleViewClick: PropTypes.any,
+  title: PropTypes.string,
+};

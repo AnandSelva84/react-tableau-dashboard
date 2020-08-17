@@ -1,6 +1,6 @@
 import React from "react";
 import { IconButton } from "@material-ui/core";
-import { Clear, Remove } from "@material-ui/icons";
+import { Remove } from "@material-ui/icons";
 
 export default function DeleteBtn(props) {
   return (

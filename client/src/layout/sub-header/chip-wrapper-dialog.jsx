@@ -7,38 +7,19 @@ import useData from "../../hooks/useStore";
 import { continuesFilter } from "../../redux/methods/continous-filter";
 import { applyFilters } from "../../redux/actions/shared";
 import SearchBar from "../../components/search-bar/search-bar";
-import { colors } from "../../constants/colors";
+import { PropTypes } from "prop-types";
 
 const ChipsWrapper = (props) => {
   const dispatch = useDispatch();
   const [deleteCases, setDeleteCases] = React.useState(0);
   const [loaded, setLoaded] = React.useState(0);
-  const { filterState, appliedFilters } = useData().sharedReducer;
-  const createChip = (id, value) => `${id} : ${value}`;
+  const { appliedFilters } = useData().sharedReducer;
 
   const chipsAfterSearch = props.values.filter((value) =>
     value.value
       .toLocaleLowerCase()
       .includes(props.searchValue.toLocaleLowerCase())
   );
-
-  const getChipId = (value) => {
-    console.log(
-      "chip ID",
-      props.filterState.find((f) => f.id === props.title && f.value === value)
-    );
-
-    return (
-      props.filterState.find((f) => f.id === props.title && f.value === value)
-        ?.ID || null
-    );
-  };
-
-  const isApplied = (ID) => {
-    return !!filterState.find((f) => f.ID === ID)?.applied || false
-      ? "#192734"
-      : "";
-  };
 
   React.useEffect(() => {
     setLoaded(true);
@@ -49,7 +30,6 @@ const ChipsWrapper = (props) => {
   };
 
   const onDelete = (ID) => {
-    const afterFilter = [...appliedFilters.filter((f) => f.ID !== ID)];
     dispatch(applyFilters([...appliedFilters.filter((f) => f.ID !== ID)]));
   };
 
@@ -120,6 +100,15 @@ const ChipsWrapper = (props) => {
       </Dialog>
     </>
   );
+};
+
+ChipsWrapper.propTypes = {
+  values: PropTypes.any,
+  searchValue: PropTypes.any,
+  onClose: PropTypes.func,
+  open: PropTypes.any,
+  handleTextChange: PropTypes.func,
+  title: PropTypes.string,
 };
 
 export default ChipsWrapper;

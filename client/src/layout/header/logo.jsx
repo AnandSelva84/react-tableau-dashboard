@@ -1,11 +1,11 @@
 import React from "react";
 import logo from "../../assets/images/usaa.png";
+import { PropTypes } from "prop-types";
 const Logo = (props) => {
   const { url } = props;
-  //   const img = require(url);
   return (
     <>
-      {!!url && (
+      {url && (
         <div className="usaa-logo-container">
           <img
             src={logo}
@@ -16,6 +16,10 @@ const Logo = (props) => {
       )}
     </>
   );
+};
+
+Logo.propTypes = {
+  url: PropTypes,
 };
 
 export default Logo;

@@ -8,7 +8,6 @@ import { setShowControl } from "../../redux/actions/shared";
 const ShowGroup = () => {
   const dispatch = useDispatch();
   const { showValue } = useData().sharedReducer;
-  const value = "";
 
   const showTable = showValue === "table";
   const showGraph = showValue === "graph";
@@ -22,18 +21,18 @@ const ShowGroup = () => {
       <ButtonGroup>
         <IconButton
           onClick={() => setValue("graph")}
-          style={{ backgroundColor: !!showGraph ? "#f4f4f4" : "" }}
+          style={{ backgroundColor: showGraph ? "#f4f4f4" : "" }}
         >
           <BarChart />
         </IconButton>
         <IconButton
-          style={{ backgroundColor: !!showBoth ? "#f4f4f4" : "" }}
+          style={{ backgroundColor: showBoth ? "#f4f4f4" : "" }}
           onClick={() => setValue("both")}
         >
           <SwapVert />
         </IconButton>
         <IconButton
-          style={{ backgroundColor: !!showTable ? "#f4f4f4" : "" }}
+          style={{ backgroundColor: showTable ? "#f4f4f4" : "" }}
           onClick={() => setValue("table")}
         >
           <TableChart />

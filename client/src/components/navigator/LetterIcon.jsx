@@ -1,5 +1,6 @@
 import React from "react";
 import Popover from "../popover/popover";
+import { PropTypes } from "prop-types";
 
 export default function LetterIcon(props) {
   const { isActive } = props;
@@ -15,3 +16,10 @@ export default function LetterIcon(props) {
     </div>
   );
 }
+
+LetterIcon.propTypes = {
+  isActive: PropTypes.any,
+  index: PropTypes.number,
+  letter: PropTypes.any,
+  titles: PropTypes.any,
+};

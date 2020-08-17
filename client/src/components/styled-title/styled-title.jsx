@@ -1,5 +1,6 @@
 import React from "react";
 import { colors } from "./../../constants/colors";
+import { PropTypes } from "prop-types";
 
 const StyledTitle = (props) => {
   const subTitles = props.title.split(" ");
@@ -19,6 +20,12 @@ const StyledTitle = (props) => {
       ))}
     </div>
   );
+};
+
+StyledTitle.propTypes = {
+  title: PropTypes.string,
+  className: PropTypes.string,
+  middleColor: PropTypes.string,
 };
 
 export default StyledTitle;

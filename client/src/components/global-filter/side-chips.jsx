@@ -1,28 +1,23 @@
 import React from "react";
 import { Chip } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { deleteFilter, editFilterState } from "../../redux/actions/shared";
-import { continuesFilter } from "../../redux/methods/continous-filter";
+import { deleteFilter } from "../../redux/actions/shared";
+import { PropTypes } from "prop-types";
 
 const SideChips = (props) => {
   const { chips = [] } = props;
   const afterCut = chips.slice(0, 2);
   const dispatch = useDispatch();
-  console.log("side chips", chips);
 
   const handleDelete = (chip) => {
     dispatch(deleteFilter({ ...chip }));
   };
 
-  console.log("chip len", props.chips);
-
   //after delete check the number of chips as an event
-  const length = chips.length - 2;
-
   const reformatLabel = (label = "") => {
-    const length = label.length;
+    const _length = label.length;
     let toReturn = label;
-    if (length > 17) toReturn = label.slice(0, 17) + "...";
+    if (_length > 17) toReturn = label.slice(0, 17) + "...";
     return toReturn;
   };
 
@@ -44,6 +39,10 @@ const SideChips = (props) => {
       </div>
     </>
   );
+};
+
+SideChips.propTypes = {
+  chips: PropTypes.any,
 };
 
 export default SideChips;

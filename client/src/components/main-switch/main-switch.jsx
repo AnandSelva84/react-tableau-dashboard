@@ -1,7 +1,6 @@
 import React from "react";
 import useData from "../../hooks/useStore";
 import {
-  Paper,
   Switch,
   FormControlLabel,
   FormGroup,
@@ -10,6 +9,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setCurrentMainFilter, addFilter } from "../../redux/actions/shared";
 import { purple, red } from "@material-ui/core/colors";
+import { PropTypes } from "prop-types";
 
 const CustomSwitch = withStyles({
   root: {
@@ -31,27 +31,15 @@ const CustomSwitch = withStyles({
       backgroundColor: red[500],
     },
   },
-
-  // checked: {},
-  // track: {},
-  // disabled: {
-  //   color: red[500],
-  // },
-  // edgeStart: {
-  //   color: red[500],
-  // },
 })(Switch);
 
-const MainSwitch = React.memo((props) => {
+const MainSwitch = (props) => {
   const { currentMainFilter, appliedFilters } = useData().sharedReducer;
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = React.useState(false);
-  const [current, setCurrent] = React.useState("Business");
   React.useEffect(() => {
-    setLoaded(true);
     const originalValue = appliedFilters.find((f) => f.id === "Hierarchies")
       ?.value;
-    if (!!originalValue) dispatch(setCurrentMainFilter(originalValue));
+    if (originalValue) dispatch(setCurrentMainFilter(originalValue));
   }, []);
 
   const testForCheck = (name) => {
@@ -71,11 +59,10 @@ const MainSwitch = React.memo((props) => {
     );
   };
   const handleChange = (e) => {
-    console.log("change in name", e.target.name);
     props.onSwitch();
     const newName = currentMainFilter === "Legacy" ? "Business" : "Legacy";
     handleStoreUpdate(newName);
-    if (!!e.target.name) dispatch(setCurrentMainFilter(newName));
+    if (e.target.name) dispatch(setCurrentMainFilter(newName));
   };
   const getName = () => {
     return currentMainFilter;
@@ -106,21 +93,14 @@ const MainSwitch = React.memo((props) => {
             />
           }
         />
-        {/* <FormControlLabel
-          label="Business"
-          control={
-            <Switch
-              onChange={handleChange}
-              checked={testForCheck("Business")}
-              name="Business"
-              color="secondary"
-            />
-          }
-        /> */}
       </FormGroup>
       <div className="">Business</div>
     </div>
   );
-});
+};
+
+MainSwitch.propTypes = {
+  onSwitch: PropTypes.func,
+};
 
 export default MainSwitch;

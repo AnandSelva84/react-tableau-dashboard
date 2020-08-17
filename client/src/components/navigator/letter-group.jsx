@@ -3,6 +3,7 @@ import ClickableIcon from "../icon-button";
 import "./navigator.css";
 import { useHistory } from "react-router-dom";
 import LetterIcon from "./LetterIcon";
+import { PropTypes } from "prop-types";
 
 const LetterGroup = (props) => {
   const { isActiveArray } = props;
@@ -36,6 +37,14 @@ const LetterGroup = (props) => {
       ))}
     </div>
   );
+};
+
+LetterGroup.propTypes = {
+  isActiveArray: PropTypes.any,
+  routes: PropTypes.any,
+  letters: PropTypes.any,
+  panels: PropTypes.any,
+  titles: PropTypes.any,
 };
 
 export default LetterGroup;

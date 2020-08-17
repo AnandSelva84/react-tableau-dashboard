@@ -1,6 +1,7 @@
 import React from "react";
 import "./popover.css";
 import { Paper } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const Popover = (props) => {
   const [show, setShow] = React.useState(false);
@@ -39,6 +40,12 @@ const Popover = (props) => {
       )}
     </div>
   );
+};
+
+Popover.propTypes = {
+  disabeld: PropTypes.bool,
+  children: PropTypes.any,
+  content: PropTypes.any,
 };
 
 export default Popover;

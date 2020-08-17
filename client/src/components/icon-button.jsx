@@ -1,5 +1,4 @@
 import React from "react";
-import { Menu } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 import PropTypes from "prop-types";
 
@@ -23,6 +22,11 @@ const ClickableIcon = (props) => {
       </IconButton>
     </div>
   );
+};
+
+ClickableIcon.propTypes = {
+  onClick: PropTypes.func,
+  icon: PropTypes.any,
 };
 
 export default ClickableIcon;
