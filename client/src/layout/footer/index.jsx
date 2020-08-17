@@ -1,12 +1,7 @@
 import React from "react";
 import "./index.css";
-import { useLocation } from "react-router-dom";
 
-export default function Footer(props) {
-  const { pathname } = useLocation();
-
-  const showCondition = pathname === "/";
-
+export default function Footer() {
   return (
     <>
       <div className="footer">

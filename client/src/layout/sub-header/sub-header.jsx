@@ -1,44 +1,21 @@
 import React, { useState } from "react";
-import {
-  Paper,
-  Chip,
-  createStyles,
-  makeStyles,
-  TextField,
-  ChipProps,
-} from "@material-ui/core";
+import { Paper, Chip } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import useData from "../../hooks/useStore";
 import { useDispatch } from "react-redux";
-import {
-  addFilter,
-  deleteFilter,
-  applyFilters,
-  toggleDrawer,
-} from "../../redux/actions/shared";
-import { isExist } from "../../redux/methods/is-exist";
+import { deleteFilter, toggleDrawer } from "../../redux/actions/shared";
 import theme from "../../theme/layout";
 import "./sub-header.css";
-import { Select } from "../../components/auto-complete-select/auto-complete-select";
-import {
-  reFormat,
-  getPossibleChoicesToFill,
-} from "../../redux/methods/re-format-response";
 import ChipsWrapper from "./chip-wrapper-dialog";
-import { colors } from "../../constants/colors";
 import ClickableIcon from "../../components/icon-button";
 import ShowGroup from "../../pages/level-3/button-group";
 import { useLocation } from "react-router-dom";
 
 const SubHeader = () => {
   const {
-    filters,
     filterState,
     appliedFilters,
     newFilters,
-    storedViewedFilters,
-    currentMainFilter,
-    drawer,
     showReport,
     appliedTimeIntervals,
   } = useData().sharedReducer;
@@ -48,54 +25,39 @@ const SubHeader = () => {
   const createChip = (id, value) => `${id} : ${value}`;
   const isVisiable = filterState.length > 0;
   const [showDialog, setShowDialog] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const [chosenDialog, seChosentShowDialog] = useState("");
-  const [initialApplied, setInitialApplied] = useState([...appliedFilters]);
   const [searchValue, setSearchValue] = React.useState("");
 
   const timeIntervalFilter = appliedTimeIntervals.find(
     (f) => f.filter_id === "DateInterval"
   );
 
-  const chosenIds = filterState.map((filter) => filter.ID) || [];
   const appliedIds = appliedFilters.map((filter) => filter.ID) || [];
-
-  React.useEffect(() => {
-    setLoaded(true);
-  }, []);
-
-  React.useEffect(() => {
-    setInitialApplied([...appliedFilters]);
-  }, [appliedFilters]);
-
-  React.useEffect(() => {
-    // if (loaded) dispatch(applyFilters([]));
-  }, [currentMainFilter]);
 
   const handleTextChange = (e) => {
     const value = e?.target?.value || "";
     setSearchValue(value);
   };
 
-  const addFilter = (id, value, lvl, ID, parentId) => {
-    dispatch(addFilter({ id, value, lvl, ID, parentId }));
+  const getAllPossibleValues = (filter_id) => {
+    const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
+    const rawValues =
+      rawFilter?.values.filter((value) =>
+        appliedIds.includes(value?.parent_filter_option)
+      ) || [];
+    return rawValues;
   };
 
-  const currentLength = (filter_Id) => {
-    return (
-      storedViewedFilters.find((f) => f.id === filter_Id)?.valuesLength || 0
+  const getStatus = (filter_id) => {
+    let status = "";
+    const rawValues = getAllPossibleValues(filter_id);
+    const appliedValues = appliedFilters.filter(
+      (f) => f.filter_id === filter_id
     );
-  };
-
-  const isMultible = (chipsForIdValues, filter_Id) => {
-    if (!!filter_Id) getAllPossibleValues(filter_Id);
-    const currentValuesLength = currentLength(filter_Id);
-    console.log("currentValuesLength", currentValuesLength);
-
-    if (chipsForIdValues.length === currentValuesLength) return "All";
-    return chipsForIdValues.length > 1
-      ? "Multiple"
-      : chipsForIdValues[0]?.value;
+    if (appliedValues?.length === rawValues?.length) status = "All";
+    if (appliedValues?.length !== rawValues?.length) status = "Multiple";
+    if (appliedValues?.length === 1) status = appliedValues[0]?.value || "";
+    return status;
   };
 
   const wrapChips = () => {
@@ -105,7 +67,6 @@ const SubHeader = () => {
       applied: true,
     }));
     let chipsArray = [];
-    let onlyApplied = filterState.filter((f) => f.applied);
     reFormattedApplied.forEach((filter) => {
       const chipsForId = appliedFilters.filter((f) => f.id === filter.id);
       const chipsForIdValues = chipsForId.map((c) => ({
@@ -125,22 +86,15 @@ const SubHeader = () => {
     return chipsArray;
   };
 
-  React.useEffect(() => {
-    console.log("wrapChips", wrapChips());
-  }, [filterState]);
-
-  const handleClick = (id, value, lvl, ID, deleteAll) => {
+  const handleClick = (id, value, lvl, ID) => {
     dispatch(deleteFilter({ id, value, lvl, ID, fromHeader: true }));
   };
 
-  const isApplied = (ID) => {
-    const color = !!appliedFilters.find((filter) => filter.ID === ID)
-      ? "#192734"
-      : "";
+  const isApplied = () => {
     return "#192734";
   };
 
-  const isClickable = (value, id) => {
+  const isClickable = (value) => {
     return value === "Multiple" || value === "All";
   };
 
@@ -183,41 +137,13 @@ const SubHeader = () => {
 
   const reOrder = (array) => {
     if (!array.map((a) => a.id).includes("Time Interval")) return array;
-    let arr = array.filter((a, index) => a.id !== "Time Interval");
-    let element = array.find((a, index) => a.id === "Time Interval");
+    let arr = array.filter((a) => a.id !== "Time Interval");
+    let element = array.find((a) => a.id === "Time Interval");
     arr.push(element);
     return arr;
   };
 
-  const getAllPossibleValues = (filter_id) => {
-    const rawFilter = newFilters.find((f) => f.filter_id === filter_id);
-    const rawValues =
-      rawFilter?.values.filter((value) =>
-        appliedIds.includes(value?.parent_filter_option)
-      ) || [];
-    return rawValues;
-  };
-  const getStatus = (filter_id) => {
-    let status = "";
-    const rawValues = getAllPossibleValues(filter_id);
-    const appliedValues = appliedFilters.filter(
-      (f) => f.filter_id === filter_id
-    );
-    if (appliedValues?.length === rawValues?.length) status = "All";
-    if (appliedValues?.length !== rawValues?.length) status = "Multiple";
-    if (appliedValues?.length === 1) status = appliedValues[0]?.value || "";
-    return status;
-  };
-
-  React.useEffect(() => {
-    filterState.forEach((elem) => {
-      if (!chosenIds.includes(elem.parentId)) {
-        console.log("this element isnt in state", elem);
-      }
-    });
-  }, [filterState]);
-
-  if (pathname == "/") return null;
+  if (pathname === "/") return null;
 
   return (
     <div>
