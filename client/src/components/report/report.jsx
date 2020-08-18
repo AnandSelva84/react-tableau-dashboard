@@ -1,18 +1,13 @@
-import React, { Component, useRef, useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-// import tableau from "tableau-api";
-import { Button } from "@material-ui/core";
+import React, { useRef, useState, useEffect } from "react";
 import { fromAppliedToOptions } from "../../redux/methods/tableau-methods";
 import useData from "../../hooks/useStore";
-import { applyFilters } from "../../redux/actions/shared";
-import { useDispatch } from "react-redux";
 import "./report.css";
 import { refactorTimeIntervalFilters } from "./../../redux/methods/panel-pocessing";
+import { PropTypes } from "prop-types";
 const { tableau } = window;
 
 const WrappedReport = (props) => {
-  const { appliedFilters, savedFilters } = useData().sharedReducer;
-  const [loaded, setLoaded] = useState(false);
+  const { appliedFilters } = useData().sharedReducer;
   const [render, setRender] = useState(true);
 
   useEffect(() => {
@@ -20,23 +15,21 @@ const WrappedReport = (props) => {
   }, [appliedFilters, props.url, props.parameter]);
 
   useEffect(() => {
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
     if (!render) {
       setRender(true);
     }
   }, [render]);
 
-  const ReportHide = () => setRender(false);
-
   return <>{render && <TableauViz {...props} />}</>;
+};
+
+WrappedReport.propTypes = {
+  url: PropTypes.string,
+  parameter: PropTypes.string,
 };
 
 const TableauViz = (props) => {
   const container = useRef(null);
-  const dispatch = useDispatch();
   const [viz, setViz] = React.useState(null);
   const [workbook, setWorkBook] = React.useState(null);
   const [vizIsInteractive, setVizIsInteractive] = React.useState(false);
@@ -61,8 +54,6 @@ const TableauViz = (props) => {
     ...mappedfilters,
     ...timeIntervalFilters,
   };
-
-  console.log({ mappedfiltersMergedWithTimeIntervals });
 
   const options = {
     hideTabs: true,
@@ -95,11 +86,6 @@ const TableauViz = (props) => {
     return viz.getWorkbook().getActiveSheet();
   };
 
-  const isActiveSheet = () => {
-    // alert(viz.getWorkbook().getActiveSheet().getIsActive());
-    return viz.getWorkbook().getActiveSheet().getIsActive();
-  };
-
   const applyfilter = (id = "", value = []) => {
     sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
   };
@@ -107,16 +93,12 @@ const TableauViz = (props) => {
   const handleApply = (filterObj = null) => {
     const allKeys = Object.keys(filterObj);
     allKeys.forEach((key) => {
-      console.log(`id is ${key}`);
-      console.log("id is value is", filterObj[key]);
       applyfilter(key, filterObj[key]);
     });
   };
 
   React.useEffect(() => {
-    if (!!workbook) {
-      console.log("initt values", reportFilters);
-      console.log("final filter to apply ", mappedfilters);
+    if (workbook) {
       const dummyFilters = {
         Gender: "Men",
       };
@@ -124,23 +106,11 @@ const TableauViz = (props) => {
     }
   }, [!!viz, vizIsInteractive, appliedFilters, savedFilters, workbook]);
 
-  if (!!!props.url) return null;
-
-  const applyDate = () => {
-    sheet().applyRangeFilterAsync(
-      "Select Date",
-      {
-        min: new Date(Date.UTC(2013, 1, 5)),
-        max: new Date(Date.UTC(2013, 10, 31)),
-      },
-      tableau.FilterUpdateType.REPLACE
-    );
-  };
+  if (!props.url) return null;
 
   return (
     <>
       <div style={{ width: "100%", height: "100%" }} className="dark-hover">
-        {/* <button onClick={applyDate}>change date</button> */}
         <div
           className=""
           style={{ width: "100%", height: "100%", position: "relative" }}
@@ -156,6 +126,14 @@ const TableauViz = (props) => {
       </div>
     </>
   );
+};
+
+TableauViz.propTypes = {
+  url: PropTypes.string,
+  filterMapping: PropTypes.any,
+  filterMappingResult: PropTypes.any,
+  hideToolbar: PropTypes.any,
+  options: PropTypes.any,
 };
 
 export default WrappedReport;
