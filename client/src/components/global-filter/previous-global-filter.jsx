@@ -148,6 +148,7 @@ const PrevGlobalFilters = () => {
         { id, valuesLength },
       ])
     );
+    return;
   };
 
   return (
