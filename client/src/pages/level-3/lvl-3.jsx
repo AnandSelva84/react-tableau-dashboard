@@ -1,43 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./lvl-3.css";
-// import SplitPane  from "react-split-pane";
-import Button from "../../components/button/button";
-//import SplitPane from "react-split-pane";
-//import SplitterLayout from "react-splitter-layout";
-//import "react-splitter-layout/lib/index.css";
-//import ToggleButton from "@material-ui/lab/ToggleButton";
-//import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import {
-  FormatAlignLeft,
-  FormatAlignCenter,
-  FormatAlignRight,
-  BarChart,
-  TableChart,
-  SwapVert,
-} from "@material-ui/icons";
-import { ButtonGroup, IconButton } from "@material-ui/core";
-import { useLocation, useParams } from "react-router-dom";
-import SplitterLayout from "react-splitter-layout";
-import "react-splitter-layout/lib/index.css";
 import { useDispatch } from "react-redux";
-import {
-  toggleShowReport,
-  setCurrentLocation,
-  setShowControl,
-} from "../../redux/actions/shared";
-import useData from "../../hooks/useStore";
-import { getPanel } from "../../redux/methods/get-level";
-import TableauViz from "../../components/report/report";
-import {
-  getViewDataByRoute,
-  filterMappingResult,
-} from "../../redux/methods/panel-pocessing";
-import WrappedReport from "../../components/report/report";
-// import LegacyReport from "./../../components/tableauViz/tableauViz";
-import ClassReport from "./../../components/class-report/index";
-import WrappedClass from "../../components/class-report/wrapped-class";
+import { setCurrentLocation } from "../../redux/actions/shared";
+import { filterMappingResult } from "../../redux/methods/panel-pocessing";
+// import WrappedClass from "../../components/class-report/wrapped-class";
+import WrappedReport from "./../../components/report/report";
+import { PropTypes } from "prop-types";
 
-const LVL_3 = React.memo((props) => {
+const LVL_3 = (props) => {
   const { singleReportData } = props;
   const { panel_header_title: ReportTitle, embedded_viz } = singleReportData;
   const { embed_url: ReportURL } = embedded_viz[0];
@@ -55,7 +25,7 @@ const LVL_3 = React.memo((props) => {
 
   return (
     <>
-      {/* {!!props.url && (
+      {!!props.url && (
         <WrappedReport
           options={{ height: "100%" }}
           url={ReportURL}
@@ -63,14 +33,20 @@ const LVL_3 = React.memo((props) => {
           filterMapping={filterMapping}
           hideToolbar={false}
         />
-      )} */}
-      <WrappedClass
+      )}
+      {/* <WrappedClass
         url={ReportURL}
         filterMappingResult={filterMappingResult}
         filterMapping={filterMapping}
-      />
+      /> */}
     </>
   );
-});
+};
+
+LVL_3.propTypes = {
+  getVizDataByUrl: PropTypes.func,
+  url: PropTypes.string,
+  singleReportData: PropTypes.any,
+};
 
 export default LVL_3;

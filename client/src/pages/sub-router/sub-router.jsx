@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LVL_2 from "../level-2/lvl-2";
 import LVL_3 from "../level-3/lvl-3";
-import { getLvl, getPanel } from "../../redux/methods/get-level";
-import { panels } from "../../data/panels_new";
 import useData from "../../hooks/useStore";
 import useFetch from "./../../hooks/useFetch";
 import { panelDataUrl } from "../../enviroment/urls";
-import {
-  getViewData,
-  getViewDataByRoute,
-} from "./../../redux/methods/panel-pocessing";
+import { getViewDataByRoute } from "./../../redux/methods/panel-pocessing";
 
 const ToRender = (props) => {
   const { vizUrls } = props;
@@ -20,7 +15,7 @@ const ToRender = (props) => {
   else return <LVL_3 {...props} url={vizUrls[0]} />;
 };
 
-const SubRouter = (props) => {
+const SubRouter = () => {
   const { app, panels } = useData().sharedReducer;
   const { all_views = [] } = app;
   const [currentLvl, setCurrentLvl] = useState(null);
@@ -71,24 +66,19 @@ const SubRouter = (props) => {
     }
   }, [data, loading, route]);
 
-  useEffect(() => {
-    if (!!vizResponse.vizData.length) {
-      getVizDataByUrl(
-        "http://public.tableau.com/views/RegionalSampleWorkbook/College"
-      );
-    }
-  }, [vizResponse]);
-
   const getVizDataByUrl = (url) => {
     const vizDataArray = vizResponse.vizData;
     const found = vizDataArray.find((v) => v.embedded_viz[0].embed_url === url);
     return found;
   };
 
-  const getLvl = (panel = "") => {
-    const lvl = +panel.depth_level[panel.depth_level.length - 1];
-    return lvl;
-  };
+  useEffect(() => {
+    if (vizResponse.vizData.length) {
+      getVizDataByUrl(
+        "http://public.tableau.com/views/RegionalSampleWorkbook/College"
+      );
+    }
+  }, [vizResponse]);
 
   return (
     <div className="" style={{ height: "88%" }}>

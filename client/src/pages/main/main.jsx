@@ -6,17 +6,15 @@ import LaodingScreen from "../../components/loading/loading";
 
 import HomePage from "../home/home";
 
-const Main = React.memo(() => {
+const Main = () => {
   const { app: App, appIsLoading } = useData().sharedReducer;
 
   return (
-    // <div className={style} style={{ height: "100%" }}>
     <>
       {appIsLoading && <LaodingScreen />}
       {!!App && !appIsLoading && <HomePage />}
     </>
-    /* </div> */
   );
-});
+};
 
 export default Main;

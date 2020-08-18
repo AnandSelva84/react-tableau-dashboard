@@ -2,16 +2,10 @@ import React from "react";
 import PanelSwitch from "../../panel-switch";
 import OutlinedTextFeild from "../../../../../components/TextFeild";
 import SimpleSelect from "./../../../../../components/simple-select/simple-select";
+import { PropTypes } from "prop-types";
 
 export default function Feilds(props) {
-  const {
-    field_type,
-    field_label,
-    field_impact_parameter,
-    field_default_value,
-    embedded_field_options,
-    onSwitchChange,
-  } = props;
+  const { field_type, field_label, onSwitchChange } = props;
   const handleSwitchChange = (e) => {
     const { checked } = e.target;
     onSwitchChange(checked);
@@ -21,7 +15,6 @@ export default function Feilds(props) {
     props.onNumericChange(value);
   };
 
-  const formatOptions = embedded_field_options.map((f) => ({}));
   return (
     <div>
       {field_type === "Switch" && <PanelSwitch onChange={handleSwitchChange} />}
@@ -46,3 +39,10 @@ export default function Feilds(props) {
     </div>
   );
 }
+
+Feilds.propTypes = {
+  field_type: PropTypes.any,
+  field_label: PropTypes.string,
+  onSwitchChange: PropTypes.func,
+  onNumericChange: PropTypes.func,
+};

@@ -1,5 +1,6 @@
 import React from "react";
 import Feilds from "./feild";
+import { PropTypes } from "prop-types";
 
 export default function EmbededFeilds(props) {
   const { onSwitchChange, onNumericChange } = props;
@@ -17,3 +18,9 @@ export default function EmbededFeilds(props) {
     </>
   );
 }
+
+EmbededFeilds.propTypes = {
+  feilds: PropTypes.any,
+  onSwitchChange: PropTypes.func,
+  onNumericChange: PropTypes.func,
+};

@@ -3,10 +3,9 @@ import PanelHeader from "../../../components/panel-header/panel-header";
 import WrappedReport from "../../../components/report/report";
 import { stylePosition } from "./embeded-feilds/pos-styles";
 import EmbededFeilds from "./embeded-feilds/index";
-import WrappedClass from "./../../../components/class-report/wrapped-class/index";
+import { PropTypes } from "prop-types";
 
 export default function Panel(props) {
-  let url = "";
   const [chartState, setChartState] = useState("Bar");
   const [numericValue, setNumericValue] = useState("");
   const { singlePanel, filterMappingResult, filterMapping, index } = props;
@@ -15,14 +14,13 @@ export default function Panel(props) {
   const [chartUrl, setChartUrl] = useState(embed_url);
   const { embedded_fields } = singlePanel;
   const hasSwitch = embedded_fields.find((f) => f.field_type === "Switch");
-  const hasNumeric = embedded_fields.find((f) => f.field_type === "Numeric");
 
   const onSwitchChange = (checked) => {
     checked ? setChartState("Box") : setChartState("Bar");
   };
 
   useEffect(() => {
-    if (!!hasSwitch) {
+    if (hasSwitch) {
       const panelUrls =
         embedded_fields.find((f) => f.field_type === "Switch")
           .embedded_field_options || [];
@@ -72,3 +70,11 @@ export default function Panel(props) {
     </div>
   );
 }
+
+Panel.propTypes = {
+  singlePanel: PropTypes.any,
+  filterMappingResult: PropTypes.any,
+  filterMapping: PropTypes.any,
+  index: PropTypes.number,
+  handleTitleClick: PropTypes.func,
+};

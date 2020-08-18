@@ -1,24 +1,12 @@
 import React from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import Button from "../../components/button/button";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { pushHistory, setCurrentLocation } from "../../redux/actions/shared";
+import { setCurrentLocation } from "../../redux/actions/shared";
 import useData from "../../hooks/useStore";
-import { getPanel } from "../../redux/methods/get-level";
-import TableauViz from "../../components/report/report";
-import { reportsUrls } from "../../data/reports-urls";
-import {
-  getAllSiblings,
-  getViewDataByRoute,
-  filterMappingResult,
-} from "../../redux/methods/panel-pocessing";
+import { filterMappingResult } from "../../redux/methods/panel-pocessing";
 import "./level-2.css";
-// import TableauViz from "../report/report";
-import { getViewData } from "./../../redux/methods/panel-pocessing";
-import WrappedReport from "../../components/report/report";
-import { ToggleSwitch } from "./../../components/switch/switch";
-import PanelHeader from "../../components/panel-header/panel-header";
 import Panel from "./panel/panel";
+import { PropTypes } from "prop-types";
 
 const LVL_2 = (props) => {
   let { id: route } = useParams();
@@ -32,22 +20,12 @@ const LVL_2 = (props) => {
     !!route && dispatch(setCurrentLocation(props.title));
   }, [route]);
 
-  const handleClick = (value) => {
-    history.push({
-      pathname: `/${value.route}`,
-    });
-  };
-
   const filterMapping = (url) =>
     props.getVizDataByUrl(url).embedded_viz[0].filter_mapping;
-
-  const panelHeaderTitle = (url) =>
-    props.getVizDataByUrl(url).panel_header_title;
 
   const handleTitleClick = (singlePanel, index) => {
     history.push(`./storyDeliveryLeadTime`);
 
-    const { view_id } = singlePanel;
     const parentPanel = all_views.find((p) => p.route === route);
     const { id: parentID } = parentPanel;
     const panelSiblings = panels.find(
@@ -59,21 +37,7 @@ const LVL_2 = (props) => {
     const panelById = all_views.find((p) => p.id === panelId);
     const { route: panelRoute } = panelById;
     history.push(`./${panelRoute}`);
-
-    // debugger;
-    // const found = all_views.find((p) => p.route === route);
-    // const { id } = found;
-    // const mainPanelData = panels.find((p) => p.title_action_code === id);
-    // const embededFeilds = mainPanelData.embedded_fields;
-    // const { value } = embededFeilds[0].embedded_field_options[index];
-  };
-
-  const onSwitchOff = () => {
-    alert("switch is off");
-  };
-
-  const onSwitchOn = () => {
-    alert("switch is on");
+    return singlePanel;
   };
 
   return (
@@ -95,6 +59,14 @@ const LVL_2 = (props) => {
       )}
     </>
   );
+};
+
+LVL_2.propTypes = {
+  vizUrls: PropTypes.any,
+  mlutiReportData: PropTypes.any,
+  title: PropTypes.any,
+  getVizByUrl: PropTypes.func,
+  getVizDataByUrl: PropTypes.func,
 };
 
 export default LVL_2;

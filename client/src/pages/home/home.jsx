@@ -2,19 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../loading/laoding.css";
 import "./home.css";
 import useData from "../../hooks/useStore";
-import Button from "../../components/button/button";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { pushHistory } from "../../redux/actions/shared";
-import { panels } from "../../data/panels_new";
-import { getViewData } from "./../../redux/methods/panel-pocessing";
 import { setCurrentLocation } from "./../../redux/actions/shared";
 import StyledTitle from "../../components/styled-title/styled-title";
 import HomePanel from "./home-panel/home-panel";
 import { ChevronRight, ChevronLeft } from "@material-ui/icons";
-import SimpleSelect from "../../components/simple-select/simple-select";
 
-const HomePage = (props) => {
+const HomePage = () => {
   const dispatch = useDispatch();
   const { app, panels = [] } = useData().sharedReducer;
   const { all_views = [] } = app;
@@ -25,7 +19,7 @@ const HomePage = (props) => {
     Math.abs(carouselValue / 56) !== maxNumberOfScrolls - 1;
 
   useEffect(() => {
-    if (!!app) dispatch(setCurrentLocation(app?.subject_area[0]?.name));
+    if (app) dispatch(setCurrentLocation(app?.subject_area[0]?.name));
   }, []);
 
   const handleRight = () => {
@@ -57,12 +51,8 @@ const HomePage = (props) => {
         <div className="wellcome-message">
           <div>Hello Panda!</div>
           <div className="app-name-words">
-            <span className="home-styled-title">Welcome to the  </span>
-            <StyledTitle
-              middleColor="yellow"
-              title={app?.application?.name}
-              
-            />
+            <span className="home-styled-title">Welcome to the </span>
+            <StyledTitle middleColor="yellow" title={app?.application?.name} />
           </div>
         </div>
         <div className="carsosel-btns-container">
