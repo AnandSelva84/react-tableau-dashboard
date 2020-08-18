@@ -63,6 +63,7 @@ const ChipsWrapper = (props) => {
           >
             {chipsAfterSearch.map((value) => (
               <Chip
+                key={Math.random()}
                 label={value.value}
                 style={{
                   marginRight: "0.4rem",

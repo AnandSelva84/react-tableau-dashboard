@@ -173,6 +173,7 @@ const SubHeader = () => {
               </>
               {reOrder(wrapChips().sort(sortOptions)).map((filter) => (
                 <Chip
+                  key={Math.random()}
                   size="small"
                   label={createChip(filter.id, filter.value)}
                   style={{

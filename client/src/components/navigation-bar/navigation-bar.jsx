@@ -44,6 +44,7 @@ const NavigationBar = () => {
       >
         {historyStack.map((pathObj, index) => (
           <div
+            key={Math.random()}
             className=""
             style={{
               display: "flex",

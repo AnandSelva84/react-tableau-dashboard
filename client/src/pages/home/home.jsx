@@ -75,7 +75,11 @@ const HomePage = () => {
                 style={{ transform: `translateX(${carouselValue}rem)` }}
               >
                 {panels.map((panel) => (
-                  <HomePanel panel={panel} all_views={all_views} />
+                  <HomePanel
+                    panel={panel}
+                    all_views={all_views}
+                    key={Math.random()}
+                  />
                 ))}
               </div>
             )}

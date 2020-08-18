@@ -54,7 +54,11 @@ export default function HomePanel(props) {
       </div>
       <div className="units-container">
         {allEmbeded.map(({ text, value: id }) => (
-          <div className="panel-unit" onClick={() => handleUnitClick(id)}>
+          <div
+            className="panel-unit"
+            onClick={() => handleUnitClick(id)}
+            key={Math.random()}
+          >
             {text}
           </div>
         ))}

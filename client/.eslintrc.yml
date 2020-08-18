@@ -2,8 +2,8 @@ env:
   browser: true
   es2020: true
 extends:
-  - 'eslint:recommended'
-  - 'plugin:react/recommended'
+  - "eslint:recommended"
+  - "plugin:react/recommended"
 parserOptions:
   ecmaFeatures:
     jsx: true
@@ -21,14 +21,10 @@ rules:
   no-use-before-define:
     - error
   react/jsx-key:
-    - off
+    - error
   no-loop-func:
     - error
   no-shadow:
     - error
   eqeqeq:
     - error
-
-    
-   
-    
