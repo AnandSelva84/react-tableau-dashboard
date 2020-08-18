@@ -57,7 +57,7 @@ export default function HomePanel(props) {
           <div
             className="panel-unit"
             onClick={() => handleUnitClick(id)}
-            key={Math.random()}
+            key={id}
           >
             {text}
           </div>

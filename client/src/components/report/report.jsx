@@ -9,16 +9,21 @@ const { tableau } = window;
 const WrappedReport = (props) => {
   const { appliedFilters } = useData().sharedReducer;
   const [render, setRender] = useState(true);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    if (loaded) {
+      setRender(false);
+    }
+  }, [appliedFilters.length, props.url, props.parameter]);
 
   useEffect(() => {
-    setRender(false);
-  }, [appliedFilters, props.url, props.parameter]);
-
+    setLoaded(true);
+  }, []);
   useEffect(() => {
     if (!render) {
       setRender(true);
     }
-  }, [render]);
+  }, [render, loaded]);
 
   return <>{render && <TableauViz {...props} />}</>;
 };
@@ -82,27 +87,24 @@ const TableauViz = (props) => {
     }
   });
 
-  const sheet = () => {
-    return viz.getWorkbook().getActiveSheet();
-  };
+  // const sheet = () => {
+  //   return viz.getWorkbook().getActiveSheet();
+  // };
 
-  const applyfilter = (id = "", value = []) => {
-    sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
-  };
+  // const applyfilter = (id = "", value = []) => {
+  //   sheet().applyFilterAsync(id, value, tableau.FilterUpdateType.REPLACE);
+  // };
 
-  const handleApply = (filterObj = null) => {
-    const allKeys = Object.keys(filterObj);
-    allKeys.forEach((key) => {
-      applyfilter(key, filterObj[key]);
-    });
-  };
+  // const handleApply = (filterObj = null) => {
+  //   const allKeys = Object.keys(filterObj);
+  //   allKeys.forEach((key) => {
+  //     applyfilter(key, filterObj[key]);
+  //   });
+  // };
 
   React.useEffect(() => {
     if (workbook) {
-      const dummyFilters = {
-        Gender: "Men",
-      };
-      handleApply(dummyFilters);
+      // handleApply(mappedfilters);
     }
   }, [!!viz, vizIsInteractive, appliedFilters, savedFilters, workbook]);
 

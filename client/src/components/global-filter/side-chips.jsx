@@ -26,7 +26,7 @@ const SideChips = (props) => {
       <div className="" style={{ display: "flex", alignItems: "center" }}>
         {afterCut.map((chip) => (
           <Chip
-            key={Math.random()}
+            key={chip.value}
             style={{ fontSize: "0.57rem" }}
             label={reformatLabel(chip.value)}
             onDelete={() => {

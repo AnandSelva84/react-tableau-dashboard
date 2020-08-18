@@ -10,7 +10,7 @@ const StyledTitle = (props) => {
     <div style={{ display: "flex" }}>
       {subTitles.map((singleTitle, index) => (
         <div
-          key={Math.random()}
+          key={singleTitle}
           className={className}
           style={{
             color: index % 2 === 0 ? "rgb(208,207,206)" : middleColor,

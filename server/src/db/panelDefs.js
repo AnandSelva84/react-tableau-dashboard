@@ -24,13 +24,13 @@ const panelDefs = {
           field_default_value: "",
           embedded_field_options: [
             {
-              text: "Story Cycle Time",
+              text: "Story Cycle Time version 1",
               value: "PORT_11_L3",
               option_order: 1,
               option_thumbnail: "",
             },
             {
-              text: "Sprint Predictability/Volatility",
+              text: "Sprint Predictability/Volatility version 1",
               value: "PORT_12_L3",
               option_order: 2,
               option_thumbnail: "",

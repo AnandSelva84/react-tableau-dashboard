@@ -9,7 +9,7 @@ export default function EmbededFeilds(props) {
       {props.feilds.map((feild) => (
         <div
           style={{ position: "absolute", ...{ ...feild.field_location } }}
-          key={Math.random()}
+          key={feild.field_label}
         >
           <Feilds
             onSwitchChange={onSwitchChange}

@@ -10,7 +10,7 @@ export const fromNewFiltersToState = (newFilters) => {
 };
 
 export const getFilterByValue = (newFilters, ID) => {
-  return newFilters.find((filter) => {
-    filter.values.map((value) => value.filter_option).includes(ID);
-  });
+  return newFilters.find((filter) =>
+    filter.values.map((value) => value.filter_option).includes(ID)
+  );
 };

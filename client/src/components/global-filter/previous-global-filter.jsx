@@ -184,6 +184,9 @@ const PrevGlobalFilters = () => {
                       />
                     </React.Suspense>
                   );
+                else {
+                  return null;
+                }
               })}
               {howManySlashes(pathname) === 1 && path && <TimeFilters />}
             </div>

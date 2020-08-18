@@ -78,7 +78,7 @@ const HomePage = () => {
                   <HomePanel
                     panel={panel}
                     all_views={all_views}
-                    key={Math.random()}
+                    key={panel.title_action_code}
                   />
                 ))}
               </div>

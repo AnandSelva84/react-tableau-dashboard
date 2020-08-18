@@ -45,7 +45,7 @@ const LVL_2 = (props) => {
       {!!vizUrls && (
         <div className="ampBody">
           {mlutiReportData.map((singlePanel, index) => (
-            <div className="panel" key={Math.random()}>
+            <div className="panel" key={index}>
               <Panel
                 index={index}
                 singlePanel={singlePanel}

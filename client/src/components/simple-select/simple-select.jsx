@@ -73,7 +73,7 @@ const SimpleSelect = (props) => {
           <OptionsWrapper onScroll={() => {}} onClose={() => {}}>
             {options.map((option) => (
               <Option
-                key={Math.random()}
+                key={option.filter_display_text}
                 display={option.filter_display_text}
                 onClick={() => handleClick(option)}
               />

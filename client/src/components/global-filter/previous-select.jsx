@@ -374,7 +374,7 @@ const PrevSelect = (props) => {
               <>
                 {virtulaizedOptions.sort(sortOptions).map((option) => (
                   <Option
-                    key={Math.random()}
+                    key={option.filterOptionId}
                     onChange={() => {}}
                     checked={isExist(option.filterOptionId)}
                     value={option.filter_value_text}
