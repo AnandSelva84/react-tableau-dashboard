@@ -1,23 +1,10 @@
 import React from "react";
 import { CardActionArea, Checkbox } from "@material-ui/core";
 import select from "../../theme/select";
-import { useDispatch } from "react-redux";
-import { editFilterState } from "../../redux/actions/shared";
-import { continuesFilter } from "../../redux/methods/continous-filter";
+import { PropTypes } from "prop-types";
 
 const Option = (props) => {
-  const dispatch = useDispatch();
-  const { checked, filterState, lvl } = props;
-  const chosenIds = filterState.map((filter) => filter.ID) || [];
-  const [loaded, setLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    setLoaded(true);
-  }, []);
-
-  const onFilterEnd = (filters) => {
-    dispatch(editFilterState([...filters]));
-  };
+  const { checked } = props;
 
   React.useEffect(() => {
     props.onChange(checked, props.id, props.parentId);
@@ -43,6 +30,16 @@ const Option = (props) => {
       </CardActionArea>
     </>
   );
+};
+
+Option.propTypes = {
+  checked: PropTypes.any,
+  onChange: PropTypes.func,
+  display: PropTypes.string,
+  onClick: PropTypes.func,
+  ref: PropTypes.any,
+  parentId: PropTypes.any,
+  id: PropTypes.any,
 };
 
 export default Option;

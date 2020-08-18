@@ -11,14 +11,12 @@ import {
   setUncompletedFilters,
   toggleResetButton,
 } from "../../redux/actions/shared";
-import { filterModel } from "../../models/filter";
 import Option from "../select/option";
 import OptionsWrapper from "./optionsWrapper";
 import SideChips from "./side-chips";
 
 //props.values should be filtered before passing it to it's component
 const PrevSelect = (props) => {
-  const { reformattedNewFilters } = props;
   const dispatch = useDispatch();
 
   const {
@@ -39,7 +37,6 @@ const PrevSelect = (props) => {
   const [unCompletedFilters, setUncompleted] = useState([]);
   const [cleared, setCleared] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [allCheck, setAllCheck] = useState(false);
 
   const chosenIds = filterState.map((filter) => filter.ID) || [];
   const mainApplied = appliedFilters.find((f) => f.id === "Hierarchies")?.value;
@@ -68,16 +65,28 @@ const PrevSelect = (props) => {
     return dataToReturn;
   };
 
+  const findChildren = (data, searchID) => {
+    let child = data.filter((f) => searchID.includes(f.parentId));
+    return child;
+  };
+
+  const getSearchID = (child) => {
+    let searchID = child.map((f) => f.ID);
+    return searchID;
+  };
+
   const findFamily = (ID, data) => {
     let family = [];
     let searchID = [ID].flat();
-
+    let breakLoop = false;
     //starting lvl is 0 end is 4
-    while (1) {
-      const child = data.filter((f) => searchID.includes(f.parentId));
-      if (child.length === 0) break;
+    while (!breakLoop) {
+      let child = findChildren(data, searchID);
+      if (child.length === 0) {
+        breakLoop = true;
+      }
       family = [...family, ...child];
-      searchID = child.map((f) => f.ID);
+      searchID = getSearchID(child);
     }
     let dataToReturn = [];
     family.forEach((filter) => {
@@ -94,7 +103,7 @@ const PrevSelect = (props) => {
   React.useEffect(() => {
     if (props.custom) return;
     if (loaded) {
-      if (!!savedFilters && savedFilters.length > 2)
+      if (savedFilters && savedFilters.length > 2)
         dispatch(editFilterState([...savedFilters]));
 
       dispatch(editFilterState([...formattedOptions]));
@@ -144,6 +153,10 @@ const PrevSelect = (props) => {
     dispatch(editFilterState([...afterDuplicateFree]));
   };
 
+  const selectAll = () => {
+    dispatch(editFilterState([...getFullState()]));
+  };
+
   React.useEffect(() => {
     props.onValuesChanged(props.values, props.id);
   }, [filterState]);
@@ -160,7 +173,7 @@ const PrevSelect = (props) => {
 
   React.useEffect(() => {
     let editedValues = storedViewedFilters.find((f) => f.id === props.id);
-    if (!!editedValues) {
+    if (editedValues) {
       editedValues.valuesLength = props.values.length;
       const storedAfterChange = [
         ...storedViewedFilters.filter((f) => f.id !== props.id),
@@ -177,7 +190,7 @@ const PrevSelect = (props) => {
   const hasParentTest = (parentId) => {
     let hasId = chosenIds.find((id) => id === parentId);
     if (hasId === 0) hasId = 1;
-    return !!hasId;
+    return hasId;
   };
 
   const handleAddFilter = (id, value, lvl, ID, parentId, filter_id) => {
@@ -222,13 +235,13 @@ const PrevSelect = (props) => {
   }
 
   React.useEffect(() => {
-    if (!!!props.values.length && !cleared) {
+    if (!props.values.length && !cleared) {
       dispatch(
         editFilterState(filterState.filter((f) => f.filter_id !== props.id))
       );
       setCleared(true);
     }
-    if (!!props.values.length) {
+    if (props.values.length) {
       setCleared(false);
     }
   }, [filterState]);
@@ -240,12 +253,14 @@ const PrevSelect = (props) => {
     return options;
   };
 
-  const selectAll = () => {
-    dispatch(editFilterState([...getFullState()]));
-  };
-
   const unSelectAll = () => {
     dispatch(editFilterState([...possibleAllSelect]));
+  };
+
+  const newAllChecked = () => {
+    const allOptionsIds = props.values.map((v) => v.filterOptionId);
+    const allExistInState = allOptionsIds.every((v) => chosenIds.includes(v));
+    return allExistInState;
   };
 
   const handleSelectAll = () => {
@@ -257,17 +272,17 @@ const PrevSelect = (props) => {
   };
 
   React.useEffect(() => {
-    let unCompletedFilters = [];
+    let _unCompletedFilters = [];
     fullStateStandardIds.forEach((id) => {
-      if (!!!filterState.find((f) => f.filter_id === id)) {
-        unCompletedFilters.push(
+      if (!filterState.find((f) => f.filter_id === id)) {
+        _unCompletedFilters.push(
           newFilters.find((f) => f.filter_id === id)?.title
         );
       } else {
-        unCompletedFilters.filter((f) => f.filter_id === id);
+        _unCompletedFilters.filter((f) => f.filter_id === id);
       }
     });
-    setUncompleted([...unCompletedFilters]);
+    setUncompleted([..._unCompletedFilters]);
   }, [filterState]);
 
   React.useEffect(() => {
@@ -278,12 +293,6 @@ const PrevSelect = (props) => {
     return props.title;
   };
 
-  const newAllChecked = () => {
-    const allOptionsIds = props.values.map((v) => v.filterOptionId);
-    const allExistInState = allOptionsIds.every((v) => chosenIds.includes(v));
-    return allExistInState;
-  };
-
   const handleOpen = () => {
     setShowMenu(true);
   };
@@ -291,7 +300,9 @@ const PrevSelect = (props) => {
   const hanldeClose = () => {
     try {
       setShowMenu(false);
-    } catch (error) {}
+    } catch (error) {
+      return;
+    }
   };
 
   const toggle = () => {
@@ -299,7 +310,7 @@ const PrevSelect = (props) => {
   };
 
   const getOptionsAfterSearch = () => {
-    if (!!searchValue) {
+    if (searchValue) {
       return getOptions().filter((option) =>
         option.filter_display_text.toLowerCase().includes(searchValue)
       );

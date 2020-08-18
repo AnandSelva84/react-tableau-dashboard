@@ -5,7 +5,7 @@ import DateSelect from "./custom-range-pickers/inedx";
 import { useDispatch } from "react-redux";
 import { editTimeFilterState } from "../../../redux/actions/shared";
 
-export default function TimeFilters(props) {
+export default function TimeFilters() {
   const dispatch = useDispatch();
   const {
     timeFilterState,

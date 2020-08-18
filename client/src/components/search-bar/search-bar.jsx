@@ -1,6 +1,7 @@
 import React from "react";
-import { InputBase, Paper, Card } from "@material-ui/core";
+import { InputBase, Card } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { PropTypes } from "prop-types";
 
 const SearchBar = (props) => {
   return (
@@ -18,6 +19,10 @@ const SearchBar = (props) => {
       <SearchIcon />
     </Card>
   );
+};
+
+SearchBar.propTypes = {
+  style: PropTypes.any,
 };
 
 export default SearchBar;

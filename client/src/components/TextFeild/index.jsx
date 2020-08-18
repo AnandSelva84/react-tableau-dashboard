@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 export default function OutlinedTextFeild(props) {
   const hadnleChange = (e) => {
@@ -18,3 +19,11 @@ export default function OutlinedTextFeild(props) {
     />
   );
 }
+
+OutlinedTextFeild.propTypes = {
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.any,
+  style: PropTypes.object,
+};

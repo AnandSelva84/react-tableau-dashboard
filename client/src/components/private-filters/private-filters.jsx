@@ -1,6 +1,6 @@
 import React from "react";
 
-const PrivateFilters = (props) => {
+const PrivateFilters = () => {
   return (
     <div className="">
       <></>

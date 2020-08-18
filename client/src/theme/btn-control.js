@@ -1,5 +1,3 @@
-import { colors } from "../constants/colors";
-
 const btnsTheme = {
   apply: {
     // backgroundColor: colors.usaa_blue,
