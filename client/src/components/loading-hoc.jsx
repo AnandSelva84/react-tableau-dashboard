@@ -7,7 +7,7 @@ export default function LoadingWrapper(Component) {
   return (
     <>
       {app && panels && <Component />}
-      {!app && panels && <LaodingScreen />}
+      {!app && <LaodingScreen />}
     </>
   );
 }
