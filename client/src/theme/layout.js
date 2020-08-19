@@ -5,6 +5,12 @@ const theme = {
     // alignItems: "center",
     justifyContent: "space-between",
     overFlow: "hidden",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    right: "0",
+    width: "100%",
+    zIndex: "1",
   },
   darkHeader: {
     backgroundColor: "rgb(18, 57, 91)",
@@ -18,6 +24,7 @@ const theme = {
     display: "flex",
     alignItems: "center",
     flexWrap: "wrap",
+    marginTop: "3.5rem",
   },
 };
 

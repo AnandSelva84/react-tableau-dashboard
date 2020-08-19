@@ -1,9 +1,9 @@
 .footer {
-  position: fixed;
+  position: absolute;
   height: fit-content;
   bottom: 0px;
   width: 100%;
-  background-color: rgb(18, 57, 91);;
+  background-color: rgb(18, 57, 91);
   display: flex;
   justify-content: space-between;
   align-items: center;
