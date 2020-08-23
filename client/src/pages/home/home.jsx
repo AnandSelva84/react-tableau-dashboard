@@ -45,6 +45,28 @@ const HomePage = () => {
         opacity: "0.4",
       };
 
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "ArrowRight") {
+        handleRight();
+      }
+      if (e.code === "ArrowLeft") {
+        handleLeft();
+      }
+    });
+
+    return () => {
+      window.removeEventListener("keydown", (e) => {
+        if (e.code === "ArrowRight") {
+          handleRight();
+        }
+        if (e.code === "ArrowLeft") {
+          handleLeft();
+        }
+      });
+    };
+  }, [carouselValue]);
+
   return (
     <div className="home-landing-page">
       <div className="landing-container">
