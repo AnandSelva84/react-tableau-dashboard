@@ -27,7 +27,7 @@ const LVL_3 = (props) => {
     <div style={{ paddingBottom: "2rem" }}>
       {!!props.url && (
         <WrappedReport
-          options={{ height: "70vh" }}
+          options={{ height: "85.5vh" }}
           url={ReportURL}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}
