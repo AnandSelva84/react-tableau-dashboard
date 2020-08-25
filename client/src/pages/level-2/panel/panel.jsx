@@ -57,7 +57,7 @@ export default function Panel(props) {
         {...singlePanel}
         handleViewClick={handleViewClick}
       />
-      <div className="" style={{ paddingTop: "5rem" }}>
+      <div className="" style={{ paddingTop: "55px" }}>
         <WrappedReport
           options={{ height: "25vh" }}
           url={chartUrl}
