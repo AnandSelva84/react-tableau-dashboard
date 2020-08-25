@@ -6,6 +6,7 @@ import EmbededFeilds from "./embeded-feilds/index";
 import { PropTypes } from "prop-types";
 
 export default function Panel(props) {
+  const screenWidth = window.innerWidth;
   const [chartState, setChartState] = useState("Bar");
   const [numericValue, setNumericValue] = useState("");
   const { singlePanel, filterMappingResult, filterMapping, index } = props;
@@ -14,7 +15,8 @@ export default function Panel(props) {
   const [chartUrl, setChartUrl] = useState(embed_url);
   const { embedded_fields } = singlePanel;
   const hasSwitch = embedded_fields.find((f) => f.field_type === "Switch");
-
+  const largeScreen = screenWidth >= 1960;
+  const reportHeight = largeScreen ? "30vh" : "25vh";
   const onSwitchChange = (checked) => {
     checked ? setChartState("Box") : setChartState("Bar");
   };
@@ -59,7 +61,7 @@ export default function Panel(props) {
       />
       <div className="" style={{ paddingTop: "55px" }}>
         <WrappedReport
-          options={{ height: "25vh" }}
+          options={{ height: reportHeight }}
           url={chartUrl}
           parameter={numericValue}
           filterMappingResult={filterMappingResult}
