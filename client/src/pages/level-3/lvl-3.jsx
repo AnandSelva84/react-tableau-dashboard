@@ -11,6 +11,9 @@ const LVL_3 = (props) => {
   const { singleReportData } = props;
   const { panel_header_title: ReportTitle, embedded_viz } = singleReportData;
   const { embed_url: ReportURL } = embedded_viz[0];
+  const screenWidth = window.innerWidth;
+  const largeScreen = screenWidth >= 1960;
+  const reportHeight = largeScreen ? "79vh" : "85vh";
 
   const { url } = props;
   const filterMapping = props.getVizDataByUrl(url).embedded_viz[0]
@@ -24,10 +27,10 @@ const LVL_3 = (props) => {
   }, [title]);
 
   return (
-    <div style={{ paddingBottom: "2rem" }}>
+    <div>
       {!!props.url && (
         <WrappedReport
-          options={{ height: "85.5vh" }}
+          options={{ height: "82vh" }}
           url={ReportURL}
           filterMappingResult={filterMappingResult}
           filterMapping={filterMapping}
