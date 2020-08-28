@@ -1,0 +1,30 @@
+.no-data-view h1 {
+  font-size: 50px;
+  color: #333;
+}
+.no-data-view a {
+  color: #dc8100;
+  text-decoration: none;
+}
+.no-data-view a:hover {
+  color: #333;
+  text-decoration: none;
+}
+.no-data-view > article {
+  display: block;
+  text-align: left;
+  margin: 0 auto;
+  font-size: 30px;
+}
+
+.no-data-view p {
+  margin-top: 2.5rem;
+  line-height: 2.5rem;
+}
+
+.no-data-view {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* body { font: 20px Helvetica, sans-serif; color: #333; } */

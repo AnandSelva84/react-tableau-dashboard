@@ -64,13 +64,17 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (!!data && !loading) {
+    if (data) {
       dispatch(setAppLoading(false));
       dispatch(setApp(data.data));
       dispatch(setLogoUrl(data.data.application.logo_path_url));
       dispatch(setBodyClass(data.data.application.app_body_css_class));
-    } else {
+    }
+    if (loading) {
       dispatch(setAppLoading(true));
+    }
+    if (!loading) {
+      dispatch(setAppLoading(false));
     }
   }, [data, loading]);
 

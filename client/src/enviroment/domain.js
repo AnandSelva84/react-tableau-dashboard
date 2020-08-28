@@ -2,7 +2,9 @@ export const getDomain = () => {
   const ampID = "3000";
   const kidID = "4000";
 
-  const fullURL = window.location.href;
+  let enviroment = "dev"; // in your side it would be client
+  let fullURL = enviroment === "dev" ? window.location.href : "";
+
   let lastColon = fullURL.lastIndexOf(":");
   let afterCut = fullURL.substr(lastColon, fullURL.length);
   let firstSlash = afterCut.search("/");
