@@ -10,6 +10,7 @@ const WrappedReport = (props) => {
   const { appliedFilters } = useData().sharedReducer;
   const [render, setRender] = useState(true);
   const [loaded, setLoaded] = useState(false);
+  const { url } = props;
   useEffect(() => {
     if (loaded) {
       setRender(false);
@@ -23,7 +24,14 @@ const WrappedReport = (props) => {
     if (!render) {
       setRender(true);
     }
-  }, [render, loaded]);
+  }, [render, loaded, url]);
+
+  useEffect(() => {
+    if (loaded) {
+      // alert(url);
+      // console.log({ url });
+    }
+  }, [url]);
 
   return <>{render && <TableauViz {...props} />}</>;
 };

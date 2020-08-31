@@ -5,14 +5,19 @@ import SimpleSelect from "./../../../../../components/simple-select/simple-selec
 import { PropTypes } from "prop-types";
 
 export default function Feilds(props) {
-  const { field_type, field_label, onSwitchChange } = props;
+  const {
+    field_type,
+    field_label,
+    onSwitchChange,
+    field_impact_parameter,
+  } = props;
   const handleSwitchChange = (e) => {
     const { checked } = e.target;
     onSwitchChange(checked);
   };
 
   const handleNumericValueChange = (value) => {
-    props.onNumericChange(value);
+    props.onNumericChange(value, field_impact_parameter);
   };
 
   return (
@@ -42,6 +47,7 @@ export default function Feilds(props) {
 
 Feilds.propTypes = {
   field_type: PropTypes.any,
+  field_impact_parameter: PropTypes.any,
   field_label: PropTypes.string,
   onSwitchChange: PropTypes.func,
   onNumericChange: PropTypes.func,

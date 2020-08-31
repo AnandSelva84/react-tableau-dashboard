@@ -4,10 +4,15 @@ import WrappedReport from "../../../components/report/report";
 import { stylePosition } from "./embeded-feilds/pos-styles";
 import EmbededFeilds from "./embeded-feilds/index";
 import { PropTypes } from "prop-types";
+import { formatQueryStrings } from "./../../../redux/methods/report-url-constructor";
 
 export default function Panel(props) {
+  const { appliedTimeIntervals } = props;
   const screenWidth = window.innerWidth;
   const [chartState, setChartState] = useState("Bar");
+  // const [url, setUrl] = useState(chartUrl);
+  const [parametersArray, setParametersArray] = useState([]);
+  const [timeParams, setTimeParams] = useState([]);
   const [numericValue, setNumericValue] = useState("");
   const { singlePanel, filterMappingResult, filterMapping, index } = props;
   const { embedded_viz } = singlePanel;
@@ -21,7 +26,13 @@ export default function Panel(props) {
     checked ? setChartState("Box") : setChartState("Bar");
   };
 
+  const getRangeType = (title = "") => {
+    const stringArray = title.split(" ");
+    return stringArray[1];
+  };
+
   useEffect(() => {
+    // field_impact_parameter
     if (hasSwitch) {
       const panelUrls =
         embedded_fields.find((f) => f.field_type === "Switch")
@@ -43,7 +54,52 @@ export default function Panel(props) {
     },
   }));
 
-  const onNumericChange = (value) => {
+  useEffect(() => {
+    const isCustom = appliedTimeIntervals.length === 3;
+    const isSignle = appliedTimeIntervals.length === 1;
+    const isEmpty = appliedTimeIntervals.length === 0;
+    const title = "Time_Interval";
+
+    let _timeParams = [];
+
+    if (isEmpty) {
+      _timeParams = [];
+      return;
+    }
+    if (isCustom) {
+      const fromTo_Array = appliedTimeIntervals.slice(1);
+      const formated = fromTo_Array.map((e) => ({
+        value: e.value,
+        title: getRangeType(e.filter_type),
+      }));
+      _timeParams = [...formated];
+    }
+    if (isSignle) {
+      _timeParams = [{ title, value: appliedTimeIntervals[0].value }];
+    }
+
+    setTimeParams([..._timeParams]);
+  }, [appliedTimeIntervals]);
+
+  useEffect(() => {
+    const _url = formatQueryStrings([...timeParams, ...parametersArray]);
+    // console.log({ _url: _url === "?" });
+    if (_url === "?") {
+      setChartUrl(embed_url);
+      return;
+    }
+
+    setChartUrl(embed_url + _url);
+  }, [timeParams, parametersArray]);
+
+  const getParameter = (field_impact_parameter, value) => {
+    const parameter = { title: field_impact_parameter, value };
+    return parameter;
+  };
+
+  const onNumericChange = (value, field_impact_parameter) => {
+    const parameter = getParameter(field_impact_parameter, value);
+    setParametersArray([parameter]);
     setNumericValue(value);
   };
 
@@ -79,4 +135,5 @@ Panel.propTypes = {
   filterMapping: PropTypes.any,
   index: PropTypes.number,
   handleTitleClick: PropTypes.func,
+  appliedTimeIntervals: PropTypes.any,
 };

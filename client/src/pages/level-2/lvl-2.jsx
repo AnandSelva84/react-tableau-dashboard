@@ -12,7 +12,7 @@ const LVL_2 = (props) => {
   let { id: route } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { app, panels } = useData().sharedReducer;
+  const { app, panels, appliedTimeIntervals } = useData().sharedReducer;
   const { all_views } = app;
   const { vizUrls, mlutiReportData } = props;
 
@@ -52,6 +52,7 @@ const LVL_2 = (props) => {
                 filterMappingResult={filterMappingResult}
                 filterMapping={filterMapping}
                 handleTitleClick={handleTitleClick}
+                appliedTimeIntervals={appliedTimeIntervals}
               />
             </div>
           ))}
